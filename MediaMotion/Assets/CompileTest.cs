@@ -14,8 +14,14 @@ public class CompileTest : MonoBehaviour
 
     void Update()
     {
+		if (controller == null) {
+						System.Console.Write ("controller = null");
+						return;
+				}
         Frame frame = controller.Frame();
-        if (frame.Fingers.Count > 0) {
+		if (frame == null)
+						System.Console.Write ("Frame = null");
+		else if (frame.Fingers.Count > 0) {
 			System.Console.Write ("LeapTest");
 		}
     }
