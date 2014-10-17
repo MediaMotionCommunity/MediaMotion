@@ -10,7 +10,7 @@ Documentation
 
 The bulk of the documentation is stored in the `Resources/doc/index.md` file in this software:
 
-[Read the Documentation for master](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Resources/doc/index.md)
+[Read the Documentation for master](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Ressources/doc/index.md)
 
 Installation
 ------------
