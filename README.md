@@ -18,7 +18,9 @@ All the installation instructions are located in the documentation.
 License
 -------
 
-This software is under the ... license.
+This software is under the GNU GPLv2 license. See the complete license in the software:
+
+    Resources/LICENSE
 
 About
 -----
