@@ -22,7 +22,7 @@ License
 
 This software is under the GNU GPLv2 license. See the complete license in the software:
 
-    [Resources/LICENSE](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Resources/LICENSE)
+[GNU GPLv2](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Resources/LICENSE)
 
 About
 -----
