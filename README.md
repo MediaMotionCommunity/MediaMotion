@@ -10,7 +10,7 @@ Documentation
 
 The bulk of the documentation is stored in the `Resources/doc/index.md` file in this software:
 
-[Read the Documentation for master](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Ressources/doc/index.md)
+[Read the Documentation for master](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Resources/doc/index.md)
 
 Installation
 ------------
@@ -22,7 +22,7 @@ License
 
 This software is under the GNU GPLv2 license. See the complete license in the software:
 
-    Resources/LICENSE
+    [Resources/LICENSE](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Resources/LICENSE)
 
 About
 -----
