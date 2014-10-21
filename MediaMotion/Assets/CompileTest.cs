@@ -9,20 +9,21 @@ public class CompileTest : MonoBehaviour
 
     void Start()
     {
+		Debug.Log ("Begin");
         controller = new Controller();
     }
 
     void Update()
     {
 		if (controller == null) {
-						System.Console.Write ("controller = null");
+						Debug.Log ("controller = null");
 						return;
 				}
         Frame frame = controller.Frame();
 		if (frame == null)
-						System.Console.Write ("Frame = null");
+						Debug.Log ("Frame = null");
 		else if (frame.Fingers.Count > 0) {
-			System.Console.Write ("LeapTest");
+			Debug.Log ("LeapTest");
 		}
     }
 }
