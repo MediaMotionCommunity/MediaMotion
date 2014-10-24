@@ -17,20 +17,20 @@ namespace MediaMotion.Modules.Components.Zoom {
 		//
 		public event ZoomHandler OnZoom;
 
-		Zoom() {
+		public Zoom() {
 			Coeff = 1.0f;
 		}
 
 		//
 		// Action
 		//
-		void ZoomIn() {
+		public void ZoomIn() {
 			Coeff *= 1.5f;
 
 			this.OnZoom(this, new ZoomEventArgs(1.5f));
 		}
 
-		void ZoomOut() {
+		public void ZoomOut() {
 			Coeff /= 1.5f;
 
 			this.OnZoom(this, new ZoomEventArgs(-1.5f));
