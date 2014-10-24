@@ -1,6 +1,6 @@
 ﻿namespace MediaMotion.Modules.Components.Zoom {
 	public interface IZoom {
-		float Zoom { get; }
+		float Coeff { get; }
 
 		//
 		// Action
