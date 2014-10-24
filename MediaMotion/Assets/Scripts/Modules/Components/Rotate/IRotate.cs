@@ -1,6 +1,6 @@
 ﻿namespace MediaMotion.Modules.Components.Rotate {
 	public interface IRotate {
-		int Angle { get; protected set; }
+		int Angle { get; }
 
 		//
 		// Action

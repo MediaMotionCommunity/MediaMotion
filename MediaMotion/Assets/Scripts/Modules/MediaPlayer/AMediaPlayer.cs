@@ -1,96 +1,147 @@
-﻿using MediaMotion.Modules.Components.Playlist;
+﻿using System.Collections.Generic;
+using MediaMotion.Modules.Components.Playlist;
+using MediaMotion.Modules.Components.Volume;
 using MediaMotion.Modules.MediaPlayer.Events;
 
 namespace MediaMotion.Modules.MediaPlayer {
 	abstract public class AMediaPlayer : IMediaPlayer {
 		//
+		// Playlist properties proxy
+		//
+		public bool Random {
+			get {
+				return (this.Playlist.Random);
+			}
+			set {
+				this.Playlist.Random = value;
+			}
+		}
+
+		public bool Loop {
+			get {
+				return (this.Playlist.Loop);
+			}
+			set {
+				this.Playlist.Loop = value;
+			}
+		}
+
+		//
+		// Volume properties proxy
+		//
+		public int Sound {
+			get {
+				return (this.Playlist.Loop);
+			}
+			private set;
+		}
+
+		public int Step { 
+			get {
+				return (this.Playlist.Loop);
+			}
+			private set;
+		}
+
+		//
 		// Attributes
 		//
-		private IPlaylist Manager;
-		private int Volume;
+		protected Playlist Playlist;
+		protected Volume Volume;
 
 		//
 		// Delegate
 		//
-		public delegate void VolumeChangeHandler(object sender, VolumeChangeEventArgs e);
-		public delegate void MediaHandle(object sender, MediaEvent e);
+		public delegate void MediaHandle(object sender, MediaEventArgs e);
 
 		//
 		// Events
 		//
-		public event VolumeChangeHandler OnVolumeChange;
-		public event MediaHandle OnMediaPlay;
-		public event MediaHandle OnMediaPause;
-		public event MediaHandle OnMediaStop;
+		public event MediaHandle OnPlay;
+		public event MediaHandle OnPause;
+		public event MediaHandle OnStop;
+		
+		//
+		// Playlist events proxy
+		//
+		public event Playlist.PlaylistElementChangeHandler OnElementChange {
+			add {
+				this.Playlist.OnElementChange += value;
+			}
+			remove {
+				this.Playlist.OnElementChange -= value;
+			}
+		}
+		
+		public event Playlist.PlaylistChangeHandler OnPlaylistChange {
+			add {
+				this.Playlist.OnPlaylistChange += value;
+			}
+			remove {
+				this.Playlist.OnPlaylistChange -= value;
+			}
+		}
 
 		//
-		// Construct
+		// Volume events proxy
 		//
-		public AMediaPlayer(IPlaylist Manager = null) {
-			if (Manager == null) {
-				Manager = new Playlist();
+		public event Volume.VolumeChangeHandler OnVolumeChange {
+			add {
+				this.Volume.OnVolumeChange += value;
 			}
-			this.Manager = Manager;
+			remove {
+				this.Volume.OnVolumeChange -= value;
+			}
 		}
 
 		//
 		// Lecture
 		//
 		public void Play() {
-			OnMediaPlay(this, new MediaEvent(this.Current()));
+			OnPlay(this, new MediaEventArgs(this.Current()));
 		}
 
 		public void Pause() {
-			OnMediaPause(this, new MediaEvent(this.Current()));
+			OnPause(this, new MediaEventArgs(this.Current()));
 		}
 
 		public void Stop() {
-			OnMediaStop(this, new MediaEvent(this.Current()));
-		}
-		
-		//
-		// Volume
-		//
-		public int GetVolume() {
-			return (this.Volume);
-		}
-
-		public void VolumeUp() {
-			this.Volume += 1;
-
-			OnVolumeChange(this, new VolumeChangeEventArgs(this.Volume));
-		}
-
-		public void VolumeDown() {
-			this.Volume -= 1;
-
-			OnVolumeChange(this, new VolumeChangeEventArgs(this.Volume));
-		}
-		
-		//
-		// Playlist movement
-		//
-		public Element Current() {
-			return (this.Manager.Current());
-		}
-
-		public void Prev() {
-			this.Manager.Prev();
-		}
-
-		public void Next() {
-			this.Manager.Next();
+			OnStop(this, new MediaEventArgs(this.Current()));
 		}
 		
 		//
 		// Playlist
 		//
-		public void Add(Element element) {
-			this.Manager.Add(element);
+		public Element Current() {
+			return (this.Playlist.Current());
 		}
 
-		public void Remove(Element element) {
-			this.Manager.Remove(element);
+		public void Prev() {
+			this.Playlist.Prev();
+		}
+
+		public void Next() {
+			this.Playlist.Next();
+		}
+		
+		//
+		// Playlist action
+		//
+		public void Add(List<Element> Elements) {
+			this.Playlist.Add(Elements);
+		}
+
+		public void Remove(List<Element> Elements) {
+			this.Playlist.Remove(Elements);
+		}
+		
+		// Volume
+		public void VolumeUp() {
+			this.Volume.VolumeUp();
+		}
+
+		public void VolumeDown() {
+			this.Volume.VolumeDown();
 		}
 	}
 }

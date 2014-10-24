@@ -1,4 +1,6 @@
-﻿namespace MediaMotion.Modules.Components.Playlist {
+﻿using System.Collections.Generic;
+
+namespace MediaMotion.Modules.Components.Playlist {
 	public interface IPlaylist {
 		//
 		// Properties
@@ -16,7 +18,7 @@
 		//
 		// Playlist action
 		//
-		void Add(Element element);
-		void Remove(Element element);
+		void Add(List<Element> Elements);
+		void Remove(List<Element> Elements);
 	}
 }

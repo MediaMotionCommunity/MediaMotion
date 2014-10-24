@@ -1,9 +1,11 @@
 ﻿using System;
 
-public class MediaEvent : EventArgs {
-	public Element Element { get; }
+namespace MediaMotion.Modules.MediaPlayer.Events {
+	public class MediaEventArgs : EventArgs {
+		public Element Element { get; }
 
-	public MediaEvent(Element Element) {
-		this.Element = Element;
+		public MediaEventArgs(Element Element) {
+			this.Element = Element;
+		}
 	}
 }
