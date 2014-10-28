@@ -1,6 +1,8 @@
 using System;
 
-public class Regular
+public class Regular : AFile
 {
-	
+	public Regular() {
+		this.fileType = FileType.Regular;
+	}
 }

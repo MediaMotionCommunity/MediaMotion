@@ -1,6 +1,9 @@
 using System;
 
-public class Image : IFile
+public class Image : AFile
 {
+	public Image() {
+		this.fileType = FileType.Image;
+	}
 	
 }

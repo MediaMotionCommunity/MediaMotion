@@ -1,6 +1,9 @@
 using System;
 
-public class Video
+public class Video : AFile
 {
-	
+		public Video ()
+		{
+				this.fileType = FileType.Video;
+		}
 }
