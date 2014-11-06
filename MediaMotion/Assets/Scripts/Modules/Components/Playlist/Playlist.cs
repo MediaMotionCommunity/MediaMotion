@@ -1,29 +1,18 @@
 ﻿using System.Collections.Generic;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Modules.Components.Playlist.Events;
 
 namespace MediaMotion.Modules.Components.Playlist {
 	public class Playlist : IPlaylist {
-		//
-		// Attributes
-		//
-		private List<Element> ElementList;
-		private List<Element>.Enumerator CurrentElement;
+		private List<IElement> ElementList;
+		private List<IElement>.Enumerator CurrentElement;
 
-		//
-		// Delegate
-		//
 		public delegate void PlaylistElementChangeHandler(object sender, PlaylistElementChangeEventArgs e);
 		public delegate void PlaylistChangeHandler(object sender, PlaylistChangeEventArgs e);
 
-		//
-		// Event
-		//
 		public event PlaylistElementChangeHandler OnElementChange;
 		public event PlaylistChangeHandler OnPlaylistChange;
 
-		//
-		// Properties
-		//
 		public bool Random { get; set; }
 		public bool Loop { get; set; }
 
@@ -33,40 +22,34 @@ namespace MediaMotion.Modules.Components.Playlist {
 			this.CurrentElement = this.ElementList.GetEnumerator();
 		}
 
-		//
-		// Playlist
-		//
-		public Element Current() {
+		public IElement Current() {
 			return (this.CurrentElement.Current);
 		}
 
 		public void Prev() {
-			Element Previous = this.Current();
+			IElement Previous = this.Current();
 
 			this.CurrentElement.MoveNext();
 			this.OnElementChange(this, new PlaylistElementChangeEventArgs(Previous, this.Current()));
 		}
 
 		public void Next() {
-			Element Previous = this.Current();
+			IElement Previous = this.Current();
 
 			this.CurrentElement.MoveNext();
 			this.OnElementChange(this, new PlaylistElementChangeEventArgs(Previous, this.Current()));
 		}
-		
-		//
-		// Playlist action
-		//
-		public void Add(List<Element> Elements) {
-			this.ElementList.Add(Elements);
 
-			this.OnElementChange(this, new PlaylistChangeEventArgs(Elements));
+		public void Add(List<IElement> Elements) {
+			this.ElementList.AddRange(Elements);
+
+			this.OnPlaylistChange(this, new PlaylistChangeEventArgs(Elements));
 		}
-		
-		public void Remove(List<Element> Elements) {
-			this.ElementList.Remove(Elements);
 
-			this.OnElementChange(this, new PlaylistChangeEventArgs(Elements));
+		public void Remove(List<IElement> Elements) {
+			//this.ElementList.Remove(Elements);
+
+			this.OnPlaylistChange(this, new PlaylistChangeEventArgs(Elements));
 		}
 	}
 }

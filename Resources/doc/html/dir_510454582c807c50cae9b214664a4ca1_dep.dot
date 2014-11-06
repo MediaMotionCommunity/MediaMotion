@@ -1,0 +1,9 @@
+digraph "MediaMotion/Assets/Scripts/Core/Controllers" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_830fd0511d08d3725b7927f67b9c483e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Core" fontname="Helvetica", fontsize="10", URL="dir_830fd0511d08d3725b7927f67b9c483e.html"]
+  dir_510454582c807c50cae9b214664a4ca1 [shape=box, label="Controllers", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_510454582c807c50cae9b214664a4ca1.html"];
+  }
+}

@@ -1,0 +1,15 @@
+digraph "MediaMotion/Assets/Scripts/Core" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_550b8978d697db70f02d9ff602bc5c19 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Scripts" fontname="Helvetica", fontsize="10", URL="dir_550b8978d697db70f02d9ff602bc5c19.html"]
+  subgraph clusterdir_830fd0511d08d3725b7927f67b9c483e {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_830fd0511d08d3725b7927f67b9c483e.html"];
+    dir_830fd0511d08d3725b7927f67b9c483e [shape=plaintext label="Core"];
+    dir_510454582c807c50cae9b214664a4ca1 [shape=box label="Controllers" color="black" fillcolor="white" style="filled" URL="dir_510454582c807c50cae9b214664a4ca1.html"];
+    dir_a17fdf3a251b95873916bb31bf26ef8b [shape=box label="Models" color="red" fillcolor="white" style="filled" URL="dir_a17fdf3a251b95873916bb31bf26ef8b.html"];
+    dir_33edba045f8381ae1efa2645f1e2ecdf [shape=box label="View" color="red" fillcolor="white" style="filled" URL="dir_33edba045f8381ae1efa2645f1e2ecdf.html"];
+  }
+  }
+}

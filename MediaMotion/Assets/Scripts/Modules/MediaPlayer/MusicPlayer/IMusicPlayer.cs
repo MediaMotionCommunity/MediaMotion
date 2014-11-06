@@ -1,5 +1,7 @@
-﻿namespace MediaMotion.Modules.MediaPlayer.MusicPlayer {
-	interface IMusicPlayer : IMediaPlayer {
+﻿using MediaMotion.Core.Models.Module.Interfaces;
+
+namespace MediaMotion.Modules.MediaPlayer.MusicPlayer {
+	public interface IMusicPlayer : IModule, IMediaPlayer {
 
 	}
 }

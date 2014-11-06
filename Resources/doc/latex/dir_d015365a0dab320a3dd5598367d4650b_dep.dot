@@ -1,0 +1,9 @@
+digraph "MediaMotion/Assets/Scripts/Modules/Components/Playlist/Interfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_3ca1b53a073ba0207a1bafe7ed2cb1c4 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Playlist" fontname="Helvetica", fontsize="10", URL="dir_3ca1b53a073ba0207a1bafe7ed2cb1c4.html"]
+  dir_d015365a0dab320a3dd5598367d4650b [shape=box, label="Interfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_d015365a0dab320a3dd5598367d4650b.html"];
+  }
+}

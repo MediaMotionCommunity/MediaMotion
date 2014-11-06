@@ -1,15 +1,7 @@
-﻿namespace MediaMotion.Modules.MediaPlayer.MusicPlayer {
+﻿using MediaMotion.Core.Models.Module.Interfaces;
+
+namespace MediaMotion.Modules.MediaPlayer.MusicPlayer {
 	public class MusicPlayer : AMediaPlayer, IMusicPlayer {
-		//
-		// Init
-		//
-		void init() {
-
-		}
-
-		//
-		// Lecture
-		//
 		override public void Play() {
 			base.Play();
 		}
@@ -20,6 +12,22 @@
 
 		override public void Stop() {
 			base.Stop();
+		}
+
+		public void Register() {
+			throw new System.NotImplementedException();
+		}
+
+		public void Unregister() {
+			throw new System.NotImplementedException();
+		}
+
+		public void Load() {
+			throw new System.NotImplementedException();
+		}
+
+		public void Unload() {
+			throw new System.NotImplementedException();
 		}
 	}
 }

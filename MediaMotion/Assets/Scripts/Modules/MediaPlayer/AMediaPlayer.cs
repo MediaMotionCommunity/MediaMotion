@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Modules.Components.Playlist;
 using MediaMotion.Modules.Components.Volume;
 using MediaMotion.Modules.MediaPlayer.Events;
 
 namespace MediaMotion.Modules.MediaPlayer {
 	abstract public class AMediaPlayer : IMediaPlayer {
-		//
-		// Playlist properties proxy
-		//
 		public bool Random {
 			get {
 				return (this.Playlist.Random);
@@ -26,44 +24,31 @@ namespace MediaMotion.Modules.MediaPlayer {
 			}
 		}
 
-		//
-		// Volume properties proxy
-		//
 		public int Sound {
 			get {
-				return (this.Playlist.Loop);
+				return (this.Volume.Sound);
 			}
-			private set;
+			private set {
+			}
 		}
 
-		public int Step { 
+		public int Step {
 			get {
-				return (this.Playlist.Loop);
+				return (this.Volume.Step);
 			}
-			private set;
+			private set {
+			}
 		}
 
-		//
-		// Attributes
-		//
 		protected Playlist Playlist;
 		protected Volume Volume;
 
-		//
-		// Delegate
-		//
 		public delegate void MediaHandle(object sender, MediaEventArgs e);
 
-		//
-		// Events
-		//
 		public event MediaHandle OnPlay;
 		public event MediaHandle OnPause;
 		public event MediaHandle OnStop;
-		
-		//
-		// Playlist events proxy
-		//
+
 		public event Playlist.PlaylistElementChangeHandler OnElementChange {
 			add {
 				this.Playlist.OnElementChange += value;
@@ -72,7 +57,7 @@ namespace MediaMotion.Modules.MediaPlayer {
 				this.Playlist.OnElementChange -= value;
 			}
 		}
-		
+
 		public event Playlist.PlaylistChangeHandler OnPlaylistChange {
 			add {
 				this.Playlist.OnPlaylistChange += value;
@@ -82,9 +67,6 @@ namespace MediaMotion.Modules.MediaPlayer {
 			}
 		}
 
-		//
-		// Volume events proxy
-		//
 		public event Volume.VolumeChangeHandler OnVolumeChange {
 			add {
 				this.Volume.OnVolumeChange += value;
@@ -94,25 +76,19 @@ namespace MediaMotion.Modules.MediaPlayer {
 			}
 		}
 
-		//
-		// Lecture
-		//
-		public void Play() {
+		virtual public void Play() {
 			OnPlay(this, new MediaEventArgs(this.Current()));
 		}
 
-		public void Pause() {
+		virtual public void Pause() {
 			OnPause(this, new MediaEventArgs(this.Current()));
 		}
 
-		public void Stop() {
+		virtual public void Stop() {
 			OnStop(this, new MediaEventArgs(this.Current()));
 		}
-		
-		//
-		// Playlist
-		//
-		public Element Current() {
+
+		public IElement Current() {
 			return (this.Playlist.Current());
 		}
 
@@ -123,19 +99,15 @@ namespace MediaMotion.Modules.MediaPlayer {
 		public void Next() {
 			this.Playlist.Next();
 		}
-		
-		//
-		// Playlist action
-		//
-		public void Add(List<Element> Elements) {
+
+		public void Add(List<IElement> Elements) {
 			this.Playlist.Add(Elements);
 		}
 
-		public void Remove(List<Element> Elements) {
+		public void Remove(List<IElement> Elements) {
 			this.Playlist.Remove(Elements);
 		}
-		
-		// Volume
+
 		public void VolumeUp() {
 			this.Volume.VolumeUp();
 		}

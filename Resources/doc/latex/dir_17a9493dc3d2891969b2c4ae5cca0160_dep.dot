@@ -1,0 +1,15 @@
+digraph "MediaMotion/Assets/Scripts/Modules" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_550b8978d697db70f02d9ff602bc5c19 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Scripts" fontname="Helvetica", fontsize="10", URL="dir_550b8978d697db70f02d9ff602bc5c19.html"]
+  subgraph clusterdir_17a9493dc3d2891969b2c4ae5cca0160 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_17a9493dc3d2891969b2c4ae5cca0160.html"];
+    dir_17a9493dc3d2891969b2c4ae5cca0160 [shape=plaintext label="Modules"];
+    dir_2fa9d518e7f5251225cdf4da93c1627d [shape=box label="Components" color="red" fillcolor="white" style="filled" URL="dir_2fa9d518e7f5251225cdf4da93c1627d.html"];
+    dir_633e538fb5cf315c4de929451705d222 [shape=box label="ImageViewer" color="red" fillcolor="white" style="filled" URL="dir_633e538fb5cf315c4de929451705d222.html"];
+    dir_ad69302c103f15cc2347a0424a7d387d [shape=box label="MediaPlayer" color="red" fillcolor="white" style="filled" URL="dir_ad69302c103f15cc2347a0424a7d387d.html"];
+  }
+  }
+}

@@ -1,0 +1,9 @@
+digraph "MediaMotion/Assets/Scripts/Modules/Components/Volume/Events" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_0963e6c77b1b5988fbdf9c6c4c3a04eb {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Volume" fontname="Helvetica", fontsize="10", URL="dir_0963e6c77b1b5988fbdf9c6c4c3a04eb.html"]
+  dir_0b3b7fe81a3fce37a0414b96eb070d1b [shape=box, label="Events", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_0b3b7fe81a3fce37a0414b96eb070d1b.html"];
+  }
+}

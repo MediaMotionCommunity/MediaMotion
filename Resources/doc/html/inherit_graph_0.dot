@@ -1,0 +1,37 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="MonoBehaviour",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="IElementUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_i_element_u_i.html"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ElementUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_element_u_i.html"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="IFolderContentUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_i_folder_content_u_i.html"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="FolderContentUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_folder_content_u_i.html"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="IImageViewerUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_i_image_viewer_u_i.html"];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ImageViewerUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_image_viewer_u_i.html"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="IMediaPlayerUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_i_media_player_u_i.html"];
+  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="MediaPlayerUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_media_player_u_i.html"];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="ITextReaderUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_i_text_reader_u_i.html"];
+  Node10 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="TextReaderUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_text_reader_u_i.html"];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="IWheelToolUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_i_wheel_tool_u_i.html"];
+  Node12 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="WheelToolUI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_wheel_tool_u_i.html"];
+  Node1 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="MediaMotion.Core.Controllers.\lFolderContentController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_media_motion_1_1_core_1_1_controllers_1_1_folder_content_controller.html"];
+  Node1 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="MediaMotion.Core.Controllers.\lMediaMotionController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_media_motion_1_1_core_1_1_controllers_1_1_media_motion_controller.html"];
+  Node1 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="MediaMotion.Core.Controllers.\lWheelToolController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_media_motion_1_1_core_1_1_controllers_1_1_wheel_tool_controller.html"];
+}

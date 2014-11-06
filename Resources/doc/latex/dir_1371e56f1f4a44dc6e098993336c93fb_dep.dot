@@ -1,0 +1,9 @@
+digraph "MediaMotion/Assets/Scripts/Core/Models/Module/Interfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_72cee6ed9076d3eb945030767c43eedc {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Module" fontname="Helvetica", fontsize="10", URL="dir_72cee6ed9076d3eb945030767c43eedc.html"]
+  dir_1371e56f1f4a44dc6e098993336c93fb [shape=box, label="Interfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_1371e56f1f4a44dc6e098993336c93fb.html"];
+  }
+}

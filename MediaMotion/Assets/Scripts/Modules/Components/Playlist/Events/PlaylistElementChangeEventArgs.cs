@@ -1,11 +1,15 @@
 ﻿using System;
+using MediaMotion.Core.Models.Interfaces;
 
 namespace MediaMotion.Modules.Components.Playlist.Events {
 	public class PlaylistElementChangeEventArgs : EventArgs {
-		public Element Previous { get; private set; }
-		public Element Current { get; private set; }
+		private IElement Previous1;
+		private IElement element;
 
-		PlaylistElementChangeEventArgs(Element Previous, Element Current) {
+		public IElement Previous { get; private set; }
+		public IElement Current { get; private set; }
+
+		public PlaylistElementChangeEventArgs(IElement Previous, IElement Current) {
 			this.Previous = Previous;
 			this.Current = Current;
 		}

@@ -1,0 +1,9 @@
+digraph "MediaMotion/Assets/Scripts/Modules/MediaPlayer/MusicPlayer" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ad69302c103f15cc2347a0424a7d387d {
+    graph [ bgcolor="#ddddee", pencolor="black", label="MediaPlayer" fontname="Helvetica", fontsize="10", URL="dir_ad69302c103f15cc2347a0424a7d387d.html"]
+  dir_9364eaacff55a808750876a21e6e6a64 [shape=box, label="MusicPlayer", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_9364eaacff55a808750876a21e6e6a64.html"];
+  }
+}
