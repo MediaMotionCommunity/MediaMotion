@@ -4,26 +4,30 @@ using MediaMotion.Core.Models.Interfaces;
 
 namespace MediaMotion.Core.Models.Abstract {
 	public abstract class AFile : IFile {
-		private ElementType elementType = ElementType.File;
-		protected FileType fileType;
+		protected FileType FileType;
+		private string Path;
 
-		public ElementType getElementType() {
-			return this.elementType;
+		public AFile(string Path) {
+			this.Path = Path;
 		}
 
-		public FileType getFileType() {
-			return this.fileType;
+		public ElementType GetElementType() {
+			return (ElementType.File);
 		}
 
-		public string getPath() {
+		public FileType GetFileType() {
+			return (this.FileType);
+		}
+
+		public string GetPath() {
 			throw new NotImplementedException();
 		}
 
-		public string getName() {
+		public string GetName() {
 			throw new NotImplementedException();
 		}
 
-		public string getExtension() {
+		public string GetExtension() {
 			throw new NotImplementedException();
 		}
 	}

@@ -4,8 +4,9 @@ using MediaMotion.Core.Models.Enums;
 
 namespace MediaMotion.Core.Models {
 	public class Image : AFile {
-		public Image() {
-			this.fileType = FileType.Image;
+		public Image(string Path)
+			: base(Path) {
+			this.FileType = FileType.Image;
 		}
 	}
 }

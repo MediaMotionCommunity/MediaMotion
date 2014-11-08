@@ -3,10 +3,10 @@ using MediaMotion.Core.Models.Enums;
 
 namespace MediaMotion.Core.Models.Interfaces {
 	public interface IElement {
-		ElementType getElementType();
+		ElementType GetElementType();
 
-		string getPath();
+		string GetPath();
 
-		string getName();
+		string GetName();
 	}
 }

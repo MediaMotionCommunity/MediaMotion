@@ -4,8 +4,9 @@ using MediaMotion.Core.Models.Enums;
 
 namespace MediaMotion.Core.Models {
 	public class Regular : AFile {
-		public Regular() {
-			this.fileType = FileType.Regular;
+		public Regular(string Path)
+			: base(Path) {
+			this.FileType = FileType.Regular;
 		}
 	}
 }

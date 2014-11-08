@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using MediaMotion.Core.Exceptions;
 using MediaMotion.Core.Models.Module.Interfaces;
 using MediaMotion.Core.Models.Wrapper.Events;
@@ -8,10 +7,12 @@ using MediaMotion.Core.Models.Wrapper.Exceptions;
 using MediaMotion.Core.Models.Wrapper.Interfaces;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
+using MediaMotion.Core.Services.Logger.Interfaces;
 using UnityEngine;
 
 namespace MediaMotion.Core.Controllers {
 	class MediaMotionController : MonoBehaviour {
+		private ILogger Logger;
 		private IFileSystem FileSystem;
 		private IWrapper Wrapper;
 		private IModule Module;
@@ -29,6 +30,8 @@ namespace MediaMotion.Core.Controllers {
 		}
 
 		public void LoadModule(string Name) {
+			IModule Module = null;
+
 			throw new ModuleNotFoundException(Name);
 		}
 
@@ -64,6 +67,5 @@ namespace MediaMotion.Core.Controllers {
 				System.Diagnostics.Debug.WriteLine("Unexpected exception on load Wrapper, no more Wrapper in use: " + Exception.ToString());
 			}
 		}
-
 	}
 }
