@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace MediaMotion.Core.Controllers {
+namespace MediaMotion.Core.Controller {
 	public class FolderContentController : MonoBehaviour {
 
 		private int rowSize = 5;

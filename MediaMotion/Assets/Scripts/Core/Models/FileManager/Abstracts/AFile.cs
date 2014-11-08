@@ -14,5 +14,17 @@ namespace MediaMotion.Core.Models.Abstract {
 		public FileType getFileType() {
 			return this.fileType;
 		}
+
+		public string getPath() {
+			throw new NotImplementedException();
+		}
+
+		public string getName() {
+			throw new NotImplementedException();
+		}
+
+		public string getExtension() {
+			throw new NotImplementedException();
+		}
 	}
 }
