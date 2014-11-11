@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using log4net;
 using MediaMotion.Core.Exceptions;
 using MediaMotion.Core.Models.Module.Interfaces;
 using MediaMotion.Core.Models.Wrapper.Events;
@@ -7,17 +8,17 @@ using MediaMotion.Core.Models.Wrapper.Exceptions;
 using MediaMotion.Core.Models.Wrapper.Interfaces;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
-using MediaMotion.Core.Services.Logger.Interfaces;
 using UnityEngine;
 
 namespace MediaMotion.Core.Controllers {
 	class MediaMotionController : MonoBehaviour {
-		private ILogger Logger;
+		private ILog Logger;
 		private IFileSystem FileSystem;
 		private IWrapper Wrapper;
 		private IModule Module;
 
 		public MediaMotionController() {
+			this.Logger = LogManager.GetLogger("Core");
 			this.FileSystem = new FileSystem();
 			this.Wrapper = null;
 			this.Module = null;
@@ -44,18 +45,22 @@ namespace MediaMotion.Core.Controllers {
 			try {
 				IWrapper current = this.Wrapper;
 
+				this.Logger.Debug("Configuration of new Wrapper");
 				Wrapper.Load();
 				Wrapper.OnActionDetected += ProxyActionHandle;
 				this.Wrapper = Wrapper;
+				this.Logger.Debug("New Wrapper successfully loaded");
 
 				if (current != null) {
+					this.Logger.Debug("Unloading previous wrapper");
 					current.OnActionDetected -= ProxyActionHandle;
 					current.Unload();
+					this.Logger.Debug("Previous wrapper successfully unloaded");
 				}
 			} catch (WrapperLoadException Exception) {
-				System.Diagnostics.Debug.WriteLine("Error while loading Wrapper, previous Wrapper always in use: " + Exception.ToString());
+				this.Logger.Error("Loading Wrapper, previous Wrapper always in use", Exception);
 			} catch (WrapperUnloadException Exception) {
-				System.Diagnostics.Debug.WriteLine("Error while unloading Wrapper, new Wrapper in use: " + Exception.ToString());
+				this.Logger.Error("Unloading Wrapper, new Wrapper in use", Exception);
 			} catch (Exception Exception) {
 				if (this.Wrapper != null) {
 					try {
@@ -64,7 +69,7 @@ namespace MediaMotion.Core.Controllers {
 					} catch (Exception) { }
 				}
 				this.Wrapper = null;
-				System.Diagnostics.Debug.WriteLine("Unexpected exception on load Wrapper, no more Wrapper in use: " + Exception.ToString());
+				this.Logger.Fatal("Unknown error on Wrapper loading, no more Wrapper in use", Exception);
 			}
 		}
 	}
