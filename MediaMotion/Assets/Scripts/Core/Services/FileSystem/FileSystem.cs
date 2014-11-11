@@ -9,8 +9,6 @@ using MediaMotion.Core.Services.FileSystem.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem {
 	public class FileSystem : IFileSystem {
-		private IFolder WorkingDirectory;
-
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -22,10 +20,20 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// Get the working directory
 		/// </summary>
 		/// <returns>
-		/// Working directory's path
+		/// Working directory
 		/// </returns>
-		public string GetWorkingDirectory() {
-			return (this.WorkingDirectory.GetPath());
+		public IFolder GetWorkingDirectory() {
+			return (new Folder(Directory.GetCurrentDirectory()));
+		}
+
+		/// <summary>
+		/// Get the home directory
+		/// </summary>
+		/// <returns>
+		/// Home directory
+		/// </returns>
+		public IFolder GetHomeDirectory() {
+			return (new Folder(Environment.GetFolderPath(Environment.SpecialFolder.Personal)));
 		}
 
 		/// <summary>
@@ -35,9 +43,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// New working directory
 		/// </param>
 		public void ChangeDirectory(IFolder Folder = null) {
-			string Path = ((Folder != null) ? (Folder.GetPath()) : (Environment.GetFolderPath(Environment.SpecialFolder.Personal)));
-
-			Directory.SetCurrentDirectory(Path);
+			Directory.SetCurrentDirectory(((Folder != null) ? (Folder) : (this.GetHomeDirectory())).GetPath());
 		}
 
 		/// <summary>
@@ -51,7 +57,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </returns>
 		public List<IElement> GetDirectoryContent(IFolder Folder = null) {
 			List<IElement> DirectoryContent = new List<IElement>();
-			string Path = ((Folder != null) ? (Folder.GetPath()) : (this.GetWorkingDirectory()));
+			string Path = ((Folder != null) ? (Folder) : (this.GetWorkingDirectory())).GetPath();
 
 			foreach (string DirectoryPath in Directory.GetDirectories(Path)) {
 				DirectoryContent.Add(new Folder(DirectoryPath));
@@ -87,7 +93,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 
 			if (Element.GetElementType() == ElementType.File) {
 				File.Move(Element.GetPath(), PathDestination);
-			} else {
+			} else if (Element.GetElementType() == ElementType.Folder) {
 				Directory.Move(Element.GetPath(), PathDestination);
 			}
 		}
@@ -101,7 +107,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		public void Remove(IElement Element) {
 			if (Element.GetElementType() == ElementType.File) {
 				File.Delete(Element.GetPath());
-			} else {
+			} else if (Element.GetElementType() == ElementType.Folder) {
 				Directory.Delete(Element.GetPath(), true);
 			}
 		}

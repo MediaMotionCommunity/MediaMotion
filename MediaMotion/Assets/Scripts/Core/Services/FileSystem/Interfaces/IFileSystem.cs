@@ -2,7 +2,8 @@
 using MediaMotion.Core.Models.Interfaces;
 namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 	public interface IFileSystem {
-		string GetWorkingDirectory();
+		IFolder GetHomeDirectory();
+		IFolder GetWorkingDirectory();
 		void ChangeDirectory(IFolder Folder);
 
 		List<IElement> GetDirectoryContent(IFolder Folder = null);
