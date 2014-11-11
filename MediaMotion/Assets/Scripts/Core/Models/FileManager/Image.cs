@@ -1,6 +1,6 @@
 using System;
-using MediaMotion.Core.Models.Abstract;
-using MediaMotion.Core.Models.Enums;
+using MediaMotion.Core.Models.FileManager.Abstract;
+using MediaMotion.Core.Models.FileManager.Enums;
 
 namespace MediaMotion.Core.Models {
 	public class Image : AFile {

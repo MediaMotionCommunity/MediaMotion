@@ -1,5 +1,5 @@
-﻿using MediaMotion.Core.Models.Enums;
-using MediaMotion.Core.Models.Interfaces;
+﻿using MediaMotion.Core.Models.FileManager.Enums;
+using MediaMotion.Core.Models.FileManager.Interfaces;
 
 namespace MediaMotion.Core.Models.FileManager {
 	public class Folder : IFolder {
