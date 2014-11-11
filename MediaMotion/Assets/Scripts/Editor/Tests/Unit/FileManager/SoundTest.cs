@@ -9,21 +9,14 @@
 // ------------------------------------------------------------------------------
 using System;
 using NUnit.Framework;
-using MediaMotion.Core.Services.FileSystem.Interfaces;
-using MediaMotion.Core.Services.FileSystem;
-using MediaMotion.Core.Models.FileManager.Interfaces;
 
-[TestFixture()]
-public class FileSystemTest
-{
+namespace FileManagerTests {
+	[TestFixture()]
+	public class SoundTest {
 		[Test()]
-		public void getHomeDirectory ()
-		{
-				IFileSystem fileSystem = new FileSystem ();
-				Assert.AreNotEqual (null, fileSystem);
-				IFolder homeFolder = fileSystem.GetHomeDirectory ();
-				Assert.AreNotEqual (null, homeFolder);
+		public void GetElementType() {
+			Assert.Fail();
 		}
+	}
 }
-
 
