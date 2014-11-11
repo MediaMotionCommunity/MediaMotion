@@ -6,9 +6,10 @@ using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
+using MediaMotion.Core.Models.Module.Interfaces;
 
 namespace MediaMotion.Core.Controller {
-	public class FolderContentController : MonoBehaviour {
+	public class FolderContentController : IModule {
 
 		private int rowSize = 5;
 
@@ -26,7 +27,7 @@ namespace MediaMotion.Core.Controller {
 		private FileSystem FileService;
 		Dictionary<ElementType, string> TextureMap;
 
-		void Start() {
+		public FolderContentController() {
 			this.FileService = new FileSystem();
 			this.FileService.ChangeDirectory();
 			this.TextureMap = new Dictionary<ElementType, string>();
@@ -36,16 +37,27 @@ namespace MediaMotion.Core.Controller {
 			this.CurrentIndex = 0;
 		}
 
-		void Update() {
+        public void Load() {
+            this.displayContent();
+        }
 
-		}
-
-		private void moveCursor() {
+		private void moveUp() {
 			//incrémenter le y de 0.5 ?
 		}
 
+        private void moveDown() {
+            //incrémenter le y de 0.5 ?
+        }
+
+        private void moveLeft() {
+            //incrémenter le y de 0.5 ?
+        }
+
+        private void moveRight() {
+            //incrémenter le y de 0.5 ?
+        }
+
 		private void displayContent() {
-			//On obtient la liste des fichiers, paramètres ou appel de fonction ???
 			int i = 0;
 			float x = originX;
 			float z = originZ;
@@ -72,5 +84,14 @@ namespace MediaMotion.Core.Controller {
 			this.tiles.Clear();
 			this.displayContent();
 		}
-	}
+
+        public void Register() {
+        }
+
+        public void Unregister() {
+        }
+
+        public void Unload() {
+        }
+    }
 }
