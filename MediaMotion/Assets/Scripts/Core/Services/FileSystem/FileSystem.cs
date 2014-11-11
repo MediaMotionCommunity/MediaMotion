@@ -5,11 +5,18 @@ using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem {
-	public class FileSystem : IFileSystem {
-		public FileSystem() { }
+	sealed public class FileSystem : IFileSystem {
+		private IFactory FolderFactory;
+		private IFactory FileFactory;
+
+		public FileSystem() {
+			this.FolderFactory = new FolderFactory();
+			this.FileFactory = new FileFactory();
+		}
 
 		public IFolder GetWorkingDirectory() {
 			return (new Folder(Directory.GetCurrentDirectory()));
@@ -28,11 +35,10 @@ namespace MediaMotion.Core.Services.FileSystem {
 			string Path = ((Folder != null) ? (Folder) : (this.GetWorkingDirectory())).GetPath();
 
 			foreach (string DirectoryPath in Directory.GetDirectories(Path)) {
-				DirectoryContent.Add(new Folder(DirectoryPath));
+				DirectoryContent.Add(this.FolderFactory.Create(DirectoryPath));
 			}
 			foreach (string FilePath in Directory.GetFiles(Path)) {
-				// TODO Check extension
-				DirectoryContent.Add(new Regular(FilePath));
+				DirectoryContent.Add(this.FileFactory.Create(FilePath));
 			}
 			return (DirectoryContent);
 		}
