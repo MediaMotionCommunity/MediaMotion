@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Modules.Components.Playlist.Events;
 
 namespace MediaMotion.Modules.Components.Playlist {

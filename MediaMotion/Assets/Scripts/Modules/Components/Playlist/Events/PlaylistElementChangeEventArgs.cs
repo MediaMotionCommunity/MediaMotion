@@ -1,5 +1,5 @@
 ﻿using System;
-using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Models.FileManager.Interfaces;
 
 namespace MediaMotion.Modules.Components.Playlist.Events {
 	public class PlaylistElementChangeEventArgs : EventArgs {

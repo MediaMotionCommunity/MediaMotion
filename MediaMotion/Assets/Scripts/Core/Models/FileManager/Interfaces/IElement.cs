@@ -1,7 +1,7 @@
 using System;
-using MediaMotion.Core.Models.Enums;
+using MediaMotion.Core.Models.FileManager.Enums;
 
-namespace MediaMotion.Core.Models.Interfaces {
+namespace MediaMotion.Core.Models.FileManager.Interfaces {
 	public interface IElement {
 		ElementType GetElementType();
 

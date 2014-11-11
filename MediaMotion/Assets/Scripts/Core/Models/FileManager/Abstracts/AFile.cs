@@ -1,8 +1,8 @@
 using System;
-using MediaMotion.Core.Models.Enums;
-using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Models.FileManager;
+using MediaMotion.Core.Models.FileManager.Enums;
 
-namespace MediaMotion.Core.Models.Abstract {
+namespace MediaMotion.Core.Models.FileManager.Abstract {
 	public abstract class AFile : IFile {
 		protected FileType FileType;
 		private string Path;

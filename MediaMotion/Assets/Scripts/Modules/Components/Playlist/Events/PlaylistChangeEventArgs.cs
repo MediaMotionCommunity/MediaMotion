@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Models.FileManager.Interfaces;
 
 namespace MediaMotion.Modules.Components.Playlist.Events {
 	public class PlaylistChangeEventArgs : EventArgs {

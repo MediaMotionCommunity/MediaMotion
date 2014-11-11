@@ -1,6 +1,6 @@
 using System;
 
-namespace MediaMotion.Core.Models.Enums {
+namespace MediaMotion.Core.Models.FileManager.Enums {
 	public enum FileType {
 		Image,
 		PDF,

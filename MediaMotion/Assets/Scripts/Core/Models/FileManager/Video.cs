@@ -1,8 +1,8 @@
 using System;
-using MediaMotion.Core.Models.Abstract;
-using MediaMotion.Core.Models.Enums;
+using MediaMotion.Core.Models.FileManager.Abstract;
+using MediaMotion.Core.Models.FileManager.Enums;
 
-namespace MediaMotion.Core.Models {
+namespace MediaMotion.Core.Models.FileManager {
 	public class Video : AFile {
 		public Video(string Path)
 			: base(Path) {
