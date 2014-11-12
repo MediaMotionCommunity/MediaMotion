@@ -28,7 +28,6 @@ namespace MediaMotion.Core.Controllers {
 		Dictionary<ElementType, string> TextureMap;
 
 		public FolderContentController() {
-            Debug.Log("This is the FCC controller");
 			this.FileService = new FileSystem();
 			this.FileService.ChangeDirectory();
 			this.TextureMap = new Dictionary<ElementType, string>();
@@ -36,7 +35,6 @@ namespace MediaMotion.Core.Controllers {
 			this.TextureMap.Add(ElementType.File, "Folder-icon.png");
 			this.tiles = new List<GameObject>();
 			this.CurrentIndex = 0;
-            Debug.Log("Controller Over");
 		}
 
         public void Load() {
@@ -99,12 +97,12 @@ namespace MediaMotion.Core.Controllers {
 				//attribuer texture en fonction du fichier ?
 				tile.renderer.material.mainTexture = Resources.Load<Texture2D>(this.TextureMap[file.GetElementType()]);
 				//tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
-				tile.name = file.GetName();
+				//tile.name = file.GetName();
 				this.tiles.Add(tile);
 				++i;
 				if (i % this.rowSize == 0)
 					z += this.incrementZ;
-			}
+			};
 		}
 
 		private void enterDirectory() {
