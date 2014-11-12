@@ -24,6 +24,10 @@ namespace MediaMotion.Core.Controllers {
 			this.Module = null;
 		}
 
+		public void Start() {
+			this.LoadModule("MediaMotion.Core.Controllers.FolderContentController");
+		}
+
 		public void ProxyActionHandle(object Sender, ActionDetectedEventArgs Args) {
 			if (this.Module != null) {
 				// proxify
@@ -31,9 +35,8 @@ namespace MediaMotion.Core.Controllers {
 		}
 
 		public void LoadModule(string Name) {
-			//IModule Module = null;
-
-			throw new ModuleNotFoundException(Name);
+			this.Module = new FolderContentController();
+			this.Module.Load();
 		}
 
 		public void LoadWrapper(string Name) {
