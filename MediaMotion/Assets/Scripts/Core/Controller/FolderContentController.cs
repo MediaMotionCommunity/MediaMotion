@@ -28,6 +28,7 @@ namespace MediaMotion.Core.Controllers {
 		Dictionary<ElementType, string> TextureMap;
 
 		public FolderContentController() {
+            Debug.Log("This is the FCC controller");
 			this.FileService = new FileSystem();
 			this.FileService.ChangeDirectory();
 			this.TextureMap = new Dictionary<ElementType, string>();
@@ -35,26 +36,55 @@ namespace MediaMotion.Core.Controllers {
 			this.TextureMap.Add(ElementType.File, "Folder-icon.png");
 			this.tiles = new List<GameObject>();
 			this.CurrentIndex = 0;
+            Debug.Log("Controller Over");
 		}
 
         public void Load() {
             this.displayContent();
         }
 
+        public void CancelHighlight() {
+            
+        }
+
+        public void HighlightCurrent() {
+
+        }
+
 		private void moveUp() {
-			//incrémenter le y de 0.5 ?
+            if (this.CurrentIndex - this.rowSize >= 0) {
+                this.CancelHighlight();
+                this.CurrentIndex -= this.rowSize;
+                this.enterDirectory();
+                this.HighlightCurrent();
+            }
 		}
 
         private void moveDown() {
-            //incrémenter le y de 0.5 ?
+            if (this.CurrentIndex + this.rowSize < this.tiles.Count) {
+                this.CancelHighlight();
+                this.CurrentIndex += this.rowSize;
+                this.enterDirectory();
+                this.HighlightCurrent();
+            }
         }
 
         private void moveLeft() {
-            //incrémenter le y de 0.5 ?
+            if (this.CurrentIndex - this.rowSize >= 0) {
+                this.CancelHighlight();
+                --this.CurrentIndex;
+                this.enterDirectory();
+                this.HighlightCurrent();
+            }
         }
 
         private void moveRight() {
-            //incrémenter le y de 0.5 ?
+            if (this.CurrentIndex - this.rowSize < this.tiles.Count) {
+                this.CancelHighlight();
+                ++this.CurrentIndex;
+                this.enterDirectory();
+                this.HighlightCurrent();
+            }
         }
 
 		private void displayContent() {
