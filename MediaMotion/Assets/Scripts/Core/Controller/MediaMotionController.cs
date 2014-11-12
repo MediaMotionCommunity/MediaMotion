@@ -14,13 +14,13 @@ namespace MediaMotion.Core.Controllers {
 	class MediaMotionController : MonoBehaviour {
 		//private ILog Logger;
 		private IFileSystem FileSystem;
-		private IWrapper Wrapper;
+		//private IWrapper Wrapper;
 		private IModule Module;
 
 		public MediaMotionController() {
 			//this.Logger = LogManager.GetLogger("Core");
 			this.FileSystem = new FileSystem();
-			this.Wrapper = null;
+			//this.Wrapper = null;
 			this.Module = null;
 		}
 
@@ -31,46 +31,46 @@ namespace MediaMotion.Core.Controllers {
 		}
 
 		public void LoadModule(string Name) {
-			IModule Module = null;
+			//IModule Module = null;
 
 			throw new ModuleNotFoundException(Name);
 		}
 
 		public void LoadWrapper(string Name) {
-			IWrapper Wrapper = null;
+			//IWrapper Wrapper = null;
 
 			// Load library
 			throw new WrapperNotFoundException(Name);
 
-			try {
-				IWrapper current = this.Wrapper;
+			//try {
+			//	IWrapper current = this.Wrapper;
 
-				//this.Logger.Debug("Configuration of new Wrapper");
-				Wrapper.Load();
-				Wrapper.OnActionDetected += ProxyActionHandle;
-				this.Wrapper = Wrapper;
-				//this.Logger.Debug("New Wrapper successfully loaded");
+			//	//this.Logger.Debug("Configuration of new Wrapper");
+			//	Wrapper.Load();
+			//	Wrapper.OnActionDetected += ProxyActionHandle;
+			//	this.Wrapper = Wrapper;
+			//	//this.Logger.Debug("New Wrapper successfully loaded");
 
-				if (current != null) {
-					//this.Logger.Debug("Unloading previous wrapper");
-					current.OnActionDetected -= ProxyActionHandle;
-					current.Unload();
-					//this.Logger.Debug("Previous wrapper successfully unloaded");
-				}
-			} catch (WrapperLoadException Exception) {
-				//this.Logger.Error("Loading Wrapper, previous Wrapper always in use", Exception);
-			} catch (WrapperUnloadException Exception) {
-				//this.Logger.Error("Unloading Wrapper, new Wrapper in use", Exception);
-			} catch (Exception Exception) {
-				if (this.Wrapper != null) {
-					try {
-						this.Wrapper.OnActionDetected -= ProxyActionHandle;
-						this.Wrapper.Unload();
-					} catch (Exception) { }
-				}
-				this.Wrapper = null;
-				//this.Logger.Fatal("Unknown error on Wrapper loading, no more Wrapper in use", Exception);
-			}
+			//	if (current != null) {
+			//		//this.Logger.Debug("Unloading previous wrapper");
+			//		current.OnActionDetected -= ProxyActionHandle;
+			//		current.Unload();
+			//		//this.Logger.Debug("Previous wrapper successfully unloaded");
+			//	}
+			//} catch (WrapperLoadException /*Exception*/) {
+			//	//this.Logger.Error("Loading Wrapper, previous Wrapper always in use", Exception);
+			//} catch (WrapperUnloadException /*Exception*/) {
+			//	//this.Logger.Error("Unloading Wrapper, new Wrapper in use", Exception);
+			//} catch (Exception /*Exception*/) {
+			//	if (this.Wrapper != null) {
+			//		try {
+			//			this.Wrapper.OnActionDetected -= ProxyActionHandle;
+			//			this.Wrapper.Unload();
+			//		} catch (Exception) { }
+			//	}
+			//	this.Wrapper = null;
+			//	//this.Logger.Fatal("Unknown error on Wrapper loading, no more Wrapper in use", Exception);
+			//}
 		}
 	}
 }
