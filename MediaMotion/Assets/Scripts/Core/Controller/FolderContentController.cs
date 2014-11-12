@@ -8,7 +8,7 @@ using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Module.Interfaces;
 
-namespace MediaMotion.Core.Controller {
+namespace MediaMotion.Core.Controllers {
 	public class FolderContentController : IModule {
 
 		private int rowSize = 5;
