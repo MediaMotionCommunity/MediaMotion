@@ -21,7 +21,8 @@ ExportedObj/
 *.booproj
 
 test-results/
- 
+bin/
+
 # ============ #
 # OS generated #
 # ============ #
@@ -34,3 +35,4 @@ Icon?
 ehthumbs.db
 Thumbs.db
 *.*~
+*.sln
