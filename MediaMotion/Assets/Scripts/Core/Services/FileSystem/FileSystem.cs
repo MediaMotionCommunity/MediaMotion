@@ -20,11 +20,11 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		public IFolder GetWorkingDirectory() {
-			return (new Folder(Directory.GetCurrentDirectory()));
+			return (this.FolderFactory.Create(Directory.GetCurrentDirectory()) as IFolder);
 		}
 
 		public IFolder GetHomeDirectory() {
-			return (new Folder(Environment.GetFolderPath(Environment.SpecialFolder.Personal)));
+			return (this.FolderFactory.Create(Environment.GetFolderPath(Environment.SpecialFolder.Personal)) as IFolder);
 		}
 
 		public void ChangeDirectory(IFolder Folder = null) {

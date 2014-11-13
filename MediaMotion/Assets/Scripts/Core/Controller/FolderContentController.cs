@@ -106,7 +106,7 @@ namespace MediaMotion.Core.Controllers {
 		}
 
 		private void enterDirectory() {
-			this.FileService.ChangeDirectory(new Folder(this.tiles[this.CurrentIndex].name));
+			this.FileService.ChangeDirectory(new Folder(this.tiles[this.CurrentIndex].name, ""));
 			//VERIFIER que la mémoire soit bien free, je sais pas si Unity a encore accès aux tiles après ou pas.
 			//Ajouter des animations quand on delete les folders.
 			this.tiles.Clear();

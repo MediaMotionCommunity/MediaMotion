@@ -1,24 +1,11 @@
-﻿using MediaMotion.Core.Models.FileManager.Enums;
+﻿using MediaMotion.Core.Models.FileManager.Abstracts;
+using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
 
 namespace MediaMotion.Core.Models.FileManager {
-	public class Folder : IFolder {
-		private string Path;
-
-		public Folder(string Path) {
-			this.Path = Path;
-		}
-		
-		public ElementType GetElementType() {
-			return (ElementType.Folder);
-		}
-
-		public string GetPath() {
-			return (this.Path);
-		}
-
-		public string GetName() {
-			throw new System.NotImplementedException();
+	public class Folder : AFolder, IFolder {
+		public Folder(string Path, string Name)
+			: base(Path, Name) {
 		}
 	}
 }
