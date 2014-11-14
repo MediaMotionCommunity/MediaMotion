@@ -1,10 +1,10 @@
-namespace MediaMotion.Motion {
+namespace MediaMotion.Motion.Actions.Parameters {
 	/// <summary>
 	/// The cursor position.
 	/// </summary>
-	public class CursorPosition {
+	public class Cursor : ICursor {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CursorPosition"/> class.
+		/// Initializes a new instance of the <see cref="Cursor"/> class.
 		/// </summary>
 		/// <param name="x">
 		/// The position x width.
@@ -18,7 +18,7 @@ namespace MediaMotion.Motion {
 		/// <param name="isTouching">
 		/// The is touching.
 		/// </param>
-		public CursorPosition(int x, int y, int z, bool isTouching) {
+		public Cursor(int x, int y, int z, bool isTouching) {
 			this.X = x;
 			this.Y = y;
 			this.Z = z;

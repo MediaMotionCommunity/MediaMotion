@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
 
 namespace MediaMotion.Motion.LeapMotion
@@ -22,8 +23,9 @@ namespace MediaMotion.Motion.LeapMotion
 		/// </summary>
 		public LeapMotion() {
 			this.Name = "LeapMotion";
-			this.Type = "HandMotion";
+			this.Type = "Hand Motion";
 			this.Link = "https://www.leapmotion.com/";
+			this.Author = "MediaMotion";
 			this.core = new LeapMotionCore();
 		}
 		#endregion
@@ -43,6 +45,11 @@ namespace MediaMotion.Motion.LeapMotion
 		/// Gets the link of device.
 		/// </summary>
 		public string Link { get; private set; }
+
+		/// <summary>
+		/// Gets the author.
+		/// </summary>
+		public string Author { get; private set; }
 
 		/// <summary>
 		/// The load.
@@ -70,21 +77,20 @@ namespace MediaMotion.Motion.LeapMotion
 		/// <exception cref="NotImplementedException">
 		/// Not Implemented
 		/// </exception>
-		public IEnumerable<Action> GetActions() {
+		public IEnumerable<IAction> GetActions() {
 			return this.core.Frame();
 		}
+		#endregion
 
+		#region IDisposable
 		/// <summary>
-		/// The get cursor position.
+		/// The dispose.
 		/// </summary>
-		/// <returns>
-		/// The <see cref="CursorPosition"/>.
-		/// </returns>
 		/// <exception cref="NotImplementedException">
-		/// Not Implemented
 		/// </exception>
-		public CursorPosition GetCursorPosition() {
-			return this.core.GetCursorPosition();
+		public void Dispose() {
+			this.core.Dispose();
+			GC.SuppressFinalize(this);
 		}
 		#endregion
 	}

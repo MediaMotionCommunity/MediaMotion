@@ -34,13 +34,14 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Action.cs" />
-    <Compile Include="CursorPosition.cs" />
+    <Compile Include="Actions\Action.cs" />
+    <Compile Include="Actions\IAction.cs" />
+    <Compile Include="Actions\Parameters\Cursor.cs" />
+    <Compile Include="Actions\Parameters\ICursor.cs" />
     <Compile Include="Exceptions\WrapperLoadException.cs" />
     <Compile Include="Exceptions\WrapperUnloadException.cs" />
     <Compile Include="IWrapperDevice.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ActionParams\Vector3.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

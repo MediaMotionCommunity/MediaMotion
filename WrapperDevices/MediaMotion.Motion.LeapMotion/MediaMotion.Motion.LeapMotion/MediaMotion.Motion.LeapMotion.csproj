@@ -55,7 +55,13 @@ xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.dll" "$(SolutionDir)..\..\Me
 xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.lib" "$(SolutionDir)..\..\MediaMotion\" /Y
 xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.dll" "$(SolutionDir)..\..\MediaMotion\" /Y
 xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.lib" "$(SolutionDir)..\..\MediaMotion\" /Y
-xcopy "$(SolutionDir)..\..\Solution Items\x86\LeapCSharp.dll" "$(SolutionDir)..\..\MediaMotion\" /Y 
+xcopy "$(SolutionDir)..\..\Solution Items\x86\LeapCSharp.dll" "$(SolutionDir)..\..\MediaMotion\" /Y
+
+xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.lib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.lib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+xcopy "$(SolutionDir)..\..\Solution Items\x86\LeapCSharp.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
 )
 if $(PlatformName) == "x64" (
 echo "copy for  x64 plateforme"
@@ -64,6 +70,12 @@ xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.lib" "$(SolutionDir)..\..\Me
 xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.dll" "$(SolutionDir)..\..\MediaMotion\" /Y
 xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.lib" "$(SolutionDir)..\..\MediaMotion\" /Y
 xcopy "$(SolutionDir)..\..\Solution Items\x64\LeapCSharp.dll" "$(SolutionDir)..\..\MediaMotion\" /Y 
+
+xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.lib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.lib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+xcopy "$(SolutionDir)..\..\Solution Items\x64\LeapCSharp.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
 )
 xcopy "$(SolutionDir)..\..\Solution Items\LeapCSharp.NET4.0.dll" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\" /Y
 xcopy "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\" /Y

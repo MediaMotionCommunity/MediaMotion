@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMoti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion", "..\MediaMotion.Motion\MediaMotion.Motion\MediaMotion.Motion.csproj", "{4E88DA8E-EB8E-4C2C-9E9B-EBF64AC12C42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMotion.Testing", "MediaMotion.Motion.LeapMotion.Testing\MediaMotion.Motion.LeapMotion.Testing.csproj", "{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4E88DA8E-EB8E-4C2C-9E9B-EBF64AC12C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E88DA8E-EB8E-4C2C-9E9B-EBF64AC12C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E88DA8E-EB8E-4C2C-9E9B-EBF64AC12C42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

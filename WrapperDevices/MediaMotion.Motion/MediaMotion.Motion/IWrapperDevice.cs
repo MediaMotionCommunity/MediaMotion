@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.Exceptions;
 
 namespace MediaMotion.Motion
@@ -7,7 +8,7 @@ namespace MediaMotion.Motion
 	/// <summary>
 	/// The WrapperDevice interface.
 	/// </summary>
-	public interface IWrapperDevice {
+	public interface IWrapperDevice : IDisposable {
 		#region Properties
 		/// <summary>
 		/// Gets the name of device.
@@ -23,6 +24,11 @@ namespace MediaMotion.Motion
 		/// Gets the link of device (http)
 		/// </summary>
 		string Link { get; }
+
+		/// <summary>
+		/// Gets the author.
+		/// </summary>
+		string Author { get;  }
 		#endregion
 
 		#region Methods
@@ -49,15 +55,7 @@ namespace MediaMotion.Motion
 		/// <returns>
 		/// The <see cref="IEnumerable"/>.
 		/// </returns>
-		IEnumerable<Motion.Action> GetActions();
-
-		/// <summary>
-		/// The get cursor position.
-		/// </summary>
-		/// <returns>
-		/// The <see cref="CursorPosition"/>.
-		/// </returns>
-		CursorPosition GetCursorPosition();
+		IEnumerable<IAction> GetActions();
 		#endregion
 	}
 }

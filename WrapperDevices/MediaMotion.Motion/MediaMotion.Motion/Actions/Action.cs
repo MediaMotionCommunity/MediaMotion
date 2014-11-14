@@ -1,27 +1,8 @@
-namespace MediaMotion.Motion {
-	/// <summary>
-	/// The action type.
-	/// </summary>
-	public enum ActionType {
-        BrowsingCursor,
-        BrowsingHighlight,
-        BrowsingScroll,
-		CommonSelect,
-		CommonOpenMenu,
-		CommonRightOnce,
-		CommonLeftOnce,
-		CommonUpOnce,
-		CommonDownOnce,
-		CommonRight,
-		CommonLeft,
-		CommonUp,
-		CommonDown
-	}
-
+namespace MediaMotion.Motion.Actions {
 	/// <summary>
 	/// The action.
 	/// </summary>
-	public class Action {
+	public class Action : IAction {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Action"/> class.
 		/// </summary>
