@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4941DBA6-22D7-4F5A-93E7-6CBE56913C45}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MediaMotion.Motion.LeapMotion</RootNamespace>
+    <AssemblyName>MediaMotion.Motion.LeapMotion</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LeapCSharp.NET4.0">
+      <HintPath>..\..\..\Solution Items\LeapCSharp.NET4.0.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\LeapMotionCore.cs" />
+    <Compile Include="LeapMotion.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MediaMotion.Motion\MediaMotion.Motion\MediaMotion.Motion.csproj">
+      <Project>{4E88DA8E-EB8E-4C2C-9E9B-EBF64AC12C42}</Project>
+      <Name>MediaMotion.Motion</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(PlatformName) == "Any CPU"  or $(PlatformName) == "x86" (
+echo "copy for x86 plateforme"
+xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.dll" "$(SolutionDir)..\..\MediaMotion\" /Y
+xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.lib" "$(SolutionDir)..\..\MediaMotion\" /Y
+xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.dll" "$(SolutionDir)..\..\MediaMotion\" /Y
+xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.lib" "$(SolutionDir)..\..\MediaMotion\" /Y
+xcopy "$(SolutionDir)..\..\Solution Items\x86\LeapCSharp.dll" "$(SolutionDir)..\..\MediaMotion\" /Y 
+)
+if $(PlatformName) == "x64" (
+echo "copy for  x64 plateforme"
+xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.dll" "$(SolutionDir)..\..\MediaMotion\" /Y
+xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.lib" "$(SolutionDir)..\..\MediaMotion\" /Y
+xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.dll" "$(SolutionDir)..\..\MediaMotion\" /Y
+xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.lib" "$(SolutionDir)..\..\MediaMotion\" /Y
+xcopy "$(SolutionDir)..\..\Solution Items\x64\LeapCSharp.dll" "$(SolutionDir)..\..\MediaMotion\" /Y 
+)
+xcopy "$(SolutionDir)..\..\Solution Items\LeapCSharp.NET4.0.dll" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\" /Y
+xcopy "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\" /Y
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -30,7 +30,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		public void ChangeDirectory(IFolder Folder = null) {
-			Directory.SetCurrentDirectory(((Folder != null) ? (Folder) : (this.GetHomeDirectory())).GetPath());
+			// Directory.SetCurrentDirectory(((Folder != null) ? (Folder) : (this.GetHomeDirectory())).GetPath());
 		}
 
 		public List<IElement> GetDirectoryContent(IFolder Folder = null) {
