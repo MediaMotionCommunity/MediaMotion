@@ -13,10 +13,12 @@ namespace MediaMotion.Core.Services.FileSystem {
 	sealed public class FileSystem : IFileSystem {
 		private IFactory FolderFactory;
 		private IFactory FileFactory;
+		public IFolder InitialFolder { get; private set; }
 
 		public FileSystem() {
 			this.FolderFactory = new FolderFactory();
 			this.FileFactory = new FileFactory();
+			this.InitialFolder = this.GetWorkingDirectory();
 		}
 
 		public IFolder GetWorkingDirectory() {
