@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>4cf08fa9-b226-4661-ba33-d99021f3ebf9</ProjectGuid>
+    <ProjectGuid>{05DB849C-099A-4356-8BEB-9F717E0537B3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MediaMotion.Motion.Debug.Testing</RootNamespace>
@@ -46,6 +46,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MediaMotion.Motion\MediaMotion.Motion\MediaMotion.Motion.csproj">
+      <Project>{4E88DA8E-EB8E-4C2C-9E9B-EBF64AC12C42}</Project>
+      <Name>MediaMotion.Motion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MediaMotion.Motion.Debug\MediaMotion.Motion.Debug.csproj">
+      <Project>{4227a5d8-2593-42af-8397-10ac6a86cfc6}</Project>
+      <Name>MediaMotion.Motion.Debug</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
