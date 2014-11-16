@@ -19,6 +19,7 @@ namespace MediaMotion.Modules.Components.Playlist {
 		public Playlist(bool Loop = true, bool Random = false) {
 			this.Loop = Loop;
 			this.Random = Random;
+			this.ElementList = new List<IElement>();
 			this.CurrentElement = this.ElementList.GetEnumerator();
 		}
 

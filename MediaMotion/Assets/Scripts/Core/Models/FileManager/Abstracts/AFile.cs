@@ -2,33 +2,22 @@ using System;
 using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
 
-namespace MediaMotion.Core.Models.FileManager.Abstract {
-	public abstract class AFile : IFile {
+namespace MediaMotion.Core.Models.FileManager.Abstracts {
+	abstract public class AFile : AElement, IFile {
 		protected FileType FileType;
-		private string Path;
+		private string Extension;
 
-		public AFile(string Path) {
-			this.Path = Path;
-		}
-
-		public ElementType GetElementType() {
-			return (ElementType.File);
+		public AFile(string Path, string Name, string Extension)
+			: base(ElementType.File, Path, Name) {
+			this.Extension = Extension;
 		}
 
 		public FileType GetFileType() {
 			return (this.FileType);
 		}
 
-		public string GetPath() {
-			throw new NotImplementedException();
-		}
-
-		public string GetName() {
-			throw new NotImplementedException();
-		}
-
 		public string GetExtension() {
-			throw new NotImplementedException();
+			return (this.Extension);
 		}
 	}
 }

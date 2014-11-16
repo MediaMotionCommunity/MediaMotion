@@ -3,6 +3,8 @@ using MediaMotion.Core.Models.FileManager.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 	public interface IFileSystem {
+		IFolder InitialFolder { get; }
+
 		/// <summary>
 		/// Get the working directory
 		/// </summary>
