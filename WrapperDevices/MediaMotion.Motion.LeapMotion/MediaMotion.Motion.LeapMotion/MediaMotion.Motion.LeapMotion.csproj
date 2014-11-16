@@ -37,6 +37,11 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MovementsDetection\ICustomDetection.cs" />
+    <Compile Include="MovementsDetection\ALeapDetection.cs" />
+    <Compile Include="MovementsDetection\Detections.cs" />
+    <Compile Include="MovementsDetection\KeyTapDetection.cs" />
+    <Compile Include="MovementsDetection\SwipeDetection.cs" />
     <Compile Include="Core\LeapMotionCore.cs" />
     <Compile Include="LeapMotion.cs" />
     <Compile Include="AssemblyInfo.cs" />

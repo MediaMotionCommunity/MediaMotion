@@ -16,7 +16,8 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 			Console.WriteLine("Testing wrapper device");
 			var wrapper = new LeapMotion();
 			wrapper.Load();
-			var timer = new Timer(Display, wrapper, 0, 1 / 30);
+			var timer = new Timer(Display, wrapper, 0, 1000 / 30);
+			Console.ReadLine();
 			wrapper.Unload();
 		}
 

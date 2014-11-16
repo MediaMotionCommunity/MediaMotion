@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Leap;
 using MediaMotion.Motion.Actions;
+using MediaMotion.Motion.LeapMotion.MovementsDetection;
 
 namespace MediaMotion.Motion.LeapMotion.Core {
 	/// <summary>
@@ -16,6 +17,8 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// The controller.
 		/// </summary>
 		private readonly Controller controller;
+
+		private Detections movementsDetection;
 
 #if DEBUG
 		[SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1121:UseBuiltInTypeAlias", Justification = "Reviewed. Suppression is OK here."),
@@ -30,6 +33,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// </summary>
 		public LeapMotionCore() {
 			this.controller = new Controller();
+			this.movementsDetection = new Detections();
 			this.Configuration();
 		}
 		#endregion
@@ -43,7 +47,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// The <see cref="IEnumerable"/>.
 		/// </returns>
 		public IEnumerable<IAction> Frame() {
-            return null;
+			return this.movementsDetection.MovementsDetection(this.controller.Frame());
         }
 		#region Private
 		/// <summary>
