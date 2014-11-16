@@ -14,15 +14,12 @@ namespace MediaMotion.Core.Services.FileSystem {
 		private IFactory FolderFactory;
 		private IFactory FileFactory;
 		public IFolder InitialFolder { get; private set; }
+		public IFolder CurrentFolder { get; private set; }
 
 		public FileSystem() {
 			this.FolderFactory = new FolderFactory();
 			this.FileFactory = new FileFactory();
-			this.InitialFolder = this.GetWorkingDirectory();
-		}
-
-		public IFolder GetWorkingDirectory() {
-			return (this.FolderFactory.Create(Directory.GetCurrentDirectory()) as IFolder);
+			this.InitialFolder = this.CurrentFolder = this.FolderFactory.Create(Directory.GetCurrentDirectory()) as IFolder;
 		}
 
 		public IFolder GetHomeDirectory() {
@@ -30,12 +27,12 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		public void ChangeDirectory(IFolder Folder = null) {
-			Directory.SetCurrentDirectory(((Folder != null) ? (Folder) : (this.GetHomeDirectory())).GetPath());
+			this.CurrentFolder = ((Folder != null) ? (Folder) : (this.GetHomeDirectory()));
 		}
 
 		public List<IElement> GetDirectoryContent(IFolder Folder = null) {
 			List<IElement> DirectoryContent = new List<IElement>();
-			string Path = ((Folder != null) ? (Folder) : (this.GetWorkingDirectory())).GetPath();
+			string Path = ((Folder != null) ? (Folder) : (this.CurrentFolder)).GetPath();
 
 			foreach (string DirectoryPath in Directory.GetDirectories(Path)) {
 				DirectoryContent.Add(this.FolderFactory.Create(DirectoryPath));

@@ -3,15 +3,21 @@ using MediaMotion.Core.Models.FileManager.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 	public interface IFileSystem {
+		/// <summary>
+		/// Gets or sets the initial folder.
+		/// </summary>
+		/// <value>
+		/// The initial folder.
+		/// </value>
 		IFolder InitialFolder { get; }
 
 		/// <summary>
-		/// Get the working directory
+		/// Gets or sets the current folder.
 		/// </summary>
-		/// <returns>
-		/// Working directory
-		/// </returns>
-		IFolder GetWorkingDirectory();
+		/// <value>
+		/// The current folder.
+		/// </value>
+		IFolder CurrentFolder { get; }
 
 		/// <summary>
 		/// Get the home directory
