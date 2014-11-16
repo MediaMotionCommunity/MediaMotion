@@ -9,7 +9,8 @@
 		Right,
 		Left,
 		ScrollIn,
-		ScrollOut
+		ScrollOut,
+		Select
 	}
 
 	/// <summary>

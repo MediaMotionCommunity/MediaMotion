@@ -56,6 +56,7 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 			list.Add(ActionType.Up, "Up");
 			list.Add(ActionType.ScrollIn, "ScrollIn");
 			list.Add(ActionType.ScrollOut, "ScrollOut");
+			list.Add(ActionType.Select, "Select");
 
 			return list[ac.Type];
 		}

@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using MediaMotion.Motion.Actions;
 using Leap;
+using Action = MediaMotion.Motion.Actions.Action;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
-	class KeyTapDetection : ALeapDetection {
+	class KeyTapDetection : ASecureLeapDetection {
 		#region Constructor
 		public KeyTapDetection() {
 			this.type = Gesture.GestureType.TYPE_KEY_TAP;
@@ -15,9 +16,13 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		#endregion
 
 		#region Methods
-		public override IEnumerable<IAction> Detection(Gesture gesture) {
-			IEnumerable<IAction> list = new List<IAction>();
-			Console.WriteLine("# In KeyTape");
+		protected override IEnumerable<IAction> SecureDetection(Gesture gesture) {
+			List<IAction> list = new List<IAction>();
+			KeyTapGesture swipe = new KeyTapGesture(gesture);
+
+			if(this.IsStateValid(swipe.State)) {
+				list.Add(new Action(ActionType.Select, null));
+			}
 			return list;
 		}
 		#endregion
