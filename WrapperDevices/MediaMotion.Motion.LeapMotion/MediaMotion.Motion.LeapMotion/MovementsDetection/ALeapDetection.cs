@@ -17,6 +17,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		public Gesture.GestureType GetGestureType() {
 			return this.type;
 		}
+
+		protected bool IsStateValid(Gesture.GestureState state) {
+			if(state == Gesture.GestureState.STATE_START ||
+				state == Gesture.GestureState.STATE_UPDATE ||
+				state == Gesture.GestureState.STATE_STOP) {
+					return true;
+			}
+			return false;
+		}
 		#endregion
 	}
 }

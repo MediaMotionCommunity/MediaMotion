@@ -38,12 +38,12 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 
 			for(int i = 0; i < gestures.Count; i++) {
 				if(this.leapDetections.ContainsKey(gestures[i].Type)) {
-					list.Concat<IAction>(this.leapDetections[gestures[i].Type](gestures[i]));
+					list = list.Concat<IAction>(this.leapDetections[gestures[i].Type](gestures[i]));
 				}
 			}
 
 			foreach(Func<Frame, IEnumerable<IAction>> func in this.customDetections) {
-				list.Concat<IAction>(func(frame));
+				list = list.Concat<IAction>(func(frame));
 			}
 			return list;
 		}
