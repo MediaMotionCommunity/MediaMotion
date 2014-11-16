@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Threading;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Motion.LeapMotion.Testing {
@@ -40,16 +36,25 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 			}
 		}
 
+		/// <summary>
+		/// Display list of IAction
+		/// </summary>
+		/// <param name="list"></param>
 		private static void DisplayAction(IEnumerable<IAction> list) {
 			int i = 0;
-			foreach(IAction ac in list) {
+			foreach (IAction ac in list) {
 				Console.WriteLine(i + ": " + Program.GetActionName(ac));
 				i++;
 			}
 		}
 
+		/// <summary>
+		/// Return string version of IAction
+		/// </summary>
+		/// <param name="ac"></param>
+		/// <returns></returns>
 		private static string GetActionName(IAction ac) {
-			Dictionary<ActionType, string> list = new Dictionary<ActionType,string>();
+			Dictionary<ActionType, string> list = new Dictionary<ActionType, string>();
 			list.Add(ActionType.Down, "Down");
 			list.Add(ActionType.Left, "Left");
 			list.Add(ActionType.Right, "Right");

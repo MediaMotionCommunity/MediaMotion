@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using MediaMotion.Motion.Actions;
 using Leap;
 using Action = MediaMotion.Motion.Actions.Action;
@@ -20,7 +16,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			List<IAction> list = new List<IAction>();
 			KeyTapGesture swipe = new KeyTapGesture(gesture);
 
-			if(this.IsStateValid(swipe.State)) {
+			if (this.IsStateValid(swipe.State)) {
 				list.Add(new Action(ActionType.Select, null));
 			}
 			return list;

@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Leap;
+using MediaMotion.Motion.Actions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediaMotion.Motion.Actions;
-using Leap;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
-    class Detections {
+	class Detections {
 		#region Fields
 		#region Detection class
 		private SwipeDetection swipeDetection;
@@ -25,7 +23,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 
 			this.leapDetections = new Dictionary<Gesture.GestureType, Func<Gesture, IEnumerable<IAction>>>();
 			this.customDetections = new List<Func<Frame, IEnumerable<IAction>>>();
-			
+
 			this.leapDetections.Add(this.swipeDetection.GetGestureType(), this.swipeDetection.Detection);
 			this.leapDetections.Add(this.keyTapDetection.GetGestureType(), this.keyTapDetection.Detection);
 		}
@@ -36,13 +34,13 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			IEnumerable<IAction> list = new List<IAction>();
 			GestureList gestures = frame.Gestures();
 
-			for(int i = 0; i < gestures.Count; i++) {
-				if(this.leapDetections.ContainsKey(gestures[i].Type)) {
+			for (int i = 0; i < gestures.Count; i++) {
+				if (this.leapDetections.ContainsKey(gestures[i].Type)) {
 					list = list.Concat<IAction>(this.leapDetections[gestures[i].Type](gestures[i]));
 				}
 			}
 
-			foreach(Func<Frame, IEnumerable<IAction>> func in this.customDetections) {
+			foreach (Func<Frame, IEnumerable<IAction>> func in this.customDetections) {
 				list = list.Concat<IAction>(func(frame));
 			}
 			return list;

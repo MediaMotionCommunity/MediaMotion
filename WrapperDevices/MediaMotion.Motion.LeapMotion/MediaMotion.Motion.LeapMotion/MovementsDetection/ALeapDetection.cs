@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Leap;
 using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
-    public abstract class ALeapDetection {
+	public abstract class ALeapDetection {
 		#region Fields
 		protected Gesture.GestureType type;
 		#endregion
@@ -19,10 +15,10 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		}
 
 		protected bool IsStateValid(Gesture.GestureState state) {
-			if(state == Gesture.GestureState.STATE_START ||
+			if (state == Gesture.GestureState.STATE_START ||
 				state == Gesture.GestureState.STATE_UPDATE ||
 				state == Gesture.GestureState.STATE_STOP) {
-					return true;
+				return true;
 			}
 			return false;
 		}

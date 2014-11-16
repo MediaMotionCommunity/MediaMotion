@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
 
-namespace MediaMotion.Motion.LeapMotion
-{
+namespace MediaMotion.Motion.LeapMotion {
 	/// <summary>
 	/// The leap motion.
 	/// </summary>
@@ -95,4 +94,3 @@ namespace MediaMotion.Motion.LeapMotion
 		#endregion
 	}
 }
-
