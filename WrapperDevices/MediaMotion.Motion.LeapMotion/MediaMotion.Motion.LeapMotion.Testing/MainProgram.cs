@@ -7,7 +7,7 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 	/// <summary>
 	/// The program.
 	/// </summary>
-	public static class Program {
+	public static class MainProgram {
 		/// <summary>
 		/// The main.
 		/// </summary>
@@ -32,7 +32,7 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 		private static void Display(object state) {
 			var wrapper = state as IWrapperDevice;
 			if (wrapper != null) {
-				Program.DisplayAction(wrapper.GetActions());
+				DisplayAction(wrapper.GetActions());
 			}
 		}
 
@@ -41,9 +41,9 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 		/// </summary>
 		/// <param name="list"></param>
 		private static void DisplayAction(IEnumerable<IAction> list) {
-			int i = 0;
-			foreach (IAction ac in list) {
-				Console.WriteLine(i + ": " + Program.GetActionName(ac));
+			var i = 0;
+			foreach (var ac in list) {
+				Console.WriteLine(i + ": " + GetActionName(ac));
 				i++;
 			}
 		}
@@ -54,14 +54,15 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 		/// <param name="ac"></param>
 		/// <returns></returns>
 		private static string GetActionName(IAction ac) {
-			Dictionary<ActionType, string> list = new Dictionary<ActionType, string>();
-			list.Add(ActionType.Down, "Down");
-			list.Add(ActionType.Left, "Left");
-			list.Add(ActionType.Right, "Right");
-			list.Add(ActionType.Up, "Up");
-			list.Add(ActionType.ScrollIn, "ScrollIn");
-			list.Add(ActionType.ScrollOut, "ScrollOut");
-			list.Add(ActionType.Select, "Select");
+			var list = new Dictionary<ActionType, string> {
+				{ActionType.Down, "Down"},
+				{ActionType.Left, "Left"},
+				{ActionType.Right, "Right"},
+				{ActionType.Up, "Up"},
+				{ActionType.ScrollIn, "ScrollIn"},
+				{ActionType.ScrollOut, "ScrollOut"},
+				{ActionType.Select, "Select"}
+			};
 
 			return list[ac.Type];
 		}

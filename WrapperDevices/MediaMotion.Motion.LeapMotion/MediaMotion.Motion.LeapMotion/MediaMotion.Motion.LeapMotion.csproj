@@ -32,12 +32,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LeapCSharp.NET4.0">
-      <HintPath>..\..\..\Solution Items\LeapCSharp.NET4.0.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="MovementsDetection\ASecureLeapDetection.cs" />
     <Compile Include="MovementsDetection\ICustomDetection.cs" />
     <Compile Include="MovementsDetection\ALeapDetection.cs" />
@@ -56,6 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="LeapCSharp.NET4.0">
+      <HintPath>..\..\..\Solution Items\LeapCSharp.NET4.0.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

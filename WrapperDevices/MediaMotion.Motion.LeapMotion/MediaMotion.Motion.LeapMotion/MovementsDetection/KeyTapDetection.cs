@@ -13,7 +13,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// Initializes a new instance of the <see cref="KeyTapDetection" /> class.
 		/// </summary>
 		public KeyTapDetection() {
-			this.type = Gesture.GestureType.TYPE_KEY_TAP;
+			this.Type = Gesture.GestureType.TYPE_KEY_TAP;
 		}
 		#endregion
 

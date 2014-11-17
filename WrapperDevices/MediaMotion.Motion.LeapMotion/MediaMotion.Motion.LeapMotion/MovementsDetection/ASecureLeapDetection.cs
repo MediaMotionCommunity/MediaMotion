@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using MediaMotion.Motion.Actions;
 using Leap;
+using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
 	/// Abstract for default LeapMotion gesture with time limitor.
-	/// Implement protected IEnumerable<IAction> SecureDetection(Gesture gesture)
-	/// Use public IEnumerable<IAction> Detection(Gesture gesture)
+	/// Implement protected IEnumerable SecureDetection(Gesture gesture)
+	/// Use public IEnumerable Detection(Gesture gesture)
 	/// </summary>
 	public abstract class ASecureLeapDetection : ALeapDetection {
 		#region Constant
 		/// <summary>
 		/// Minimal time between two detection
 		/// </summary>
-		private readonly TimeSpan TimeInterval = new TimeSpan(0, 0, 0, 0, 250);
+		private readonly TimeSpan timeInterval = new TimeSpan(0, 0, 0, 0, 250);
 		#endregion
 
 		#region Fields
@@ -42,7 +42,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		public override IEnumerable<IAction> Detection(Gesture gesture) {
 			IEnumerable<IAction> list = new List<IAction>();
 
-			if (DateTime.Now - this.lastDetection > this.TimeInterval) {
+			if (DateTime.Now - this.lastDetection > this.timeInterval) {
 				list = this.SecureDetection(gesture);
 			}
 			this.lastDetection = DateTime.Now;

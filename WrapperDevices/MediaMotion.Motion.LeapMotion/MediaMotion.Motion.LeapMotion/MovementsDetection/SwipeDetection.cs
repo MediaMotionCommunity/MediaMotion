@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MediaMotion.Motion.Actions;
 using Leap;
 using Action = MediaMotion.Motion.Actions.Action;
@@ -21,7 +20,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// Initializes a new instance of the <see cref="SwipeDetection" /> class.
 		/// </summary>
 		public SwipeDetection() {
-			this.type = Gesture.GestureType.TYPE_SWIPE;
+			this.Type = Gesture.GestureType.TYPE_SWIPE;
 		}
 		#endregion
 
@@ -32,31 +31,32 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <param name="gesture">Leap Gesture</param>
 		/// <returns>List of IAction</returns>
 		protected override IEnumerable<IAction> SecureDetection(Gesture gesture) {
-			List<IAction> list = new List<IAction>();
+			var list = new List<IAction>();
 
-			SwipeGesture swipe = new SwipeGesture(gesture);
+			var swipe = new SwipeGesture(gesture);
 
-			if (this.IsStateValid(swipe.State)) {
-				if (swipe.Direction.x > MinVal) {
-					list.Add(new Action(ActionType.Right, null));
-				}
-				else if (swipe.Direction.x < -MinVal) {
-					list.Add(new Action(ActionType.Left, null));
-				}
+			if (!this.IsStateValid(swipe.State)) {
+				return list;
+			}
+			if (swipe.Direction.x > MinVal) {
+				list.Add(new Action(ActionType.Right, null));
+			}
+			else if (swipe.Direction.x < -MinVal) {
+				list.Add(new Action(ActionType.Left, null));
+			}
 
-				if (swipe.Direction.y > MinVal) {
-					list.Add(new Action(ActionType.Up, null));
-				}
-				else if (swipe.Direction.y < -MinVal) {
-					list.Add(new Action(ActionType.Down, null));
-				}
+			if (swipe.Direction.y > MinVal) {
+				list.Add(new Action(ActionType.Up, null));
+			}
+			else if (swipe.Direction.y < -MinVal) {
+				list.Add(new Action(ActionType.Down, null));
+			}
 
-				if (swipe.Direction.z > MinVal) {
-					list.Add(new Action(ActionType.ScrollIn, null));
-				}
-				else if (swipe.Direction.z < -MinVal) {
-					list.Add(new Action(ActionType.ScrollOut, null));
-				}
+			if (swipe.Direction.z > MinVal) {
+				list.Add(new Action(ActionType.ScrollIn, null));
+			}
+			else if (swipe.Direction.z < -MinVal) {
+				list.Add(new Action(ActionType.ScrollOut, null));
 			}
 
 			return list;

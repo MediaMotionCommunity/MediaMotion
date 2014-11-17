@@ -1,8 +1,8 @@
-﻿using Leap;
-using MediaMotion.Motion.Actions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Leap;
+using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
@@ -26,12 +26,12 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <summary>
 		/// List of detection class for default leap gesture
 		/// </summary>
-		private Dictionary<Gesture.GestureType, Func<Gesture, IEnumerable<IAction>>> leapDetections;
+		private readonly Dictionary<Gesture.GestureType, Func<Gesture, IEnumerable<IAction>>> leapDetections;
 
 		/// <summary>
 		/// List of detection class for custom gesture
 		/// </summary>
-		private List<Func<Frame, IEnumerable<IAction>>> customDetections;
+		private readonly List<Func<Frame, IEnumerable<IAction>>> customDetections;
 		#endregion
 
 		#region Constructor
@@ -58,18 +58,11 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <returns>List of IAction</returns>
 		public IEnumerable<IAction> MovementsDetection(Frame frame) {
 			IEnumerable<IAction> list = new List<IAction>();
-			GestureList gestures = frame.Gestures();
+			var gestures = frame.Gestures();
 
-			for (int i = 0; i < gestures.Count; i++) {
-				if (this.leapDetections.ContainsKey(gestures[i].Type)) {
-					list = list.Concat<IAction>(this.leapDetections[gestures[i].Type](gestures[i]));
-				}
-			}
+			list = gestures.Where(t => this.leapDetections.ContainsKey(t.Type)).Aggregate(list, (current, t) => current.Concat(this.leapDetections[t.Type](t)));
 
-			foreach (Func<Frame, IEnumerable<IAction>> func in this.customDetections) {
-				list = list.Concat<IAction>(func(frame));
-			}
-			return list;
+			return this.customDetections.Aggregate(list, (current, func) => current.Concat(func(frame)));
 		}
 		#endregion
 	}

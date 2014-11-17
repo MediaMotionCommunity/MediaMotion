@@ -5,14 +5,13 @@ using MediaMotion.Motion.Actions;
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
 	/// Abstract for default LeapMotion gesture.
-	/// Implement public IEnumerable<IAction> Detection(Gesture gesture)
 	/// </summary>
 	public abstract class ALeapDetection {
 		#region Fields
 		/// <summary>
 		/// Leap Gesture type of checked gesture
 		/// </summary>
-		protected Gesture.GestureType type;
+		protected Gesture.GestureType Type;
 		#endregion
 		#region Methods
 		/// <summary>
@@ -27,7 +26,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// </summary>
 		/// <returns>Leap GestureType</returns>
 		public Gesture.GestureType GetGestureType() {
-			return this.type;
+			return this.Type;
 		}
 
 		/// <summary>
@@ -36,13 +35,11 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <param name="state">Leap Gesture.GestureState</param>
 		/// <returns>Return a boolean</returns>
 		protected bool IsStateValid(Gesture.GestureState state) {
-			if (state == Gesture.GestureState.STATE_START ||
-				state == Gesture.GestureState.STATE_UPDATE ||
-				state == Gesture.GestureState.STATE_STOP) {
-				return true;
-			}
-			return false;
+			return state == Gesture.GestureState.STATE_START ||
+			       state == Gesture.GestureState.STATE_UPDATE ||
+			       state == Gesture.GestureState.STATE_STOP;
 		}
+
 		#endregion
 	}
 }

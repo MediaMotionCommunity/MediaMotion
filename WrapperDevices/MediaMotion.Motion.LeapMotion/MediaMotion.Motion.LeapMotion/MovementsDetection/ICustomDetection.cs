@@ -5,7 +5,7 @@ using Leap;
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
 	/// Abstract for custom gesture.
-	/// Implement public IEnumerable<IAction> Detection(Frame frame)
+	/// Implement public IEnumerable Detection(Frame frame)
 	/// </summary>
 	public interface ICustomDetection {
 		/// <summary>
