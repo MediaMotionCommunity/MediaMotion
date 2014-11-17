@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Threading;
 using System.Collections.Generic;
+using System.Threading;
 using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Motion.LeapMotion.Testing {

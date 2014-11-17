@@ -5,18 +5,39 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
-	class Detections {
+	/// <summary>
+	/// Detections Class
+	/// Run all Detection class known
+	/// </summary>
+	public class Detections {
 		#region Fields
 		#region Detection class
+		/// <summary>
+		/// Detection class for swipe gesture
+		/// </summary>
 		private SwipeDetection swipeDetection;
+
+		/// <summary>
+		/// Detection class for keyTap gesture
+		/// </summary>
 		private KeyTapDetection keyTapDetection;
 		#endregion
 
+		/// <summary>
+		/// List of detection class for default leap gesture
+		/// </summary>
 		private Dictionary<Gesture.GestureType, Func<Gesture, IEnumerable<IAction>>> leapDetections;
+
+		/// <summary>
+		/// List of detection class for custom gesture
+		/// </summary>
 		private List<Func<Frame, IEnumerable<IAction>>> customDetections;
 		#endregion
 
 		#region Constructor
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Detections" /> class.
+		/// </summary>
 		public Detections() {
 			this.swipeDetection = new SwipeDetection();
 			this.keyTapDetection = new KeyTapDetection();
@@ -30,6 +51,11 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		#endregion
 
 		#region Methods
+		/// <summary>
+		/// Run all detection class with specified frame
+		/// </summary>
+		/// <param name="frame">Leap Frame</param>
+		/// <returns>List of IAction</returns>
 		public IEnumerable<IAction> MovementsDetection(Frame frame) {
 			IEnumerable<IAction> list = new List<IAction>();
 			GestureList gestures = frame.Gestures();

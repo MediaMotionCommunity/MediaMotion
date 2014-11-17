@@ -18,6 +18,9 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// </summary>
 		private readonly Controller controller;
 
+		/// <summary>
+		/// The movement detection class
+		/// </summary>
 		private Detections movementsDetection;
 
 #if DEBUG
@@ -60,7 +63,6 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 			this.controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE);
 		}
 
-
 		/// <summary>
 		/// The safe write line.
 		/// </summary>
@@ -74,7 +76,6 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 			}
 #endif
 		}
-
 
 		#endregion
 		#endregion
