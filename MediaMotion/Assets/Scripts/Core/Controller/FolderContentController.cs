@@ -100,6 +100,7 @@ namespace MediaMotion.Core.Controllers {
 				tile.renderer.material.mainTexture = Resources.Load<Texture2D>(this.TextureMap[file.GetElementType()]);
 				tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
 				tile.renderer.material.color = new Color(0.5f, 0.8f, 0.7f, 1);
+				tile.AddComponent("FolderHover");
 				//tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 				tile.name = "Plane";
 				this.tiles.Add(tile);
