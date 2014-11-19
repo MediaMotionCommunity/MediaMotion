@@ -94,10 +94,13 @@ namespace MediaMotion.Core.Controllers {
 				GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Plane);
 				tile.transform.position = new Vector3(x, 1, z);
                 tile.transform.eulerAngles = new Vector3(60, 180, 0);
-                tile.transform.localScale = new Vector3(0.115F, 0.1F, 0.1F);
+                tile.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
 				//attribuer texture en fonction du fichier ?
                 Debug.Log(this.TextureMap[file.GetElementType()]);
 				tile.renderer.material.mainTexture = Resources.Load<Texture2D>(this.TextureMap[file.GetElementType()]);
+				tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
+				tile.renderer.material.color = new Color(0.5f, 0.8f, 0.7f, 1);
+				tile.AddComponent("FolderHover");
 				//tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 				tile.name = "Plane";
 				this.tiles.Add(tile);
