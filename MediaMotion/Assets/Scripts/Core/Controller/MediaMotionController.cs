@@ -9,6 +9,7 @@ using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Motion;
 using UnityEngine;
+using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Core.Controllers {
 	/// <summary>
@@ -19,6 +20,9 @@ namespace MediaMotion.Core.Controllers {
 		private IWrapperDevice wrapper;
 		private IModule Module;
 		private string WrapperDevicePath;
+
+        private delegate void ActionsHandler(object Sender, ActionDetectedEventArgs Args);
+        private event ActionsHandler ActionsHandlers;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MediaMotionController"/> class.
@@ -38,20 +42,11 @@ namespace MediaMotion.Core.Controllers {
 			this.LoadWrapper();
 		}
 
-		/// <summary>
-		/// The proxy action handle.
-		/// </summary>
-		/// <param name="sender">
-		/// The sender.
-		/// </param>
-		/// <param name="args">
-		/// The args.
-		/// </param>
-		public void ProxyActionHandle(object sender, ActionDetectedEventArgs args) {
-			if (this.Module != null) {
-				// proxify
-			}
-		}
+        public void Update() {
+            foreach (IAction Action in this.wrapper.GetActions()) {
+                this.ActionsHandlers(this, new ActionDetectedEventArgs(Action));
+            }
+        }
 
 		/// <summary>
 		/// The load module.
@@ -62,6 +57,7 @@ namespace MediaMotion.Core.Controllers {
 		private void LoadModule(string name) {
 			this.Module = new FolderContentController();
 			this.Module.Load();
+            this.ActionsHandlers += this.Module.ActionHandle;
 		}
 
 		/// <summary>

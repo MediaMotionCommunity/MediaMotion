@@ -1,4 +1,5 @@
 ﻿using MediaMotion.Core.Models.Module.Interfaces;
+using MediaMotion.Core.Models.Wrapper.Events;
 
 namespace MediaMotion.Modules.MediaPlayer.MusicPlayer {
 	public class MusicPlayer : AMediaPlayer, IMusicPlayer {
@@ -29,5 +30,8 @@ namespace MediaMotion.Modules.MediaPlayer.MusicPlayer {
 		public void Unload() {
 			throw new System.NotImplementedException();
 		}
+
+        public void ActionHandle(object Sender, ActionDetectedEventArgs Action) {
+        }
 	}
 }

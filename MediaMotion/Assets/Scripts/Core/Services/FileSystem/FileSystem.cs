@@ -34,12 +34,13 @@ namespace MediaMotion.Core.Services.FileSystem {
 			List<IElement> DirectoryContent = new List<IElement>();
 			string Path = ((Folder != null) ? (Folder) : (this.CurrentFolder)).GetPath();
 
-			foreach (string DirectoryPath in Directory.GetDirectories(Path)) {
-				DirectoryContent.Add(this.FolderFactory.Create(DirectoryPath));
-			}
 			foreach (string FilePath in Directory.GetFiles(Path)) {
 				DirectoryContent.Add(this.FileFactory.Create(FilePath));
 			}
+            foreach (string DirectoryPath in Directory.GetDirectories(Path))
+            {
+                DirectoryContent.Add(this.FolderFactory.Create(DirectoryPath));
+            }
 			return (DirectoryContent);
 		}
 
