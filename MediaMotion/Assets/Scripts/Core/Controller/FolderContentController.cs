@@ -24,145 +24,168 @@ namespace MediaMotion.Core.Controllers {
 		private float incrementZ = 1.5f;
 
 		private List<GameObject> tiles;
-        private List<GameObject> filenames;
+		private List<GameObject> filenames;
 		private int CurrentIndex;
 
 		private FileSystem FileService;
 		Dictionary<ElementType, string> TextureMap;
 
-        private int Line;
-        private GameObject Camera;
+		private int Line;
+		private GameObject Camera;
+		private List<IElement> Content;
 
 		public FolderContentController() {
 			this.FileService = new FileSystem();
-			this.FileService.ChangeDirectory();
 			this.TextureMap = new Dictionary<ElementType, string>();
-			this.TextureMap.Add(ElementType.Folder, "File-icon");
-			this.TextureMap.Add(ElementType.File, "Folder-icon");
+			this.TextureMap.Add(ElementType.File, "File-icon");
+			this.TextureMap.Add(ElementType.Folder, "Folder-icon");
 			this.tiles = new List<GameObject>();
-            this.filenames = new List<GameObject>();
+			this.filenames = new List<GameObject>();
 			this.CurrentIndex = 0;
-            this.Line = 0;
-            this.Camera = GameObject.Find("Main Camera");
+			this.Line = 0;
+			this.Camera = GameObject.Find("Main Camera");
 		}
 
-        public void Load() {
-            this.displayContent();
-        }
+		public void Load() {
+			this.EnterDirectory();
+		}
 
-        public void CancelHighlight() {
-            this.tiles[CurrentIndex].transform.position = new Vector3(this.tiles[CurrentIndex].transform.position.x, 1, this.tiles[CurrentIndex].transform.position.z);
-        }
+		public void CancelHighlight() {
+			this.tiles[CurrentIndex].transform.position = new Vector3(this.tiles[CurrentIndex].transform.position.x, 1, this.tiles[CurrentIndex].transform.position.z);
+		}
 
-        public void HighlightCurrent() {
-            this.tiles[CurrentIndex].transform.position = new Vector3(this.tiles[CurrentIndex].transform.position.x, 2, this.tiles[CurrentIndex].transform.position.z);
-        }
+		public void HighlightCurrent() {
+			this.tiles[CurrentIndex].transform.position = new Vector3(this.tiles[CurrentIndex].transform.position.x, 2, this.tiles[CurrentIndex].transform.position.z);
+		}
 
 		private void moveUp() {
-            if (this.CurrentIndex - this.rowSize >= 0) {
-                this.CancelHighlight();
-                if (this.Line++ % 2 == 0)
-                    this.Camera.transform.Translate(0, 0, -3, Space.World);
-                this.CurrentIndex -= this.rowSize;
-                this.HighlightCurrent();
-            }
+			if (this.CurrentIndex - this.rowSize >= 0) {
+				this.CancelHighlight();
+				if (this.Line++ % 2 == 0)
+					this.Camera.transform.Translate(0, 0, -3, Space.World);
+				this.CurrentIndex -= this.rowSize;
+				this.HighlightCurrent();
+			}
 		}
 
-        private void moveDown() {
-            if (this.CurrentIndex + this.rowSize < this.tiles.Count) {
-                this.CancelHighlight();
-                if (--this.Line % 2 == 0)
-                    this.Camera.transform.Translate(0, 0, 3, Space.World);
-                this.CurrentIndex += this.rowSize;
-                this.HighlightCurrent();
-            }
-        }
+		private void moveDown() {
+			if (this.CurrentIndex + this.rowSize < this.tiles.Count) {
+				this.CancelHighlight();
+				if (--this.Line % 2 == 0)
+					this.Camera.transform.Translate(0, 0, 3, Space.World);
+				this.CurrentIndex += this.rowSize;
+				this.HighlightCurrent();
+			}
+		}
 
-        private void moveLeft() {
-            if (this.CurrentIndex - 1 >= 0) {
-                this.CancelHighlight();
-                --this.CurrentIndex;
-                this.HighlightCurrent();
-            }
-        }
+		private void moveLeft() {
+			if (this.CurrentIndex - 1 >= 0) {
+				this.CancelHighlight();
+				--this.CurrentIndex;
+				this.HighlightCurrent();
+			}
+		}
 
-        private void moveRight() {
-            if (this.CurrentIndex + 1 < this.tiles.Count) {
-                this.CancelHighlight();
-                ++this.CurrentIndex;
-                this.HighlightCurrent();
-            }
-        }
+		private void moveRight() {
+			if (this.CurrentIndex + 1 < this.tiles.Count) {
+				this.CancelHighlight();
+				++this.CurrentIndex;
+				this.HighlightCurrent();
+			}
+		}
 
-		private void displayContent() {
+		private void DisplayContent() {
 			int i = 0;
 			float x = originX;
 			float z = originZ;
-			List<IElement> content = this.FileService.GetDirectoryContent();
-			foreach (IElement file in content) {
+
+			this.Clear();
+			foreach (IElement file in this.Content) {
 				GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+
 				tile.transform.position = new Vector3(x, 1, z);
-                tile.transform.eulerAngles = new Vector3(60, 180, 0);
-                tile.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
-                Debug.Log(this.TextureMap[file.GetElementType()]);
+				tile.transform.eulerAngles = new Vector3(60, 180, 0);
+				tile.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
 				tile.renderer.material.mainTexture = Resources.Load<Texture2D>(this.TextureMap[file.GetElementType()]);
 				tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
 				tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
-//				tile.AddComponent("FolderHover");
-				//tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
-                tile.name = file.GetName();
+				tile.name = "tile_" + file.GetName();
 
-                //tile.AddComponent(typeof(TextMesh));
+				//				tile.AddComponent("FolderHover");
+				//tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
+
+				//tile.AddComponent(typeof(TextMesh));
 				this.tiles.Add(tile);
 				++i;
-                if (i % this.rowSize == 0)
-                    x = this.originX;
-                else
-                    x += this.incrementX;
-				if (i % this.rowSize == 0)
+				if (i % this.rowSize == 0) {
+					x = this.originX;
+				} else {
+					x += this.incrementX;
+				}
+				if (i % this.rowSize == 0) {
 					z += this.incrementZ;
-
-                this.HighlightCurrent();
+				}
+				this.HighlightCurrent();
 			};
 		}
 
-
-		private void enterDirectory() {
-			this.FileService.ChangeDirectory(new Folder(this.tiles[this.CurrentIndex].name, ""));
-			//VERIFIER que la mémoire soit bien free, je sais pas si Unity a encore accès aux tiles après ou pas.
-			//Ajouter des animations quand on delete les folders.
+		private void Clear() {
+			this.Camera.transform.position = new Vector3(0, 5, -15);
+			foreach (GameObject tile in tiles) {
+				GameObject.Destroy(tile);
+			}
 			this.tiles.Clear();
-			this.displayContent();
+			this.CurrentIndex = 0;
 		}
 
-        public void Register() {
-        }
+		private void EnterDirectory(IFolder Destination = null) {
+			this.FileService.ChangeDirectory(Destination);
+			this.Content = this.FileService.GetDirectoryContent();
+			this.DisplayContent();
+		}
 
-        public void Unregister() {
-        }
+		private void Open() {
+			if (this.Content != null && this.Content.Count > this.CurrentIndex) {
+				switch (this.Content[this.CurrentIndex].GetElementType()) {
+					case ElementType.Folder:
+						this.EnterDirectory(this.Content[this.CurrentIndex] as IFolder);
+						break;
+					default:
+						break;
+				}
+			}
+		}
 
-        public void Unload() {
-        }
+		public void Register() {
+		}
 
-        public void ActionHandle(object Sender, ActionDetectedEventArgs Action) {
-            Debug.Log(Action.Action.Type);
-            switch (Action.Action.Type)
-            {
-                case ActionType.Left:
-                    this.moveLeft();
-                    break;
-                case ActionType.Right:
-                    this.moveRight();
-                    break;
-                case ActionType.ScrollIn:
-                    this.moveDown();
-                    break;
-                case ActionType.ScrollOut:
-                    this.moveUp();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+		public void Unregister() {
+		}
+
+		public void Unload() {
+		}
+
+		public void ActionHandle(object Sender, ActionDetectedEventArgs Action) {
+			Debug.Log(Action.Action.Type);
+			switch (Action.Action.Type) {
+				case ActionType.Left:
+					this.moveLeft();
+					break;
+				case ActionType.Right:
+					this.moveRight();
+					break;
+				case ActionType.ScrollIn:
+					this.moveDown();
+					break;
+				case ActionType.ScrollOut:
+					this.moveUp();
+					break;
+				case ActionType.Select:
+					this.Open();
+					break;
+				default:
+					break;
+			}
+		}
+	}
 }
