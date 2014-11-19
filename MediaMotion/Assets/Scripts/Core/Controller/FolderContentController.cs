@@ -107,8 +107,8 @@ namespace MediaMotion.Core.Controllers {
                 Debug.Log(this.TextureMap[file.GetElementType()]);
 				tile.renderer.material.mainTexture = Resources.Load<Texture2D>(this.TextureMap[file.GetElementType()]);
 				tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
-				tile.renderer.material.color = new Color(0.5f, 0.8f, 0.7f, 1);
-				//tile.AddComponent("FolderHover");
+				tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
+//				tile.AddComponent("FolderHover");
 				//tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
                 tile.name = file.GetName();
 
