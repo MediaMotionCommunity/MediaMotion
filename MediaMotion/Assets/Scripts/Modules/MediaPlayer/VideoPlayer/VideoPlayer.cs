@@ -1,4 +1,5 @@
-﻿namespace MediaMotion.Modules.MediaPlayer.VideoPlayer {
+﻿using MediaMotion.Core.Models.Wrapper.Events;
+namespace MediaMotion.Modules.MediaPlayer.VideoPlayer {
 	public class VideoPlayer : AMediaPlayer, IVideoPlayer {
 		
 		override public void Play() {
@@ -28,5 +29,8 @@
 		public void Unload() {
 			throw new System.NotImplementedException();
 		}
-	}
+
+        public void ActionHandle(object Sender, ActionDetectedEventArgs Action) {
+        }
+    }
 }
