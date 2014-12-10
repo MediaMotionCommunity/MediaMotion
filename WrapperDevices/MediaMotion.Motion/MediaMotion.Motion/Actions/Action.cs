@@ -32,5 +32,12 @@ namespace MediaMotion.Motion.Actions {
 		/// Gets the parameter.
 		/// </summary>
 		public object Parameter { get; private set; }
+
+        /// <summary>
+        /// Action string representation
+        /// </summary>
+        override public string ToString() {
+            return "Action: " + this.Type.ToString() + " Params: " + this.Parameter.ToString();
+        }
     }
 }

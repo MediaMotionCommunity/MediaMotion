@@ -10,7 +10,10 @@
 		Left,
 		ScrollIn,
 		ScrollOut,
-		Select
+		Select,
+        BrowsingHighlight,
+        BrowsingScroll,
+        BrowsingCursor,
 	}
 
 	/// <summary>

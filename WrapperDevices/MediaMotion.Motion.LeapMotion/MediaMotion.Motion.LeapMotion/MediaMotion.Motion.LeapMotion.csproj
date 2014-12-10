@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="MovementsDetection\ASecureLeapDetection.cs" />
+    <Compile Include="MovementsDetection\EasyFileBrowsingDetection.cs" />
     <Compile Include="MovementsDetection\ICustomDetection.cs" />
     <Compile Include="MovementsDetection\ALeapDetection.cs" />
     <Compile Include="MovementsDetection\Detections.cs" />

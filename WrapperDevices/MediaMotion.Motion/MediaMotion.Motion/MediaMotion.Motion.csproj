@@ -40,6 +40,7 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Actions\Parameters\Cursor.cs" />
     <Compile Include="Actions\Parameters\ICursor.cs" />
+    <Compile Include="Actions\Parameters\Vector3.cs" />
     <Compile Include="Exceptions\WrapperLoadException.cs" />
     <Compile Include="Exceptions\WrapperUnloadException.cs" />
     <Compile Include="IWrapperDevice.cs" />

@@ -99,7 +99,7 @@ namespace MediaMotion.Core.Controllers {
 		/// Loads this instance.
 		/// </summary>
 		public void Load() {
-			this.EnterDirectory();
+			this.EnterDirectory(null);
 		}
 
 		/// <summary>
@@ -286,7 +286,7 @@ namespace MediaMotion.Core.Controllers {
 		/// <param name="Destination">The destination.</param>
 		private void EnterDirectory(IFolder Destination = null) {
 			this.FileService.ChangeDirectory(Destination);
-			this.Content = this.FileService.GetDirectoryContent();
+			this.Content = this.FileService.GetDirectoryContent(null);
 			this.DisplayContent();
 		}
 
@@ -302,6 +302,50 @@ namespace MediaMotion.Core.Controllers {
 					default:
 						break;
 				}
+			}
+		}
+
+		public void Register() {
+		}
+
+		public void Unregister() {
+		}
+
+		public void Unload() {
+		}
+
+		public void ActionHandle(object Sender, ActionDetectedEventArgs Action) {
+			Debug.Log(Action.Action.Type);
+			switch (Action.Action.Type) {
+
+				case ActionType.BrowsingCursor:
+				Debug.Log ("LOL");
+					break;
+				case ActionType.BrowsingScroll:
+				Debug.Log ("LOL2");
+					break;
+
+			case ActionType.BrowsingHighlight:
+				Debug.Log ("LOL3");
+				break;
+
+			case ActionType.Left:
+					//this.moveLeft();
+					break;
+				case ActionType.Right:
+					//this.moveRight();
+					break;
+				case ActionType.ScrollIn:
+					//this.moveDown();
+					break;
+				case ActionType.ScrollOut:
+					//this.moveUp();
+					break;
+				case ActionType.Select:
+					//this.Open();
+					break;
+				default:
+					break;
 			}
 		}
 	}

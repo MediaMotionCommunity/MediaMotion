@@ -31,6 +31,11 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// Detection class for keyTap gesture
 		/// </summary>
 		private KeyTapDetection keyTapDetection;
+
+		/// <summary>
+		/// Detection class for browsing movement
+		/// </summary>
+		private EasyFileBrowsingDetection easyFileBrowsingDetection;
 		#endregion
 		#endregion
 
@@ -41,12 +46,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		public Detections() {
 			this.swipeDetection = new SwipeDetection();
 			this.keyTapDetection = new KeyTapDetection();
+			this.easyFileBrowsingDetection = new EasyFileBrowsingDetection();
 
 			this.leapDetections = new Dictionary<Gesture.GestureType, Func<Gesture, IEnumerable<IAction>>>();
 			this.customDetections = new List<Func<Frame, IEnumerable<IAction>>>();
 
 			this.leapDetections.Add(this.swipeDetection.GetGestureType(), this.swipeDetection.Detection);
 			this.leapDetections.Add(this.keyTapDetection.GetGestureType(), this.keyTapDetection.Detection);
+
+			this.customDetections.Add(this.easyFileBrowsingDetection.Detection);
 		}
 		#endregion
 
