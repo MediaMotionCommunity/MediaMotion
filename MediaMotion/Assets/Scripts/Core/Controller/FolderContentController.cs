@@ -324,13 +324,19 @@ namespace MediaMotion.Core.Controllers {
 			Debug.Log(Action.Action.Type);
 			switch (Action.Action.Type) {
 
-				case ActionType.BrowsingCursor:
-					this.Cursor.transform.position = new Vector3((float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).x, (float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).y, (float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).z);
-					break;
+				case ActionType.BrowsingCursor: {
+						MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
 
-				case ActionType.BrowsingScroll:
-					Debug.Log("LOL2");
-					break;
+						this.Cursor.transform.position = new Vector3((float)Parameter.x, (float)Parameter.y, (float)Parameter.z);
+						break;
+					}
+
+				case ActionType.BrowsingScroll: {
+						MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
+
+						this.Camera.transform.Translate(0, 0, (float)Parameter.z / 20, Space.World);
+						break;
+					}
 				case ActionType.BrowsingHighlight:
 					Debug.Log("LOL3");
 					break;

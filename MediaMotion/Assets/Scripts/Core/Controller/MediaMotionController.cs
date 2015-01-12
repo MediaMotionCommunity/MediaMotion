@@ -119,6 +119,8 @@ namespace MediaMotion.Core.Controllers {
 			this.Module = new FolderContentController();
 			this.Module.Load();
 			this.ActionsHandlers += this.Module.ActionHandle;
+
+			//this.ActionsHandlers(this, new ActionDetectedEventArgs(new MediaMotion.Motion.Actions.Action(ActionType.BrowsingScroll, new MediaMotion.Motion.Actions.Parameters.Vector3(1, 2, 3))));
 		}
 
 		/// <summary>
