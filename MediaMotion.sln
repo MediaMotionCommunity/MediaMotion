@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotionTests", "MediaMotionTests\MediaMotionTests.csproj", "{79698F09-5DE7-47AD-B7D1-E177A11C3972}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "MediaMotion\Assembly-CSharp.csproj", "{7E9DCBE1-C4A5-0C42-DBBA-54DBF2F887EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "MediaMotion\Assembly-CSharp-firstpass.csproj", "{84EC80A4-08FB-75A8-E509-CFAA3781C530}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotionTests", "MediaMotionTests\MediaMotionTests.csproj", "{0F08AA0A-9EA5-40A0-B152-835C52F869B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,10 +14,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{79698F09-5DE7-47AD-B7D1-E177A11C3972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79698F09-5DE7-47AD-B7D1-E177A11C3972}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79698F09-5DE7-47AD-B7D1-E177A11C3972}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79698F09-5DE7-47AD-B7D1-E177A11C3972}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E9DCBE1-C4A5-0C42-DBBA-54DBF2F887EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E9DCBE1-C4A5-0C42-DBBA-54DBF2F887EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E9DCBE1-C4A5-0C42-DBBA-54DBF2F887EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -26,6 +22,10 @@ Global
 		{84EC80A4-08FB-75A8-E509-CFAA3781C530}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84EC80A4-08FB-75A8-E509-CFAA3781C530}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84EC80A4-08FB-75A8-E509-CFAA3781C530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F08AA0A-9EA5-40A0-B152-835C52F869B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F08AA0A-9EA5-40A0-B152-835C52F869B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F08AA0A-9EA5-40A0-B152-835C52F869B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F08AA0A-9EA5-40A0-B152-835C52F869B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
