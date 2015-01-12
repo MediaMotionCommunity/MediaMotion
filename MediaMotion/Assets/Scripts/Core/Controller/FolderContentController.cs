@@ -321,11 +321,10 @@ namespace MediaMotion.Core.Controllers {
 		}
 
 		public void ActionHandle(object Sender, ActionDetectedEventArgs Action) {
-			Debug.Log(Action.Action.Type);
-			switch (Action.Action.Type) {
 
+			switch (Action.Action.Type) {
 				case ActionType.BrowsingCursor: {
-						MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
+					MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
 					this.Cursor.transform.position = new Vector3(
 						(float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).x / 10,
 						(float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).y / 10,
@@ -333,15 +332,13 @@ namespace MediaMotion.Core.Controllers {
 					);
 					break;
 				}
-
 				case ActionType.BrowsingScroll: {
-						MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
-
-						this.Camera.transform.Translate(0, 0, (float)Parameter.z / 20, Space.World);
-						break;
-					}
+					MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
+					this.cursorZtmp += (float)(Parameter.z) / 20;
+					this.Camera.transform.Translate(0, 0, (float)Parameter.z / 20, Space.World);
+					break;
+				}
 				case ActionType.BrowsingHighlight:
-					Debug.Log("LOL3");
 					break;
 
 				case ActionType.Left:

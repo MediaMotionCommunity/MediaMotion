@@ -25,7 +25,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
         /// <summary>
         /// Height of the virtual browser plan (in degrees)
         /// </summary>
-        private readonly double browserPlanAngle = 20;
+        private readonly double browserPlanAngle = 0; // TMP Ignore
 
         /// <summary>
         /// Calculate the position relative to the corrected 3D plan
