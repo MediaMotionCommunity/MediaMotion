@@ -74,6 +74,11 @@ namespace MediaMotion.Core.Controllers {
 		/// The camera
 		/// </summary>
 		private GameObject Camera;
+		
+		/// <summary>
+		/// The cursor
+		/// </summary>
+		private GameObject Cursor;
 
 		/// <summary>
 		/// The content
@@ -93,6 +98,7 @@ namespace MediaMotion.Core.Controllers {
 			this.CurrentIndex = 0;
 			this.Line = 0;
 			this.Camera = GameObject.Find("Main Camera");
+			this.Cursor = GameObject.Find("Cursor");
 		}
 
 		/// <summary>
@@ -319,17 +325,17 @@ namespace MediaMotion.Core.Controllers {
 			switch (Action.Action.Type) {
 
 				case ActionType.BrowsingCursor:
-				Debug.Log ("LOL");
+					this.Cursor.transform.position = new Vector3((float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).x, (float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).y, (float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).z);
 					break;
+
 				case ActionType.BrowsingScroll:
-				Debug.Log ("LOL2");
+					Debug.Log("LOL2");
+					break;
+				case ActionType.BrowsingHighlight:
+					Debug.Log("LOL3");
 					break;
 
-			case ActionType.BrowsingHighlight:
-				Debug.Log ("LOL3");
-				break;
-
-			case ActionType.Left:
+				case ActionType.Left:
 					//this.moveLeft();
 					break;
 				case ActionType.Right:

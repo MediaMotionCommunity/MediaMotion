@@ -37,6 +37,19 @@ namespace MediaMotion.Core.Controllers {
 		private string WrapperDevicePath;
 
 		/// <summary>
+		/// Delegate of action handler
+		/// </summary>
+		/// <param name="Sender">The sender.</param>
+		/// <param name="Args">The <see cref="ActionDetectedEventArgs"/> instance containing the event data.</param>
+		private delegate void ActionsHandler(object Sender, ActionDetectedEventArgs Args);
+		
+		/// <summary>
+		/// Occurs when an action occurred.
+		/// </summary>
+		private event ActionsHandler ActionsHandlers;
+
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="MediaMotionController"/> class.
 		/// </summary>
 		public MediaMotionController() {
@@ -66,6 +79,7 @@ namespace MediaMotion.Core.Controllers {
 			this.LoadWrapper();
 		}
 
+
 		/// <summary>
 		/// Updates this instance.
 		/// </summary>
@@ -89,6 +103,10 @@ namespace MediaMotion.Core.Controllers {
 			if (Input.GetKeyDown(KeyCode.Space)) {
 				this.ActionsHandlers(this, new ActionDetectedEventArgs(new MediaMotion.Motion.Actions.Action(ActionType.Select, null)));
 			}
+		
+		//	foreach (IAction Action in this.wrapper.GetActions()) {
+		//		this.ActionsHandlers(this, new ActionDetectedEventArgs(Action));
+		//	}
 		}
 
 		/// <summary>
