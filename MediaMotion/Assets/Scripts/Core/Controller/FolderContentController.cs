@@ -326,10 +326,13 @@ namespace MediaMotion.Core.Controllers {
 
 				case ActionType.BrowsingCursor: {
 						MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
-
-						this.Cursor.transform.position = new Vector3((float)Parameter.x, (float)Parameter.y, (float)Parameter.z);
-						break;
-					}
+					this.Cursor.transform.position = new Vector3(
+						(float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).x / 10,
+						(float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).y / 10,
+						-(float)((MediaMotion.Motion.Actions.Parameters.Vector3)(Action.Action.Parameter)).z / 10
+					);
+					break;
+				}
 
 				case ActionType.BrowsingScroll: {
 						MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
