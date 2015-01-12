@@ -17,19 +17,19 @@ namespace MediaMotion.Core.Controllers {
 	/// </summary>
 	public class MediaMotionController : MonoBehaviour {
 		private IFileSystem FileSystem;
-		private IWrapperDevice wrapper;
+		private IWrapperDevice Wrapper;
 		private IModule Module;
 		private string WrapperDevicePath;
 
-        private delegate void ActionsHandler(object Sender, ActionDetectedEventArgs Args);
-        private event ActionsHandler ActionsHandlers;
+		private delegate void ActionsHandler(object Sender, ActionDetectedEventArgs Args);
+		private event ActionsHandler ActionsHandlers;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MediaMotionController"/> class.
 		/// </summary>
 		public MediaMotionController() {
 			// this.Logger = LogManager.GetLogger("Core");
-			this.FileSystem = new FileSystem();
+			this.FileSystem = FileSystemService.GetInstance();
 			this.Module = null;
 			this.WrapperDevicePath = Path.Combine(this.FileSystem.InitialFolder.GetPath(), "WrapperDevicesLibraries");
 		}
@@ -42,11 +42,27 @@ namespace MediaMotion.Core.Controllers {
 			this.LoadWrapper();
 		}
 
-        public void Update() {
-            foreach (IAction Action in this.wrapper.GetActions()) {
-                this.ActionsHandlers(this, new ActionDetectedEventArgs(Action));
-            }
-        }
+		public void Update() {
+			foreach (IAction Action in this.Wrapper.GetActions()) {
+				this.ActionsHandlers(this, new ActionDetectedEventArgs(Action));
+			}
+
+			if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+				this.ActionsHandlers(this, new ActionDetectedEventArgs(new MediaMotion.Motion.Actions.Action(ActionType.Left, null)));
+			}
+			if (Input.GetKeyDown(KeyCode.RightArrow)) {
+				this.ActionsHandlers(this, new ActionDetectedEventArgs(new MediaMotion.Motion.Actions.Action(ActionType.Right, null)));
+			}
+			if (Input.GetKeyDown(KeyCode.UpArrow)) {
+				this.ActionsHandlers(this, new ActionDetectedEventArgs(new MediaMotion.Motion.Actions.Action(ActionType.ScrollIn, null)));
+			}
+			if (Input.GetKeyDown(KeyCode.DownArrow)) {
+				this.ActionsHandlers(this, new ActionDetectedEventArgs(new MediaMotion.Motion.Actions.Action(ActionType.ScrollOut, null)));
+			}
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				this.ActionsHandlers(this, new ActionDetectedEventArgs(new MediaMotion.Motion.Actions.Action(ActionType.Select, null)));
+			}
+		}
 
 		/// <summary>
 		/// The load module.
@@ -57,7 +73,7 @@ namespace MediaMotion.Core.Controllers {
 		private void LoadModule(string name) {
 			this.Module = new FolderContentController();
 			this.Module.Load();
-            this.ActionsHandlers += this.Module.ActionHandle;
+			this.ActionsHandlers += this.Module.ActionHandle;
 		}
 
 		/// <summary>
@@ -65,8 +81,8 @@ namespace MediaMotion.Core.Controllers {
 		/// </summary>
 		private void LoadWrapper() {
 			Debug.Log("Load Wrapper");
-			this.wrapper = this.LoadWrapperDevice();
-			this.wrapper.Load();
+			this.Wrapper = this.LoadWrapperDevice();
+			this.Wrapper.Load();
 		}
 
 		/// <summary>

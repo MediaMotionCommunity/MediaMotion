@@ -13,21 +13,21 @@ using MediaMotion.Motion.Actions;
 namespace MediaMotion.Core.Controllers {
 	public class FolderContentController : IModule {
 
-		private int rowSize = 5;
+		private int RowSize = 5;
 
 		/* Coordinates of the first placed tile */
-		private float originX = -3f;
-		private float originZ = -12.5f;
+		private float OriginX = -3f;
+		private float OriginZ = -12.5f;
 
 		/* Value to increment to get the next IElement or next row */
-		private float incrementX = 1.5f;
-		private float incrementZ = 1.5f;
+		private float IncrementX = 1.5f;
+		private float IncrementZ = 1.5f;
 
-		private List<GameObject> tiles;
-		private List<GameObject> filenames;
+		private List<GameObject> Tiles;
+		private List<GameObject> Filenames;
 		private int CurrentIndex;
 
-		private FileSystem FileService;
+		private FileSystemService FileService;
 		Dictionary<ElementType, string> TextureMap;
 
 		private int Line;
@@ -35,12 +35,12 @@ namespace MediaMotion.Core.Controllers {
 		private List<IElement> Content;
 
 		public FolderContentController() {
-			this.FileService = new FileSystem();
+			this.FileService = FileSystemService.GetInstance();
 			this.TextureMap = new Dictionary<ElementType, string>();
 			this.TextureMap.Add(ElementType.File, "File-icon");
 			this.TextureMap.Add(ElementType.Folder, "Folder-icon");
-			this.tiles = new List<GameObject>();
-			this.filenames = new List<GameObject>();
+			this.Tiles = new List<GameObject>();
+			this.Filenames = new List<GameObject>();
 			this.CurrentIndex = 0;
 			this.Line = 0;
 			this.Camera = GameObject.Find("Main Camera");
@@ -50,54 +50,66 @@ namespace MediaMotion.Core.Controllers {
 			this.EnterDirectory();
 		}
 
-		public void CancelHighlight() {
-			this.tiles[CurrentIndex].transform.position = new Vector3(this.tiles[CurrentIndex].transform.position.x, 1, this.tiles[CurrentIndex].transform.position.z);
+		private void HighlightCurrent(GameObject Object) {
+			Object.transform.position = new Vector3(Object.transform.position.x, 2, Object.transform.position.z);
 		}
 
-		public void HighlightCurrent() {
-			this.tiles[CurrentIndex].transform.position = new Vector3(this.tiles[CurrentIndex].transform.position.x, 2, this.tiles[CurrentIndex].transform.position.z);
+		private void CancelHighlight(GameObject Object) {
+			Object.transform.position = new Vector3(Object.transform.position.x, 1, Object.transform.position.z);
+		}
+
+		private void ChangeSelection(int offset) {
+			this.CancelHighlight(this.Tiles[this.CurrentIndex]);
+			this.HighlightCurrent(this.Tiles[this.CurrentIndex + offset]);
+			this.CurrentIndex += offset;
 		}
 
 		private void moveUp() {
-			if (this.CurrentIndex - this.rowSize >= 0) {
-				this.CancelHighlight();
+			if (this.CurrentIndex - this.RowSize >= 0) {
 				if (this.Line++ % 2 == 0)
 					this.Camera.transform.Translate(0, 0, -3, Space.World);
-				this.CurrentIndex -= this.rowSize;
-				this.HighlightCurrent();
+				this.ChangeSelection(-this.RowSize);
 			}
 		}
 
 		private void moveDown() {
-			if (this.CurrentIndex + this.rowSize < this.tiles.Count) {
-				this.CancelHighlight();
+			if (this.CurrentIndex + this.RowSize < this.Tiles.Count) {
 				if (--this.Line % 2 == 0)
 					this.Camera.transform.Translate(0, 0, 3, Space.World);
-				this.CurrentIndex += this.rowSize;
-				this.HighlightCurrent();
+				this.ChangeSelection(this.RowSize);
 			}
 		}
 
 		private void moveLeft() {
-			if (this.CurrentIndex - 1 >= 0) {
-				this.CancelHighlight();
-				--this.CurrentIndex;
-				this.HighlightCurrent();
+			int LineOffset = 0;
+
+			if ((this.CurrentIndex % this.RowSize) - 1 < 0) {
+				if (this.CurrentIndex + this.RowSize - 1 >= this.Tiles.Count) {
+					LineOffset += this.Tiles.Count % this.RowSize - 1;
+				} else {
+					LineOffset += this.RowSize - 1;
+				}
+			} else {
+				LineOffset -= 1;
 			}
+			this.ChangeSelection(LineOffset);
 		}
 
 		private void moveRight() {
-			if (this.CurrentIndex + 1 < this.tiles.Count) {
-				this.CancelHighlight();
-				++this.CurrentIndex;
-				this.HighlightCurrent();
+			int LineOffset = 0;
+
+			if ((this.CurrentIndex + 1) % this.RowSize == 0 || this.CurrentIndex + 1 >= this.Tiles.Count) {
+				LineOffset -= this.CurrentIndex % this.RowSize;
+			} else {
+				LineOffset += 1;
 			}
+			this.ChangeSelection(LineOffset);
 		}
 
 		private void DisplayContent() {
 			int i = 0;
-			float x = originX;
-			float z = originZ;
+			float x = OriginX;
+			float z = OriginZ;
 
 			this.Clear();
 			foreach (IElement file in this.Content) {
@@ -115,26 +127,26 @@ namespace MediaMotion.Core.Controllers {
 				//tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 
 				//tile.AddComponent(typeof(TextMesh));
-				this.tiles.Add(tile);
+				this.Tiles.Add(tile);
 				++i;
-				if (i % this.rowSize == 0) {
-					x = this.originX;
+				if (i % this.RowSize == 0) {
+					x = this.OriginX;
 				} else {
-					x += this.incrementX;
+					x += this.IncrementX;
 				}
-				if (i % this.rowSize == 0) {
-					z += this.incrementZ;
+				if (i % this.RowSize == 0) {
+					z += this.IncrementZ;
 				}
-				this.HighlightCurrent();
+				this.HighlightCurrent(this.Tiles[this.CurrentIndex]);
 			};
 		}
 
 		private void Clear() {
 			this.Camera.transform.position = new Vector3(0, 5, -15);
-			foreach (GameObject tile in tiles) {
+			foreach (GameObject tile in Tiles) {
 				GameObject.Destroy(tile);
 			}
-			this.tiles.Clear();
+			this.Tiles.Clear();
 			this.CurrentIndex = 0;
 		}
 

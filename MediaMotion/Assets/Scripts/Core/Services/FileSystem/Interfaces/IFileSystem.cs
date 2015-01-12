@@ -33,7 +33,7 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// <param name="Folder">
 		/// New working directory
 		/// </param>
-		void ChangeDirectory(IFolder Folder);
+		bool ChangeDirectory(IFolder Folder);
 
 		/// <summary>
 		/// Get the content of the current directory or the <see cref="IFolder"/> provide in parameter
@@ -51,7 +51,7 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// </summary>
 		/// <param name="Element"></param>
 		/// <param name="Destination"></param>
-		void Copy(IElement Element, IFolder Destination);
+		bool Copy(IElement Element, IFolder Destination);
 
 		/// <summary>
 		/// Move an <see cref="IElement"/> in a different <see cref="IFolder"/>
@@ -62,7 +62,7 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// <param name="Destination">
 		/// The folder destination
 		/// </param>
-		void Move(IElement Element, IFolder Destination);
+		bool Move(IElement Element, IFolder Destination);
 
 		/// <summary>
 		/// Remove an element
@@ -70,6 +70,12 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// <param name="Element">
 		/// The element to delete
 		/// </param>
-		void Remove(IElement Element);
+		bool Remove(IElement Element);
+
+		/// <summary>
+		/// Restores an element which was remove earlier
+		/// </summary>
+		/// <param name="Element">The element.</param>
+		bool Restore(IElement Element);
 	}
 }
