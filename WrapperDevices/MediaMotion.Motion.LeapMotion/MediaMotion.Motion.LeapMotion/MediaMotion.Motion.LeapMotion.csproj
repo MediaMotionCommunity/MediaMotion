@@ -39,6 +39,7 @@
     <Compile Include="MovementsDetection\ALeapDetection.cs" />
     <Compile Include="MovementsDetection\Detections.cs" />
     <Compile Include="MovementsDetection\KeyTapDetection.cs" />
+    <Compile Include="MovementsDetection\PinchSelectionDetection.cs" />
     <Compile Include="MovementsDetection\SwipeDetection.cs" />
     <Compile Include="Core\LeapMotionCore.cs" />
     <Compile Include="LeapMotion.cs" />
