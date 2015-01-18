@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{7E9DCBE1-C4A5-0C42-DBBA-54DBF2F887EB}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_5_3;UNITY_4_5;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Scripts\Core\Components\WheelTool\WheelTool.cs" />
+     <Compile Include="Assets\Scripts\Core\Controller\FolderContentController.cs" />
+     <Compile Include="Assets\Scripts\Core\Controller\MediaMotionController.cs" />
+     <Compile Include="Assets\Scripts\Core\Exceptions\ModuleNotFoundException.cs" />
+     <Compile Include="Assets\Scripts\Core\Exceptions\NotFoundException.cs" />
+     <Compile Include="Assets\Scripts\Core\Exceptions\WrapperNotFoundException.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Abstracts\AElement.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Abstracts\AFile.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Abstracts\AFolder.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Enums\ElementType.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Enums\FileType.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Folder.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Image.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Interfaces\IElement.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Interfaces\IFile.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Interfaces\IFolder.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\PDF.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Regular.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Sound.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Text.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\FileManager\Video.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\Module\Interfaces\IModule.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\Wrapper\Enums\ActionType.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\Wrapper\Events\ActionDetectedEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\Wrapper\Exceptions\WrapperLoadException.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\Wrapper\Exceptions\WrapperUnloadException.cs" />
+     <Compile Include="Assets\Scripts\Core\Models\Wrapper\Interfaces\IWrapper.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\FileSystem\Abstracts\AFactory.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\FileSystem\Bridges\History\Actions\RemoveAction.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\FileSystem\Bridges\History\Identifiers\PathIdentifier.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\FileSystem\Factories\FileFactory.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\FileSystem\Factories\FolderFactory.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\FileSystem\FileSystemService.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\FileSystem\Interfaces\IFactory.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\FileSystem\Interfaces\IFileSystem.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\History\HistoryService.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\History\IdentifierHistory.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\History\Interfaces\IAction.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\History\Interfaces\IHistory.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\History\Interfaces\IIdentifier.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\History\Interfaces\IIdentifierHistory.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\PluginDatabase\Interfaces\IPluginDatabase.cs" />
+     <Compile Include="Assets\Scripts\Core\Services\PluginDatabase\PluginDatabaseService.cs" />
+     <Compile Include="Assets\Scripts\Core\View\ElementUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\FileUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\FolderContentUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\FolderHover.cs" />
+     <Compile Include="Assets\Scripts\Core\View\FolderUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\ImageViewerUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\Interfaces\IElementUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\Interfaces\IFileUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\Interfaces\IFolderContentUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\Interfaces\IFolderUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\Interfaces\IImageViewerUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\Interfaces\IMediaPlayerUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\Interfaces\ITextReaderUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\Interfaces\IWheelToolUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\MediaPlayerUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\TextReaderUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\WheelToolUI.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Playlist\Events\PlaylistChangeEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Playlist\Events\PlaylistElementChangeEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Playlist\Interfaces\IPlaylist.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Playlist\Playlist.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Rotate\Events\RotateEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Rotate\Interfaces\IRotate.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Rotate\Rotate.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Volume\Events\VolumeChangeEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Volume\Interfaces\IVolume.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Volume\Volume.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Zoom\Events\ZoomEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Zoom\Interfaces\IZoom.cs" />
+     <Compile Include="Assets\Scripts\Modules\Components\Zoom\Zoom.cs" />
+     <Compile Include="Assets\Scripts\Modules\ImageViewer\Interfaces\IImageViewer.cs" />
+     <Compile Include="Assets\Scripts\Modules\MediaPlayer\AMediaPlayer.cs" />
+     <Compile Include="Assets\Scripts\Modules\MediaPlayer\Events\MediaEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Modules\MediaPlayer\IMediaPlayer.cs" />
+     <Compile Include="Assets\Scripts\Modules\MediaPlayer\MusicPlayer\IMusicPlayer.cs" />
+     <Compile Include="Assets\Scripts\Modules\MediaPlayer\MusicPlayer\MusicPlayer.cs" />
+     <Compile Include="Assets\Scripts\Modules\MediaPlayer\VideoPlayer\IVideoPlayer.cs" />
+     <Compile Include="Assets\Scripts\Modules\MediaPlayer\VideoPlayer\VideoPlayer.cs" />
+     <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
+ <Reference Include="MediaMotion.Motion">
+ <HintPath>O:/Projects/MediaMotion/MediaMotion/Assets/MediaMotion.Motion.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{84EC80A4-08FB-75A8-E509-CFAA3781C530}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

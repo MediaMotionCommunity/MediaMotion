@@ -12,10 +12,8 @@ Library/
 ExportedObj/
 *.svd
 *.userprefs
-*.csproj
 *.pidb
 *.suo
-*.sln
 *.user
 *.unityproj
 *.booproj
@@ -35,4 +33,3 @@ Icon?
 ehthumbs.db
 Thumbs.db
 *.*~
-*.sln
