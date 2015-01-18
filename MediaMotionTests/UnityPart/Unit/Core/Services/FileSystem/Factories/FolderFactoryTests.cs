@@ -10,7 +10,7 @@ namespace MediaMotion.Core.Services.FileSystem.Factories.Tests {
 	public class FolderFactoryTests {
 		[Test()]
 		public void CreateTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 	}
 }

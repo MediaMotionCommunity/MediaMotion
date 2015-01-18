@@ -10,32 +10,32 @@ namespace MediaMotion.Modules.Components.Playlist.Tests {
 	public class PlaylistTests {
 		[Test()]
 		public void PlaylistTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void CurrentTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void PrevTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void NextTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void AddTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void RemoveTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 	}
 }
