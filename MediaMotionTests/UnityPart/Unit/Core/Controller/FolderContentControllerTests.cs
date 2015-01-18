@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MediaMotion.Core.Controllers;
 using NUnit.Framework;
+
 namespace MediaMotion.Core.Controllers.Tests {
 	[TestFixture()]
 	public class FolderContentControllerTests {
