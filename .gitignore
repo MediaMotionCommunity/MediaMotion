@@ -17,6 +17,8 @@ ExportedObj/
 *.user
 *.unityproj
 *.booproj
+*.csproj
+*.sln
 
 test-results/
 bin/
@@ -33,3 +35,4 @@ Icon?
 ehthumbs.db
 Thumbs.db
 *.*~
+*.sln
