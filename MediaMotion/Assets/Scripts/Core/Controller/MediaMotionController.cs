@@ -8,31 +8,55 @@ using MediaMotion.Core.Models.Wrapper.Events;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Motion;
-using UnityEngine;
 using MediaMotion.Motion.Actions;
+using UnityEngine;
 
 namespace MediaMotion.Core.Controllers {
 	/// <summary>
 	/// The media motion controller.
 	/// </summary>
 	public class MediaMotionController : MonoBehaviour {
+		/// <summary>
+		/// The file system
+		/// </summary>
 		private IFileSystem FileSystem;
-		private IWrapperDevice Wrapper;
-		private IModule Module;
-		private string WrapperDevicePath;
 
-		private delegate void ActionsHandler(object Sender, ActionDetectedEventArgs Args);
-		private event ActionsHandler ActionsHandlers;
+		/// <summary>
+		/// The wrapper
+		/// </summary>
+		private IWrapperDevice Wrapper;
+
+		/// <summary>
+		/// The module
+		/// </summary>
+		private IModule Module;
+
+		/// <summary>
+		/// The wrapper device path
+		/// </summary>
+		private string WrapperDevicePath;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MediaMotionController"/> class.
 		/// </summary>
 		public MediaMotionController() {
-			// this.Logger = LogManager.GetLogger("Core");
+			//// this.Logger = LogManager.GetLogger("Core");
 			this.FileSystem = FileSystemService.GetInstance();
 			this.Module = null;
 			this.WrapperDevicePath = Path.Combine(this.FileSystem.InitialFolder.GetPath(), "WrapperDevicesLibraries");
 		}
+
+		/// <summary>
+		/// Delegate of action handler
+		/// </summary>
+		/// <param name="Sender">The sender.</param>
+		/// <param name="Args">The <see cref="ActionDetectedEventArgs"/> instance containing the event data.</param>
+		private delegate void ActionsHandler(object Sender, ActionDetectedEventArgs Args);
+
+		/// <summary>
+		/// Occurs when an action occurred.
+		/// </summary>
+		private event ActionsHandler ActionsHandlers;
 
 		/// <summary>
 		/// The start.
@@ -42,6 +66,9 @@ namespace MediaMotion.Core.Controllers {
 			this.LoadWrapper();
 		}
 
+		/// <summary>
+		/// Updates this instance.
+		/// </summary>
 		public void Update() {
 			foreach (IAction Action in this.Wrapper.GetActions()) {
 				this.ActionsHandlers(this, new ActionDetectedEventArgs(Action));

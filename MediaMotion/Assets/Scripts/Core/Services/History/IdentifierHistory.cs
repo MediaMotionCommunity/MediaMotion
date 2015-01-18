@@ -2,6 +2,9 @@
 using Mediamotion.Core.Services.History.Interfaces;
 
 namespace Mediamotion.Core.Services.History {
+	/// <summary>
+	/// Identifier History
+	/// </summary>
 	public class IdentifierHistory : IIdentifierHistory {
 		/// <summary>
 		/// The identifier
@@ -31,7 +34,7 @@ namespace Mediamotion.Core.Services.History {
 		/// <summary>
 		/// Gets the identifier.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The identifier</returns>
 		public IIdentifier GetIdentifier() {
 			return (this.Identifier);
 		}
@@ -39,7 +42,7 @@ namespace Mediamotion.Core.Services.History {
 		/// <summary>
 		/// Go back in the history
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Back() {
 			bool OperationSuccessed = false;
 
@@ -57,7 +60,7 @@ namespace Mediamotion.Core.Services.History {
 		/// <summary>
 		/// Go forward in the history
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Forward() {
 			bool OperationSuccessed = false;
 
@@ -72,14 +75,16 @@ namespace Mediamotion.Core.Services.History {
 			return (OperationSuccessed);
 		}
 
-
 		/// <summary>
 		/// Adds the action.
 		/// </summary>
 		/// <param name="Action">The action.</param>
-		public void AddAction(IAction Action) {
+		/// <returns>True if the action succeed, False otherwise</returns>
+		public bool AddAction(IAction Action) {
 			this.BackActions.AddLast(Action);
 			this.ForwardActions.Clear();
+
+			return (true);
 		}
 	}
 }

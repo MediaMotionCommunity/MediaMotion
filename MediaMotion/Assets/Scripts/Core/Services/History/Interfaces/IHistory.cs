@@ -1,24 +1,27 @@
 ﻿namespace Mediamotion.Core.Services.History.Interfaces {
+	/// <summary>
+	/// History Interface
+	/// </summary>
 	public interface IHistory {
 		/// <summary>
 		/// Gets the history.
 		/// </summary>
 		/// <param name="Identifier">The identifier.</param>
-		/// <returns></returns>
+		/// <returns>The identifier</returns>
 		IIdentifierHistory GetHistory(IIdentifier Identifier);
 
 		/// <summary>
 		/// Backs the history of specified identifier.
 		/// </summary>
 		/// <param name="Identifier">The identifier.</param>
-		/// <returns></returns>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		bool Back(IIdentifier Identifier);
 
 		/// <summary>
 		/// Forwards the history of specified identifier.
 		/// </summary>
 		/// <param name="Identifier">The identifier.</param>
-		/// <returns></returns>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		bool Forward(IIdentifier Identifier);
 
 		/// <summary>
@@ -26,6 +29,7 @@
 		/// </summary>
 		/// <param name="Identifier">The identifier.</param>
 		/// <param name="Action">The action.</param>
-		void AddAction(IIdentifier Identifier, IAction Action);
+		/// <returns>True if the action succeed, False otherwise</returns>
+		bool AddAction(IIdentifier Identifier, IAction Action);
 	}
 }

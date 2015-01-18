@@ -1,4 +1,7 @@
-﻿namespace Assets.Scripts.Core.View.Interfaces {
-	public interface IEelementUI {
+﻿namespace Mediamotion.Core.View.Interfaces {
+	/// <summary>
+	/// Element UI Interface
+	/// </summary>
+	public interface IElementUI {
 	}
 }

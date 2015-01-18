@@ -1,15 +1,20 @@
-﻿using UnityEngine;
-using System.Collections;
-using MediaMotion.Core.View.Interfaces;
+﻿using MediaMotion.Core.View.Interfaces;
 
 namespace MediaMotion.Core.View {
+	/// <summary>
+	/// Image Viewer UI
+	/// </summary>
 	public class ImageViewerUI : IImageViewerUI {
-		void Start() {
-
+		/// <summary>
+		/// Starts this instance.
+		/// </summary>
+		public void Start() {
 		}
 
-		void Update() {
-
+		/// <summary>
+		/// Updates this instance.
+		/// </summary>
+		public void Update() {
 		}
 	}
 }

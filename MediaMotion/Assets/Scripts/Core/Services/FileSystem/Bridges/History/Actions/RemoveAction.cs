@@ -3,7 +3,10 @@ using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Services.FileSystem;
 
 namespace Mediamotion.Core.Services.FileSystem.Bridges.History.Actions {
-	sealed public class RemoveAction : IAction {
+	/// <summary>
+	/// Action Remove
+	/// </summary>
+	public sealed class RemoveAction : IAction {
 		/// <summary>
 		/// The element
 		/// </summary>
@@ -20,7 +23,7 @@ namespace Mediamotion.Core.Services.FileSystem.Bridges.History.Actions {
 		/// <summary>
 		/// Do the action
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Do() {
 			return (FileSystemService.GetInstance().Remove(this.Element));
 		}
@@ -28,7 +31,7 @@ namespace Mediamotion.Core.Services.FileSystem.Bridges.History.Actions {
 		/// <summary>
 		/// Undo the action
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Undo() {
 			return (FileSystemService.GetInstance().Restore(this.Element));
 		}

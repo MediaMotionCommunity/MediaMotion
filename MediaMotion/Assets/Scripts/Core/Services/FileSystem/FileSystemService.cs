@@ -11,7 +11,10 @@ using MediaMotion.Core.Services.FileSystem.Interfaces;
 using UnityEngine;
 
 namespace MediaMotion.Core.Services.FileSystem {
-	sealed public class FileSystemService : IFileSystem {
+	/// <summary>
+	/// FileSystem Service
+	/// </summary>
+	public sealed class FileSystemService : IFileSystem {
 		/// <summary>
 		/// The instance
 		/// </summary>
@@ -20,62 +23,12 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// The folder factory
 		/// </summary>
-		private IFactory _FolderFactory;
-
-		/// <summary>
-		/// Gets or sets the folder factory.
-		/// </summary>
-		/// <value>
-		/// The folder factory.
-		/// </value>
-		public IFactory FolderFactory {
-			private get {
-				return (this._FolderFactory);
-			}
-			set {
-				if (value != null) {
-					this._FolderFactory = value;
-				}
-			}
-		}
+		private IFactory FolderFactoryInstance;
 
 		/// <summary>
 		/// The file factory
 		/// </summary>
-		private IFactory _FileFactory;
-
-		/// <summary>
-		/// Gets or sets the file factory.
-		/// </summary>
-		/// <value>
-		/// The file factory.
-		/// </value>
-		public IFactory FileFactory {
-			private get {
-				return (this._FileFactory);
-			}
-			set {
-				if (value != null) {
-					this._FileFactory = value;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the initial folder.
-		/// </summary>
-		/// <value>
-		/// The initial folder.
-		/// </value>
-		public IFolder InitialFolder { get; private set; }
-
-		/// <summary>
-		/// Gets or sets the current folder.
-		/// </summary>
-		/// <value>
-		/// The current folder.
-		/// </value>
-		public IFolder CurrentFolder { get; private set; }
+		private IFactory FileFactoryInstance;
 
 		/// <summary>
 		/// Prevents a default instance of the <see cref="FileSystemService"/> class from being created.
@@ -87,10 +40,59 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
+		/// Gets or sets the folder factory.
+		/// </summary>
+		/// <value>
+		/// The folder factory.
+		/// </value>
+		public IFactory FolderFactory {
+			private get {
+				return (this.FolderFactoryInstance);
+			}
+			set {
+				if (value != null) {
+					this.FolderFactoryInstance = value;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the file factory.
+		/// </summary>
+		/// <value>
+		/// The file factory.
+		/// </value>
+		public IFactory FileFactory {
+			private get {
+				return (this.FileFactoryInstance);
+			}
+			set {
+				if (value != null) {
+					this.FileFactoryInstance = value;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the initial folder.
+		/// </summary>
+		/// <value>
+		/// The initial folder.
+		/// </value>
+		public IFolder InitialFolder { get; private set; }
+
+		/// <summary>
+		/// Gets the current folder.
+		/// </summary>
+		/// <value>
+		/// The current folder.
+		/// </value>
+		public IFolder CurrentFolder { get; private set; }
+
+		/// <summary>
 		/// Gets the instance
 		/// </summary>
-		/// <param name="Identifier">The identifier.</param>
-		/// <returns></returns>
+		/// <returns>The instance</returns>
 		public static FileSystemService GetInstance() {
 			return (FileSystemService.Instance);
 		}
@@ -98,9 +100,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// Get the home directory
 		/// </summary>
-		/// <returns>
-		/// Home directory
-		/// </returns>
+		/// <returns>Home directory</returns>
 		public IFolder GetHomeDirectory() {
 			return (this.FolderFactory.Create(Environment.GetFolderPath(Environment.SpecialFolder.Personal)) as IFolder);
 		}
@@ -109,6 +109,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// Change directory to the Home or the <see cref="IFolder" /> provide in parameter
 		/// </summary>
 		/// <param name="Folder">New working directory</param>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool ChangeDirectory(IFolder Folder = null) {
 			this.CurrentFolder = ((Folder != null) ? (Folder) : (this.GetHomeDirectory()));
 
@@ -119,9 +120,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// Get the content of the current directory or the <see cref="IFolder" /> provide in parameter
 		/// </summary>
 		/// <param name="Folder">A specific folder to use</param>
-		/// <returns>
-		/// List of elements
-		/// </returns>
+		/// <returns>List of elements</returns>
 		public List<IElement> GetDirectoryContent(IFolder Folder = null) {
 			List<IElement> DirectoryContent = new List<IElement>();
 			string Path = ((Folder != null) ? (Folder) : (this.CurrentFolder)).GetPath();
@@ -138,8 +137,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// Copy an <see cref="IElement" /> to the specific <see cref="IFolder" />
 		/// </summary>
-		/// <param name="Element"></param>
-		/// <param name="Destination"></param>
+		/// <param name="Element">The element to be copied</param>
+		/// <param name="Destination">The folder destination</param>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Copy(IElement Element, IFolder Destination) {
 			// FIXME Handle Directory copy
 			File.Copy(Element.GetPath(), Path.Combine(Destination.GetPath(), Element.GetName()));
@@ -152,6 +152,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </summary>
 		/// <param name="Element">The element to be move</param>
 		/// <param name="Destination">The folder destination</param>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Move(IElement Element, IFolder Destination) {
 			string PathDestination = Path.Combine(Destination.GetPath(), Element.GetName());
 
@@ -167,6 +168,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// Remove an element
 		/// </summary>
 		/// <param name="Element">The element to delete</param>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Remove(IElement Element) {
 			if (Element.GetElementType() == ElementType.File) {
 				File.Delete(Element.GetPath());
@@ -180,7 +182,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// Restores an element which was remove earlier
 		/// </summary>
 		/// <param name="Element">The element.</param>
-		/// <exception cref="System.NotImplementedException"></exception>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Restore(IElement Element) {
 			return (false);
 		}

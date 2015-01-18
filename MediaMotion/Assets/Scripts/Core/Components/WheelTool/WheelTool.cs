@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
 
 namespace MediaMotion.Core.Components.WheelTool {
+	/// <summary>
+	/// Wheel Tool class
+	/// </summary>
 	public class WheelTool : MonoBehaviour {
-		void Start() {
-
+		/// <summary>
+		/// Starts this instance.
+		/// </summary>
+		public void Start() {
 		}
 
-		void Update() {
-
+		/// <summary>
+		/// Updates this instance.
+		/// </summary>
+		public void Update() {
 		}
 	}
 }

@@ -4,7 +4,10 @@ using Mediamotion.Core.Services.History;
 using Mediamotion.Core.Services.History.Interfaces;
 
 namespace MediaMotion.Core.Services.History {
-	sealed public class HistoryService : IHistory {
+	/// <summary>
+	/// History Service
+	/// </summary>
+	public sealed class HistoryService : IHistory {
 		/// <summary>
 		/// The instance
 		/// </summary>
@@ -16,26 +19,25 @@ namespace MediaMotion.Core.Services.History {
 		private Dictionary<IIdentifier, IIdentifierHistory> Histories;
 		
 		/// <summary>
-		/// Gets the instance
-		/// </summary>
-		/// <param name="Identifier">The identifier.</param>
-		/// <returns></returns>
-		public static HistoryService GetInstance() {
-			return (HistoryService.Instance);
-		}
-
-		/// <summary>
 		/// Prevents a default instance of the <see cref="HistoryService"/> class from being created.
 		/// </summary>
 		private HistoryService() {
-			this.Histories = new Dictionary<IIdentifier,IIdentifierHistory>();
+			this.Histories = new Dictionary<IIdentifier, IIdentifierHistory>();
+		}
+
+		/// <summary>
+		/// Gets the instance
+		/// </summary>
+		/// <returns>The instance</returns>
+		public static HistoryService GetInstance() {
+			return (HistoryService.Instance);
 		}
 
 		/// <summary>
 		/// Gets the history of specified identifier
 		/// </summary>
 		/// <param name="Identifier">The identifier.</param>
-		/// <returns></returns>
+		/// <returns>The history</returns>
 		public IIdentifierHistory GetHistory(IIdentifier Identifier) {
 			IIdentifierHistory History = null;
 
@@ -49,7 +51,7 @@ namespace MediaMotion.Core.Services.History {
 		/// Backs the history of specified identifier.
 		/// </summary>
 		/// <param name="Identifier">The identifier.</param>
-		/// <returns></returns>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Back(IIdentifier Identifier) {
 			return (this.GetHistory(Identifier).Back());
 		}
@@ -58,7 +60,7 @@ namespace MediaMotion.Core.Services.History {
 		/// Forwards the history of specified identifier.
 		/// </summary>
 		/// <param name="Identifier">The identifier.</param>
-		/// <returns></returns>
+		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Forward(IIdentifier Identifier) {
 			return (this.GetHistory(Identifier).Forward());
 		}
@@ -68,8 +70,9 @@ namespace MediaMotion.Core.Services.History {
 		/// </summary>
 		/// <param name="Identifier">The identifier.</param>
 		/// <param name="Action">The action.</param>
-		public void AddAction(IIdentifier Identifier, IAction Action) {
-			this.GetHistory(Identifier).AddAction(Action);
+		/// <returns>True if the action succeed, False otherwise</returns>
+		public bool AddAction(IIdentifier Identifier, IAction Action) {
+			return (this.GetHistory(Identifier).AddAction(Action));
 		}
 	}
 }

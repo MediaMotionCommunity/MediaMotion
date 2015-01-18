@@ -1,15 +1,21 @@
-﻿using UnityEngine;
-using System.Collections;
-using MediaMotion.Core.View.Interfaces;
+﻿using MediaMotion.Core.View.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Core.View {
+	/// <summary>
+	/// Wheel Tool UI
+	/// </summary>
 	public class WheelToolUI : IWheelToolUI {
-		void Start() {
-
+		/// <summary>
+		/// Starts this instance.
+		/// </summary>
+		public void Start() {
 		}
 
-		void Update() {
-
+		/// <summary>
+		/// Updates this instance.
+		/// </summary>
+		public void Update() {
 		}
 	}
 }
