@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Mediamotion.Core.Services;
-using Mediamotion.Core.Services.History;
-using Mediamotion.Core.Services.History.Interfaces;
+using MediaMotion.Core.Services;
+using MediaMotion.Core.Services.History;
+using MediaMotion.Core.Services.History.Interfaces;
 
 namespace MediaMotion.Core.Services.History {
 	/// <summary>

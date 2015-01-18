@@ -1,9 +1,0 @@
-digraph "MediaMotion/Assets/Scripts/Modules/Components/Rotate/Interfaces" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_494c3edd58990493e19cd46af116ddc1 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Rotate" fontname="Helvetica", fontsize="10", URL="dir_494c3edd58990493e19cd46af116ddc1.html"]
-  dir_cd2215f72f98c966998c2498109fdf44 [shape=box, label="Interfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_cd2215f72f98c966998c2498109fdf44.html"];
-  }
-}

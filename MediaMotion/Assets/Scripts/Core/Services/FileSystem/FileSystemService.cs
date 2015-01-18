@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Mediamotion.Core.Services;
+using MediaMotion.Core.Services;
 using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;

@@ -1,26 +1,4 @@
 var searchData=
 [
-  ['ielement',['IElement',['../interface_media_motion_1_1_core_1_1_models_1_1_interfaces_1_1_i_element.html',1,'MediaMotion::Core::Models::Interfaces']]],
-  ['ielementui',['IElementUI',['../interface_i_element_u_i.html',1,'']]],
-  ['ifile',['IFile',['../interface_media_motion_1_1_core_1_1_models_1_1_interfaces_1_1_i_file.html',1,'MediaMotion::Core::Models::Interfaces']]],
-  ['ifileui',['IFileUI',['../interface_i_file_u_i.html',1,'']]],
-  ['ifolder',['IFolder',['../interface_media_motion_1_1_core_1_1_models_1_1_interfaces_1_1_i_folder.html',1,'MediaMotion::Core::Models::Interfaces']]],
-  ['ifoldercontentui',['IFolderContentUI',['../interface_i_folder_content_u_i.html',1,'']]],
-  ['ifolderui',['IFolderUI',['../interface_i_folder_u_i.html',1,'']]],
-  ['iimageviewer',['IImageViewer',['../interface_media_motion_1_1_modules_1_1_image_viewer_1_1_interfaces_1_1_i_image_viewer.html',1,'MediaMotion::Modules::ImageViewer::Interfaces']]],
-  ['iimageviewerui',['IImageViewerUI',['../interface_i_image_viewer_u_i.html',1,'']]],
-  ['image',['Image',['../class_media_motion_1_1_core_1_1_models_1_1_image.html',1,'MediaMotion::Core::Models']]],
-  ['imageviewerui',['ImageViewerUI',['../class_image_viewer_u_i.html',1,'']]],
-  ['imediaplayer',['IMediaPlayer',['../interface_media_motion_1_1_modules_1_1_media_player_1_1_i_media_player.html',1,'MediaMotion::Modules::MediaPlayer']]],
-  ['imediaplayerui',['IMediaPlayerUI',['../interface_i_media_player_u_i.html',1,'']]],
-  ['imodule',['IModule',['../interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html',1,'MediaMotion::Core::Models::Module::Interfaces']]],
-  ['imusicplayer',['IMusicPlayer',['../interface_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_i_music_player.html',1,'MediaMotion::Modules::MediaPlayer::MusicPlayer']]],
-  ['iplaylist',['IPlaylist',['../interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html',1,'MediaMotion::Modules::Components::Playlist']]],
-  ['irotate',['IRotate',['../interface_media_motion_1_1_modules_1_1_components_1_1_rotate_1_1_i_rotate.html',1,'MediaMotion::Modules::Components::Rotate']]],
-  ['itextreaderui',['ITextReaderUI',['../interface_i_text_reader_u_i.html',1,'']]],
-  ['ivideoplayer',['IVideoPlayer',['../interface_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_i_video_player.html',1,'MediaMotion::Modules::MediaPlayer::VideoPlayer']]],
-  ['ivolume',['IVolume',['../interface_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_i_volume.html',1,'MediaMotion::Modules::Components::Volume']]],
-  ['iwheeltoolui',['IWheelToolUI',['../interface_i_wheel_tool_u_i.html',1,'']]],
-  ['iwrapper',['IWrapper',['../interface_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_interfaces_1_1_i_wrapper.html',1,'MediaMotion::Core::Models::Wrapper::Interfaces']]],
-  ['izoom',['IZoom',['../interface_media_motion_1_1_modules_1_1_components_1_1_zoom_1_1_i_zoom.html',1,'MediaMotion::Modules::Components::Zoom']]]
+  ['historyservice',['HistoryService',['../class_media_motion_1_1_core_1_1_services_1_1_history_1_1_history_service.html',1,'MediaMotion::Core::Services::History']]]
 ];

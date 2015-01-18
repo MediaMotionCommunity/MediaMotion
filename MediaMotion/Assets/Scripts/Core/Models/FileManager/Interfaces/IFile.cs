@@ -2,7 +2,7 @@ using System;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
 
-namespace MediaMotion.Core.Models.FileManager {
+namespace MediaMotion.Core.Models.FileManager.Interfaces {
 	/// <summary>
 	/// File Interface
 	/// </summary>

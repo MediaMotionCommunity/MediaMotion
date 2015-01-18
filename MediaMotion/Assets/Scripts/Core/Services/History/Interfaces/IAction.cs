@@ -1,4 +1,4 @@
-﻿namespace Mediamotion.Core.Services.History.Interfaces {
+﻿namespace MediaMotion.Core.Services.History.Interfaces {
 	/// <summary>
 	/// Action Interface
 	/// </summary>

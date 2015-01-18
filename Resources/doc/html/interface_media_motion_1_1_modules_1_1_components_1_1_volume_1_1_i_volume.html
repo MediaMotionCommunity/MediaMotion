@@ -63,6 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -70,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Events</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -93,49 +94,140 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MediaMotion.Modules.Components.Volume.IVolume Interface Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_volume.html" title="Volume Model ">Volume</a> Interface  
+ <a href="interface_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_i_volume.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for MediaMotion.Modules.Components.Volume.IVolume:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="interface_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_i_volume.png" usemap="#MediaMotion.Modules.Components.Volume.IVolume_map" alt=""/>
   <map id="MediaMotion.Modules.Components.Volume.IVolume_map" name="MediaMotion.Modules.Components.Volume.IVolume_map">
-<area href="class_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_volume.html" alt="MediaMotion.Modules.Components.Volume.Volume" shape="rect" coords="0,56,366,80"/>
-<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_i_media_player.html" alt="MediaMotion.Modules.MediaPlayer.IMediaPlayer" shape="rect" coords="752,56,1118,80"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_a_media_player.html" alt="MediaMotion.Modules.MediaPlayer.AMediaPlayer" shape="rect" coords="188,112,554,136"/>
-<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_i_music_player.html" alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.IMusicPlayer" shape="rect" coords="752,112,1118,136"/>
-<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_i_video_player.html" alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.IVideoPlayer" shape="rect" coords="1128,112,1494,136"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html" alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer" shape="rect" coords="0,168,366,192"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html" alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer" shape="rect" coords="376,168,742,192"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html" alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer" shape="rect" coords="752,168,1118,192"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html" alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer" shape="rect" coords="1128,168,1494,192"/>
+<area href="class_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_volume.html" title="Volume Model " alt="MediaMotion.Modules.Components.Volume.Volume" shape="rect" coords="0,56,366,80"/>
+<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_i_media_player.html" title="Media Player Interface " alt="MediaMotion.Modules.MediaPlayer.IMediaPlayer" shape="rect" coords="752,56,1118,80"/>
+<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_a_media_player.html" title="Media Player " alt="MediaMotion.Modules.MediaPlayer.AMediaPlayer" shape="rect" coords="188,112,554,136"/>
+<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_i_music_player.html" title="Music Player Interface " alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.IMusicPlayer" shape="rect" coords="752,112,1118,136"/>
+<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_i_video_player.html" title="Video Player Interface " alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.IVideoPlayer" shape="rect" coords="1128,112,1494,136"/>
+<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html" title="Music Player Model " alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer" shape="rect" coords="0,168,366,192"/>
+<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html" title="Video Player Module " alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer" shape="rect" coords="376,168,742,192"/>
+<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html" title="Music Player Model " alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer" shape="rect" coords="752,168,1118,192"/>
+<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html" title="Video Player Module " alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer" shape="rect" coords="1128,168,1494,192"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a27222259ab3085631f8723952059623a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27222259ab3085631f8723952059623a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>VolumeUp</b> ()</td></tr>
+<tr class="memitem:a27222259ab3085631f8723952059623a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_i_volume.html#a27222259ab3085631f8723952059623a">VolumeUp</a> ()</td></tr>
+<tr class="memdesc:a27222259ab3085631f8723952059623a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Volumes up.  <a href="#a27222259ab3085631f8723952059623a">More...</a><br /></td></tr>
 <tr class="separator:a27222259ab3085631f8723952059623a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a079aa9e43fd201125391e17c86f83e6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a079aa9e43fd201125391e17c86f83e6c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>VolumeDown</b> ()</td></tr>
+<tr class="memitem:a079aa9e43fd201125391e17c86f83e6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_i_volume.html#a079aa9e43fd201125391e17c86f83e6c">VolumeDown</a> ()</td></tr>
+<tr class="memdesc:a079aa9e43fd201125391e17c86f83e6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Volumes down.  <a href="#a079aa9e43fd201125391e17c86f83e6c">More...</a><br /></td></tr>
 <tr class="separator:a079aa9e43fd201125391e17c86f83e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:af7b1970ffa7e18357bf3af3597e9e014"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7b1970ffa7e18357bf3af3597e9e014"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Sound</b><code> [get]</code></td></tr>
+<tr class="memitem:af7b1970ffa7e18357bf3af3597e9e014"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_i_volume.html#af7b1970ffa7e18357bf3af3597e9e014">Sound</a><code> [get]</code></td></tr>
+<tr class="memdesc:af7b1970ffa7e18357bf3af3597e9e014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the volume.  <a href="#af7b1970ffa7e18357bf3af3597e9e014">More...</a><br /></td></tr>
 <tr class="separator:af7b1970ffa7e18357bf3af3597e9e014"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec2c2cfe378cc0e99477d26a1e346f96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec2c2cfe378cc0e99477d26a1e346f96"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Step</b><code> [get]</code></td></tr>
+<tr class="memitem:aec2c2cfe378cc0e99477d26a1e346f96"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_i_volume.html#aec2c2cfe378cc0e99477d26a1e346f96">Step</a><code> [get]</code></td></tr>
+<tr class="memdesc:aec2c2cfe378cc0e99477d26a1e346f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the step.  <a href="#aec2c2cfe378cc0e99477d26a1e346f96">More...</a><br /></td></tr>
 <tr class="separator:aec2c2cfe378cc0e99477d26a1e346f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_volume.html" title="Volume Model ">Volume</a> Interface </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a079aa9e43fd201125391e17c86f83e6c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Modules.Components.Volume.IVolume.VolumeDown </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Volumes down. </p>
+
+<p>Implemented in <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_a_media_player.html#a251cebc54b2eff4d097b5c281334e51d">MediaMotion.Modules.MediaPlayer.AMediaPlayer</a>, and <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_volume.html#af1d1a2f2cec6adda05edbb5411a96628">MediaMotion.Modules.Components.Volume.Volume</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a27222259ab3085631f8723952059623a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Modules.Components.Volume.IVolume.VolumeUp </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Volumes up. </p>
+
+<p>Implemented in <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_a_media_player.html#a48d64ea14b422a16714343f5b792a9ea">MediaMotion.Modules.MediaPlayer.AMediaPlayer</a>, and <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_volume.html#a78ee24429301cb6f0dbed70e61401951">MediaMotion.Modules.Components.Volume.Volume</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a class="anchor" id="af7b1970ffa7e18357bf3af3597e9e014"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MediaMotion.Modules.Components.Volume.IVolume.Sound</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the volume. </p>
+<p>The sound. </p>
+
+</div>
+</div>
+<a class="anchor" id="aec2c2cfe378cc0e99477d26a1e346f96"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MediaMotion.Modules.Components.Volume.IVolume.Step</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the step. </p>
+<p>The step. </p>
+
+</div>
+</div>
 <hr/>The documentation for this interface was generated from the following file:<ul>
 <li>O:/Projects/MediaMotion/MediaMotion/Assets/Scripts/Modules/Components/Volume/Interfaces/IVolume.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Nov 6 2014 17:51:40 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 18 2015 11:26:51 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

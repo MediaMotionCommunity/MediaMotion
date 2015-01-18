@@ -1,6 +1,6 @@
-﻿using Mediamotion.Core.Services.History.Interfaces;
+﻿using MediaMotion.Core.Services.History.Interfaces;
 
-namespace Mediamotion.Core.Services.FileSystem.Bridges.History.Identifiers {
+namespace MediaMotion.Core.Services.FileSystem.Bridges.History.Identifiers {
 	/// <summary>
 	/// Identifier Path
 	/// </summary>

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Mediamotion.Core.Services.History.Interfaces;
+using MediaMotion.Core.Services.History.Interfaces;
 
-namespace Mediamotion.Core.Services.History {
+namespace MediaMotion.Core.Services.History {
 	/// <summary>
 	/// Identifier History
 	/// </summary>

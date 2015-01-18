@@ -1,6 +1,7 @@
 using System;
 using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
+using MediaMotion.Core.Models.FileManager.Interfaces;
 
 namespace MediaMotion.Core.Models.FileManager.Abstracts {
 	/// <summary>

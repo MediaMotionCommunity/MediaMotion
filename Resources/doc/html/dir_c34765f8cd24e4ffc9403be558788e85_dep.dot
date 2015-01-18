@@ -1,9 +1,0 @@
-digraph "MediaMotion/Assets/Scripts/Core/Models/FileManager/Interfaces" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_fb87bc092156023b07838f506e80d48b {
-    graph [ bgcolor="#ddddee", pencolor="black", label="FileManager" fontname="Helvetica", fontsize="10", URL="dir_fb87bc092156023b07838f506e80d48b.html"]
-  dir_c34765f8cd24e4ffc9403be558788e85 [shape=box, label="Interfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_c34765f8cd24e4ffc9403be558788e85.html"];
-  }
-}
