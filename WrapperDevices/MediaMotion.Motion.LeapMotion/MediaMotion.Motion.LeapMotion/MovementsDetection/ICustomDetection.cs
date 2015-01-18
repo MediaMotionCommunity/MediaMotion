@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using MediaMotion.Motion.Actions;
 using Leap;
+using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
