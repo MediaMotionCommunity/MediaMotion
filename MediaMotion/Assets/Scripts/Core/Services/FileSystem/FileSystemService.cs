@@ -102,7 +102,12 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </summary>
 		/// <returns>Home directory</returns>
 		public IFolder GetHomeDirectory() {
-			return (this.FolderFactory.Create(Environment.GetFolderPath(Environment.SpecialFolder.Personal)) as IFolder);
+			string Home = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+
+			if (Home == string.Empty) {
+				Home = Environment.GetFolderPath(Environment.SpecialFolder.System);
+			}
+			return (this.FolderFactory.Create(Home) as IFolder);
 		}
 
 		/// <summary>
