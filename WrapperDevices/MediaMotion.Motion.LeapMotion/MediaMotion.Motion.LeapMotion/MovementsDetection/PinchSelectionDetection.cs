@@ -1,10 +1,10 @@
-﻿using Leap;
-using Action = MediaMotion.Motion.Actions.Action;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Leap;
 using MediaMotion.Motion.Actions;
+using Action = MediaMotion.Motion.Actions.Action;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
@@ -87,7 +87,8 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 					this.detectionState = false;
 					this.lastAction = DateTime.Now;
 				}
-			} else if (DateTime.Now - this.lastAction > this.ReleaseTimeMax) {
+			}
+			else if (DateTime.Now - this.lastAction > this.ReleaseTimeMax) {
 				this.detectionState = true;
 			}
 			return list;
@@ -106,7 +107,8 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			if (streng >= this.ThresholdDetection && !this.states[hand]) {
 				this.states[hand] = true;
 				this.lastDetections[hand] = DateTime.Now;
-			} else if (!this.states[hand] && (DateTime.Now - this.lastDetections[hand] < this.ReleaseTimeMax)) {
+			}
+			else if (!this.states[hand] && (DateTime.Now - this.lastDetections[hand] < this.ReleaseTimeMax)) {
 				return true;
 			}
 			return false;
