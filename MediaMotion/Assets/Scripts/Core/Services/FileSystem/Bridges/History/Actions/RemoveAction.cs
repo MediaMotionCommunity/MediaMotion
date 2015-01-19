@@ -1,6 +1,6 @@
-﻿using MediaMotion.Core.Services.History.Interfaces;
-using MediaMotion.Core.Models.FileManager.Interfaces;
+﻿using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Services.FileSystem;
+using MediaMotion.Core.Services.History.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem.Bridges.History.Actions {
 	/// <summary>
