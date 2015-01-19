@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <Prefer32Bit>false</Prefer32Bit>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="MovementsDetection\ASecureLeapDetection.cs" />

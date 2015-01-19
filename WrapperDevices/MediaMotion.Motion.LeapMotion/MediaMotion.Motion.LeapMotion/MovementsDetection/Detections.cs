@@ -11,6 +11,16 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// </summary>
 	public class Detections {
 		#region Fields
+		/// <summary>
+		/// List of detection class for default leap gesture
+		/// </summary>
+		private readonly Dictionary<Gesture.GestureType, Func<Gesture, IEnumerable<IAction>>> leapDetections;
+
+		/// <summary>
+		/// List of detection class for custom gesture
+		/// </summary>
+		private readonly List<Func<Frame, IEnumerable<IAction>>> customDetections;
+
 		#region Detection class
 		/// <summary>
 		/// Detection class for swipe gesture
@@ -22,16 +32,6 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// </summary>
 		private KeyTapDetection keyTapDetection;
 		#endregion
-
-		/// <summary>
-		/// List of detection class for default leap gesture
-		/// </summary>
-		private readonly Dictionary<Gesture.GestureType, Func<Gesture, IEnumerable<IAction>>> leapDetections;
-
-		/// <summary>
-		/// List of detection class for custom gesture
-		/// </summary>
-		private readonly List<Func<Frame, IEnumerable<IAction>>> customDetections;
 		#endregion
 
 		#region Constructor
