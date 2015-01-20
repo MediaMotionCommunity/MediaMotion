@@ -274,7 +274,7 @@ namespace MediaMotion.Core.Controllers {
                 tileTextMesh.text = file.GetName();
                 tileText.transform.eulerAngles = new Vector3(60, 0, 0);
                 tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
-                filenames.Add(tileText);
+                Filenames.Add(tileText);
 
 				this.Tiles.Add(tile);
 				++i;
