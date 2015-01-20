@@ -33,6 +33,7 @@ namespace MediaMotion.Core.Controllers {
 		private int Line;
 		private GameObject Camera;
 		private List<IElement> Content;
+        Font ArialFont;
 
 		public FolderContentController() {
 			this.FileService = new FileSystem();
@@ -43,6 +44,7 @@ namespace MediaMotion.Core.Controllers {
 			this.filenames = new List<GameObject>();
 			this.CurrentIndex = 0;
 			this.Line = 0;
+            this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Main Camera");
 		}
 
@@ -114,7 +116,18 @@ namespace MediaMotion.Core.Controllers {
 				//				tile.AddComponent("FolderHover");
 				//tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 
-				//tile.AddComponent(typeof(TextMesh));
+                GameObject tileText = new GameObject();
+                tileText.transform.position = new Vector3(x - 1, 0.6f, z - 0.5f);
+                TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
+                tileTextMesh.transform.parent = tileText.transform;
+                tileTextMesh.font = this.ArialFont;
+                tileTextMesh.fontSize = 16;
+                tileTextMesh.renderer.material = tileTextMesh.font.material;
+                tileTextMesh.text = file.GetName();
+                tileText.transform.eulerAngles = new Vector3(60, 0, 0);
+                tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+                filenames.Add(tileText);
+
 				this.tiles.Add(tile);
 				++i;
 				if (i % this.rowSize == 0) {
