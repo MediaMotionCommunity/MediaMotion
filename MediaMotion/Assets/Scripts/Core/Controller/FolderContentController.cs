@@ -84,6 +84,7 @@ namespace MediaMotion.Core.Controllers {
 		/// The content
 		/// </summary>
 		private List<IElement> Content;
+        Font ArialFont;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
@@ -97,6 +98,7 @@ namespace MediaMotion.Core.Controllers {
 			this.Filenames = new List<GameObject>();
 			this.CurrentIndex = 0;
 			this.Line = 0;
+            this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Main Camera");
 			this.Cursor = GameObject.Find("Cursor");
 		}
@@ -247,6 +249,7 @@ namespace MediaMotion.Core.Controllers {
 			this.Clear();
 			foreach (IElement file in this.Content) {
 				GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+				GameObject tileText = new GameObject();
 
 				tile.transform.position = new Vector3(x, 1, z);
 				tile.transform.eulerAngles = new Vector3(60, 180, 0);
@@ -260,6 +263,19 @@ namespace MediaMotion.Core.Controllers {
 				////tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 
 				////tile.AddComponent(typeof(TextMesh));
+	
+
+                tileText.transform.position = new Vector3(x - 1, 0.6f, z - 0.5f);
+                TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
+                tileTextMesh.transform.parent = tileText.transform;
+                tileTextMesh.font = this.ArialFont;
+                tileTextMesh.fontSize = 16;
+                tileTextMesh.renderer.material = tileTextMesh.font.material;
+                tileTextMesh.text = file.GetName();
+                tileText.transform.eulerAngles = new Vector3(60, 0, 0);
+                tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+                filenames.Add(tileText);
+
 				this.Tiles.Add(tile);
 				++i;
 				if (i % this.RowSize == 0) {
