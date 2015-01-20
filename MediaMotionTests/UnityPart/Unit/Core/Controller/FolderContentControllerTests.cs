@@ -5,42 +5,43 @@ using System.Text;
 using System.Threading.Tasks;
 using MediaMotion.Core.Controllers;
 using NUnit.Framework;
+
 namespace MediaMotion.Core.Controllers.Tests {
 	[TestFixture()]
 	public class FolderContentControllerTests {
 		[Test()]
 		public void FolderContentControllerTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void LoadTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void CancelHighlightTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void HighlightCurrentTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void RegisterTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void UnregisterTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void UnloadTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 	}
 }

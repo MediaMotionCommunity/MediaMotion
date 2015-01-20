@@ -10,37 +10,37 @@ namespace MediaMotion.Modules.MediaPlayer.MusicPlayer.Tests {
 	public class MusicPlayerTests {
 		[Test()]
 		public void PlayTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void PauseTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void StopTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void RegisterTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void UnregisterTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void LoadTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void UnloadTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 	}
 }

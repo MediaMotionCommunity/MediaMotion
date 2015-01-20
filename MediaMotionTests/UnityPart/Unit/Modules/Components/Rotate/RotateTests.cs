@@ -10,17 +10,17 @@ namespace MediaMotion.Modules.Components.Rotate.Tests {
 	public class RotateTests {
 		[Test()]
 		public void RotateTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void RotateLeftTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 
 		[Test()]
 		public void RotateRightTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 	}
 }

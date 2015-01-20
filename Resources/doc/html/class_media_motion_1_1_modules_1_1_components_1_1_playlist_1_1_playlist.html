@@ -63,6 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -70,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Events</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -94,75 +95,373 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MediaMotion.Modules.Components.Playlist.Playlist Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> Model  
+ <a href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for MediaMotion.Modules.Components.Playlist.Playlist:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.png" usemap="#MediaMotion.Modules.Components.Playlist.Playlist_map" alt=""/>
   <map id="MediaMotion.Modules.Components.Playlist.Playlist_map" name="MediaMotion.Modules.Components.Playlist.Playlist_map">
-<area href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html" alt="MediaMotion.Modules.Components.Playlist.IPlaylist" shape="rect" coords="0,0,301,24"/>
+<area href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html" title="Playlist Interface " alt="MediaMotion.Modules.Components.Playlist.IPlaylist" shape="rect" coords="0,0,301,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afe2c90bf65e6c602134d6855eb719046"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe2c90bf65e6c602134d6855eb719046"></a>
-delegate void&#160;</td><td class="memItemRight" valign="bottom"><b>PlaylistElementChangeHandler</b> (object sender, <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_element_change_event_args.html">PlaylistElementChangeEventArgs</a> e)</td></tr>
-<tr class="separator:afe2c90bf65e6c602134d6855eb719046"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d6d093a372a5e0909aecbf339d013f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d6d093a372a5e0909aecbf339d013f6"></a>
-delegate void&#160;</td><td class="memItemRight" valign="bottom"><b>PlaylistChangeHandler</b> (object sender, <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_change_event_args.html">PlaylistChangeEventArgs</a> e)</td></tr>
-<tr class="separator:a4d6d093a372a5e0909aecbf339d013f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa0f71cc951631f2f05c287cffe9d64b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa0f71cc951631f2f05c287cffe9d64b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Playlist</b> (bool Loop=true, bool Random=false)</td></tr>
+<tr class="memitem:aaa0f71cc951631f2f05c287cffe9d64b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#aaa0f71cc951631f2f05c287cffe9d64b">Playlist</a> (bool <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#a393cb97cede7dc4b3b624b9e51c2a32a">Loop</a>=true, bool <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#ac293f0b3e77b15d3eb60747f75c29ba4">Random</a>=false)</td></tr>
+<tr class="memdesc:aaa0f71cc951631f2f05c287cffe9d64b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> class.  <a href="#aaa0f71cc951631f2f05c287cffe9d64b">More...</a><br /></td></tr>
 <tr class="separator:aaa0f71cc951631f2f05c287cffe9d64b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad180bca0034027f3776f71dc3acaa3a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad180bca0034027f3776f71dc3acaa3a2"></a>
-<a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_interfaces_1_1_i_element.html">IElement</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Current</b> ()</td></tr>
+<tr class="memitem:afe2c90bf65e6c602134d6855eb719046"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#afe2c90bf65e6c602134d6855eb719046">PlaylistElementChangeHandler</a> (object sender, <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_element_change_event_args.html">PlaylistElementChangeEventArgs</a> e)</td></tr>
+<tr class="memdesc:afe2c90bf65e6c602134d6855eb719046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event Handler <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> Element Change Event  <a href="#afe2c90bf65e6c602134d6855eb719046">More...</a><br /></td></tr>
+<tr class="separator:afe2c90bf65e6c602134d6855eb719046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d6d093a372a5e0909aecbf339d013f6"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#a4d6d093a372a5e0909aecbf339d013f6">PlaylistChangeHandler</a> (object sender, <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_change_event_args.html">PlaylistChangeEventArgs</a> e)</td></tr>
+<tr class="memdesc:a4d6d093a372a5e0909aecbf339d013f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event Handler <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> Change Event  <a href="#a4d6d093a372a5e0909aecbf339d013f6">More...</a><br /></td></tr>
+<tr class="separator:a4d6d093a372a5e0909aecbf339d013f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad180bca0034027f3776f71dc3acaa3a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#ad180bca0034027f3776f71dc3acaa3a2">Current</a> ()</td></tr>
+<tr class="memdesc:ad180bca0034027f3776f71dc3acaa3a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currents this instance.  <a href="#ad180bca0034027f3776f71dc3acaa3a2">More...</a><br /></td></tr>
 <tr class="separator:ad180bca0034027f3776f71dc3acaa3a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27629b345ac08920422898c79aca3d79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27629b345ac08920422898c79aca3d79"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Prev</b> ()</td></tr>
+<tr class="memitem:a27629b345ac08920422898c79aca3d79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#a27629b345ac08920422898c79aca3d79">Prev</a> ()</td></tr>
+<tr class="memdesc:a27629b345ac08920422898c79aca3d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Back to the previous element  <a href="#a27629b345ac08920422898c79aca3d79">More...</a><br /></td></tr>
 <tr class="separator:a27629b345ac08920422898c79aca3d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f684e4fc067e47b7041127c7f8ea5fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f684e4fc067e47b7041127c7f8ea5fc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Next</b> ()</td></tr>
+<tr class="memitem:a7f684e4fc067e47b7041127c7f8ea5fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#a7f684e4fc067e47b7041127c7f8ea5fc">Next</a> ()</td></tr>
+<tr class="memdesc:a7f684e4fc067e47b7041127c7f8ea5fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Go to the next element  <a href="#a7f684e4fc067e47b7041127c7f8ea5fc">More...</a><br /></td></tr>
 <tr class="separator:a7f684e4fc067e47b7041127c7f8ea5fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c61725444e5553d60d788dfabdcac8c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c61725444e5553d60d788dfabdcac8c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Add</b> (List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_interfaces_1_1_i_element.html">IElement</a> &gt; Elements)</td></tr>
+<tr class="memitem:a3c61725444e5553d60d788dfabdcac8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#a3c61725444e5553d60d788dfabdcac8c">Add</a> (List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a> &gt; Elements)</td></tr>
+<tr class="memdesc:a3c61725444e5553d60d788dfabdcac8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the specified elements.  <a href="#a3c61725444e5553d60d788dfabdcac8c">More...</a><br /></td></tr>
 <tr class="separator:a3c61725444e5553d60d788dfabdcac8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7bd8105e1063e49bd9ef7afde1fe329"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7bd8105e1063e49bd9ef7afde1fe329"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Remove</b> (List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_interfaces_1_1_i_element.html">IElement</a> &gt; Elements)</td></tr>
+<tr class="memitem:af7bd8105e1063e49bd9ef7afde1fe329"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#af7bd8105e1063e49bd9ef7afde1fe329">Remove</a> (List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a> &gt; Elements)</td></tr>
+<tr class="memdesc:af7bd8105e1063e49bd9ef7afde1fe329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the specified elements.  <a href="#af7bd8105e1063e49bd9ef7afde1fe329">More...</a><br /></td></tr>
 <tr class="separator:af7bd8105e1063e49bd9ef7afde1fe329"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:ac293f0b3e77b15d3eb60747f75c29ba4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac293f0b3e77b15d3eb60747f75c29ba4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Random</b><code> [get, set]</code></td></tr>
+<tr class="memitem:ac293f0b3e77b15d3eb60747f75c29ba4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#ac293f0b3e77b15d3eb60747f75c29ba4">Random</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:ac293f0b3e77b15d3eb60747f75c29ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets a value indicating whether this <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html" title="Playlist Interface ">IPlaylist</a> is random.  <a href="#ac293f0b3e77b15d3eb60747f75c29ba4">More...</a><br /></td></tr>
 <tr class="separator:ac293f0b3e77b15d3eb60747f75c29ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a393cb97cede7dc4b3b624b9e51c2a32a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a393cb97cede7dc4b3b624b9e51c2a32a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Loop</b><code> [get, set]</code></td></tr>
+<tr class="memitem:a393cb97cede7dc4b3b624b9e51c2a32a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#a393cb97cede7dc4b3b624b9e51c2a32a">Loop</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a393cb97cede7dc4b3b624b9e51c2a32a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets a value indicating whether this <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html" title="Playlist Interface ">IPlaylist</a> is loop.  <a href="#a393cb97cede7dc4b3b624b9e51c2a32a">More...</a><br /></td></tr>
 <tr class="separator:a393cb97cede7dc4b3b624b9e51c2a32a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html">MediaMotion.Modules.Components.Playlist.IPlaylist</a></td></tr>
-<tr class="memitem:ad33154fb3b673835f80f5021813c15cb inherit properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad33154fb3b673835f80f5021813c15cb"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Random</b><code> [get, set]</code></td></tr>
+<tr class="memitem:ad33154fb3b673835f80f5021813c15cb inherit properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html#ad33154fb3b673835f80f5021813c15cb">Random</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:ad33154fb3b673835f80f5021813c15cb inherit properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets a value indicating whether this <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html" title="Playlist Interface ">IPlaylist</a> is random.  <a href="#ad33154fb3b673835f80f5021813c15cb">More...</a><br /></td></tr>
 <tr class="separator:ad33154fb3b673835f80f5021813c15cb inherit properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88003650ca0f4779df2fe2b409be7e09 inherit properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88003650ca0f4779df2fe2b409be7e09"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Loop</b><code> [get, set]</code></td></tr>
+<tr class="memitem:a88003650ca0f4779df2fe2b409be7e09 inherit properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html#a88003650ca0f4779df2fe2b409be7e09">Loop</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a88003650ca0f4779df2fe2b409be7e09 inherit properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets a value indicating whether this <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html" title="Playlist Interface ">IPlaylist</a> is loop.  <a href="#a88003650ca0f4779df2fe2b409be7e09">More...</a><br /></td></tr>
 <tr class="separator:a88003650ca0f4779df2fe2b409be7e09 inherit properties_interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="events"></a>
 Events</h2></td></tr>
-<tr class="memitem:acd79347d70f2e77035bc1475b8928b5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd79347d70f2e77035bc1475b8928b5c"></a>
-PlaylistElementChangeHandler&#160;</td><td class="memItemRight" valign="bottom"><b>OnElementChange</b></td></tr>
+<tr class="memitem:acd79347d70f2e77035bc1475b8928b5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#afe2c90bf65e6c602134d6855eb719046">PlaylistElementChangeHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#acd79347d70f2e77035bc1475b8928b5c">OnElementChange</a></td></tr>
+<tr class="memdesc:acd79347d70f2e77035bc1475b8928b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Occurs when element change.  <a href="#acd79347d70f2e77035bc1475b8928b5c">More...</a><br /></td></tr>
 <tr class="separator:acd79347d70f2e77035bc1475b8928b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d84b782096b8cadd6ef68f64dec80e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d84b782096b8cadd6ef68f64dec80e3"></a>
-PlaylistChangeHandler&#160;</td><td class="memItemRight" valign="bottom"><b>OnPlaylistChange</b></td></tr>
+<tr class="memitem:a1d84b782096b8cadd6ef68f64dec80e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#a4d6d093a372a5e0909aecbf339d013f6">PlaylistChangeHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#a1d84b782096b8cadd6ef68f64dec80e3">OnPlaylistChange</a></td></tr>
+<tr class="memdesc:a1d84b782096b8cadd6ef68f64dec80e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Occurs when playlist change.  <a href="#a1d84b782096b8cadd6ef68f64dec80e3">More...</a><br /></td></tr>
 <tr class="separator:a1d84b782096b8cadd6ef68f64dec80e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> Model </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="aaa0f71cc951631f2f05c287cffe9d64b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MediaMotion.Modules.Components.Playlist.Playlist.Playlist </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>Loop</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>Random</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Loop</td><td>if set to <code>true</code> [loop].</td></tr>
+    <tr><td class="paramname">Random</td><td>if set to <code>true</code> [random].</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a3c61725444e5553d60d788dfabdcac8c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Modules.Components.Playlist.Playlist.Add </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a> &gt;&#160;</td>
+          <td class="paramname"><em>Elements</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds the specified elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Elements</td><td>The elements.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html#a78275fbc8f716cdd4a547c99420bb89d">MediaMotion.Modules.Components.Playlist.IPlaylist</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad180bca0034027f3776f71dc3acaa3a2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a> MediaMotion.Modules.Components.Playlist.Playlist.Current </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Currents this instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current element </dd></dl>
+
+<p>Implements <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html#a1ad0cb5984add87c6e436869985f7386">MediaMotion.Modules.Components.Playlist.IPlaylist</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7f684e4fc067e47b7041127c7f8ea5fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Modules.Components.Playlist.Playlist.Next </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Go to the next element </p>
+
+<p>Implements <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html#a017f72e0182525cb6b6a8dc0b7d18a21">MediaMotion.Modules.Components.Playlist.IPlaylist</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4d6d093a372a5e0909aecbf339d013f6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">delegate void MediaMotion.Modules.Components.Playlist.Playlist.PlaylistChangeHandler </td>
+          <td>(</td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>sender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_change_event_args.html">PlaylistChangeEventArgs</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event Handler <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> Change Event </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sender</td><td>The sender.</td></tr>
+    <tr><td class="paramname">e</td><td>The PlaylistChangeEventArgs instance containing the event data.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="afe2c90bf65e6c602134d6855eb719046"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">delegate void MediaMotion.Modules.Components.Playlist.Playlist.PlaylistElementChangeHandler </td>
+          <td>(</td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>sender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_element_change_event_args.html">PlaylistElementChangeEventArgs</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event Handler <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> Element Change Event </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sender</td><td>The sender.</td></tr>
+    <tr><td class="paramname">e</td><td>The PlaylistElementChangeEventArgs instance containing the event data.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a27629b345ac08920422898c79aca3d79"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Modules.Components.Playlist.Playlist.Prev </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Back to the previous element </p>
+
+<p>Implements <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html#a34a209dfe8a4e12871cfd433ea89357f">MediaMotion.Modules.Components.Playlist.IPlaylist</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af7bd8105e1063e49bd9ef7afde1fe329"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Modules.Components.Playlist.Playlist.Remove </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a> &gt;&#160;</td>
+          <td class="paramname"><em>Elements</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes the specified elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Elements</td><td>The elements.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html#a3e1df9682ed9c1aaa317b002224bd4dd">MediaMotion.Modules.Components.Playlist.IPlaylist</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a class="anchor" id="a393cb97cede7dc4b3b624b9e51c2a32a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MediaMotion.Modules.Components.Playlist.Playlist.Loop</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets or sets a value indicating whether this <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html" title="Playlist Interface ">IPlaylist</a> is loop. </p>
+<p><code>true</code> if loop; otherwise, <code>false</code>. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac293f0b3e77b15d3eb60747f75c29ba4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MediaMotion.Modules.Components.Playlist.Playlist.Random</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets or sets a value indicating whether this <a class="el" href="interface_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_i_playlist.html" title="Playlist Interface ">IPlaylist</a> is random. </p>
+<p><code>true</code> if random; otherwise, <code>false</code>. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Event Documentation</h2>
+<a class="anchor" id="acd79347d70f2e77035bc1475b8928b5c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#afe2c90bf65e6c602134d6855eb719046">PlaylistElementChangeHandler</a> MediaMotion.Modules.Components.Playlist.Playlist.OnElementChange</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Occurs when element change. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1d84b782096b8cadd6ef68f64dec80e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html#a4d6d093a372a5e0909aecbf339d013f6">PlaylistChangeHandler</a> MediaMotion.Modules.Components.Playlist.Playlist.OnPlaylistChange</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Occurs when playlist change. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>O:/Projects/MediaMotion/MediaMotion/Assets/Scripts/Modules/Components/Playlist/Playlist.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Nov 6 2014 17:51:40 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 18 2015 11:26:50 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

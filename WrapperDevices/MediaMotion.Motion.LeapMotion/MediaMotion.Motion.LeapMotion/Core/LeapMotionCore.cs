@@ -18,16 +18,17 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// </summary>
 		private readonly Controller controller;
 
+#if DEBUG
+		[SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1215:InstanceReadonlyElementsMustAppearBeforeInstanceNonReadonlyElements", Justification = "Reviewed. Suppression is OK here."),
+		SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1121:UseBuiltInTypeAlias", Justification = "Reviewed. Suppression is OK here."),
+		SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Suppression is OK here.")]
+		private readonly Object thisLock = new Object();
+#endif
 		/// <summary>
 		/// The movement detection class
 		/// </summary>
 		private Detections movementsDetection;
 
-#if DEBUG
-		[SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1121:UseBuiltInTypeAlias", Justification = "Reviewed. Suppression is OK here."),
-		SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Suppression is OK here.")] 
-		private readonly Object thisLock = new Object();
-#endif
 		#endregion
 
 		#region Constructor
@@ -42,6 +43,11 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		#endregion
 
 		#region Methods
+		#region IDisposable
+		public void Dispose() {
+			this.controller.Dispose();
+		}
+		#endregion
 
 		/// <summary>
 		/// The frame.
@@ -76,14 +82,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 			}
 #endif
 		}
-
 		#endregion
-		#endregion
-
-		#region IDisposable
-		public void Dispose() {
-			this.controller.Dispose();
-		}
 		#endregion
 	}
 }

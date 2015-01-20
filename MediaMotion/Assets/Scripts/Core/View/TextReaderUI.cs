@@ -1,15 +1,21 @@
-﻿using UnityEngine;
-using System.Collections;
-using MediaMotion.Core.View.Interfaces;
+﻿using MediaMotion.Core.View.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Core.View {
+	/// <summary>
+	/// Text Reader UI
+	/// </summary>
 	public class TextReaderUI : ITextReaderUI {
-		void Start() {
-
+		/// <summary>
+		/// Starts this instance.
+		/// </summary>
+		public void Start() {
 		}
 
-		void Update() {
-
+		/// <summary>
+		/// Updates this instance.
+		/// </summary>
+		public void Update() {
 		}
 	}
 }

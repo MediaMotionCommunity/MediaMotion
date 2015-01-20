@@ -63,6 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -70,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Events</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -93,6 +94,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MediaMotion.Modules.Components.Playlist.Events.PlaylistChangeEventArgs Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Event Handler <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> Change Event  
+ <a href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_change_event_args.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for MediaMotion.Modules.Components.Playlist.Events.PlaylistChangeEventArgs:</div>
 <div class="dyncontent">
@@ -104,23 +108,74 @@ Inheritance diagram for MediaMotion.Modules.Components.Playlist.Events.PlaylistC
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a08d2f9853f428dd6df0a200c79b97a5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08d2f9853f428dd6df0a200c79b97a5d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>PlaylistChangeEventArgs</b> (List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_interfaces_1_1_i_element.html">IElement</a> &gt; Elements)</td></tr>
+<tr class="memitem:a08d2f9853f428dd6df0a200c79b97a5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_change_event_args.html#a08d2f9853f428dd6df0a200c79b97a5d">PlaylistChangeEventArgs</a> (List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a> &gt; <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_change_event_args.html#a8367ec884414f33038540efe88a8df98">Elements</a>)</td></tr>
+<tr class="memdesc:a08d2f9853f428dd6df0a200c79b97a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_change_event_args.html" title="Event Handler Playlist Change Event ">PlaylistChangeEventArgs</a> class.  <a href="#a08d2f9853f428dd6df0a200c79b97a5d">More...</a><br /></td></tr>
 <tr class="separator:a08d2f9853f428dd6df0a200c79b97a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a8367ec884414f33038540efe88a8df98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8367ec884414f33038540efe88a8df98"></a>
-List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_interfaces_1_1_i_element.html">IElement</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Elements</b><code> [get]</code></td></tr>
+<tr class="memitem:a8367ec884414f33038540efe88a8df98"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_change_event_args.html#a8367ec884414f33038540efe88a8df98">Elements</a><code> [get]</code></td></tr>
+<tr class="memdesc:a8367ec884414f33038540efe88a8df98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the elements.  <a href="#a8367ec884414f33038540efe88a8df98">More...</a><br /></td></tr>
 <tr class="separator:a8367ec884414f33038540efe88a8df98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Event Handler <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_playlist.html" title="Playlist Model ">Playlist</a> Change Event </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a08d2f9853f428dd6df0a200c79b97a5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MediaMotion.Modules.Components.Playlist.Events.PlaylistChangeEventArgs.PlaylistChangeEventArgs </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a> &gt;&#160;</td>
+          <td class="paramname"><em>Elements</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_media_motion_1_1_modules_1_1_components_1_1_playlist_1_1_events_1_1_playlist_change_event_args.html" title="Event Handler Playlist Change Event ">PlaylistChangeEventArgs</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Elements</td><td>The elements.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a class="anchor" id="a8367ec884414f33038540efe88a8df98"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;<a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html">IElement</a>&gt; MediaMotion.Modules.Components.Playlist.Events.PlaylistChangeEventArgs.Elements</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the elements. </p>
+<p>The elements. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>O:/Projects/MediaMotion/MediaMotion/Assets/Scripts/Modules/Components/Playlist/Events/PlaylistChangeEventArgs.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Nov 6 2014 17:51:40 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 18 2015 11:26:50 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

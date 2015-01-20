@@ -1,9 +1,0 @@
-digraph "MediaMotion/Assets/Scripts/Core/Models/Wrapper/Interfaces" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_ec791a675b44423e3d6b0c074c2eb299 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Wrapper" fontname="Helvetica", fontsize="10", URL="dir_ec791a675b44423e3d6b0c074c2eb299.html"]
-  dir_e439e4d48affc70a2c66b30c0e4b57af [shape=box, label="Interfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_e439e4d48affc70a2c66b30c0e4b57af.html"];
-  }
-}

@@ -2,13 +2,20 @@
 using MediaMotion.Core.View.Interfaces;
 
 namespace MediaMotion.Core.View {
+	/// <summary>
+	/// Element UI
+	/// </summary>
 	public class ElementUI : IElementUI {
-		void Start() {
-
+		/// <summary>
+		/// Starts this instance.
+		/// </summary>
+		public void Start() {
 		}
 
-		void Update() {
-
+		/// <summary>
+		/// Updates this instance.
+		/// </summary>
+		public void Update() {
 		}
 	}
 }

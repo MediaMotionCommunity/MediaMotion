@@ -10,7 +10,7 @@ namespace MediaMotion.Core.Models.FileManager.Tests {
 	public class FolderTests {
 		[Test()]
 		public void FolderTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 	}
 }

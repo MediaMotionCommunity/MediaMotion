@@ -12,13 +12,13 @@ Library/
 ExportedObj/
 *.svd
 *.userprefs
-*.csproj
 *.pidb
 *.suo
-*.sln
 *.user
 *.unityproj
 *.booproj
+*.csproj
+*.sln
 
 test-results/
 bin/

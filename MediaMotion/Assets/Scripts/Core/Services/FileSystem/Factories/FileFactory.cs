@@ -6,7 +6,16 @@ using MediaMotion.Core.Services.FileSystem.Abstracts;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem.Factories {
+	/// <summary>
+	/// File Factory
+	/// </summary>
 	public class FileFactory : AFactory, IFactory {
+		/// <summary>
+		/// Creates the specified path.
+		/// </summary>
+		/// <param name="Path">The path.</param>
+		/// <returns>The created element</returns>
+		/// <exception cref="System.Exception">File ' + Path + ' doesn't exist</exception>
 		public IElement Create(string Path) {
 			IElement Element;
 			string Name = this.GetName(Path);

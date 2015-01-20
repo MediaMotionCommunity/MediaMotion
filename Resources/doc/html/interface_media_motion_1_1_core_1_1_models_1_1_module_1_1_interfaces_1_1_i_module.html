@@ -63,6 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -70,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Events</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -92,37 +93,164 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MediaMotion.Core.Models.Module.Interfaces.IModule Interface Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="namespace_media_motion_1_1_core_1_1_models_1_1_module.html">Module</a> Interface  
+ <a href="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for MediaMotion.Core.Models.Module.Interfaces.IModule:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.png" usemap="#MediaMotion.Core.Models.Module.Interfaces.IModule_map" alt=""/>
   <map id="MediaMotion.Core.Models.Module.Interfaces.IModule_map" name="MediaMotion.Core.Models.Module.Interfaces.IModule_map">
-<area href="interface_media_motion_1_1_modules_1_1_image_viewer_1_1_interfaces_1_1_i_image_viewer.html" alt="MediaMotion.Modules.ImageViewer.Interfaces.IImageViewer" shape="rect" coords="0,56,366,80"/>
-<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_i_media_player.html" alt="MediaMotion.Modules.MediaPlayer.IMediaPlayer" shape="rect" coords="752,56,1118,80"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_a_media_player.html" alt="MediaMotion.Modules.MediaPlayer.AMediaPlayer" shape="rect" coords="188,112,554,136"/>
-<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_i_music_player.html" alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.IMusicPlayer" shape="rect" coords="752,112,1118,136"/>
-<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_i_video_player.html" alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.IVideoPlayer" shape="rect" coords="1128,112,1494,136"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html" alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer" shape="rect" coords="0,168,366,192"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html" alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer" shape="rect" coords="376,168,742,192"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html" alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer" shape="rect" coords="752,168,1118,192"/>
-<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html" alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer" shape="rect" coords="1128,168,1494,192"/>
+<area href="class_media_motion_1_1_core_1_1_controllers_1_1_folder_content_controller.html" title="Explorer Controller " alt="MediaMotion.Core.Controllers.FolderContentController" shape="rect" coords="0,56,366,80"/>
+<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_i_music_player.html" title="Music Player Interface " alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.IMusicPlayer" shape="rect" coords="376,56,742,80"/>
+<area href="interface_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_i_video_player.html" title="Video Player Interface " alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.IVideoPlayer" shape="rect" coords="752,56,1118,80"/>
+<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html" title="Music Player Model " alt="MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer" shape="rect" coords="376,112,742,136"/>
+<area href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html" title="Video Player Module " alt="MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer" shape="rect" coords="752,112,1118,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a512dd79360075a410750ca49f12a452d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a512dd79360075a410750ca49f12a452d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
-<tr class="separator:a512dd79360075a410750ca49f12a452d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa481d84f1e1911ee55e7e6df771340f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#aa481d84f1e1911ee55e7e6df771340f9">ActionHandle</a> (object Sender, <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_events_1_1_action_detected_event_args.html">ActionDetectedEventArgs</a> Action)</td></tr>
+<tr class="memdesc:aa481d84f1e1911ee55e7e6df771340f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actions the handle.  <a href="#aa481d84f1e1911ee55e7e6df771340f9">More...</a><br /></td></tr>
+<tr class="separator:aa481d84f1e1911ee55e7e6df771340f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd67c0c4ac74de2c8d11a666fdde90f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#abd67c0c4ac74de2c8d11a666fdde90f8">Register</a> ()</td></tr>
+<tr class="memdesc:abd67c0c4ac74de2c8d11a666fdde90f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers this instance.  <a href="#abd67c0c4ac74de2c8d11a666fdde90f8">More...</a><br /></td></tr>
+<tr class="separator:abd67c0c4ac74de2c8d11a666fdde90f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa70e34256a074c712f15f0a075e07f34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#aa70e34256a074c712f15f0a075e07f34">Unregister</a> ()</td></tr>
+<tr class="memdesc:aa70e34256a074c712f15f0a075e07f34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters this instance.  <a href="#aa70e34256a074c712f15f0a075e07f34">More...</a><br /></td></tr>
+<tr class="separator:aa70e34256a074c712f15f0a075e07f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dd7f2ce6020916ea2d5727d960110e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#a5dd7f2ce6020916ea2d5727d960110e5">Load</a> ()</td></tr>
+<tr class="memdesc:a5dd7f2ce6020916ea2d5727d960110e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads this instance.  <a href="#a5dd7f2ce6020916ea2d5727d960110e5">More...</a><br /></td></tr>
+<tr class="separator:a5dd7f2ce6020916ea2d5727d960110e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae81674e819a8118302e651e50dc8a1f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#ae81674e819a8118302e651e50dc8a1f4">Unload</a> ()</td></tr>
+<tr class="memdesc:ae81674e819a8118302e651e50dc8a1f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unloads this instance.  <a href="#ae81674e819a8118302e651e50dc8a1f4">More...</a><br /></td></tr>
+<tr class="separator:ae81674e819a8118302e651e50dc8a1f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="namespace_media_motion_1_1_core_1_1_models_1_1_module.html">Module</a> Interface </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aa481d84f1e1911ee55e7e6df771340f9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Core.Models.Module.Interfaces.IModule.ActionHandle </td>
+          <td>(</td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>Sender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_events_1_1_action_detected_event_args.html">ActionDetectedEventArgs</a>&#160;</td>
+          <td class="paramname"><em>Action</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Actions the handle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Sender</td><td>The sender.</td></tr>
+    <tr><td class="paramname">Action</td><td>The ActionDetectedEventArgs instance containing the event data.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_media_motion_1_1_core_1_1_controllers_1_1_folder_content_controller.html#a4b99e8133c58d3101e402552b0644dde">MediaMotion.Core.Controllers.FolderContentController</a>, <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html#a8508f95e0c09f5d0274f2a92d24c90ee">MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer</a>, and <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html#a9e4656c45bc6769332a99750f096cd29">MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5dd7f2ce6020916ea2d5727d960110e5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Core.Models.Module.Interfaces.IModule.Load </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads this instance. </p>
+
+<p>Implemented in <a class="el" href="class_media_motion_1_1_core_1_1_controllers_1_1_folder_content_controller.html#a66de9a1e1f5e1d476d3fc57819f62643">MediaMotion.Core.Controllers.FolderContentController</a>, <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html#a543e552a1711f85d4df3d45ba512ee16">MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer</a>, and <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html#a7f2d898b9615d7fe59eb2e45c2ebe781">MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abd67c0c4ac74de2c8d11a666fdde90f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Core.Models.Module.Interfaces.IModule.Register </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers this instance. </p>
+
+<p>Implemented in <a class="el" href="class_media_motion_1_1_core_1_1_controllers_1_1_folder_content_controller.html#a52075a9266bb56f3ccceada447fc3d94">MediaMotion.Core.Controllers.FolderContentController</a>, <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html#adf0c10bdeb7677db55dac77f916a5658">MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer</a>, and <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html#a312a40dbbcc57d1b095cf22dfe2635d8">MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae81674e819a8118302e651e50dc8a1f4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Core.Models.Module.Interfaces.IModule.Unload </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unloads this instance. </p>
+
+<p>Implemented in <a class="el" href="class_media_motion_1_1_core_1_1_controllers_1_1_folder_content_controller.html#a703eee6aeb8359ffb034d0d923958d95">MediaMotion.Core.Controllers.FolderContentController</a>, <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html#a278b0ae1829de3d06ae6508ab4bb59e1">MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer</a>, and <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html#a1dfae2ef0f28ac0cd127df8369237e0b">MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa70e34256a074c712f15f0a075e07f34"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MediaMotion.Core.Models.Module.Interfaces.IModule.Unregister </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unregisters this instance. </p>
+
+<p>Implemented in <a class="el" href="class_media_motion_1_1_core_1_1_controllers_1_1_folder_content_controller.html#a5a34e043016f4087ebfead188eea7929">MediaMotion.Core.Controllers.FolderContentController</a>, <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_music_player_1_1_music_player.html#aded2bd06051d322e0aa56ae19c5e8398">MediaMotion.Modules.MediaPlayer.MusicPlayer.MusicPlayer</a>, and <a class="el" href="class_media_motion_1_1_modules_1_1_media_player_1_1_video_player_1_1_video_player.html#a9b990cbd2deae4444cf6d7401f516896">MediaMotion.Modules.MediaPlayer.VideoPlayer.VideoPlayer</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this interface was generated from the following file:<ul>
 <li>O:/Projects/MediaMotion/MediaMotion/Assets/Scripts/Core/Models/Module/Interfaces/IModule.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Nov 6 2014 17:51:40 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 18 2015 11:26:49 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

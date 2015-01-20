@@ -1,81 +1,136 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
-using System;
+using UnityEngine;
 
+/// <summary>
+/// Folder Hover
+/// </summary>
 public class FolderHover : MonoBehaviour {
+	/// <summary>
+	/// The animation height
+	/// </summary>
+	public float AnimationHeight = 0.3f;
 
-	public float animationHeight = 0.3f;
-	public float animationSpeed = 1.6f;
-	public float animationScale = 0.09f;
+	/// <summary>
+	/// The animation speed
+	/// </summary>
+	public float AnimationSpeed = 1.6f;
 
-	private bool hovering = false;
-	private float defaultPosition;
-	private float maxPosition;
-	private bool animate;
-	private Vector3 defaultScale;
-	private Vector3 scale;
-	private Vector3 position;
-	
-	// Use this for initialization
-	void Start() {
-		position = transform.position;
-		defaultPosition = transform.position.z;
-		maxPosition = defaultPosition + animationHeight;
-		defaultScale = transform.localScale;
-		scale = new Vector3(animationScale, animationScale, animationScale);
-		Debug.Log(defaultPosition);
-		Debug.Log(defaultScale);
+	/// <summary>
+	/// The animation scale
+	/// </summary>
+	public float AnimationScale = 0.09f;
+
+	/// <summary>
+	/// The hovering
+	/// </summary>
+	private bool Hovering = false;
+
+	/// <summary>
+	/// The default position
+	/// </summary>
+	private float DefaultPosition;
+
+	/// <summary>
+	/// The maximum position
+	/// </summary>
+	private float MaxPosition;
+
+	/// <summary>
+	/// The animate
+	/// </summary>
+	private bool Animate;
+
+	/// <summary>
+	/// The default scale
+	/// </summary>
+	private Vector3 DefaultScale;
+
+	/// <summary>
+	/// The scale
+	/// </summary>
+	private Vector3 Scale;
+
+	/// <summary>
+	/// The position
+	/// </summary>
+	private Vector3 Position;
+
+	/// <summary>
+	/// The temporary
+	/// </summary>
+	private bool Tmp = true;
+
+	/// <summary>
+	/// Starts this instance.
+	/// </summary>
+	public void Start() {
+		this.Position = this.transform.position;
+		this.DefaultPosition = transform.position.z;
+		this.MaxPosition = this.DefaultPosition + this.AnimationHeight;
+		this.DefaultScale = transform.localScale;
+		this.Scale = new Vector3(this.AnimationScale, this.AnimationScale, this.AnimationScale);
+		Debug.Log(this.DefaultPosition);
+		Debug.Log(this.DefaultScale);
 	}
 
-	private bool tmp = true;
-
-	// Update is called once per frame
-	void Update() {
+	/// <summary>
+	/// Updates this instance.
+	/// </summary>
+	public void Update() {
 		// to delete
-		hover(tmp);
-		tmp = !tmp;
+		this.Hover(this.Tmp);
+		this.Tmp = !this.Tmp;
 
-		if (!animate) {
-			return ;
+		if (!this.Animate) {
+			return;
 		}
-		if (hovering) {
-			hoverAnimation();
-		}
-		else if (!hovering) {
-			unhoverAnimation();
+		if (this.Hovering) {
+			this.HoverAnimation();
+		} else if (!this.Hovering) {
+			this.UnhoverAnimation();
 		}
 	}
 
-	private void hoverAnimation() {
-		if (transform.position.z <= maxPosition) {
-			transform.Translate(Vector3.back * Time.deltaTime * animationSpeed);
-			transform.localScale += Time.deltaTime * scale;
+	/// <summary>
+	/// Hovers the specified state.
+	/// </summary>
+	/// <param name="State">if set to <c>true</c> [state].</param>
+	public void Hover(bool State) {
+		if (!this.Animate && this.Hovering != State) {
+			this.Hovering = State;
+			this.Animate = true;
 		}
-		else {
-			Vector3 newPosition = transform.position;
-			newPosition.z = defaultPosition + animationHeight;
-			transform.position = newPosition;
-			animate = false;
+	}
+
+	/// <summary>
+	/// Hovers the animation.
+	/// </summary>
+	private void HoverAnimation() {
+		if (this.transform.position.z <= this.MaxPosition) {
+			this.transform.Translate(Vector3.back * Time.deltaTime * this.AnimationSpeed);
+			this.transform.localScale += Time.deltaTime * this.Scale;
+		} else {
+			Vector3 NewPosition = this.transform.position;
+			NewPosition.z = this.DefaultPosition + this.AnimationHeight;
+			this.transform.position = NewPosition;
+			this.Animate = false;
+			Debug.Log(this.transform.position);
+		}
+	}
+
+	/// <summary>
+	/// Un hovers the animation.
+	/// </summary>
+	private void UnhoverAnimation() {
+		if (this.transform.position.z > this.DefaultPosition) {
+			this.transform.Translate(Vector3.forward * Time.deltaTime * this.AnimationSpeed);
+			this.transform.localScale -= Time.deltaTime * this.Scale;
+		} else {
+			this.transform.position = this.Position;
+			this.transform.localScale = this.DefaultScale;
+			this.Animate = false;
 			Debug.Log(transform.position);
-		}
-	}
-	private void unhoverAnimation() {
-		if (transform.position.z > defaultPosition) {
-			transform.Translate(Vector3.forward * Time.deltaTime * animationSpeed);
-			transform.localScale -= Time.deltaTime * scale;
-		}
-		else {
-			transform.position = position;
-			transform.localScale = defaultScale;
-			animate = false;
-			Debug.Log(transform.position);
-		}
-	}
-
-	public void hover(bool state) {
-		if (!animate && hovering != state) {
-			hovering = state;
-			animate = true;
 		}
 	}
 }

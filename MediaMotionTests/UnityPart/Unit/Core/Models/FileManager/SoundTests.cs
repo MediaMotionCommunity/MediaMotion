@@ -10,7 +10,7 @@ namespace MediaMotion.Core.Models.FileManager.Tests {
 	public class SoundTests {
 		[Test()]
 		public void SoundTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 	}
 }

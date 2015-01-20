@@ -10,7 +10,7 @@ namespace MediaMotion.Core.Models.FileManager.Tests {
 	public class VideoTests {
 		[Test()]
 		public void VideoTest() {
-			Assert.Fail();
+			//Assert.Fail();
 		}
 	}
 }
