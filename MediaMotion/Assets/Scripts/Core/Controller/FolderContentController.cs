@@ -76,6 +76,11 @@ namespace MediaMotion.Core.Controllers {
 		private GameObject Camera;
 
 		/// <summary>
+		/// The camera position
+		/// </summary>
+		private Vector3 camPos = new Vector3(0, 0, 0);
+
+		/// <summary>
 		/// The content
 		/// </summary>
 		private List<IElement> Content;
@@ -187,9 +192,6 @@ namespace MediaMotion.Core.Controllers {
 			this.HighlightCurrent(this.Tiles[this.CurrentIndex + Offset]);
 			this.CurrentIndex += Offset;
 		}
-
-		private Vector3 camPos = new Vector3(0, 0, 0);
-		private Vector3 lightPos = new Vector3(0, 0, 0);
 
 		/// <summary>
 		/// Moves up.
@@ -308,12 +310,28 @@ namespace MediaMotion.Core.Controllers {
                 tileTextMesh.font = this.ArialFont;
                 tileTextMesh.fontSize = 16;
                 tileTextMesh.renderer.material = tileTextMesh.font.material;
-                tileTextMesh.text = file.GetName();
-//				tileText.transform.eulerAngles = new Vector3(30, 0, 0);
-//				tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+				tileTextMesh.text = file.GetName();
 				tileText.transform.eulerAngles = new Vector3(30, 0, 0);
 				tileText.transform.localScale = new Vector3(0.9F, 0.9F, 0.9F);
+//				tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
                 Filenames.Add(tileText);
+
+				Hashtable color = new Hashtable();
+				color.Add("r", 0.8);
+				color.Add("g", 0.9);
+				color.Add("b", 1);
+				color.Add("time", 0.1);
+				iTween.ColorTo(tileText, color);
+
+				color = new Hashtable();
+				if (tile.renderer.bounds.size.x < tileText.renderer.bounds.size.x) {
+					Debug.Log("Yolo");
+					color.Add("r", 1);
+					color.Add("g", 0.5);
+					color.Add("b", 0.5);
+					color.Add("time", 0.5);
+					iTween.ColorTo(tileText, color);
+				}
 
 				this.Tiles.Add(tile);
 				++i;
