@@ -101,8 +101,10 @@ namespace MediaMotion.Core.Controllers {
             this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Main Camera");
 			this.light = GameObject.Find("Point light");
+			this.light.transform.parent = this.Camera.transform;
 			iTween.Init(this.Camera);
-			iTween.Init(this.light);
+//			iTween.Init(this.light);
+
 		}
 
 		/// <summary>
@@ -203,18 +205,6 @@ namespace MediaMotion.Core.Controllers {
 					else {
 						camPos += vect;
 					}
-					if (lightPos == Vector3.zero) {
-						lightPos = this.light.transform.position + vect;
-					}
-					else {
-						lightPos += vect;
-					}
-					Hashtable lightHash = new Hashtable();
-					lightHash.Add("z", lightPos.z);
-					lightHash.Add("space", Space.World);
-					lightHash.Add("islocal", true);
-					lightHash.Add("easetype", iTween.EaseType.easeInOutSine);
-					lightHash.Add("time", time);
 					Hashtable camHash = new Hashtable();
 					camHash.Add("z", camPos.z);
 					camHash.Add("space", Space.World);
@@ -222,7 +212,6 @@ namespace MediaMotion.Core.Controllers {
 					camHash.Add("easetype", iTween.EaseType.easeInOutSine);
 					camHash.Add("time", time);
 					iTween.MoveTo(this.Camera, camHash);
-					iTween.MoveTo(this.light, lightHash);
 //					this.Camera.transform.Translate(0, 0, -3, Space.World);
 				}
 				this.ChangeSelection(-this.RowSize);
@@ -244,18 +233,6 @@ namespace MediaMotion.Core.Controllers {
 					else {
 						camPos += vect;
 					}
-					if (lightPos == Vector3.zero) {
-						lightPos = this.light.transform.position + vect;
-					}
-					else {
-						lightPos += vect;
-					}
-					Hashtable lightHash = new Hashtable();
-					lightHash.Add("z", lightPos.z);
-					lightHash.Add("space", Space.World);
-					lightHash.Add("islocal", true);
-					lightHash.Add("easetype", iTween.EaseType.easeInOutSine);
-					lightHash.Add("time", time);
 					Hashtable camHash = new Hashtable();
 					camHash.Add("z", camPos.z);
 					camHash.Add("space", Space.World);
@@ -263,7 +240,6 @@ namespace MediaMotion.Core.Controllers {
 					camHash.Add("easetype", iTween.EaseType.easeInOutSine);
 					camHash.Add("time", time);
 					iTween.MoveTo(this.Camera, camHash);
-					iTween.MoveTo(this.light, lightHash);
 				}
 				this.ChangeSelection(this.RowSize);
 			}
@@ -312,6 +288,8 @@ namespace MediaMotion.Core.Controllers {
 			this.Clear();
 			foreach (IElement file in this.Content) {
 				GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+				GameObject tileText = new GameObject();
+				tileText.transform.parent = tile.transform;
 
 				tile.transform.position = new Vector3(x, 1, z);
 				tile.transform.eulerAngles = new Vector3(60, 180, 0);
@@ -324,18 +302,18 @@ namespace MediaMotion.Core.Controllers {
 				////				tile.AddComponent("FolderHover");
 				////tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 
-                GameObject tileText = new GameObject();
-                tileText.transform.position = new Vector3(x - 0.35f, 0.4f, z - 0.19f);
+                tileText.transform.position = new Vector3(x - 0.4f, 0.45f, z - 0.2f);
                 TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
                 tileTextMesh.transform.parent = tileText.transform;
                 tileTextMesh.font = this.ArialFont;
                 tileTextMesh.fontSize = 16;
                 tileTextMesh.renderer.material = tileTextMesh.font.material;
                 tileTextMesh.text = file.GetName();
-                tileText.transform.eulerAngles = new Vector3(30, 0, 0);
-                tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+//				tileText.transform.eulerAngles = new Vector3(30, 0, 0);
+//				tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+				tileText.transform.eulerAngles = new Vector3(30, 0, 0);
+				tileText.transform.localScale = new Vector3(0.9F, 0.9F, 0.9F);
                 Filenames.Add(tileText);
-				tileText.transform.parent = tile.transform;
 
 				this.Tiles.Add(tile);
 				++i;
