@@ -87,6 +87,11 @@ namespace MediaMotion.Core.Controllers {
         Font ArialFont;
 
 		/// <summary>
+		/// The light
+		/// </summary>
+		private GameObject light;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
 		/// </summary>
 		public FolderContentController() {
@@ -101,6 +106,10 @@ namespace MediaMotion.Core.Controllers {
             this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Main Camera");
 			this.Cursor = GameObject.Find("Cursor");
+			this.light = GameObject.Find("Point light");
+			iTween.Init(this.Camera);
+			iTween.Init(this.light);
+
 		}
 
 		/// <summary>
@@ -182,13 +191,44 @@ namespace MediaMotion.Core.Controllers {
 			this.CurrentIndex += Offset;
 		}
 
+		private Vector3 camPos = new Vector3(0, 0, 0);
+		private Vector3 lightPos = new Vector3(0, 0, 0);
+
 		/// <summary>
 		/// Moves up.
 		/// </summary>
 		private void MoveUp() {
 			if (this.CurrentIndex - this.RowSize >= 0) {
 				if (this.Line++ % 2 == 0) {
-					this.Camera.transform.Translate(0, 0, -3, Space.World);
+					float time = 0.5f;
+					Vector3 vect = new Vector3(0, 0, -3);
+					if (camPos == Vector3.zero) {
+						camPos = this.Camera.transform.position + vect;
+					}
+					else {
+						camPos += vect;
+					}
+					if (lightPos == Vector3.zero) {
+						lightPos = this.light.transform.position + vect;
+					}
+					else {
+						lightPos += vect;
+					}
+					Hashtable lightHash = new Hashtable();
+					lightHash.Add("z", lightPos.z);
+					lightHash.Add("space", Space.World);
+					lightHash.Add("islocal", true);
+					lightHash.Add("easetype", iTween.EaseType.easeInOutSine);
+					lightHash.Add("time", time);
+					Hashtable camHash = new Hashtable();
+					camHash.Add("z", camPos.z);
+					camHash.Add("space", Space.World);
+					camHash.Add("islocal", true);
+					camHash.Add("easetype", iTween.EaseType.easeInOutSine);
+					camHash.Add("time", time);
+					iTween.MoveTo(this.Camera, camHash);
+					iTween.MoveTo(this.light, lightHash);
+//					this.Camera.transform.Translate(0, 0, -3, Space.World);
 				}
 				this.ChangeSelection(-this.RowSize);
 			}
@@ -200,7 +240,35 @@ namespace MediaMotion.Core.Controllers {
 		private void MoveDown() {
 			if (this.CurrentIndex + this.RowSize < this.Tiles.Count) {
 				if (--this.Line % 2 == 0) {
-					this.Camera.transform.Translate(0, 0, 3, Space.World);
+//					this.Camera.transform.Translate(0, 0, 3, Space.World);
+					float time = 0.5f;
+					Vector3 vect = new Vector3(0, 0, 3);
+					if (camPos == Vector3.zero) {
+						camPos = this.Camera.transform.position + vect;
+					}
+					else {
+						camPos += vect;
+					}
+					if (lightPos == Vector3.zero) {
+						lightPos = this.light.transform.position + vect;
+					}
+					else {
+						lightPos += vect;
+					}
+					Hashtable lightHash = new Hashtable();
+					lightHash.Add("z", lightPos.z);
+					lightHash.Add("space", Space.World);
+					lightHash.Add("islocal", true);
+					lightHash.Add("easetype", iTween.EaseType.easeInOutSine);
+					lightHash.Add("time", time);
+					Hashtable camHash = new Hashtable();
+					camHash.Add("z", camPos.z);
+					camHash.Add("space", Space.World);
+					camHash.Add("islocal", true);
+					camHash.Add("easetype", iTween.EaseType.easeInOutSine);
+					camHash.Add("time", time);
+					iTween.MoveTo(this.Camera, camHash);
+					iTween.MoveTo(this.light, lightHash);
 				}
 				this.ChangeSelection(this.RowSize);
 			}
