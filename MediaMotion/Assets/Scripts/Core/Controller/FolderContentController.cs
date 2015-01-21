@@ -256,7 +256,7 @@ namespace MediaMotion.Core.Controllers {
 				////tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 
                 GameObject tileText = new GameObject();
-                tileText.transform.position = new Vector3(x - 1, 0.6f, z - 0.5f);
+                tileText.transform.position = new Vector3(x, 0.6f, z + 0.2f);
                 TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
                 tileTextMesh.transform.parent = tileText.transform;
                 tileTextMesh.font = this.ArialFont;
