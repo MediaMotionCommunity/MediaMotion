@@ -163,7 +163,8 @@ namespace MediaMotion.Core.Controllers {
 		/// </summary>
 		/// <param name="Current">The object.</param>
 		private void HighlightCurrent(GameObject Current) {
-			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
+//			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
+			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 2, Current.transform.position.z), 0.5f);
 		}
 
 		/// <summary>
@@ -171,7 +172,8 @@ namespace MediaMotion.Core.Controllers {
 		/// </summary>
 		/// <param name="Current">The object.</param>
 		private void CancelHighlight(GameObject Current) {
-			Current.transform.position = new Vector3(Current.transform.position.x, 1, Current.transform.position.z);
+//			Current.transform.position = new Vector3(Current.transform.position.x, 1, Current.transform.position.z);
+			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 1, Current.transform.position.z), 0.5f);
 		}
 
 		/// <summary>
@@ -323,16 +325,17 @@ namespace MediaMotion.Core.Controllers {
 				////tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 
                 GameObject tileText = new GameObject();
-                tileText.transform.position = new Vector3(x - 1, 0.6f, z - 0.5f);
+                tileText.transform.position = new Vector3(x - 0.35f, 0.4f, z - 0.19f);
                 TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
                 tileTextMesh.transform.parent = tileText.transform;
                 tileTextMesh.font = this.ArialFont;
                 tileTextMesh.fontSize = 16;
                 tileTextMesh.renderer.material = tileTextMesh.font.material;
                 tileTextMesh.text = file.GetName();
-                tileText.transform.eulerAngles = new Vector3(60, 0, 0);
+                tileText.transform.eulerAngles = new Vector3(30, 0, 0);
                 tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
                 Filenames.Add(tileText);
+				tileText.transform.parent = tile.transform;
 
 				this.Tiles.Add(tile);
 				++i;
