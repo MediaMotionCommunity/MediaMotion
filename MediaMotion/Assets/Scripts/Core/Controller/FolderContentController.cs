@@ -89,7 +89,7 @@ namespace MediaMotion.Core.Controllers {
 		/// <summary>
 		/// The light
 		/// </summary>
-		private GameObject light;
+		private GameObject Light;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
@@ -105,8 +105,8 @@ namespace MediaMotion.Core.Controllers {
 			this.Line = 0;
             this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Main Camera");
-			this.light = GameObject.Find("Point light");
-			this.light.transform.parent = this.Camera.transform;
+			this.Light = GameObject.Find("Point light");
+			this.Light.transform.parent = this.Camera.transform;
 			iTween.Init(this.Camera);
 //			iTween.Init(this.light);
 
@@ -325,12 +325,12 @@ namespace MediaMotion.Core.Controllers {
 
 				color = new Hashtable();
 				if (tile.renderer.bounds.size.x < tileText.renderer.bounds.size.x) {
-					Debug.Log("Yolo");
-					color.Add("r", 1);
-					color.Add("g", 0.5);
-					color.Add("b", 0.5);
-					color.Add("time", 0.5);
-					iTween.ColorTo(tileText, color);
+//					color.Add("r", 1);
+//					color.Add("g", 0.5);
+//					color.Add("b", 0.5);
+//					color.Add("time", 0.5);
+//					iTween.ColorTo(tileText, color);
+					tileTextMesh.text = file.GetName().Substring(0, 10) + "...";
 				}
 
 				this.Tiles.Add(tile);
