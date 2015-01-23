@@ -48,7 +48,6 @@ namespace MediaMotion.Core.Controllers {
 		/// </summary>
 		private event ActionsHandler ActionsHandlers;
 
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MediaMotionController"/> class.
 		/// </summary>

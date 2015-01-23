@@ -129,7 +129,7 @@
      <Compile Include="Assets\Scripts\Modules\MediaPlayer\VideoPlayer\VideoPlayer.cs" />
      <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
  <Reference Include="MediaMotion.Motion">
- <HintPath>C:/Users/barate_q/Documents/GitHub/MediaMotion/MediaMotion/Assets/MediaMotion.Motion.dll</HintPath>
+ <HintPath>O:/Projects/MediaMotionLeapMotion/MediaMotion/Assets/MediaMotion.Motion.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

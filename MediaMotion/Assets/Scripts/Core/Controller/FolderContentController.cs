@@ -89,7 +89,7 @@ namespace MediaMotion.Core.Controllers {
 		/// The content
 		/// </summary>
 		private List<IElement> Content;
-        Font ArialFont;
+		Font ArialFont;
 
 		/// <summary>
 		/// The light
@@ -108,7 +108,7 @@ namespace MediaMotion.Core.Controllers {
 			this.Filenames = new List<GameObject>();
 			this.CurrentIndex = 0;
 			this.Line = 0;
-            this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+			this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Main Camera");
 			this.Cursor = GameObject.Find("Cursor");
 			this.Light = GameObject.Find("Point light");
@@ -143,39 +143,11 @@ namespace MediaMotion.Core.Controllers {
 		}
 
 		/// <summary>
-		/// Actions the handle.
-		/// </summary>
-		/// <param name="Sender">The sender.</param>
-		/// <param name="Action">The <see cref="ActionDetectedEventArgs"/> instance containing the event data.</param>
-		public void ActionHandle(object Sender, ActionDetectedEventArgs Action) {
-			Debug.Log(Action.Action.Type);
-			switch (Action.Action.Type) {
-				case ActionType.Left:
-					this.MoveLeft();
-					break;
-				case ActionType.Right:
-					this.MoveRight();
-					break;
-				case ActionType.ScrollIn:
-					this.MoveDown();
-					break;
-				case ActionType.ScrollOut:
-					this.MoveUp();
-					break;
-				case ActionType.Select:
-					this.Open();
-					break;
-				default:
-					break;
-			}
-		}
-
-		/// <summary>
 		/// Highlights the current.
 		/// </summary>
 		/// <param name="Current">The object.</param>
 		private void HighlightCurrent(GameObject Current) {
-//			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
+			//			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 2, Current.transform.position.z), 0.5f);
 		}
 
@@ -184,7 +156,7 @@ namespace MediaMotion.Core.Controllers {
 		/// </summary>
 		/// <param name="Current">The object.</param>
 		private void CancelHighlight(GameObject Current) {
-//			Current.transform.position = new Vector3(Current.transform.position.x, 1, Current.transform.position.z);
+			//			Current.transform.position = new Vector3(Current.transform.position.x, 1, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 1, Current.transform.position.z), 0.5f);
 		}
 
@@ -208,8 +180,7 @@ namespace MediaMotion.Core.Controllers {
 					Vector3 vect = new Vector3(0, 0, -3);
 					if (camPos == Vector3.zero) {
 						camPos = this.Camera.transform.position + vect;
-					}
-					else {
+					} else {
 						camPos += vect;
 					}
 					Hashtable camHash = new Hashtable();
@@ -219,7 +190,7 @@ namespace MediaMotion.Core.Controllers {
 					camHash.Add("easetype", iTween.EaseType.easeInOutSine);
 					camHash.Add("time", time);
 					iTween.MoveTo(this.Camera, camHash);
-//					this.Camera.transform.Translate(0, 0, -3, Space.World);
+					//					this.Camera.transform.Translate(0, 0, -3, Space.World);
 				}
 				this.ChangeSelection(-this.RowSize);
 			}
@@ -231,13 +202,12 @@ namespace MediaMotion.Core.Controllers {
 		private void MoveDown() {
 			if (this.CurrentIndex + this.RowSize < this.Tiles.Count) {
 				if (--this.Line % 2 == 0) {
-//					this.Camera.transform.Translate(0, 0, 3, Space.World);
+					//					this.Camera.transform.Translate(0, 0, 3, Space.World);
 					float time = 0.5f;
 					Vector3 vect = new Vector3(0, 0, 3);
 					if (camPos == Vector3.zero) {
 						camPos = this.Camera.transform.position + vect;
-					}
-					else {
+					} else {
 						camPos += vect;
 					}
 					Hashtable camHash = new Hashtable();
@@ -309,17 +279,17 @@ namespace MediaMotion.Core.Controllers {
 				////				tile.AddComponent("FolderHover");
 				////tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 
-                tileText.transform.position = new Vector3(x - 0.4f, 0.45f, z - 0.2f);
-                TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
-                tileTextMesh.transform.parent = tileText.transform;
-                tileTextMesh.font = this.ArialFont;
-                tileTextMesh.fontSize = 16;
-                tileTextMesh.renderer.material = tileTextMesh.font.material;
+				tileText.transform.position = new Vector3(x - 0.4f, 0.45f, z - 0.2f);
+				TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
+				tileTextMesh.transform.parent = tileText.transform;
+				tileTextMesh.font = this.ArialFont;
+				tileTextMesh.fontSize = 16;
+				tileTextMesh.renderer.material = tileTextMesh.font.material;
 				tileTextMesh.text = file.GetName();
 				tileText.transform.eulerAngles = new Vector3(30, 0, 0);
 				tileText.transform.localScale = new Vector3(0.9F, 0.9F, 0.9F);
-//				tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
-                Filenames.Add(tileText);
+				//				tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+				Filenames.Add(tileText);
 
 				Hashtable color = new Hashtable();
 				color.Add("r", 0.8);
@@ -330,11 +300,11 @@ namespace MediaMotion.Core.Controllers {
 
 				color = new Hashtable();
 				if (tile.renderer.bounds.size.x < tileText.renderer.bounds.size.x) {
-//					color.Add("r", 1);
-//					color.Add("g", 0.5);
-//					color.Add("b", 0.5);
-//					color.Add("time", 0.5);
-//					iTween.ColorTo(tileText, color);
+					//					color.Add("r", 1);
+					//					color.Add("g", 0.5);
+					//					color.Add("b", 0.5);
+					//					color.Add("time", 0.5);
+					//					iTween.ColorTo(tileText, color);
 					tileTextMesh.text = file.GetName().Substring(0, 10) + "...";
 				}
 
@@ -389,6 +359,7 @@ namespace MediaMotion.Core.Controllers {
 			}
 		}
 
+<<<<<<< HEAD
 		public void Register() {
 		}
 
@@ -410,14 +381,34 @@ namespace MediaMotion.Core.Controllers {
 					);
 					break;
 				}
+=======
+		/// <summary>
+		/// Actions the handle.
+		/// </summary>
+		/// <param name="Sender">The sender.</param>
+		/// <param name="Action">The <see cref="ActionDetectedEventArgs"/> instance containing the event data.</param>
+		public void ActionHandle(object Sender, ActionDetectedEventArgs Action) {
+			Debug.Log(Action.Action.Type);
+			switch (Action.Action.Type) {
+				case ActionType.BrowsingCursor: {
+						MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
+						this.Cursor.transform.position = new Vector3(
+							(float)(Parameter.x) / 10,
+							(float)(Parameter.y) / 10,
+							-(float)Parameter.z / 10 + cursorZtmp
+						);
+						break;
+					}
+>>>>>>> Fix merge
 				case ActionType.BrowsingScroll: {
-					MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
-					this.cursorZtmp += (float)(Parameter.z) / 20;
-					this.Camera.transform.Translate(0, 0, (float)Parameter.z / 20, Space.World);
-					break;
-				}
+						MediaMotion.Motion.Actions.Parameters.Vector3 Parameter = Action.Action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
+						this.cursorZtmp += (float)(Parameter.z) / 20;
+						this.Camera.transform.Translate(0, 0, (float)Parameter.z / 20, Space.World);
+						break;
+					}
 				case ActionType.BrowsingHighlight:
 					break;
+<<<<<<< HEAD
 
 				case ActionType.Left:
 					//this.moveLeft();
@@ -433,6 +424,22 @@ namespace MediaMotion.Core.Controllers {
 					break;
 				case ActionType.Select:
 					//this.Open();
+=======
+				case ActionType.Left:
+					this.MoveLeft();
+					break;
+				case ActionType.Right:
+					this.MoveRight();
+					break;
+				case ActionType.ScrollIn:
+					this.MoveDown();
+					break;
+				case ActionType.ScrollOut:
+					this.MoveUp();
+					break;
+				case ActionType.Select:
+					this.Open();
+>>>>>>> Fix merge
 					break;
 				default:
 					break;
