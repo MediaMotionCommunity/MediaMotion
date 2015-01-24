@@ -87,9 +87,9 @@ namespace MediaMotion.Core.Controllers {
         Font ArialFont;
 
 		/// <summary>
-		/// The light
+		/// The lights
 		/// </summary>
-		private GameObject Light;
+		private List<GameObject> Lights;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
@@ -105,11 +105,9 @@ namespace MediaMotion.Core.Controllers {
 			this.Line = 0;
             this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Main Camera");
-			this.Light = GameObject.Find("Point light");
-			this.Light.transform.parent = this.Camera.transform;
 			iTween.Init(this.Camera);
-//			iTween.Init(this.light);
-
+//			this.Light = GameObject.Find("Point light");
+//			this.Light.transform.parent = this.Camera.transform;
 		}
 
 		/// <summary>
@@ -280,6 +278,20 @@ namespace MediaMotion.Core.Controllers {
 		}
 
 		/// <summary>
+		/// Add a light
+		/// </summary>
+		private void AddLight(Vector3 position, Color color, float range) {
+			GameObject lightC = new GameObject();
+			lightC.AddComponent<Light>();
+			lightC.light.name = "light_" + position.x + "_" + position.y + "_" + position.z;
+			lightC.light.transform.position = position;
+			lightC.light.color = color;
+			lightC.light.range = range;
+			lightC.light.intensity = 1.4f;
+			lightC.light.renderMode = LightRenderMode.ForcePixel;
+		}
+
+		/// <summary>
 		/// Displays the content.
 		/// </summary>
 		private void DisplayContent() {
@@ -297,6 +309,7 @@ namespace MediaMotion.Core.Controllers {
 				tile.transform.eulerAngles = new Vector3(60, 180, 0);
 				tile.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
 				tile.renderer.material.mainTexture = Resources.Load<Texture2D>(this.TextureMap[file.GetElementType()]);
+//				tile.renderer.material.mainTextureOffset = new Vector2(0, -0.001f);
 				tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
 				tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
 				tile.name = "tile_" + file.GetName();
@@ -343,6 +356,16 @@ namespace MediaMotion.Core.Controllers {
 				if (i % this.RowSize == 0) {
 					z += this.IncrementZ;
 				}
+
+				if (i == 1) {
+					AddLight(new Vector3 (0, 5, z), new Color(0.9f, 1, 1), 9f);
+					AddLight(new Vector3 (0, 5, z - 1.5f), new Color(0.9f, 1, 1), 9f);
+					AddLight(new Vector3 (0, 5, z - 3f), new Color(0.9f, 1, 1), 14f);
+				}
+				if (i % 5 == 0) {
+					AddLight(new Vector3 (0, 5, z), new Color(0.9f, 1, 1), 9f);
+				}
+
 				this.HighlightCurrent(this.Tiles[this.CurrentIndex]);
 			}
 		}
