@@ -61,7 +61,11 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 				{ActionType.Up, "Up"},
 				{ActionType.ScrollIn, "ScrollIn"},
 				{ActionType.ScrollOut, "ScrollOut"},
-				{ActionType.Select, "Select"}
+				{ActionType.Select, "Select"},
+				{ActionType.Return, "Return"},
+				{ActionType.BrowsingCursor, "BrowsingCursor"},
+				{ActionType.BrowsingHighlight, "BrowsingHighlight"},
+				{ActionType.BrowsingScroll, "BrowsingScroll"}
 			};
 
 			return list[ac.Type];

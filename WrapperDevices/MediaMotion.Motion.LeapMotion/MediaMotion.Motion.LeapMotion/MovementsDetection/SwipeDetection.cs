@@ -12,7 +12,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <summary>
 		/// Minimal value for direction detection
 		/// </summary>
-		private const double MinVal = 0.5;
+		private const double MinVal = 0.8;
 		#endregion
 
 		#region Constructor
@@ -38,25 +38,8 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			if (!this.IsStateValid(swipe.State)) {
 				return list;
 			}
-			if (swipe.Direction.x > MinVal) {
-				list.Add(new Action(ActionType.Right, null));
-			}
-			else if (swipe.Direction.x < -MinVal) {
-				list.Add(new Action(ActionType.Left, null));
-			}
-
-			if (swipe.Direction.y > MinVal) {
-				list.Add(new Action(ActionType.Up, null));
-			}
-			else if (swipe.Direction.y < -MinVal) {
-				list.Add(new Action(ActionType.Down, null));
-			}
-
-			if (swipe.Direction.z > MinVal) {
-				list.Add(new Action(ActionType.ScrollIn, null));
-			}
-			else if (swipe.Direction.z < -MinVal) {
-				list.Add(new Action(ActionType.ScrollOut, null));
+			if (swipe.Direction.x > MinVal || swipe.Direction.x < -MinVal) {
+				list.Add(new Action(ActionType.Return, null));
 			}
 
 			return list;

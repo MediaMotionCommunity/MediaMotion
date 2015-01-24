@@ -63,7 +63,6 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// The configuration of controller.
 		/// </summary>
 		private void Configuration() {
-			this.controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP);
 			this.controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE);
 		}
 
