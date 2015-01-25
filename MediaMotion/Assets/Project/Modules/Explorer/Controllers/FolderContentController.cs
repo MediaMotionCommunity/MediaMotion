@@ -96,11 +96,6 @@ namespace MediaMotion.Core.Controllers {
 		Font ArialFont;
 
 		/// <summary>
-		/// The light
-		/// </summary>
-		private GameObject Light;
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
 		/// </summary>
 		public FolderContentController() {
@@ -113,6 +108,9 @@ namespace MediaMotion.Core.Controllers {
 			this.TextureMap = new Dictionary<ElementType, string>();
 			this.TextureMap.Add(ElementType.File, "File-icon");
 			this.TextureMap.Add(ElementType.Folder, "Folder-icon");
+			iTween.Init(this.Camera);
+//			this.Light = GameObject.Find("Point light");
+//			this.Light.transform.parent = this.Camera.transform;
 		}
 			
 
@@ -124,8 +122,6 @@ namespace MediaMotion.Core.Controllers {
 			this.CurrentIndex = 0;
 			this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Camera/Main");
-			this.Light = GameObject.Find("Point light");
-			this.Light.transform.parent = this.Camera.transform;
 			iTween.Init(this.Camera);
 
 			this.EnterDirectory();
@@ -137,7 +133,7 @@ namespace MediaMotion.Core.Controllers {
 		/// </summary>
 		/// <param name="Current">The object.</param>
 		private void HighlightCurrent(GameObject Current) {
-			//			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
+//			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 2, Current.transform.position.z), 0.5f);
 		}
 
@@ -146,7 +142,7 @@ namespace MediaMotion.Core.Controllers {
 		/// </summary>
 		/// <param name="Current">The object.</param>
 		private void CancelHighlight(GameObject Current) {
-			//			Current.transform.position = new Vector3(Current.transform.position.x, 1, Current.transform.position.z);
+//			Current.transform.position = new Vector3(Current.transform.position.x, 1, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 1, Current.transform.position.z), 0.5f);
 		}
 
@@ -170,7 +166,8 @@ namespace MediaMotion.Core.Controllers {
 					Vector3 vect = new Vector3(0, 0, -3);
 					if (camPos == Vector3.zero) {
 						camPos = this.Camera.transform.position + vect;
-					} else {
+					}
+					else {
 						camPos += vect;
 					}
 					Hashtable camHash = new Hashtable();
@@ -180,7 +177,7 @@ namespace MediaMotion.Core.Controllers {
 					camHash.Add("easetype", iTween.EaseType.easeInOutSine);
 					camHash.Add("time", time);
 					iTween.MoveTo(this.Camera, camHash);
-					//					this.Camera.transform.Translate(0, 0, -3, Space.World);
+//					this.Camera.transform.Translate(0, 0, -3, Space.World);
 				}
 				this.ChangeSelection(-this.RowSize);
 			}
@@ -192,12 +189,13 @@ namespace MediaMotion.Core.Controllers {
 		private void MoveDown() {
 			if (this.CurrentIndex + this.RowSize < this.Tiles.Count) {
 				if (--this.Line % 2 == 0) {
-					//					this.Camera.transform.Translate(0, 0, 3, Space.World);
+//					this.Camera.transform.Translate(0, 0, 3, Space.World);
 					float time = 0.5f;
 					Vector3 vect = new Vector3(0, 0, 3);
 					if (camPos == Vector3.zero) {
 						camPos = this.Camera.transform.position + vect;
-					} else {
+					}
+					else {
 						camPos += vect;
 					}
 					Hashtable camHash = new Hashtable();
@@ -245,6 +243,20 @@ namespace MediaMotion.Core.Controllers {
 		}
 
 		/// <summary>
+		/// Add a light
+		/// </summary>
+		private void AddLight(Vector3 position, Color color, float range) {
+			GameObject lightC = new GameObject();
+			lightC.AddComponent<Light>();
+			lightC.light.name = "light_" + position.x + "_" + position.y + "_" + position.z;
+			lightC.light.transform.position = position;
+			lightC.light.color = color;
+			lightC.light.range = range;
+			lightC.light.intensity = 1.4f;
+			lightC.light.renderMode = LightRenderMode.ForcePixel;
+		}
+
+		/// <summary>
 		/// Displays the content.
 		/// </summary>
 		private void DisplayContent() {
@@ -262,6 +274,7 @@ namespace MediaMotion.Core.Controllers {
 				tile.transform.eulerAngles = new Vector3(60, 180, 0);
 				tile.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
 				tile.renderer.material.mainTexture = Resources.Load<Texture2D>(this.TextureMap[file.GetElementType()]);
+//				tile.renderer.material.mainTextureOffset = new Vector2(0, -0.001f);
 				tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
 				tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
 				tile.name = "tile_" + file.GetName();
@@ -269,17 +282,17 @@ namespace MediaMotion.Core.Controllers {
 				////				tile.AddComponent("FolderHover");
 				////tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 
-				tileText.transform.position = new Vector3(x - 0.4f, 0.45f, z - 0.2f);
-				TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
-				tileTextMesh.transform.parent = tileText.transform;
-				tileTextMesh.font = this.ArialFont;
-				tileTextMesh.fontSize = 16;
-				tileTextMesh.renderer.material = tileTextMesh.font.material;
+                tileText.transform.position = new Vector3(x - 0.4f, 0.45f, z - 0.2f);
+                TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
+                tileTextMesh.transform.parent = tileText.transform;
+                tileTextMesh.font = this.ArialFont;
+                tileTextMesh.fontSize = 16;
+                tileTextMesh.renderer.material = tileTextMesh.font.material;
 				tileTextMesh.text = file.GetName();
 				tileText.transform.eulerAngles = new Vector3(30, 0, 0);
 				tileText.transform.localScale = new Vector3(0.9F, 0.9F, 0.9F);
-				//				tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
-				Filenames.Add(tileText);
+//				tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+                Filenames.Add(tileText);
 
 				Hashtable color = new Hashtable();
 				color.Add("r", 0.8);
@@ -290,11 +303,11 @@ namespace MediaMotion.Core.Controllers {
 
 				color = new Hashtable();
 				if (tile.renderer.bounds.size.x < tileText.renderer.bounds.size.x) {
-					//					color.Add("r", 1);
-					//					color.Add("g", 0.5);
-					//					color.Add("b", 0.5);
-					//					color.Add("time", 0.5);
-					//					iTween.ColorTo(tileText, color);
+//					color.Add("r", 1);
+//					color.Add("g", 0.5);
+//					color.Add("b", 0.5);
+//					color.Add("time", 0.5);
+//					iTween.ColorTo(tileText, color);
 					tileTextMesh.text = file.GetName().Substring(0, 10) + "...";
 				}
 
@@ -308,6 +321,16 @@ namespace MediaMotion.Core.Controllers {
 				if (i % this.RowSize == 0) {
 					z += this.IncrementZ;
 				}
+
+				if (i == 1) {
+					AddLight(new Vector3 (0, 5, z), new Color(0.9f, 1, 1), 9f);
+					AddLight(new Vector3 (0, 5, z - 1.5f), new Color(0.9f, 1, 1), 9f);
+					AddLight(new Vector3 (0, 5, z - 3f), new Color(0.9f, 1, 1), 14f);
+				}
+				if (i % 5 == 0) {
+					AddLight(new Vector3 (0, 5, z), new Color(0.9f, 1, 1), 9f);
+				}
+
 				this.HighlightCurrent(this.Tiles[this.CurrentIndex]);
 			}
 		}
