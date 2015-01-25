@@ -10,7 +10,8 @@
 		Left,
 		ScrollIn,
 		ScrollOut,
-		Select
+		Select,
+		Back
 	}
 
 	/// <summary>

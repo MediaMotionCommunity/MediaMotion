@@ -52,7 +52,7 @@
      <Compile Include="Assets\Plugins\Pixelplacement\iTween\iTween.cs" />
      <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
  <Reference Include="MediaMotion.Motion">
- <HintPath>O:/Projects/MediaMotion/MediaMotion/Assets/MediaMotion.Motion.dll</HintPath>
+ <HintPath>O:/Projects/MediaMotion/Unity/MediaMotion/Assets/MediaMotion.Motion.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

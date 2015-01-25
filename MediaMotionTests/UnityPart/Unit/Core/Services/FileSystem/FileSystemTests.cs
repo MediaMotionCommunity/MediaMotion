@@ -19,7 +19,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 
 		[SetUp]
 		public void Init() {
-			FileSystem = FileSystemService.GetInstance();
+			FileSystem = MediaMotionCore.Core.GetService("FileSystem") as IFileSystem;
 		}
 
 		[Test()]
