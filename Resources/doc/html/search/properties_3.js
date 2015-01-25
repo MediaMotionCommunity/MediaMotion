@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['filefactory',['FileFactory',['../class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#ae7181f34f0440d3ef42fd5ff93d4551d',1,'MediaMotion::Core::Services::FileSystem::FileSystemService']]],
-  ['folderfactory',['FolderFactory',['../class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#a2f40b0661886303c13cbd79702c642b0',1,'MediaMotion::Core::Services::FileSystem::FileSystemService']]]
+  ['description',['Description',['../class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#a36abb96dc6f02d57c6b1558d6eb0f540',1,'MediaMotion::Core::Models::Module::Configuration']]]
 ];

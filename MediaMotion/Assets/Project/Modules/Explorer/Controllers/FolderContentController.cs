@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using MediaMotion.Core;
 using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
@@ -13,7 +14,7 @@ using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
-namespace MediaMotion.Core.Controllers {
+namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Explorer Controller
 	/// </summary>

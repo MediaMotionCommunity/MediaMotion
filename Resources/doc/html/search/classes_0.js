@@ -4,6 +4,5 @@ var searchData=
   ['aelement',['AElement',['../class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_element.html',1,'MediaMotion::Core::Models::FileManager::Abstracts']]],
   ['afactory',['AFactory',['../class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_abstracts_1_1_a_factory.html',1,'MediaMotion::Core::Services::FileSystem::Abstracts']]],
   ['afile',['AFile',['../class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_file.html',1,'MediaMotion::Core::Models::FileManager::Abstracts']]],
-  ['afolder',['AFolder',['../class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_folder.html',1,'MediaMotion::Core::Models::FileManager::Abstracts']]],
-  ['amediaplayer',['AMediaPlayer',['../class_media_motion_1_1_modules_1_1_media_player_1_1_a_media_player.html',1,'MediaMotion::Modules::MediaPlayer']]]
+  ['afolder',['AFolder',['../class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_folder.html',1,'MediaMotion::Core::Models::FileManager::Abstracts']]]
 ];
