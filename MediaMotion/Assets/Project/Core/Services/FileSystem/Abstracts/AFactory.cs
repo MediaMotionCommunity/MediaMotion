@@ -15,7 +15,7 @@ namespace MediaMotion.Core.Services.FileSystem.Abstracts {
 		public string GetName(string Path) {
 			int index;
 
-			return (((index = Math.Max(Path.LastIndexOf('/'), Path.LastIndexOf('\\'))) >= 0) ? (Path.Substring(index)) : (Path));
+			return (((index = Math.Max(Path.LastIndexOf('/'), Path.LastIndexOf('\\'))) >= 0) ? (Path.Substring(index + 1)) : (Path));
 		}
 
 		/// <summary>
