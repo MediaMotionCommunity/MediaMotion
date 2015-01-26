@@ -13,6 +13,8 @@ using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
+using Assets.Scripts.Core.View;
+using System.Timers;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
@@ -96,22 +98,35 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private List<IElement> Content;
 		Font ArialFont;
 
-		/// <summary>
+        /// <summary>
+        /// Timer to display the file info popup.
+        /// </summary>
+        private Timer PopupTimer;
+
+        /// <summary>
+        /// Popup time value.
+        /// </summary>
+        private int PopupTime;
+
+        /// <summary>
+        /// Popup reference.
+        /// </summary>
+        private FileInfoUI Popup;
+        
+        /// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
 		/// </summary>
 		public FolderContentController() {
 			this.Input = MediaMotionCore.Core.GetService("Input") as IInput;
 			this.FileService = MediaMotionCore.Core.GetService("FileSystem") as IFileSystem;
-
-			this.Tiles = new List<GameObject>();
+			
+            this.Tiles = new List<GameObject>();
 			this.Filenames = new List<GameObject>();
 
 			this.TextureMap = new Dictionary<ElementType, string>();
 			this.TextureMap.Add(ElementType.File, "File-icon");
 			this.TextureMap.Add(ElementType.Folder, "Folder-icon");
-			iTween.Init(this.Camera);
-//			this.Light = GameObject.Find("Point light");
-//			this.Light.transform.parent = this.Camera.transform;
+//			iTween.Init(this.light);
 		}
 			
 
@@ -123,7 +138,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.CurrentIndex = 0;
 			this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Camera/Main");
-			iTween.Init(this.Camera);
+            this.Camera.AddComponent("FileInfoUI");
+
+            this.Popup = this.Camera.GetComponent<FileInfoUI>();
+            this.PopupTime = 2000;
+            this.PopupTimer = new System.Timers.Timer(this.PopupTime);
+            this.PopupTimer.Elapsed += DisplayFilePopup;
+            
+            iTween.Init(this.Camera);
 
 			this.EnterDirectory();
 			//			iTween.Init(this.light);
@@ -136,6 +158,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private void HighlightCurrent(GameObject Current) {
 //			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 2, Current.transform.position.z), 0.5f);
+            this.PopupTimer.Interval = this.PopupTime;
+            this.PopupTimer.Start();
 		}
 
 		/// <summary>
@@ -181,6 +205,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 //					this.Camera.transform.Translate(0, 0, -3, Space.World);
 				}
 				this.ChangeSelection(-this.RowSize);
+                this.Camera.GetComponent<FileInfoUI>().Hide();
 			}
 		}
 
@@ -208,6 +233,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					iTween.MoveTo(this.Camera, camHash);
 				}
 				this.ChangeSelection(this.RowSize);
+                this.Camera.GetComponent<FileInfoUI>().Hide();
 			}
 		}
 
@@ -227,6 +253,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				LineOffset -= 1;
 			}
 			this.ChangeSelection(LineOffset);
+            this.Camera.GetComponent<FileInfoUI>().Hide();
 		}
 
 		/// <summary>
@@ -241,6 +268,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				LineOffset += 1;
 			}
 			this.ChangeSelection(LineOffset);
+            this.Camera.GetComponent<FileInfoUI>().Hide();
 		}
 
 		/// <summary>
@@ -372,6 +400,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				}
 			}
 		}
+
+        /// <summary>
+        /// Displays the popup.
+        /// </summary>
+        /// <param name="Source"></param>
+        /// <param name="E"></param>
+        private void DisplayFilePopup(System.Object Source, ElapsedEventArgs E) {
+            this.Popup.Show();
+            this.Popup.GenerateBaseInfo(this.Content[this.CurrentIndex].GetName(), this.Content[this.CurrentIndex].GetType().ToString());
+            this.PopupTimer.Enabled = false;
+        }
 
 		/// <summary>
 		/// Enters the directory.
