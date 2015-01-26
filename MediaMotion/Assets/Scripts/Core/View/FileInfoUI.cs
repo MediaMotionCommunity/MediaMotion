@@ -3,13 +3,13 @@ using System.Collections;
 using MediaMotion.Core.Models.FileManager.Interfaces;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.Core.View {
+namespace MediaMotion.Core.View {
     public class FileInfoUI : MonoBehaviour {
         
         /// <summary>
         /// Popup container
         /// </summary>
-        public Rect WindowRect = new Rect(20, 20, 200, 65);
+        public Rect WindowRect = new Rect(20, 20, 300, 65);
 
         /// <summary>
         /// Filename
@@ -59,8 +59,8 @@ namespace Assets.Scripts.Core.View {
         public void DoMyWindow(int WindowID) {
             GUI.Label(new Rect(10, 20, 100, 20), "Name", this.PropertyLabelStyle);
             GUI.Label(new Rect(10, 40, 100, 20), "Type", this.PropertyLabelStyle);
-            GUI.Label(new Rect(110, 20, 100, 20), this.Filename);
-            GUI.Label(new Rect(110, 40, 100, 20), this.Filetype);
+            GUI.Label(new Rect(110, 20, 200, 20), this.Filename);
+            GUI.Label(new Rect(110, 40, 200, 20), this.Filetype);
             
             if (this.InfoMap != null) {
                 int Offset = 60;
@@ -73,7 +73,13 @@ namespace Assets.Scripts.Core.View {
 
         public void GenerateBaseInfo(string Filename, string Type) {
             this.Filename = Filename;
-            this.Filetype = Type;
+            string[] strs = Type.Split('.');
+            if (strs != null && strs.Length > 0) {
+                this.Filetype = strs[strs.Length - 1];
+            }
+            else {
+                this.Filetype = "Undefined";
+            }
         }
 
         public void RecordAdditionalInfo(Dictionary<string, string> InfoMap) {

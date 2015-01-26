@@ -13,8 +13,9 @@ using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
-using Assets.Scripts.Core.View;
+
 using System.Timers;
+using MediaMotion.Core.View;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
