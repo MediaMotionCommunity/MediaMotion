@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
@@ -9,6 +10,7 @@ using MediaMotion.Core.Models.Wrapper.Events;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
+using Assets.Scripts.Core.View;
 
 namespace MediaMotion.Core.Controllers {
 	/// <summary>
@@ -91,7 +93,22 @@ namespace MediaMotion.Core.Controllers {
 		/// </summary>
 		private GameObject light;
 
-		/// <summary>
+        /// <summary>
+        /// Timer to display the file info popup.
+        /// </summary>
+        private Timer PopupTimer;
+
+        /// <summary>
+        /// Popup time value.
+        /// </summary>
+        private int PopupTime;
+
+        /// <summary>
+        /// Popup reference.
+        /// </summary>
+        private FileInfoUI Popup;
+        
+        /// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
 		/// </summary>
 		public FolderContentController() {
@@ -105,11 +122,15 @@ namespace MediaMotion.Core.Controllers {
 			this.Line = 0;
             this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Main Camera");
+            this.Camera.AddComponent("FileInfoUI");
+            this.Popup = this.Camera.GetComponent<FileInfoUI>();
 			this.light = GameObject.Find("Point light");
 			this.light.transform.parent = this.Camera.transform;
 			iTween.Init(this.Camera);
+            this.PopupTime = 2000;
+            this.PopupTimer = new System.Timers.Timer(this.PopupTime);
+            this.PopupTimer.Elapsed += DisplayFilePopup;
 //			iTween.Init(this.light);
-
 		}
 
 		/// <summary>
@@ -172,6 +193,8 @@ namespace MediaMotion.Core.Controllers {
 		private void HighlightCurrent(GameObject Current) {
 //			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 2, Current.transform.position.z), 0.5f);
+            this.PopupTimer.Interval = this.PopupTime;
+            this.PopupTimer.Start();
 		}
 
 		/// <summary>
@@ -217,6 +240,7 @@ namespace MediaMotion.Core.Controllers {
 //					this.Camera.transform.Translate(0, 0, -3, Space.World);
 				}
 				this.ChangeSelection(-this.RowSize);
+                this.Camera.GetComponent<FileInfoUI>().Hide();
 			}
 		}
 
@@ -244,6 +268,7 @@ namespace MediaMotion.Core.Controllers {
 					iTween.MoveTo(this.Camera, camHash);
 				}
 				this.ChangeSelection(this.RowSize);
+                this.Camera.GetComponent<FileInfoUI>().Hide();
 			}
 		}
 
@@ -263,6 +288,7 @@ namespace MediaMotion.Core.Controllers {
 				LineOffset -= 1;
 			}
 			this.ChangeSelection(LineOffset);
+            this.Camera.GetComponent<FileInfoUI>().Hide();
 		}
 
 		/// <summary>
@@ -277,6 +303,7 @@ namespace MediaMotion.Core.Controllers {
 				LineOffset += 1;
 			}
 			this.ChangeSelection(LineOffset);
+            this.Camera.GetComponent<FileInfoUI>().Hide();
 		}
 
 		/// <summary>
@@ -383,5 +410,16 @@ namespace MediaMotion.Core.Controllers {
 				}
 			}
 		}
+
+        /// <summary>
+        /// Displays the popup.
+        /// </summary>
+        /// <param name="Source"></param>
+        /// <param name="E"></param>
+        private void DisplayFilePopup(System.Object Source, ElapsedEventArgs E) {
+            this.Popup.Show();
+            this.Popup.GenerateBaseInfo(this.Content[this.CurrentIndex].GetName(), this.Content[this.CurrentIndex].GetType().ToString());
+            this.PopupTimer.Enabled = false;
+        }
 	}
 }

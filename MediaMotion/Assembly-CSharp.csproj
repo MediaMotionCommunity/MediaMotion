@@ -90,6 +90,7 @@
      <Compile Include="Assets\Scripts\Core\Services\PluginDatabase\Interfaces\IPluginDatabase.cs" />
      <Compile Include="Assets\Scripts\Core\Services\PluginDatabase\PluginDatabaseService.cs" />
      <Compile Include="Assets\Scripts\Core\View\ElementUI.cs" />
+     <Compile Include="Assets\Scripts\Core\View\FileInfoUI.cs" />
      <Compile Include="Assets\Scripts\Core\View\FileUI.cs" />
      <Compile Include="Assets\Scripts\Core\View\FolderContentUI.cs" />
      <Compile Include="Assets\Scripts\Core\View\FolderHover.cs" />
