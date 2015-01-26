@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Timers;
 using MediaMotion.Core;
 using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.FileManager;
@@ -11,11 +12,10 @@ using MediaMotion.Core.Models.Wrapper.Events;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
+using MediaMotion.Modules.Explorer.View;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
-using System.Timers;
-using MediaMotion.Core.View;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
@@ -99,37 +99,37 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private List<IElement> Content;
 		Font ArialFont;
 
-        /// <summary>
-        /// Timer to display the file info popup.
-        /// </summary>
-        private Timer PopupTimer;
+		/// <summary>
+		/// Timer to display the file info popup.
+		/// </summary>
+		private Timer PopupTimer;
 
-        /// <summary>
-        /// Popup time value.
-        /// </summary>
-        private int PopupTime;
+		/// <summary>
+		/// Popup time value.
+		/// </summary>
+		private int PopupTime;
 
-        /// <summary>
-        /// Popup reference.
-        /// </summary>
-        private FileInfoUI Popup;
-        
-        /// <summary>
+		/// <summary>
+		/// Popup reference.
+		/// </summary>
+		private FileInfoUI Popup;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
 		/// </summary>
 		public FolderContentController() {
 			this.Input = MediaMotionCore.Core.GetService("Input") as IInput;
 			this.FileService = MediaMotionCore.Core.GetService("FileSystem") as IFileSystem;
-			
-            this.Tiles = new List<GameObject>();
+
+			this.Tiles = new List<GameObject>();
 			this.Filenames = new List<GameObject>();
 
 			this.TextureMap = new Dictionary<ElementType, string>();
 			this.TextureMap.Add(ElementType.File, "File-icon");
 			this.TextureMap.Add(ElementType.Folder, "Folder-icon");
-//			iTween.Init(this.light);
+			//			iTween.Init(this.light);
 		}
-			
+
 
 		/// <summary>
 		/// Starts this instance.
@@ -139,14 +139,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.CurrentIndex = 0;
 			this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("Camera/Main");
-            this.Camera.AddComponent("FileInfoUI");
+			this.Camera.AddComponent("FileInfoUI");
 
-            this.Popup = this.Camera.GetComponent<FileInfoUI>();
-            this.PopupTime = 2000;
-            this.PopupTimer = new System.Timers.Timer(this.PopupTime);
-            this.PopupTimer.Elapsed += DisplayFilePopup;
-            
-            iTween.Init(this.Camera);
+			this.Popup = this.Camera.GetComponent<FileInfoUI>();
+			this.PopupTime = 2000;
+			this.PopupTimer = new System.Timers.Timer(this.PopupTime);
+			this.PopupTimer.Elapsed += DisplayFilePopup;
+
+			iTween.Init(this.Camera);
 
 			this.EnterDirectory();
 			//			iTween.Init(this.light);
@@ -157,10 +157,10 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="Current">The object.</param>
 		private void HighlightCurrent(GameObject Current) {
-//			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
+			//			Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 2, Current.transform.position.z), 0.5f);
-            this.PopupTimer.Interval = this.PopupTime;
-            this.PopupTimer.Start();
+			this.PopupTimer.Interval = this.PopupTime;
+			this.PopupTimer.Start();
 		}
 
 		/// <summary>
@@ -168,7 +168,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="Current">The object.</param>
 		private void CancelHighlight(GameObject Current) {
-//			Current.transform.position = new Vector3(Current.transform.position.x, 1, Current.transform.position.z);
+			//			Current.transform.position = new Vector3(Current.transform.position.x, 1, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 1, Current.transform.position.z), 0.5f);
 		}
 
@@ -192,8 +192,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					Vector3 vect = new Vector3(0, 0, -3);
 					if (camPos == Vector3.zero) {
 						camPos = this.Camera.transform.position + vect;
-					}
-					else {
+					} else {
 						camPos += vect;
 					}
 					Hashtable camHash = new Hashtable();
@@ -203,10 +202,10 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					camHash.Add("easetype", iTween.EaseType.easeInOutSine);
 					camHash.Add("time", time);
 					iTween.MoveTo(this.Camera, camHash);
-//					this.Camera.transform.Translate(0, 0, -3, Space.World);
+					//					this.Camera.transform.Translate(0, 0, -3, Space.World);
 				}
 				this.ChangeSelection(-this.RowSize);
-                this.Camera.GetComponent<FileInfoUI>().Hide();
+				this.Camera.GetComponent<FileInfoUI>().Hide();
 			}
 		}
 
@@ -216,13 +215,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private void MoveDown() {
 			if (this.CurrentIndex + this.RowSize < this.Tiles.Count) {
 				if (--this.Line % 2 == 0) {
-//					this.Camera.transform.Translate(0, 0, 3, Space.World);
+					//					this.Camera.transform.Translate(0, 0, 3, Space.World);
 					float time = 0.5f;
 					Vector3 vect = new Vector3(0, 0, 3);
 					if (camPos == Vector3.zero) {
 						camPos = this.Camera.transform.position + vect;
-					}
-					else {
+					} else {
 						camPos += vect;
 					}
 					Hashtable camHash = new Hashtable();
@@ -234,7 +232,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					iTween.MoveTo(this.Camera, camHash);
 				}
 				this.ChangeSelection(this.RowSize);
-                this.Camera.GetComponent<FileInfoUI>().Hide();
+				this.Camera.GetComponent<FileInfoUI>().Hide();
 			}
 		}
 
@@ -254,7 +252,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				LineOffset -= 1;
 			}
 			this.ChangeSelection(LineOffset);
-            this.Camera.GetComponent<FileInfoUI>().Hide();
+			this.Camera.GetComponent<FileInfoUI>().Hide();
 		}
 
 		/// <summary>
@@ -269,7 +267,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				LineOffset += 1;
 			}
 			this.ChangeSelection(LineOffset);
-            this.Camera.GetComponent<FileInfoUI>().Hide();
+			this.Camera.GetComponent<FileInfoUI>().Hide();
 		}
 
 		/// <summary>
@@ -304,7 +302,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				tile.transform.eulerAngles = new Vector3(60, 180, 0);
 				tile.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
 				tile.renderer.material.mainTexture = Resources.Load<Texture2D>(this.TextureMap[file.GetElementType()]);
-//				tile.renderer.material.mainTextureOffset = new Vector2(0, -0.001f);
+				//				tile.renderer.material.mainTextureOffset = new Vector2(0, -0.001f);
 				tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
 				tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
 				tile.name = "tile_" + file.GetName();
@@ -312,17 +310,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				////				tile.AddComponent("FolderHover");
 				////tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
 
-                tileText.transform.position = new Vector3(x - 0.4f, 0.45f, z - 0.2f);
-                TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
-                tileTextMesh.transform.parent = tileText.transform;
-                tileTextMesh.font = this.ArialFont;
-                tileTextMesh.fontSize = 16;
-                tileTextMesh.renderer.material = tileTextMesh.font.material;
+				tileText.transform.position = new Vector3(x - 0.4f, 0.45f, z - 0.2f);
+				TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
+				tileTextMesh.transform.parent = tileText.transform;
+				tileTextMesh.font = this.ArialFont;
+				tileTextMesh.fontSize = 16;
+				tileTextMesh.renderer.material = tileTextMesh.font.material;
 				tileTextMesh.text = file.GetName();
 				tileText.transform.eulerAngles = new Vector3(30, 0, 0);
 				tileText.transform.localScale = new Vector3(0.9F, 0.9F, 0.9F);
-//				tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
-                Filenames.Add(tileText);
+				//				tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+				Filenames.Add(tileText);
 
 				Hashtable color = new Hashtable();
 				color.Add("r", 0.8);
@@ -333,11 +331,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 				color = new Hashtable();
 				if (tile.renderer.bounds.size.x < tileText.renderer.bounds.size.x) {
-//					color.Add("r", 1);
-//					color.Add("g", 0.5);
-//					color.Add("b", 0.5);
-//					color.Add("time", 0.5);
-//					iTween.ColorTo(tileText, color);
+					//					color.Add("r", 1);
+					//					color.Add("g", 0.5);
+					//					color.Add("b", 0.5);
+					//					color.Add("time", 0.5);
+					//					iTween.ColorTo(tileText, color);
 					tileTextMesh.text = file.GetName().Substring(0, 10) + "...";
 				}
 
@@ -353,12 +351,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				}
 
 				if (i == 1) {
-					AddLight(new Vector3 (0, 5, z), new Color(0.9f, 1, 1), 9f);
-					AddLight(new Vector3 (0, 5, z - 1.5f), new Color(0.9f, 1, 1), 9f);
-					AddLight(new Vector3 (0, 5, z - 3f), new Color(0.9f, 1, 1), 14f);
+					AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f);
+					AddLight(new Vector3(0, 5, z - 1.5f), new Color(0.9f, 1, 1), 9f);
+					AddLight(new Vector3(0, 5, z - 3f), new Color(0.9f, 1, 1), 14f);
 				}
 				if (i % 5 == 0) {
-					AddLight(new Vector3 (0, 5, z), new Color(0.9f, 1, 1), 9f);
+					AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f);
 				}
 
 				this.HighlightCurrent(this.Tiles[this.CurrentIndex]);
@@ -402,16 +400,16 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			}
 		}
 
-        /// <summary>
-        /// Displays the popup.
-        /// </summary>
-        /// <param name="Source"></param>
-        /// <param name="E"></param>
-        private void DisplayFilePopup(System.Object Source, ElapsedEventArgs E) {
-            this.Popup.Show();
-            this.Popup.GenerateBaseInfo(this.Content[this.CurrentIndex].GetName(), this.Content[this.CurrentIndex].GetType().ToString());
-            this.PopupTimer.Enabled = false;
-        }
+		/// <summary>
+		/// Displays the popup.
+		/// </summary>
+		/// <param name="Source"></param>
+		/// <param name="E"></param>
+		private void DisplayFilePopup(System.Object Source, ElapsedEventArgs E) {
+			this.Popup.Show();
+			this.Popup.GenerateBaseInfo(this.Content[this.CurrentIndex].GetName(), this.Content[this.CurrentIndex].GetType().ToString());
+			this.PopupTimer.Enabled = false;
+		}
 
 		/// <summary>
 		/// Enters the directory.
