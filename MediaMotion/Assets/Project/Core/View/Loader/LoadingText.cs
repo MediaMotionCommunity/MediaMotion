@@ -5,7 +5,7 @@ namespace MediaMotion.Core.View.Loader {
 	/// <summary>
 	/// Loading text
 	/// </summary>
-	class LoadingText : MonoBehaviour {
+	public class LoadingText : MonoBehaviour {
 		/// <summary>
 		/// The cumulative delta time
 		/// </summary>

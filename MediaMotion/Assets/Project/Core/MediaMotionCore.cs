@@ -23,17 +23,17 @@ namespace MediaMotion.Core {
 		/// <summary>
 		/// The core
 		/// </summary>
-		private readonly static ICore Instance = new MediaMotionCore();
+		private static readonly ICore Instance = new MediaMotionCore();
 
 		/// <summary>
 		/// The service lock
 		/// </summary>
-		private object ModuleLock = new System.Object();
+		private object ModuleLock = new object();
 
 		/// <summary>
 		/// The service lock
 		/// </summary>
-		private object ServiceLock = new System.Object();
+		private object ServiceLock = new object();
 
 		/// <summary>
 		/// The module
@@ -51,7 +51,7 @@ namespace MediaMotion.Core {
 		private FolderContentController Tmp;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MediaMotionCore"/> class.
+		/// Prevents a default instance of the <see cref="MediaMotionCore"/> class from being created.
 		/// </summary>
 		private MediaMotionCore() {
 			this.Modules = new Dictionary<string, IModule>();
@@ -77,7 +77,7 @@ namespace MediaMotion.Core {
 		/// <param name="Namespace">The namespace.</param>
 		/// <returns>The service</returns>
 		public ServiceBase GetService(string Name, string Namespace = null) {
-			lock (ServiceLock) {
+			lock (this.ServiceLock) {
 				string FullName = null;
 				ServiceBase Service = null;
 
@@ -100,7 +100,7 @@ namespace MediaMotion.Core {
 						return (null);
 					}
 					Service = Constructor.Invoke(new object[] { this }) as ServiceBase;
-					
+
 					this.Services.Remove(FullName);
 					this.Services.Add(FullName, Service);
 				}

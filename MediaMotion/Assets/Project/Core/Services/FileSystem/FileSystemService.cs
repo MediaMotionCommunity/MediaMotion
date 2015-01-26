@@ -28,8 +28,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 		private IFactory FileFactoryInstance;
 
 		/// <summary>
-		/// Prevents a default instance of the <see cref="FileSystemService"/> class from being created.
+		/// Initializes a new instance of the <see cref="FileSystemService"/> class.
 		/// </summary>
+		/// <param name="Core">The core.</param>
 		public FileSystemService(ICore Core)
 			: base(Core) {
 			this.FileFactory = new FileFactory();
@@ -106,6 +107,13 @@ namespace MediaMotion.Core.Services.FileSystem {
 			return (true);
 		}
 
+		/// <summary>
+		/// Changes the directory.
+		/// </summary>
+		/// <param name="Path">The path.</param>
+		/// <returns>
+		/// True if the action succeed, False otherwise
+		/// </returns>
 		public bool ChangeDirectory(string Path = null) {
 			this.CurrentFolder = this.FolderFactory.Create(Path ?? this.GetHomeDirectory().GetPath()) as IFolder;
 			return (true);

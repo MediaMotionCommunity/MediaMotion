@@ -9,8 +9,9 @@ namespace MediaMotion.Core.Services.PluginDatabase {
 	/// </summary>
 	public class PluginDatabaseService : ServiceBase, IPluginDatabase {
 		/// <summary>
-		/// Prevents a default instance of the <see cref="PluginDatabaseService"/> class from being created.
+		/// Initializes a new instance of the <see cref="PluginDatabaseService"/> class.
 		/// </summary>
+		/// <param name="Core">The core.</param>
 		private PluginDatabaseService(ICore Core)
 			: base(Core) {
 		}

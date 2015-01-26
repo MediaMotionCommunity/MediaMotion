@@ -14,7 +14,7 @@ namespace MediaMotion.Modules.Explorer.View {
 		public Rect WindowRect = new Rect(20, 20, 300, 65);
 
 		/// <summary>
-		/// Filename
+		/// The filename
 		/// </summary>
 		public string Filename = "File";
 
@@ -29,23 +29,19 @@ namespace MediaMotion.Modules.Explorer.View {
 		public string Size = "0 MB";
 
 		/// <summary>
+		/// Style for the name of the property.
+		/// </summary>
+		public GUIStyle PropertyLabelStyle;
+
+		/// <summary>
 		/// Visibility of the popup
 		/// </summary>
 		private bool Visibility = false;
 
 		/// <summary>
-		/// Map of additional properties & values to display.
+		/// Map of additional properties and values to display.
 		/// </summary>
 		private Dictionary<string, string> InfoMap = null;
-
-		#region Styles
-
-		/// <summary>
-		/// Style for the name of the property.
-		/// </summary>
-		public GUIStyle PropertyLabelStyle;
-
-		#endregion
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileInfoUI"/> class.
@@ -60,7 +56,7 @@ namespace MediaMotion.Modules.Explorer.View {
 		/// </summary>
 		public void OnGUI() {
 			if (this.Visibility == true) {
-				WindowRect = GUI.Window(0, WindowRect, DoMyWindow, "Information");
+				this.WindowRect = GUI.Window(0, this.WindowRect, this.DoMyWindow, "Information");
 			}
 		}
 

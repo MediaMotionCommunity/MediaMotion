@@ -4,7 +4,7 @@ namespace MediaMotion.Core.View.Loader {
 	/// <summary>
 	/// Logo bound
 	/// </summary>
-	class LogoBound : MonoBehaviour {
+	public class LogoBound : MonoBehaviour {
 		/// <summary>
 		/// The direction
 		/// </summary>

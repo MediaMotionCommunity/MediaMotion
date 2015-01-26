@@ -16,7 +16,7 @@ namespace MediaMotion.Core.Services.Input {
 	/// <summary>
 	/// LeapMotion Service
 	/// </summary>
-	class InputService : ServiceBase, IInput {
+	public class InputService : ServiceBase, IInput {
 		/// <summary>
 		/// The wrapper
 		/// </summary>
@@ -40,6 +40,7 @@ namespace MediaMotion.Core.Services.Input {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InputService"/> class.
 		/// </summary>
+		/// <param name="Core">The core.</param>
 		public InputService(ICore Core)
 			: base(Core) {
 			this.LastFrame = null;

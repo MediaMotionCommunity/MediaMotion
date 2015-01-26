@@ -6,9 +6,11 @@ namespace MediaMotion.Core.Models.Module.Interfaces {
 	/// </summary>
 	public interface IModule {
 		/// <summary>
-		/// Gets or sets a value indicating whether [keep in background].
+		/// Gets a value indicating whether [keep in background].
 		/// </summary>
-		/// <value><c>true</c> if [keep in background]; otherwise, <c>false</c>.</value>
+		/// <value>
+		///   <c>true</c> if [keep in background]; otherwise, <c>false</c>.
+		/// </value>
 		bool KeepInBackground { get; }
 
 		/// <summary>

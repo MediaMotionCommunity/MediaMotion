@@ -47,7 +47,7 @@ namespace MediaMotion.Core.Models.Module {
 		public string Description { get; set; }
 
 		/// <summary>
-		/// Gets or sets the movements.
+		/// Gets the movements.
 		/// </summary>
 		/// <value>
 		/// The movements.
@@ -55,7 +55,7 @@ namespace MediaMotion.Core.Models.Module {
 		public Dictionary<ActionType, ActionHandler> Movements { get; private set; }
 
 		/// <summary>
-		/// Gets or sets the background movements.
+		/// Gets the background movements.
 		/// </summary>
 		/// <value>
 		/// The background movements.
