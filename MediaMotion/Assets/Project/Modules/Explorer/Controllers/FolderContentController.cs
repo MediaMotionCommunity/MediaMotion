@@ -89,7 +89,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// The camera position
 		/// </summary>
-		private Vector3 CamPos = new Vector3(0, 0, 0);
+		private Vector3 CamPos;
 
 		/// <summary>
 		/// The content
@@ -117,19 +117,25 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private FileInfoUI Popup;
 
 		/// <summary>
+		/// The lights
+		/// </summary>
+		private List<GameObject> Lights;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
 		/// </summary>
 		public FolderContentController() {
 			this.Input = MediaMotionCore.Core.GetService("Input") as IInput;
 			this.FileService = MediaMotionCore.Core.GetService("FileSystem") as IFileSystem;
 
+			this.CamPos = new Vector3(0, 0, 0);
 			this.Tiles = new List<GameObject>();
 			this.Filenames = new List<GameObject>();
+			this.Lights = new List<GameObject>();
 
 			this.TextureMap = new Dictionary<ElementType, string>();
 			this.TextureMap.Add(ElementType.File, "File-icon");
 			this.TextureMap.Add(ElementType.Folder, "Folder-icon");
-			//// iTween.Init(this.light);
 		}
 
 		/// <summary>
@@ -150,7 +156,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			iTween.Init(this.Camera);
 
 			this.EnterDirectory();
-			//// iTween.Init(this.light);
 		}
 
 		/// <summary>
@@ -238,6 +243,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				}
 				this.ChangeSelection(-this.RowSize);
 				this.Camera.GetComponent<FileInfoUI>().Hide();
+				Debug.Log(this.CamPos);
 			}
 		}
 
@@ -266,6 +272,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				}
 				this.ChangeSelection(this.RowSize);
 				this.Camera.GetComponent<FileInfoUI>().Hide();
+				Debug.Log(this.CamPos);
 			}
 		}
 
@@ -309,7 +316,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="position">The position.</param>
 		/// <param name="color">The color.</param>
 		/// <param name="range">The range.</param>
-		private void AddLight(Vector3 position, Color color, float range) {
+		private GameObject AddLight(Vector3 position, Color color, float range) {
 			GameObject lightC = new GameObject();
 
 			lightC.AddComponent<Light>();
@@ -319,6 +326,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			lightC.light.range = range;
 			lightC.light.intensity = 1.4f;
 			lightC.light.renderMode = LightRenderMode.ForcePixel;
+			return lightC;
 		}
 
 		/// <summary>
@@ -388,12 +396,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				}
 
 				if (i == 1) {
-					this.AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f);
-					this.AddLight(new Vector3(0, 5, z - 1.5f), new Color(0.9f, 1, 1), 9f);
-					this.AddLight(new Vector3(0, 5, z - 3f), new Color(0.9f, 1, 1), 14f);
+					this.Lights.Add(this.AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f));
+					this.Lights.Add(this.AddLight(new Vector3(0, 5, z - 1.5f), new Color(0.9f, 1, 1), 9f));
+					this.Lights.Add(this.AddLight(new Vector3(0, 5, z - 3f), new Color(0.9f, 1, 1), 14f));
 				}
 				if (i % 5 == 0) {
-					this.AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f);
+					this.Lights.Add(this.AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f));
 				}
 
 				this.HighlightCurrent(this.Tiles[this.CurrentIndex]);
@@ -404,12 +412,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Clears this instance.
 		/// </summary>
 		private void Clear() {
+			foreach (GameObject light in this.Lights) {
+				GameObject.Destroy(light);
+			}
 			this.Camera.transform.position = new Vector3(0, 5, -15);
+			this.CamPos = this.Camera.transform.position;
 			foreach (GameObject tile in this.Tiles) {
 				GameObject.Destroy(tile);
 			}
 			this.Tiles.Clear();
 			this.CurrentIndex = 0;
+			this.Line = 0;
 		}
 
 		/// <summary>
