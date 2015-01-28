@@ -5,7 +5,7 @@ namespace MediaMotion.Core.Services.Input.Interfaces {
 	/// <summary>
 	/// Input Interface
 	/// </summary>
-	public interface IInput {
+	public interface IInputService {
 		/// <summary>
 		/// Loads the wrapper.
 		/// </summary>

@@ -60,7 +60,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="NMock3\NMockTest.cs" />
     <Compile Include="UnityPart\Unit\Core\Controller\FolderContentControllerTests.cs" />
     <Compile Include="UnityPart\Unit\Core\Models\FileManager\FolderTests.cs" />
     <Compile Include="UnityPart\Unit\Core\Models\FileManager\ImageTests.cs" />

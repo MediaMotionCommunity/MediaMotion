@@ -7,6 +7,7 @@ using MediaMotion.Core.Exceptions;
 using MediaMotion.Core.Models.Core;
 using MediaMotion.Core.Models.Service;
 using MediaMotion.Core.Services.FileSystem;
+using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion;
 using MediaMotion.Motion.Actions;
@@ -16,7 +17,9 @@ namespace MediaMotion.Core.Services.Input {
 	/// <summary>
 	/// LeapMotion Service
 	/// </summary>
-	public class InputService : ServiceBase, IInput {
+	public class InputService : ServiceBase, IInputService {
+		private readonly IFileSystemService fileSystemService;
+
 		/// <summary>
 		/// The wrapper
 		/// </summary>
@@ -41,8 +44,9 @@ namespace MediaMotion.Core.Services.Input {
 		/// Initializes a new instance of the <see cref="InputService"/> class.
 		/// </summary>
 		/// <param name="Core">The core.</param>
-		public InputService(ICore Core)
-			: base(Core) {
+		/// <param name="fileSystemService"></param>
+		public InputService(IFileSystemService fileSystemService) {
+			this.fileSystemService = fileSystemService;
 			this.LastFrame = null;
 			this.Movements = new List<IAction>();
 			this.DefaultInput = new Dictionary<KeyCode, IAction>();
@@ -67,11 +71,9 @@ namespace MediaMotion.Core.Services.Input {
 			Type Type = null;
 			string[] Files = null;
 			IEnumerable<Type> Types = null;
-			FileSystemService FileSystem = null;
 
 			Type = typeof(IWrapperDevice);
-			FileSystem = this.Core.GetService("FileSystem") as FileSystemService;
-			Files = Directory.GetFiles(Path ?? System.IO.Path.Combine(FileSystem.InitialFolder.GetPath(), "WrapperDevicesLibraries"), Name);
+			Files = Directory.GetFiles(Path ?? System.IO.Path.Combine(this.fileSystemService.InitialFolder.GetPath(), "WrapperDevicesLibraries"), Name);
 			if (Files.Length < 1) {
 				throw new WrapperNotFoundException("WrapperDevice library not found");
 			}

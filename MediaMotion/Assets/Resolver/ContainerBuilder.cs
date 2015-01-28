@@ -63,6 +63,19 @@ namespace MediaMotion.Resolver {
 		}
 
 		/// <summary>
+		/// The resolve.
+		/// </summary>
+		/// <param name="type">
+		/// The type.
+		/// </param>
+		/// <returns>
+		/// The <see cref="object"/>.
+		/// </returns>
+		public object Resolve(Type type) {
+			return this.resolver.Resolve(type);
+		}
+
+		/// <summary>
 		/// The register type.
 		/// </summary>
 		/// <typeparam name="T">

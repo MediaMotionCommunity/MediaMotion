@@ -1,41 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediaMotion.Core.Services.FileSystem;
-using MediaMotion.Core.Models.FileManager.Interfaces;
-using MediaMotion.Core.Models.FileManager;
-using MediaMotion.Core.Services.FileSystem.Interfaces;
-using MediaMotion.Core.Models.FileManager.Enums;
-using NUnit.Framework;
 
+using MediaMotion.Core.Models.FileManager.Enums;
+using MediaMotion.Core.Models.FileManager.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Interfaces;
+
+using NUnit.Framework;
 
 namespace MediaMotion.Core.Services.FileSystem.Tests {
 	[TestFixture()]
 	public class FileSystemTests {
 
-		public IFileSystem FileSystem;
+		public IFileSystemService FileSystemService;
 
 		[SetUp]
 		public void Init() {
-			FileSystem = MediaMotionCore.Core.GetService("FileSystem") as IFileSystem;
+			this.FileSystemService = new FileSystemService();
 		}
 
 		[Test()]
 		public void FileSystemTest() {
-			Assert.AreNotEqual(null, FileSystem);
+			Assert.AreNotEqual(null, this.FileSystemService);
 		}
 
 		[Test()]
 		public void GetHomeDirectoryTest() {
-			String HomePath = (Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty) ? (Environment.GetFolderPath(Environment.SpecialFolder.Personal)) : (Environment.GetFolderPath(Environment.SpecialFolder.System));
-			IFolder HomeFolder = FileSystem.GetHomeDirectory();
+			string HomePath = (Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty) ? Environment.GetFolderPath(Environment.SpecialFolder.Personal) : (Environment.GetFolderPath(Environment.SpecialFolder.System));
+			IFolder HomeFolder = this.FileSystemService.GetHomeDirectory();
 
-			FileSystem.ChangeDirectory(HomeFolder);
-			Assert.AreEqual(HomeFolder.GetName(), FileSystem.CurrentFolder.GetName());
-			Assert.AreEqual(HomeFolder.GetPath(), FileSystem.CurrentFolder.GetPath());
-			Assert.AreEqual(HomePath, FileSystem.CurrentFolder.GetPath());
+			this.FileSystemService.ChangeDirectory(HomeFolder);
+			Assert.AreEqual(HomeFolder.GetName(), this.FileSystemService.CurrentFolder.GetName());
+			Assert.AreEqual(HomeFolder.GetPath(), this.FileSystemService.CurrentFolder.GetPath());
+			Assert.AreEqual(HomePath, this.FileSystemService.CurrentFolder.GetPath());
 			Assert.AreEqual(HomePath, HomeFolder.GetPath());
 		}
 
@@ -44,26 +40,26 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 
 			// Testing valid values
 			IFolder newDirectory = null;
-			IFolder initialDirectory = FileSystem.GetHomeDirectory();
-			FileSystem.ChangeDirectory(FileSystem.GetHomeDirectory());
+			IFolder initialDirectory = this.FileSystemService.GetHomeDirectory();
+			this.FileSystemService.ChangeDirectory(this.FileSystemService.GetHomeDirectory());
 			Assert.AreEqual(ElementType.Folder, initialDirectory.GetElementType());
-			List<IElement> directoryContent = FileSystem.GetDirectoryContent(FileSystem.CurrentFolder);
+			List<IElement> directoryContent = this.FileSystemService.GetDirectoryContent(this.FileSystemService.CurrentFolder);
 			foreach (IElement element in directoryContent) {
 				if (element.GetElementType().Equals(ElementType.Folder)) {
 					newDirectory = element as IFolder;
-					FileSystem.ChangeDirectory(element as IFolder);
+					this.FileSystemService.ChangeDirectory(element as IFolder);
 					break;
 				}
 			}
 			Assert.AreNotEqual(null, newDirectory);
 			Assert.AreNotEqual(newDirectory.GetPath(), initialDirectory.GetPath());
-			Assert.AreEqual(newDirectory.GetPath(), FileSystem.CurrentFolder.GetPath());
+			Assert.AreEqual(newDirectory.GetPath(), this.FileSystemService.CurrentFolder.GetPath());
 
 			// Testing invalid value
-			//IFolder invalidFolder = new Folder("/invalid/path", "toto");
-			//FileSystem.ChangeDirectory(invalidFolder); // Should return true/false ?
-			//Assert.AreNotEqual(invalidFolder.GetPath(), FileSystem.CurrentFolder.GetPath());
-			//Assert.AreEqual(newDirectory.GetPath(), FileSystem.CurrentFolder.GetPath());
+			// IFolder invalidFolder = new Folder("/invalid/path", "toto");
+			// FileSystem.ChangeDirectory(invalidFolder); // Should return true/false ?
+			// Assert.AreNotEqual(invalidFolder.GetPath(), FileSystem.CurrentFolder.GetPath());
+			// Assert.AreEqual(newDirectory.GetPath(), FileSystem.CurrentFolder.GetPath());
 
 
 			// Add test with invalid folder like a IFile.
@@ -71,22 +67,22 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 
 		[Test()]
 		public void GetDirectoryContentTest() {
-			//Assert.Fail();
+			// Assert.Fail();
 		}
 
 		[Test()]
 		public void CopyTest() {
-			//Assert.Fail();
+			// Assert.Fail();
 		}
 
 		[Test()]
 		public void MoveTest() {
-			//Assert.Fail();
+			// Assert.Fail();
 		}
 
 		[Test()]
 		public void RemoveTest() {
-			//Assert.Fail();
+			// Assert.Fail();
 		}
 	}
 }

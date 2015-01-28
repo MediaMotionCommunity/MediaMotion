@@ -7,15 +7,7 @@ namespace MediaMotion.Core.Services.PluginDatabase {
 	/// <summary>
 	/// Plugin Database Service
 	/// </summary>
-	public class PluginDatabaseService : ServiceBase, IPluginDatabase {
-		/// <summary>
-		/// Initializes a new instance of the <see cref="PluginDatabaseService"/> class.
-		/// </summary>
-		/// <param name="Core">The core.</param>
-		private PluginDatabaseService(ICore Core)
-			: base(Core) {
-		}
-
+	public class PluginDatabaseService : ServiceBase, IPluginDatabaseService {
 		/// <summary>
 		/// Gets the plugin available.
 		/// </summary>

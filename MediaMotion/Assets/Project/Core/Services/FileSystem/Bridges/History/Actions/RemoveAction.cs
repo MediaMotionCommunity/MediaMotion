@@ -10,14 +10,14 @@ namespace MediaMotion.Core.Services.FileSystem.Bridges.History.Actions {
 		/// <summary>
 		/// The element
 		/// </summary>
-		private IElement Element;
+		private readonly IElement element;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RemoveAction"/> class.
 		/// </summary>
-		/// <param name="Element">The element.</param>
-		public RemoveAction(IElement Element) {
-			this.Element = Element;
+		/// <param name="element">The element.</param>
+		public RemoveAction(IElement element) {
+			this.element = element;
 		}
 
 		/// <summary>
@@ -25,7 +25,7 @@ namespace MediaMotion.Core.Services.FileSystem.Bridges.History.Actions {
 		/// </summary>
 		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Do() {
-			return ((MediaMotionCore.Core.GetService("FileSystem") as IFileSystem).Remove(this.Element));
+			return (MediaMotionCore.Core.Resolve<IFileSystemService>().Remove(this.element));
 		}
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace MediaMotion.Core.Services.FileSystem.Bridges.History.Actions {
 		/// </summary>
 		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Undo() {
-			return ((MediaMotionCore.Core.GetService("FileSystem") as IFileSystem).Restore(this.Element));
+			return (MediaMotionCore.Core.Resolve<IFileSystemService>().Restore(this.element));
 		}
 	}
 }

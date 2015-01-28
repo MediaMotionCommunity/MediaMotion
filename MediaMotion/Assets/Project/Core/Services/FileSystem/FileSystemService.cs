@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using MediaMotion.Core.Models;
-using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Models.FileManager;
+
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Service;
-using MediaMotion.Core.Services;
 using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
-using UnityEngine;
 
 namespace MediaMotion.Core.Services.FileSystem {
 	/// <summary>
 	/// FileSystem Service
 	/// </summary>
-	public sealed class FileSystemService : ServiceBase, IFileSystem {
+	public sealed class FileSystemService : ServiceBase, IFileSystemService {
 		/// <summary>
 		/// The folder factory
 		/// </summary>
@@ -30,9 +26,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileSystemService"/> class.
 		/// </summary>
-		/// <param name="Core">The core.</param>
-		public FileSystemService(ICore Core)
-			: base(Core) {
+		public FileSystemService() {
 			this.FileFactory = new FileFactory();
 			this.FolderFactory = new FolderFactory();
 			this.InitialFolder = this.CurrentFolder = this.FolderFactory.Create(Directory.GetCurrentDirectory()) as IFolder;
@@ -97,10 +91,14 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
-		/// Change directory to the Home or the <see cref="IFolder" /> provide in parameter
+		/// Change directory to the Home or the <see cref="IFolder"/> provide in parameter
 		/// </summary>
-		/// <param name="Folder">New working directory</param>
-		/// <returns>True if the action succeed, False otherwise</returns>
+		/// <param name="Folder">
+		/// New working directory
+		/// </param>
+		/// <returns>
+		/// True if the action succeed, False otherwise
+		/// </returns>
 		public bool ChangeDirectory(IFolder Folder = null) {
 			this.CurrentFolder = ((Folder != null) ? (Folder) : (this.GetHomeDirectory()));
 
@@ -110,7 +108,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// Changes the directory.
 		/// </summary>
-		/// <param name="Path">The path.</param>
+		/// <param name="Path">
+		/// The path.
+		/// </param>
 		/// <returns>
 		/// True if the action succeed, False otherwise
 		/// </returns>
@@ -120,10 +120,14 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
-		/// Get the content of the current directory or the <see cref="IFolder" /> provide in parameter
+		/// Get the content of the current directory or the <see cref="IFolder"/> provide in parameter
 		/// </summary>
-		/// <param name="Folder">A specific folder to use</param>
-		/// <returns>List of elements</returns>
+		/// <param name="Folder">
+		/// A specific folder to use
+		/// </param>
+		/// <returns>
+		/// List of elements
+		/// </returns>
 		public List<IElement> GetDirectoryContent(IFolder Folder = null) {
 			List<IElement> DirectoryContent = new List<IElement>();
 			string Path = ((Folder != null) ? (Folder) : (this.CurrentFolder)).GetPath();
@@ -138,11 +142,17 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
-		/// Copy an <see cref="IElement" /> to the specific <see cref="IFolder" />
+		/// Copy an <see cref="IElement"/> to the specific <see cref="IFolder"/>
 		/// </summary>
-		/// <param name="Element">The element to be copied</param>
-		/// <param name="Destination">The folder destination</param>
-		/// <returns>True if the action succeed, False otherwise</returns>
+		/// <param name="Element">
+		/// The element to be copied
+		/// </param>
+		/// <param name="Destination">
+		/// The folder destination
+		/// </param>
+		/// <returns>
+		/// True if the action succeed, False otherwise
+		/// </returns>
 		public bool Copy(IElement Element, IFolder Destination) {
 			// FIXME Handle Directory copy
 			File.Copy(Element.GetPath(), Path.Combine(Destination.GetPath(), Element.GetName()));
@@ -151,17 +161,24 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
-		/// Move an <see cref="IElement" /> in a different <see cref="IFolder" />
+		/// Move an <see cref="IElement"/> in a different <see cref="IFolder"/>
 		/// </summary>
-		/// <param name="Element">The element to be move</param>
-		/// <param name="Destination">The folder destination</param>
-		/// <returns>True if the action succeed, False otherwise</returns>
+		/// <param name="Element">
+		/// The element to be move
+		/// </param>
+		/// <param name="Destination">
+		/// The folder destination
+		/// </param>
+		/// <returns>
+		/// True if the action succeed, False otherwise
+		/// </returns>
 		public bool Move(IElement Element, IFolder Destination) {
 			string PathDestination = Path.Combine(Destination.GetPath(), Element.GetName());
 
 			if (Element.GetElementType() == ElementType.File) {
 				File.Move(Element.GetPath(), PathDestination);
-			} else if (Element.GetElementType() == ElementType.Folder) {
+			}
+			else if (Element.GetElementType() == ElementType.Folder) {
 				Directory.Move(Element.GetPath(), PathDestination);
 			}
 			return (true);
@@ -170,12 +187,17 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// Remove an element
 		/// </summary>
-		/// <param name="Element">The element to delete</param>
-		/// <returns>True if the action succeed, False otherwise</returns>
+		/// <param name="Element">
+		/// The element to delete
+		/// </param>
+		/// <returns>
+		/// True if the action succeed, False otherwise
+		/// </returns>
 		public bool Remove(IElement Element) {
 			if (Element.GetElementType() == ElementType.File) {
 				File.Delete(Element.GetPath());
-			} else if (Element.GetElementType() == ElementType.Folder) {
+			}
+			else if (Element.GetElementType() == ElementType.Folder) {
 				Directory.Delete(Element.GetPath(), true);
 			}
 			return (true);
@@ -184,8 +206,12 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// Restores an element which was remove earlier
 		/// </summary>
-		/// <param name="Element">The element.</param>
-		/// <returns>True if the action succeed, False otherwise</returns>
+		/// <param name="Element">
+		/// The element.
+		/// </param>
+		/// <returns>
+		/// True if the action succeed, False otherwise
+		/// </returns>
 		public bool Restore(IElement Element) {
 			return (false);
 		}

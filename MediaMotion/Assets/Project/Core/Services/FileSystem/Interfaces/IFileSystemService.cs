@@ -5,7 +5,7 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 	/// <summary>
 	/// FileSystem Interface
 	/// </summary>
-	public interface IFileSystem {
+	public interface IFileSystemService {
 		/// <summary>
 		/// Gets the initial folder.
 		/// </summary>

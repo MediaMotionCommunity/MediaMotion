@@ -2,7 +2,7 @@
 	/// <summary>
 	/// History Interface
 	/// </summary>
-	public interface IHistory {
+	public interface IHistoryService {
 		/// <summary>
 		/// Gets the history.
 		/// </summary>

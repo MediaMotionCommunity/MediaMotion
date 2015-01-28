@@ -4,7 +4,7 @@ namespace MediaMotion.Core.Services.PluginDatabase.Interfaces {
 	/// <summary>
 	/// Plugin Database Interface
 	/// </summary>
-	public interface IPluginDatabase {
+	public interface IPluginDatabaseService {
 		/// <summary>
 		/// Gets the plugin available.
 		/// </summary>

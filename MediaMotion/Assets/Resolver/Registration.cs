@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+
+using MediaMotion.Resolver.Exceptions;
 
 using MediaMotion.Resolver.Activators;
 
@@ -56,6 +59,9 @@ namespace MediaMotion.Resolver {
 		/// </returns>
 		public IRegistration As<TOtherType>() {
 			this.otherType = typeof(TOtherType);
+			if (!this.otherType.IsAssignableFrom(this.globalType)) {
+				throw new NotAssignableTypeException("This type is not assignable to base type");
+			}
 			return this;
 		}
 
