@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NMock3">
+      <HintPath>..\packages\NMock3.3.5.44\lib\net40\NMock3.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -57,6 +60,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="NMock3\NMockTest.cs" />
     <Compile Include="UnityPart\Unit\Core\Controller\FolderContentControllerTests.cs" />
     <Compile Include="UnityPart\Unit\Core\Models\FileManager\FolderTests.cs" />
     <Compile Include="UnityPart\Unit\Core\Models\FileManager\ImageTests.cs" />
@@ -74,6 +78,7 @@
     <Compile Include="UnityPart\Unit\Modules\Components\Zoom\ZoomTests.cs" />
     <Compile Include="UnityPart\Unit\Modules\MediaPlayer\MusicPlayer\MusicPlayerTests.cs" />
     <Compile Include="UnityPart\Unit\Modules\MediaPlayer\VideoPlayer\VideoPlayerTests.cs" />
+    <Compile Include="UnityPart\Unit\Resolver\ContainerBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MediaMotion\Assembly-CSharp-firstpass.csproj">
