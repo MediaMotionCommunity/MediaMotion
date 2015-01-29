@@ -1,4 +1,6 @@
-﻿using MediaMotion.Core.Models.Service;
+﻿using System;
+
+using MediaMotion.Core.Models.Service;
 
 namespace MediaMotion.Core.Models.Core {
 	/// <summary>
@@ -6,11 +8,24 @@ namespace MediaMotion.Core.Models.Core {
 	/// </summary>
 	public interface ICore {
 		/// <summary>
-		/// Gets the service.
+		/// The get service.
 		/// </summary>
-		/// <param name="Name">The name.</param>
-		/// <param name="Namespace">The namespace.</param>
-		/// <returns>The service</returns>
-		ServiceBase GetService(string Name, string Namespace = null);
+		/// <typeparam name="T">
+		/// </typeparam>
+		/// <returns>
+		/// The <see cref="T"/>.
+		/// </returns>
+		T Resolve<T>() where T : class;
+
+		/// <summary>
+		/// The get service.
+		/// </summary>
+		/// <param name="type">
+		/// The type.
+		/// </param>
+		/// <returns>
+		/// The <see cref="object"/>.
+		/// </returns>
+		object Resolve(Type type);
 	}
 }

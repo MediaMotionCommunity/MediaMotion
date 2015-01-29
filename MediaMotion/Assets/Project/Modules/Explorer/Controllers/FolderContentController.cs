@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Timers;
+
 using MediaMotion.Core;
-using MediaMotion.Core.Models;
-using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
-using MediaMotion.Core.Models.Module.Interfaces;
-using MediaMotion.Core.Models.Wrapper.Events;
-using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Modules.Explorer.View;
 using MediaMotion.Motion.Actions;
+
 using UnityEngine;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Explorer Controller
 	/// </summary>
-	public class FolderContentController : MonoBehaviour {
+	public class FolderContentController : AUnityObject {
 		/// <summary>
 		/// The row size
 		/// </summary>
@@ -64,12 +61,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// The file service
 		/// </summary>
-		private IFileSystem FileService;
+		private IFileSystemService FileService;
 
 		/// <summary>
 		/// The input
 		/// </summary>
-		private IInput Input;
+		private IInputService inputService;
 
 		/// <summary>
 		/// The texture map
@@ -124,9 +121,15 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
 		/// </summary>
-		public FolderContentController() {
-			this.Input = MediaMotionCore.Core.GetService("Input") as IInput;
-			this.FileService = MediaMotionCore.Core.GetService("FileSystem") as IFileSystem;
+		/// <param name="inputService">
+		/// The input Service.
+		/// </param>
+		/// <param name="fileSystemService">
+		/// The file System Service.
+		/// </param>
+		public FolderContentController(IInputService inputService, IFileSystemService fileSystemService) {
+			this.inputService = inputService;
+			this.FileService = fileSystemService;
 
 			this.CamPos = new Vector3(0, 0, 0);
 			this.Tiles = new List<GameObject>();
@@ -141,7 +144,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Starts this instance.
 		/// </summary>
-		public void Start() {
+		public override void Start() {
 			this.Line = 0;
 			this.CurrentIndex = 0;
 			this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
@@ -150,7 +153,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 			this.Popup = this.Camera.GetComponent<FileInfoUI>();
 			this.PopupTime = 2000;
-			this.PopupTimer = new System.Timers.Timer(this.PopupTime);
+			this.PopupTimer = new Timer(this.PopupTime);
 			this.PopupTimer.Elapsed += this.DisplayFilePopup;
 
 			iTween.Init(this.Camera);
@@ -161,8 +164,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Actions the handle.
 		/// </summary>
-		public void Update() {
-			foreach (IAction Action in this.Input.GetMovements()) {
+		public override void Update() {
+			foreach (IAction Action in this.inputService.GetMovements()) {
 				switch (Action.Type) {
 					case ActionType.Left:
 						this.MoveLeft();
@@ -191,7 +194,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Highlights the current.
 		/// </summary>
-		/// <param name="Current">The object.</param>
+		/// <param name="Current">
+		/// The object.
+		/// </param>
 		private void HighlightCurrent(GameObject Current) {
 			//// Current.transform.position = new Vector3(Current.transform.position.x, 2, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 2, Current.transform.position.z), 0.5f);
@@ -202,7 +207,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Cancels the highlight.
 		/// </summary>
-		/// <param name="Current">The object.</param>
+		/// <param name="Current">
+		/// The object.
+		/// </param>
 		private void CancelHighlight(GameObject Current) {
 			//// Current.transform.position = new Vector3(Current.transform.position.x, 1, Current.transform.position.z);
 			iTween.MoveTo(Current, new Vector3(Current.transform.position.x, 1, Current.transform.position.z), 0.5f);
@@ -211,7 +218,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Changes the selection.
 		/// </summary>
-		/// <param name="Offset">The offset.</param>
+		/// <param name="Offset">
+		/// The offset.
+		/// </param>
 		private void ChangeSelection(int Offset) {
 			this.CancelHighlight(this.Tiles[this.CurrentIndex]);
 			this.HighlightCurrent(this.Tiles[this.CurrentIndex + Offset]);
@@ -230,7 +239,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 					if (this.CamPos == Vector3.zero) {
 						this.CamPos = this.Camera.transform.position + vect;
-					} else {
+					}
+					else {
 						this.CamPos += vect;
 					}
 					camHash.Add("z", this.CamPos.z);
@@ -239,6 +249,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					camHash.Add("easetype", iTween.EaseType.easeInOutSine);
 					camHash.Add("time", time);
 					iTween.MoveTo(this.Camera, camHash);
+
 					//// this.Camera.transform.Translate(0, 0, -3, Space.World);
 				}
 				this.ChangeSelection(-this.RowSize);
@@ -313,9 +324,18 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Adds the light.
 		/// </summary>
-		/// <param name="position">The position.</param>
-		/// <param name="color">The color.</param>
-		/// <param name="range">The range.</param>
+		/// <param name="position">
+		/// The position.
+		/// </param>
+		/// <param name="color">
+		/// The color.
+		/// </param>
+		/// <param name="range">
+		/// The range.
+		/// </param>
+		/// <returns>
+		/// The <see cref="GameObject"/>.
+		/// </returns>
 		private GameObject AddLight(Vector3 position, Color color, float range) {
 			GameObject lightC = new GameObject();
 
@@ -347,6 +367,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				tile.transform.eulerAngles = new Vector3(60, 180, 0);
 				tile.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
 				tile.renderer.material.mainTexture = Resources.Load<Texture2D>(this.TextureMap[file.GetElementType()]);
+
 				//// tile.renderer.material.mainTextureOffset = new Vector2(0, -0.001f);
 				tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
 				tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
@@ -354,7 +375,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 				//// tile.AddComponent("FolderHover");
 				//// tile.AddComponent(COMPONENT_POUR_INFOS_FICHIER);
-
 				tileText.transform.position = new Vector3(x - 0.4f, 0.45f, z - 0.2f);
 				TextMesh tileTextMesh = tileText.AddComponent(typeof(TextMesh)) as TextMesh;
 				tileTextMesh.transform.parent = tileText.transform;
@@ -364,6 +384,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				tileTextMesh.text = file.GetName();
 				tileText.transform.eulerAngles = new Vector3(30, 0, 0);
 				tileText.transform.localScale = new Vector3(0.9F, 0.9F, 0.9F);
+
 				//// tileText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
 				this.Filenames.Add(tileText);
 
@@ -388,7 +409,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				++i;
 				if (i % this.RowSize == 0) {
 					x = this.OriginX;
-				} else {
+				}
+				else {
 					x += this.IncrementX;
 				}
 				if (i % this.RowSize == 0) {
@@ -413,12 +435,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private void Clear() {
 			foreach (GameObject light in this.Lights) {
-				GameObject.Destroy(light);
+				this.Destroy(light);
 			}
 			this.Camera.transform.position = new Vector3(0, 5, -15);
 			this.CamPos = this.Camera.transform.position;
 			foreach (GameObject tile in this.Tiles) {
-				GameObject.Destroy(tile);
+				this.Destroy(tile);
 			}
 			this.Tiles.Clear();
 			this.CurrentIndex = 0;
@@ -428,7 +450,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Enters the directory.
 		/// </summary>
-		/// <param name="Destination">The destination.</param>
+		/// <param name="Destination">
+		/// The destination.
+		/// </param>
 		private void EnterDirectory(IFolder Destination = null) {
 			this.FileService.ChangeDirectory(Destination);
 			this.Content = this.FileService.GetDirectoryContent(null);
@@ -453,8 +477,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Displays the file popup.
 		/// </summary>
-		/// <param name="Source">The source.</param>
-		/// <param name="E">The <see cref="ElapsedEventArgs"/> instance containing the event data.</param>
+		/// <param name="Source">
+		/// The source.
+		/// </param>
+		/// <param name="E">
+		/// The <see cref="ElapsedEventArgs"/> instance containing the event data.
+		/// </param>
 		private void DisplayFilePopup(object Source, ElapsedEventArgs E) {
 			this.Popup.Show();
 			this.Popup.GenerateBaseInfo(this.Content[this.CurrentIndex].GetName(), this.Content[this.CurrentIndex].GetType().ToString());
