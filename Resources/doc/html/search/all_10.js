@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['recordadditionalinfo',['RecordAdditionalInfo',['../class_media_motion_1_1_modules_1_1_explorer_1_1_view_1_1_file_info_u_i.html#a0eda50364b1331fd51dd74439a15b3c5',1,'MediaMotion::Modules::Explorer::View::FileInfoUI']]],
   ['rectupdate',['RectUpdate',['../classi_tween.html#a15d01f3b893e13f4296274c1db8aa2b4',1,'iTween']]],
   ['register',['Register',['../interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#a6fbacf01ffb62fdcd400527d78c6f71f',1,'MediaMotion.Core.Models.Module.Interfaces.IModule.Register()'],['../class_media_motion_1_1_modules_1_1_explorer_1_1_explorer_module.html#a7f31ceb99841e4456d2b478bd75c4992',1,'MediaMotion.Modules.Explorer.ExplorerModule.Register()']]],
   ['regular',['Regular',['../class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_regular.html',1,'MediaMotion::Core::Models::FileManager']]],

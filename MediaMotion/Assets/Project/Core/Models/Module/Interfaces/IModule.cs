@@ -20,9 +20,10 @@ namespace MediaMotion.Core.Models.Module.Interfaces {
 		void Register(out Configuration ModuleConfiguration);
 
 		/// <summary>
-		/// Loads this instance.
+		/// Loads the specified files.
 		/// </summary>
-		void Load();
+		/// <param name="Files">The files.</param>
+		void Load(string[] Files = null);
 
 		/// <summary>
 		/// Unloads this instance.

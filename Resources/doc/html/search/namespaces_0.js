@@ -7,7 +7,6 @@ var searchData=
   ['controllers',['Controllers',['../namespace_media_motion_1_1_modules_1_1_explorer_1_1_controllers.html',1,'MediaMotion::Modules::Explorer']]],
   ['core',['Core',['../namespace_media_motion_1_1_core_1_1_models_1_1_core.html',1,'MediaMotion::Core::Models']]],
   ['core',['Core',['../namespace_media_motion_1_1_core.html',1,'MediaMotion']]],
-  ['cursor',['Cursor',['../namespace_media_motion_1_1_core_1_1_services_1_1_cursor.html',1,'MediaMotion::Core::Services']]],
   ['enums',['Enums',['../namespace_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_enums.html',1,'MediaMotion::Core::Models::FileManager']]],
   ['enums',['Enums',['../namespace_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_enums.html',1,'MediaMotion::Core::Models::Wrapper']]],
   ['events',['Events',['../namespace_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_events.html',1,'MediaMotion::Core::Models::Wrapper']]],
@@ -25,7 +24,6 @@ var searchData=
   ['interfaces',['Interfaces',['../namespace_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_interfaces.html',1,'MediaMotion::Core::Models::Wrapper']]],
   ['interfaces',['Interfaces',['../namespace_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces.html',1,'MediaMotion::Core::Models::FileManager']]],
   ['interfaces',['Interfaces',['../namespace_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces.html',1,'MediaMotion::Core::Models::Module']]],
-  ['interfaces',['Interfaces',['../namespace_media_motion_1_1_core_1_1_view_1_1_interfaces.html',1,'MediaMotion::Core::View']]],
   ['interfaces',['Interfaces',['../namespace_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces.html',1,'MediaMotion::Core::Services::FileSystem']]],
   ['interfaces',['Interfaces',['../namespace_media_motion_1_1_core_1_1_services_1_1_history_1_1_interfaces.html',1,'MediaMotion::Core::Services::History']]],
   ['interfaces',['Interfaces',['../namespace_media_motion_1_1_core_1_1_services_1_1_input_1_1_interfaces.html',1,'MediaMotion::Core::Services::Input']]],
@@ -37,7 +35,7 @@ var searchData=
   ['plugindatabase',['PluginDatabase',['../namespace_media_motion_1_1_core_1_1_services_1_1_plugin_database.html',1,'MediaMotion::Core::Services']]],
   ['service',['Service',['../namespace_media_motion_1_1_core_1_1_models_1_1_service.html',1,'MediaMotion::Core::Models']]],
   ['services',['Services',['../namespace_media_motion_1_1_core_1_1_services.html',1,'MediaMotion::Core']]],
-  ['view',['View',['../namespace_media_motion_1_1_modules_1_1_explorer_1_1_view.html',1,'MediaMotion::Modules::Explorer']]],
   ['view',['View',['../namespace_media_motion_1_1_core_1_1_view.html',1,'MediaMotion::Core']]],
+  ['view',['View',['../namespace_media_motion_1_1_modules_1_1_explorer_1_1_view.html',1,'MediaMotion::Modules::Explorer']]],
   ['wrapper',['Wrapper',['../namespace_media_motion_1_1_core_1_1_models_1_1_wrapper.html',1,'MediaMotion::Core::Models']]]
 ];

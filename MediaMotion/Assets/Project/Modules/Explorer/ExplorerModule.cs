@@ -7,7 +7,7 @@ namespace MediaMotion.Modules.Explorer {
 	/// <summary>
 	/// Explorer module
 	/// </summary>
-	public class ExplorerModule : IModule {
+	public sealed class ExplorerModule : IModule {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExplorerModule"/> class.
 		/// </summary>
@@ -37,9 +37,10 @@ namespace MediaMotion.Modules.Explorer {
 		}
 
 		/// <summary>
-		/// Called when the module is loaded
+		/// Loads the specified files.
 		/// </summary>
-		public void Load() {
+		/// <param name="Files">The files.</param>
+		public void Load(string[] Files = null) {
 		}
 
 		/// <summary>
