@@ -1,21 +1,4 @@
 var searchData=
 [
-  ['iaction',['IAction',['../interface_media_motion_1_1_core_1_1_services_1_1_history_1_1_interfaces_1_1_i_action.html',1,'MediaMotion::Core::Services::History::Interfaces']]],
-  ['icore',['ICore',['../interface_media_motion_1_1_core_1_1_models_1_1_core_1_1_i_core.html',1,'MediaMotion::Core::Models::Core']]],
-  ['identifierhistory',['IdentifierHistory',['../class_media_motion_1_1_core_1_1_services_1_1_history_1_1_identifier_history.html',1,'MediaMotion::Core::Services::History']]],
-  ['ielement',['IElement',['../interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html',1,'MediaMotion::Core::Models::FileManager::Interfaces']]],
-  ['ifactory',['IFactory',['../interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_factory.html',1,'MediaMotion::Core::Services::FileSystem::Interfaces']]],
-  ['ifile',['IFile',['../interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_file.html',1,'MediaMotion::Core::Models::FileManager::Interfaces']]],
-  ['ifilesystem',['IFileSystem',['../interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system.html',1,'MediaMotion::Core::Services::FileSystem::Interfaces']]],
-  ['ifolder',['IFolder',['../interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_folder.html',1,'MediaMotion::Core::Models::FileManager::Interfaces']]],
-  ['ihistory',['IHistory',['../interface_media_motion_1_1_core_1_1_services_1_1_history_1_1_interfaces_1_1_i_history.html',1,'MediaMotion::Core::Services::History::Interfaces']]],
-  ['iidentifier',['IIdentifier',['../interface_media_motion_1_1_core_1_1_services_1_1_history_1_1_interfaces_1_1_i_identifier.html',1,'MediaMotion::Core::Services::History::Interfaces']]],
-  ['iidentifierhistory',['IIdentifierHistory',['../interface_media_motion_1_1_core_1_1_services_1_1_history_1_1_interfaces_1_1_i_identifier_history.html',1,'MediaMotion::Core::Services::History::Interfaces']]],
-  ['iinput',['IInput',['../interface_media_motion_1_1_core_1_1_services_1_1_input_1_1_interfaces_1_1_i_input.html',1,'MediaMotion::Core::Services::Input::Interfaces']]],
-  ['image',['Image',['../class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_image.html',1,'MediaMotion::Core::Models::FileManager']]],
-  ['imodule',['IModule',['../interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html',1,'MediaMotion::Core::Models::Module::Interfaces']]],
-  ['inputservice',['InputService',['../class_media_motion_1_1_core_1_1_services_1_1_input_1_1_input_service.html',1,'MediaMotion::Core::Services::Input']]],
-  ['iplugindatabase',['IPluginDatabase',['../interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database.html',1,'MediaMotion::Core::Services::PluginDatabase::Interfaces']]],
-  ['itween',['iTween',['../classi_tween.html',1,'']]],
-  ['iwrapper',['IWrapper',['../interface_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_interfaces_1_1_i_wrapper.html',1,'MediaMotion::Core::Models::Wrapper::Interfaces']]]
+  ['historyservice',['HistoryService',['../class_media_motion_1_1_core_1_1_services_1_1_history_1_1_history_service.html',1,'MediaMotion::Core::Services::History']]]
 ];

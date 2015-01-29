@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">MediaMotion
-   &#160;<span id="projectnumber">0.1</span>
+   &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
  </tr>
@@ -124,16 +124,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_view_1_1_file_info_u_i.html#aadb20c725fc63bba8c6bcceae77715d1">MediaMotion.Modules.Explorer.View.FileInfoUI</a>
 </li>
 <li>GetAllPluginForExtension()
-: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database.html#a58f7a3b40929dbd9af9c402768d522a6">MediaMotion.Core.Services.PluginDatabase.Interfaces.IPluginDatabase</a>
+: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database_service.html#af659c1710d1c65ab9335ebffe787ae70">MediaMotion.Core.Services.PluginDatabase.Interfaces.IPluginDatabaseService</a>
 , <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_plugin_database_service.html#a0a211b698d5243a7e639043b438d631f">MediaMotion.Core.Services.PluginDatabase.PluginDatabaseService</a>
 </li>
 <li>GetDefaultPluginForExtension()
-: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database.html#aa8a22e2f0592f806d0270c7eb3e6ec0e">MediaMotion.Core.Services.PluginDatabase.Interfaces.IPluginDatabase</a>
+: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database_service.html#a3f9372c8819fac1da13ce66ec7db7a2b">MediaMotion.Core.Services.PluginDatabase.Interfaces.IPluginDatabaseService</a>
 , <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_plugin_database_service.html#ab215a83c2ced2eb8399bebde66f66f2b">MediaMotion.Core.Services.PluginDatabase.PluginDatabaseService</a>
 </li>
 <li>GetDirectoryContent()
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#a56797d3d8742507fc7c417719d680c56">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system.html#ad2934b0cc19cc490d2a698c9c1449379">MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystem</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system_service.html#a5e477e33fde657a8d358cab3ef971938">MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystemService</a>
 </li>
 <li>GetElementType()
 : <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_element.html#aeb832748e2cbe270d2fc28d22b3f9e14">MediaMotion.Core.Models.FileManager.Abstracts.AElement</a>
@@ -153,11 +153,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>GetHistory()
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_history_1_1_history_service.html#a6ba18300b2d4c42ccdb06e8863d4eca6">MediaMotion.Core.Services.History.HistoryService</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_history_1_1_interfaces_1_1_i_history.html#a2ea550017518ce157337294ee960dab2">MediaMotion.Core.Services.History.Interfaces.IHistory</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_history_1_1_interfaces_1_1_i_history_service.html#a93a63b7acdeed669021a7890eae495ce">MediaMotion.Core.Services.History.Interfaces.IHistoryService</a>
 </li>
 <li>GetHomeDirectory()
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#ab279faa546bf4e3e5cdb9396855a5d80">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system.html#a9e147ed00442687a6a7bb59eb4b3da01">MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystem</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system_service.html#ad574ccc1d251220d813378bac7d8db24">MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystemService</a>
 </li>
 <li>GetIdentifier()
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_history_1_1_identifier_history.html#a184ff41e2b5d0c0fb14b5dee6f285a1f">MediaMotion.Core.Services.History.IdentifierHistory</a>
@@ -168,12 +168,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>GetMovements()
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_input_1_1_input_service.html#a82c37a0e8e55eab56713ff809b94bd86">MediaMotion.Core.Services.Input.InputService</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_input_1_1_interfaces_1_1_i_input.html#a7b0bea36924d70cdc1994be9ef5ce024">MediaMotion.Core.Services.Input.Interfaces.IInput</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_input_1_1_interfaces_1_1_i_input_service.html#a5c451ad0bee53963409d494d1ea662d9">MediaMotion.Core.Services.Input.Interfaces.IInputService</a>
 </li>
 <li>GetName()
 : <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_element.html#ad2a5a186c327860b2fdf57e6447863d1">MediaMotion.Core.Models.FileManager.Abstracts.AElement</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html#abbef66e7b8e1c5c745bd48ede787add8">MediaMotion.Core.Models.FileManager.Interfaces.IElement</a>
 , <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_abstracts_1_1_a_factory.html#a949f54ccf9d0f3487ff40657144605d0">MediaMotion.Core.Services.FileSystem.Abstracts.AFactory</a>
+</li>
+<li>GetParentPath()
+: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_folder.html#acf8ca6f8c0fb5414f7d6680eadadd671">MediaMotion.Core.Models.FileManager.Abstracts.AFolder</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_folder.html#a48b05bbf207011e49f388b998adc8dbb">MediaMotion.Core.Models.FileManager.Interfaces.IFolder</a>
 </li>
 <li>GetPath()
 : <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_element.html#ad4e1424e7adcd73d6b11e46040cbd44a">MediaMotion.Core.Models.FileManager.Abstracts.AElement</a>
@@ -181,18 +185,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_bridges_1_1_history_1_1_identifiers_1_1_path_identifier.html#a8544e4675c9335b1af6b81ba1d54976e">MediaMotion.Core.Services.FileSystem.Bridges.History.Identifiers.PathIdentifier</a>
 </li>
 <li>GetPluginAvailable()
-: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database.html#a1168dfeadb8169c2af8493921fc0d2a9">MediaMotion.Core.Services.PluginDatabase.Interfaces.IPluginDatabase</a>
+: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database_service.html#a8047e6c460a424d18223f72bd146bc70">MediaMotion.Core.Services.PluginDatabase.Interfaces.IPluginDatabaseService</a>
 , <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_plugin_database_service.html#aad9bb9bd3118558fe403471ddd72bd0e">MediaMotion.Core.Services.PluginDatabase.PluginDatabaseService</a>
-</li>
-<li>GetService()
-: <a class="el" href="class_media_motion_1_1_core_1_1_media_motion_core.html#a909f36eea7a306f90342dcc8419e9a1b">MediaMotion.Core.MediaMotionCore</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_core_1_1_i_core.html#acb90be1497daebbcb415178a29114145">MediaMotion.Core.Models.Core.ICore</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 26 2015 18:41:48 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 29 2015 18:13:55 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

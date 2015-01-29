@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['core',['Core',['../class_media_motion_1_1_core_1_1_models_1_1_service_1_1_service_base.html#a1261dbbfac5513d3478f80e36dbba654',1,'MediaMotion::Core::Models::Service::ServiceBase']]]
+  ['classname',['ClassName',['../class_media_motion_1_1_core_1_1_base_factory.html#a46c5de94c21df47771ec4016681814d5',1,'MediaMotion::Core::BaseFactory']]]
 ];
