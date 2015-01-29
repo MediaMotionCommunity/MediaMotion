@@ -12,9 +12,9 @@
 		ScrollOut,
 		Select,
 		Return,
-        BrowsingHighlight,
-        BrowsingScroll,
-        BrowsingCursor,
+		BrowsingHighlight,
+		BrowsingScroll,
+		BrowsingCursor,
 	}
 
 	/// <summary>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['volume',['Volume',['../class_media_motion_1_1_modules_1_1_media_player_1_1_a_media_player.html#a6f5dd174fcedcba77cf9c79fd4c4dc0b',1,'MediaMotion::Modules::MediaPlayer::AMediaPlayer']]]
+  ['propertylabelstyle',['PropertyLabelStyle',['../class_media_motion_1_1_modules_1_1_explorer_1_1_view_1_1_file_info_u_i.html#a12be6b802f513d2ce1d3d7eece99d75d',1,'MediaMotion::Modules::Explorer::View::FileInfoUI']]]
 ];

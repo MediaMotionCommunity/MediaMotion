@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['historyservice',['HistoryService',['../class_media_motion_1_1_core_1_1_services_1_1_history_1_1_history_service.html',1,'MediaMotion::Core::Services::History']]]
+  ['explorermodule',['ExplorerModule',['../class_media_motion_1_1_modules_1_1_explorer_1_1_explorer_module.html',1,'MediaMotion::Modules::Explorer']]]
 ];

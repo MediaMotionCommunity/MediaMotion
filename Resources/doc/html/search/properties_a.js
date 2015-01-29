@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['volume',['Volume',['../class_media_motion_1_1_modules_1_1_components_1_1_volume_1_1_events_1_1_volume_change_event_args.html#abaa32dffd46ba9d89087da5bb65d3adc',1,'MediaMotion::Modules::Components::Volume::Events::VolumeChangeEventArgs']]]
+  ['scene',['Scene',['../class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#af8d00b9411a868fe2b18f98a84bc2381',1,'MediaMotion::Core::Models::Module::Configuration']]]
 ];
