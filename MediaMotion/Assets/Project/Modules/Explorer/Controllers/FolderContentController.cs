@@ -465,7 +465,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Backs this instance.
 		/// </summary>
 		private void Back() {
-			this.FileService.ChangeDirectory(Path.Combine(this.FileService.CurrentFolder.GetPath(), ".."));
+			this.FileService.ChangeDirectory(this.FileService.CurrentFolder.GetParentPath() ?? this.FileService.CurrentFolder.GetPath());
 			this.Content = this.FileService.GetDirectoryContent(null);
 			this.DisplayContent();
 		}
