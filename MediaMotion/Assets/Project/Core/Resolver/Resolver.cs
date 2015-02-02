@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+using MediaMotion.Core.Resolver.Exceptions;
+using MediaMotion.Core.Resolver.Registrations.Interfaces;
 
-using MediaMotion.Resolver.Exceptions;
-
-namespace MediaMotion.Resolver {
+namespace MediaMotion.Core.Resolver {
 	/// <summary>
 	/// The resolver.
 	/// </summary>
-	internal class Resolver {
+	public class Resolver {
 		/// <summary>
 		/// The registrations.
 		/// </summary>
@@ -25,16 +27,12 @@ namespace MediaMotion.Resolver {
 		}
 
 		/// <summary>
-		/// The resolve.
+		/// Resolve the service
 		/// </summary>
-		/// <typeparam name="T">
-		/// </typeparam>
-		/// <returns>
-		/// The <see cref="T"/>.
-		/// </returns>
-		public T Resolve<T>() where T : class {
-			var type = typeof(T);
-			return (T)this.Resolve(type);
+		/// <typeparam name="Service">The type of the service.</typeparam>
+		/// <returns>The service</returns>
+		public Service Get<Service>() where Service : class {
+			return (this.Get(typeof(Service)) as Service);
 		}
 
 		/// <summary>
@@ -49,12 +47,14 @@ namespace MediaMotion.Resolver {
 		/// <exception cref="TypeNotFoundException">
 		/// When the type is not register in builder
 		/// </exception>
-		public object Resolve(Type type) {
-			var registration = this.registrations.FirstOrDefault(r => r.IsType(type));
+		public object Get(Type type) {
+			Debug.Assert(this.registrations != null);
+			IRegistration registration = this.registrations.FirstOrDefault(r => r.IsType(type));
+
 			if (registration == null) {
 				throw new TypeNotFoundException("This type is not register");
 			}
-			return registration.Resolve();
+			return (registration.Get());
 		}
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace MediaMotion.Resolver {
 		/// The <see cref="bool"/>.
 		/// </returns>
 		public bool IsRegisterType<T>() {
-			return this.IsRegisterType(typeof(T));
+			return (this.IsRegisterType(typeof(T)));
 		}
 
 		/// <summary>
@@ -79,7 +79,7 @@ namespace MediaMotion.Resolver {
 		/// The <see cref="bool"/>.
 		/// </returns>
 		public bool IsRegisterType(Type type) {
-			return this.registrations.Any(r => r.IsType(type));
+			return (this.registrations.Any(r => r.IsType(type)));
 		}
 	}
 }

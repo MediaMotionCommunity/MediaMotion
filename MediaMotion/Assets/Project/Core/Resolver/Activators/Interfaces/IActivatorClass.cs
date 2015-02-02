@@ -1,4 +1,4 @@
-﻿namespace MediaMotion.Resolver.Activators {
+﻿namespace MediaMotion.Core.Resolver.Activators.Interfaces {
 	/// <summary>
 	/// The ActivatorClass interface.
 	/// </summary>
@@ -11,16 +11,16 @@
 		bool SingleInstance { get; set; }
 
 		/// <summary>
+		/// The build.
+		/// </summary>
+		void Build();
+
+		/// <summary>
 		/// The resolve.
 		/// </summary>
 		/// <returns>
 		/// The <see cref="T"/>.
 		/// </returns>
-		T Resolve();
-
-		/// <summary>
-		/// The build.
-		/// </summary>
-		void Build();
+		T Get();
 	}
 }

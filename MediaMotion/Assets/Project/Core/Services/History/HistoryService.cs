@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 
 using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Models.Service;
 using MediaMotion.Core.Services.History.Interfaces;
 
 namespace MediaMotion.Core.Services.History {
 	/// <summary>
 	/// History Service
 	/// </summary>
-	public sealed class HistoryService : ServiceBase, IHistoryService {
+	public sealed class HistoryService : IHistoryService {
 		/// <summary>
 		/// The histories
 		/// </summary>

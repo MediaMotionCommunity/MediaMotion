@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Models.Service;
 using MediaMotion.Core.Services.PluginDatabase.Interfaces;
 
 namespace MediaMotion.Core.Services.PluginDatabase {
 	/// <summary>
 	/// Plugin Database Service
 	/// </summary>
-	public class PluginDatabaseService : ServiceBase, IPluginDatabaseService {
+	public class PluginDatabaseService : IPluginDatabaseService {
 		/// <summary>
 		/// Gets the plugin available.
 		/// </summary>

@@ -5,8 +5,6 @@ using System.Linq;
 using System.Reflection;
 using MediaMotion.Core.Exceptions;
 using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Models.Service;
-using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion;
@@ -17,7 +15,7 @@ namespace MediaMotion.Core.Services.Input {
 	/// <summary>
 	/// LeapMotion Service
 	/// </summary>
-	public class InputService : ServiceBase, IInputService {
+	public class InputService : IInputService {
 		private readonly IFileSystemService fileSystemService;
 
 		/// <summary>

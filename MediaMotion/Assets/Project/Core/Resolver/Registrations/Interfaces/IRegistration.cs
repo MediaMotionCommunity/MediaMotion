@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MediaMotion.Resolver {
+namespace MediaMotion.Core.Resolver.Registrations.Interfaces {
 	/// <summary>
 	/// The Registration interface.
 	/// </summary>
@@ -11,7 +11,7 @@ namespace MediaMotion.Resolver {
 		/// <returns>
 		/// The <see cref="object"/>.
 		/// </returns>
-		object Resolve();
+		object Get();
 
 		/// <summary>
 		/// The as.
@@ -37,7 +37,7 @@ namespace MediaMotion.Resolver {
 		/// <summary>
 		/// The build.
 		/// </summary>
-		void Build();
+		IRegistration Build();
 
 		/// <summary>
 		/// The single instance.

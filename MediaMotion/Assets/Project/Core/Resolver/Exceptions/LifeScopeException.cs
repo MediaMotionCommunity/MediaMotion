@@ -1,6 +1,6 @@
 using System;
 
-namespace MediaMotion.Resolver.Exceptions {
+namespace MediaMotion.Core.Resolver.Exceptions {
 	/// <summary>
 	/// The life scope exception.
 	/// </summary>

@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Timers;
-
 using MediaMotion.Core;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
+using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
+using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer.View;
 using MediaMotion.Motion.Actions;
-
 using UnityEngine;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Explorer Controller
 	/// </summary>
-	public class FolderContentController : AUnityObject {
+	public class FolderContentController : BaseUnityScript<FolderContentController> {
 		/// <summary>
 		/// The row size
 		/// </summary>
@@ -119,15 +119,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private List<GameObject> Lights;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
+		/// Initializes the specified input service.
 		/// </summary>
-		/// <param name="inputService">
-		/// The input Service.
-		/// </param>
-		/// <param name="fileSystemService">
-		/// The file System Service.
-		/// </param>
-		public FolderContentController(IInputService inputService, IFileSystemService fileSystemService) {
+		/// <param name="inputService">The input service.</param>
+		/// <param name="fileSystemService">The file system service.</param>
+		public void Init(IInputService inputService, IFileSystemService fileSystemService) {
 			this.inputService = inputService;
 			this.FileService = fileSystemService;
 
@@ -139,12 +135,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.TextureMap = new Dictionary<ElementType, string>();
 			this.TextureMap.Add(ElementType.File, "File-icon");
 			this.TextureMap.Add(ElementType.Folder, "Folder-icon");
-		}
 
-		/// <summary>
-		/// Starts this instance.
-		/// </summary>
-		public override void Start() {
 			this.Line = 0;
 			this.CurrentIndex = 0;
 			this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
@@ -164,7 +155,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Actions the handle.
 		/// </summary>
-		public override void Update() {
+		public void Update() {
 			foreach (IAction Action in this.inputService.GetMovements()) {
 				switch (Action.Type) {
 					case ActionType.Left:
@@ -435,12 +426,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private void Clear() {
 			foreach (GameObject light in this.Lights) {
-				this.Destroy(light);
+				Object.Destroy(light);
 			}
 			this.Camera.transform.position = new Vector3(0, 5, -15);
 			this.CamPos = this.Camera.transform.position;
 			foreach (GameObject tile in this.Tiles) {
-				this.Destroy(tile);
+				Object.Destroy(tile);
 			}
 			this.Tiles.Clear();
 			this.CurrentIndex = 0;
@@ -469,6 +460,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 						this.EnterDirectory(this.Content[this.CurrentIndex] as IFolder);
 						break;
 					default:
+						MediaMotionCore.Core.LoadModule<DefaultViewerModule>(new string[] { this.Content[this.CurrentIndex].GetName() });
 						break;
 				}
 			}

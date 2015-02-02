@@ -1,4 +1,5 @@
 ﻿using MediaMotion.Core.Models.Wrapper.Events;
+using MediaMotion.Core.Resolver.Containers.Interfaces;
 
 namespace MediaMotion.Core.Models.Module.Interfaces {
 	/// <summary>
@@ -14,10 +15,10 @@ namespace MediaMotion.Core.Models.Module.Interfaces {
 		bool KeepInBackground { get; }
 
 		/// <summary>
-		/// Registers this instance.
+		/// Registers this module
 		/// </summary>
 		/// <param name="ModuleConfiguration">The module configuration.</param>
-		void Register(out Configuration ModuleConfiguration);
+		void Register(IContainer ServiceContainer, out Configuration ModuleConfiguration);
 
 		/// <summary>
 		/// Loads the specified files.
@@ -26,7 +27,17 @@ namespace MediaMotion.Core.Models.Module.Interfaces {
 		void Load(string[] Files = null);
 
 		/// <summary>
-		/// Unloads this instance.
+		/// Load another module.
+		/// </summary>
+		void Sleep();
+
+		/// <summary>
+		/// Back to the module.
+		/// </summary>
+		void WakeUp();
+
+		/// <summary>
+		/// Unloads the module.
 		/// </summary>
 		void Unload();
 	}

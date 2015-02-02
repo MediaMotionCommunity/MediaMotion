@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
-using MediaMotion.Core.Models.Service;
 using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 
@@ -12,7 +10,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 	/// <summary>
 	/// FileSystem Service
 	/// </summary>
-	public sealed class FileSystemService : ServiceBase, IFileSystemService {
+	public sealed class FileSystemService : IFileSystemService {
 		/// <summary>
 		/// The folder factory
 		/// </summary>

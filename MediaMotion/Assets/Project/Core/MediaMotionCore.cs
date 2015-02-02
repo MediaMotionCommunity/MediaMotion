@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 using MediaMotion.Core.Models.Core;
 using MediaMotion.Core.Models.Module.Interfaces;
-using MediaMotion.Core.Models.Service;
-using MediaMotion.Core.Services.FileSystem;
-using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.History;
 using MediaMotion.Core.Services.History.Interfaces;
 using MediaMotion.Core.Services.Input;
@@ -13,7 +11,14 @@ using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.PluginDatabase;
 using MediaMotion.Core.Services.PluginDatabase.Interfaces;
 using MediaMotion.Modules.Explorer.Controllers;
-using MediaMotion.Resolver;
+using MediaMotion.Core.Resolver.Containers;
+using MediaMotion.Core.Resolver.Containers.Interfaces;
+using MediaMotion.Core.Services.FileSystem;
+using MediaMotion.Core.Services.FileSystem.Interfaces;
+using MediaMotion.Modules.Explorer;
+using MediaMotion.Core.Models.Module;
+using UnityEngine;
+using MediaMotion.Modules.DefaultViewer;
 
 namespace MediaMotion.Core {
 	/// <summary>
@@ -26,29 +31,34 @@ namespace MediaMotion.Core {
 		private static readonly ICore Instance = new MediaMotionCore();
 
 		/// <summary>
-		/// The builder.
+		/// The service lock
 		/// </summary>
-		private readonly ContainerBuilder builder;
+		private object moduleLock = new object();
 
 		/// <summary>
 		/// The service lock
 		/// </summary>
-		private object ModuleLock = new object();
+		private object serviceLock = new object();
 
 		/// <summary>
-		/// The service lock
+		/// The modules
 		/// </summary>
-		private object ServiceLock = new object();
+		private Stack<IModule> modules;
 
 		/// <summary>
-		/// The module
+		/// The background modules
 		/// </summary>
-		private Dictionary<string, IModule> Modules;
+		private Stack<IModule> backgroundModules;
+
+		/// <summary>
+		/// The modules configuration
+		/// </summary>
+		private Dictionary<Type, Configuration> modulesConfiguration;
 
 		/// <summary>
 		/// The services
 		/// </summary>
-		private Dictionary<string, ServiceBase> Services;
+		private IContainer servicesContainer;
 
 		/// <summary>
 		/// The temporary
@@ -59,10 +69,10 @@ namespace MediaMotion.Core {
 		/// Prevents a default instance of the <see cref="MediaMotionCore"/> class from being created.
 		/// </summary>
 		private MediaMotionCore() {
-			this.Modules = new Dictionary<string, IModule>();
-			this.Services = new Dictionary<string, ServiceBase>();
-			this.builder = new ContainerBuilder();
-			this.InitialiseInjection();
+			this.modules = new Stack<IModule>();
+			this.backgroundModules = new Stack<IModule>();
+			this.modulesConfiguration = new Dictionary<Type, Configuration>();
+			this.InitializeServiceContainer();
 		}
 
 		/// <summary>
@@ -78,76 +88,36 @@ namespace MediaMotion.Core {
 		}
 
 		/// <summary>
-		/// The initialise.
+		/// Gets the service container.
 		/// </summary>
-		private void InitialiseInjection() {
-			this.builder.RegisterType<FileSystemService>().As<IFileSystemService>();
-			this.builder.RegisterType<HistoryService>().As<IHistoryService>();
-			this.builder.RegisterType<InputService>().As<IInputService>();
-			this.builder.RegisterType<PluginDatabaseService>().As<IPluginDatabaseService>();
-			this.builder.RegisterType<FolderContentController>();
-			this.builder.Build();
-		}
-
-		/// <summary>
-		/// The get service.
-		/// </summary>
-		/// <typeparam name="T">
-		/// </typeparam>
-		/// <returns>
-		/// The <see cref="T"/>.
-		/// </returns>
-		public T Resolve<T>() where T : class {
-			lock (this.ServiceLock) {
-				return this.builder.Resolve<T>();
+		/// <value>
+		/// The service container.
+		/// </value>
+		public IContainer ServicesContainer {
+			get {
+				return (this.servicesContainer);
+			}
+			private set {
+				this.servicesContainer = value;
 			}
 		}
 
 		/// <summary>
-		/// The get service.
+		/// Initializes the service container.
 		/// </summary>
-		/// <param name="type">
-		/// The type.
-		/// </param>
-		/// <returns>
-		/// The <see cref="object"/>.
-		/// </returns>
-		public object Resolve(Type type) {
-			lock (this.ServiceLock) {
-				return this.builder.Resolve(type);
-			}
-		}
+		private void InitializeServiceContainer() {
+			ContainerBuilder builder = new ContainerBuilder();
 
-		/// <summary>
-		/// Gets the name of the module.
-		/// </summary>
-		/// <param name="Name">
-		/// The name.
-		/// </param>
-		/// <param name="Root">
-		/// The root.
-		/// </param>
-		/// <returns>
-		/// The module name
-		/// </returns>
-		public string GetModuleName(string Name, string Root = "MediaMotion.Modules") {
-			return ((((Root ?? string.Empty) == string.Empty) ? (string.Empty) : (Root + ".")) + Name + "." + Name + "Module");
-		}
+			builder.Register<ContainerBuilder>(builder).As<IContainerBuilder>().SingleInstance();
+			builder.Register<FileSystemService>().As<IFileSystemService>();
+			builder.Register<HistoryService>().As<IHistoryService>().SingleInstance();
+			builder.Register<InputService>().As<IInputService>().SingleInstance();
+			builder.Register<PluginDatabaseService>().As<IPluginDatabaseService>().SingleInstance();
 
-		/// <summary>
-		/// Gets the full name of the module.
-		/// </summary>
-		/// <param name="ModuleName">
-		/// Name of the module.
-		/// </param>
-		/// <param name="Assembly">
-		/// The assembly.
-		/// </param>
-		/// <returns>
-		/// The full module name
-		/// </returns>
-		public string GetFullModuleName(string ModuleName, string Assembly = null) {
-			return (Assembly ?? string.Empty + ";" + ModuleName);
+			builder.Register<ExplorerModule>().SingleInstance();
+			builder.Register<DefaultViewerModule>().SingleInstance();
+
+			this.ServicesContainer = builder.Build();
 		}
 
 		/// <summary>
@@ -165,13 +135,25 @@ namespace MediaMotion.Core {
 		/// <returns>
 		/// <c>true</c> if the module is correctly loaded, <c>false</c> otherwise
 		/// </returns>
-		public bool LoadModule(string Name = "Explorer", string Root = "MediaMotion.Modules", string Assembly = null) {
-			IModule Module = null;
-			string ModuleName = this.GetModuleName(Name, Root);
+		public bool LoadModule<Module>(string[] parameters) where Module : class, IModule {
+			lock (this.moduleLock) {
+				Configuration moduleConfiguration = null;
+				Type moduleType = typeof(Module);
+				IModule module = this.ServicesContainer.Get<Module>();
 
-			if (this.Modules.TryGetValue(this.GetFullModuleName(ModuleName, Assembly), out Module)) {
+				if (!this.modulesConfiguration.TryGetValue(moduleType, out moduleConfiguration)) {
+					module.Register(this.ServicesContainer, out moduleConfiguration);
+					this.modulesConfiguration.Add(moduleType, moduleConfiguration);
+					this.ServicesContainer = this.ServicesContainer.Get<IContainerBuilder>().Build();
+				}
+				if (this.modules.Count > 0) {
+					this.modules.Peek().Sleep();
+				}
+				module.Load(parameters);
+				Application.LoadLevel(moduleConfiguration.Scene);
+				this.modules.Push(module);
+				return (true);
 			}
-			return (true);
 		}
 
 		/// <summary>
@@ -179,60 +161,28 @@ namespace MediaMotion.Core {
 		/// </summary>
 		/// <returns><c>true</c> if the module is correctly unloaded, <c>false</c> otherwise</returns>
 		public bool UnloadModule() {
-			return (true);
-		}
+			lock (this.moduleLock) {
+				IModule unloadModule = this.modules.Pop();
 
-		/// <summary>
-		/// Register a module
-		/// </summary>
-		/// <param name="ModuleName">
-		/// Name of the module.
-		/// </param>
-		/// <param name="Assembly">
-		/// The assembly.
-		/// </param>
-		/// <returns>
-		/// <c>true</c> if the module is correctly loaded, <c>false</c> otherwise
-		/// </returns>
-		private IModule RegisterModule(string ModuleName, string Assembly) {
-			IModule Module = null;
-			string FullModuleName = this.GetFullModuleName(ModuleName, Assembly);
-
-			try {
-				Module = (IModule)Activator.CreateInstance(Assembly, ModuleName).Unwrap();
-				if (Module == null) {
-					return (null);
+				if (unloadModule.KeepInBackground) {
+					unloadModule.Sleep();
+					this.backgroundModules.Push(unloadModule);
 				}
-			} catch (InvalidCastException) {
-				return (null);
-			}
-			this.Modules.Add(FullModuleName, Module);
-			return (Module);
-		}
+				if (this.modules.Count > 0) {
+					Configuration moduleConfiguration = null;
+					IModule loadModule = this.modules.Peek();
+					Type moduleType = loadModule.GetType();
 
-		/// <summary>
-		/// Unregister the module.
-		/// </summary>
-		/// <param name="FullModuleName">
-		/// Full name of the module.
-		/// </param>
-		/// <param name="ForceUnload">
-		/// if set to <c>true</c> [force unload].
-		/// </param>
-		/// <returns>
-		/// <c>true</c> if the module is correctly unloaded, <c>false</c> otherwise
-		/// </returns>
-		private bool UnregisterModule(string FullModuleName, bool ForceUnload = false) {
-			IModule Module = null;
-
-			if (this.Modules.TryGetValue(FullModuleName, out Module)) {
-				if (Module.KeepInBackground || ForceUnload) {
-					Module.Unload();
-					this.Modules.Remove(FullModuleName);
-					return (true);
+					if (!this.modulesConfiguration.TryGetValue(moduleType, out moduleConfiguration)) {
+						throw new Exception("toto");
+					}
+					loadModule.WakeUp();
+					Application.LoadLevel(moduleConfiguration.Scene);
+				} else {
+					Application.LoadLevel("Loader");
 				}
+				return (true);
 			}
-			return (false);
 		}
 	}
 }

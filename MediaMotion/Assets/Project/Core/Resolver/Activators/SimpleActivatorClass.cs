@@ -1,6 +1,7 @@
-using MediaMotion.Resolver.Exceptions;
+using MediaMotion.Core.Resolver.Activators.Interfaces;
+using MediaMotion.Core.Resolver.Exceptions;
 
-namespace MediaMotion.Resolver.Activators {
+namespace MediaMotion.Core.Resolver.Activators {
 	/// <summary>
 	/// The simple activator class.
 	/// </summary>
@@ -48,19 +49,19 @@ namespace MediaMotion.Resolver.Activators {
 		}
 
 		/// <summary>
+		/// The build.
+		/// </summary>
+		public void Build() {
+		}
+
+		/// <summary>
 		/// The resolve.
 		/// </summary>
 		/// <returns>
 		/// The <see cref="T"/>.
 		/// </returns>
-		public T Resolve() {
+		public T Get() {
 			return this.instance;
-		}
-
-		/// <summary>
-		/// The build.
-		/// </summary>
-		public void Build() {
 		}
 	}
 }

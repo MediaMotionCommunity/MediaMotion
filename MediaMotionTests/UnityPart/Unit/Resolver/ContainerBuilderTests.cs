@@ -1,4 +1,6 @@
-﻿using MediaMotion.Resolver;
+﻿using MediaMotion.Core.Resolver;
+using MediaMotion.Core.Resolver.Containers;
+using MediaMotion.Core.Resolver.Registrations.Interfaces;
 using NUnit.Framework;
 
 namespace MediaMotionTests.UnityPart.Unit.Resolver {
@@ -16,7 +18,7 @@ namespace MediaMotionTests.UnityPart.Unit.Resolver {
 
 		[Test]
 		public void WhenRegisteringInstanceShouldReturnTheRegistrationObject() {
-			var register = this.containerBuilder.RegisterInstance(new ObjectWithoutDependency());
+			var register = this.containerBuilder.Register(new ObjectWithoutDependency());
 
 			Assert.IsTrue(register is IRegistration);
 		}
@@ -24,10 +26,10 @@ namespace MediaMotionTests.UnityPart.Unit.Resolver {
 		[Test]
 		public void RegisterInstanceWhenResolveShouldReturnTheSameInstance() {
 			var instance = new ObjectWithoutDependency();
-			this.containerBuilder.RegisterInstance(instance);
-			this.containerBuilder.Build();
+			this.containerBuilder.Register(instance);
+			var container = this.containerBuilder.Build();
 
-			var @object = this.containerBuilder.Resolve<ObjectWithoutDependency>();
+			var @object = container.Get<ObjectWithoutDependency>();
 
 			Assert.IsNotNull(@object);
 			Assert.IsTrue(@object == instance);
@@ -36,10 +38,10 @@ namespace MediaMotionTests.UnityPart.Unit.Resolver {
 		[Test]
 		public void RegisterInstanceWithInterfaceWhenResolveInterfaceShouldReturnTheInstance() {
 			var instance = new ObjectWithoutDependency();
-			this.containerBuilder.RegisterInstance(instance).As<IObjectWithoutDependency>();
-			this.containerBuilder.Build();
+			this.containerBuilder.Register(instance).As<IObjectWithoutDependency>();
+			var container = this.containerBuilder.Build();
 
-			var @object = this.containerBuilder.Resolve<IObjectWithoutDependency>();
+			var @object = container.Get<IObjectWithoutDependency>();
 
 			Assert.IsNotNull(@object);
 			Assert.IsTrue(@object == instance);
@@ -47,10 +49,10 @@ namespace MediaMotionTests.UnityPart.Unit.Resolver {
 
 		[Test]
 		public void RegisterTypeWhenResolveShouldReturnAnInstanceOfType() {
-			this.containerBuilder.RegisterType<ObjectWithoutDependency>();
-			this.containerBuilder.Build();
+			this.containerBuilder.Register<ObjectWithoutDependency>();
+			var container = this.containerBuilder.Build();
 
-			var @object = this.containerBuilder.Resolve<ObjectWithoutDependency>();
+			var @object = container.Get<ObjectWithoutDependency>();
 
 			Assert.IsNotNull(@object);
 			Assert.IsTrue(@object is ObjectWithoutDependency);
@@ -58,11 +60,10 @@ namespace MediaMotionTests.UnityPart.Unit.Resolver {
 
 		[Test]
 		public void RegisterTypeWithInterfaceWhenResolveShouldReturnAnInstanceOfType() {
-			this.containerBuilder.RegisterType<ObjectWithoutDependency>().As<IObjectWithoutDependency>();
-			this.containerBuilder.Build();
+			this.containerBuilder.Register<ObjectWithoutDependency>().As<IObjectWithoutDependency>();
+			var container = this.containerBuilder.Build();
 
-
-			var @object = this.containerBuilder.Resolve<ObjectWithoutDependency>();
+			var @object = container.Get<ObjectWithoutDependency>();
 
 			Assert.IsNotNull(@object);
 			Assert.IsTrue(@object is ObjectWithoutDependency);			
@@ -70,35 +71,35 @@ namespace MediaMotionTests.UnityPart.Unit.Resolver {
 
 		[Test]
 		public void RegisterTypeWithADependencyWhenResolveShouldReturnAnInstanceOfType() {
-			this.containerBuilder.RegisterType<ObjectWithoutDependency>().As<IObjectWithoutDependency>();
-			this.containerBuilder.RegisterType<ObjectWithDependency>().As<IObjectWithDependency>();
-			this.containerBuilder.Build();
+			this.containerBuilder.Register<ObjectWithoutDependency>().As<IObjectWithoutDependency>();
+			this.containerBuilder.Register<ObjectWithDependency>().As<IObjectWithDependency>();
+			var container = this.containerBuilder.Build();
 
-			var @object = this.containerBuilder.Resolve<ObjectWithDependency>();
+			var @object = container.Get<ObjectWithDependency>();
 
 			Assert.IsNotNull(@object);
-			Assert.IsTrue(@object is ObjectWithDependency);						
+			Assert.IsTrue(@object is ObjectWithDependency);
 		}
 
 		[Test]
 		public void RegisterTypeWithTwoDependenciesWhenResolveShouldReturnAnInstanceOfType() {
-			this.containerBuilder.RegisterType<ObjectWithDependencies>().As<IObjectWithDependencies>();
-			this.containerBuilder.RegisterType<ObjectWithoutDependency>().As<IObjectWithoutDependency>();
-			this.containerBuilder.RegisterType<ObjectWithDependency>().As<IObjectWithDependency>();
-			this.containerBuilder.Build();
+			this.containerBuilder.Register<ObjectWithDependencies>().As<IObjectWithDependencies>();
+			this.containerBuilder.Register<ObjectWithoutDependency>().As<IObjectWithoutDependency>();
+			this.containerBuilder.Register<ObjectWithDependency>().As<IObjectWithDependency>();
+			var container = this.containerBuilder.Build();
 
-			var @object = this.containerBuilder.Resolve<ObjectWithDependencies>();
+			var @object = container.Get<ObjectWithDependencies>();
 
 			Assert.IsNotNull(@object);
-			Assert.IsTrue(@object is ObjectWithDependencies);						
+			Assert.IsTrue(@object is ObjectWithDependencies);
 		}
 
 		[Test]
 		public void RegisterTypeWithSingleInstanceScopeWhenResolveManyTimeShouldBeTheSameInstance() {
-			this.containerBuilder.RegisterType<ObjectWithoutDependency>().As<IObjectWithoutDependency>().SingleInstance();
-			this.containerBuilder.Build();
+			this.containerBuilder.Register<ObjectWithoutDependency>().As<IObjectWithoutDependency>().SingleInstance();
+			var container = this.containerBuilder.Build();
 
-			var @object = this.containerBuilder.Resolve<IObjectWithoutDependency>();
+			var @object = container.Get<IObjectWithoutDependency>();
 
 			Assert.IsNotNull(@object);
 			Assert.IsTrue(@object is ObjectWithoutDependency);						

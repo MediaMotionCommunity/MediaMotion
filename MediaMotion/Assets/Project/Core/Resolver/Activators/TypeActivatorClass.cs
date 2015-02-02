@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using MediaMotion.Core.Resolver.Activators.Interfaces;
+using MediaMotion.Core.Resolver.Exceptions;
 
-using MediaMotion.Resolver.Exceptions;
-
-namespace MediaMotion.Resolver.Activators {
+namespace MediaMotion.Core.Resolver.Activators {
 	/// <summary>
 	/// The type activator class.
 	/// </summary>
-	/// <typeparam name="T">
+	/// <typeparam name="Service">
 	/// </typeparam>
-	internal class TypeActivatorClass<T> : IActivatorClass<T>
-		where T : class {
+	internal class TypeActivatorClass<Service> : IActivatorClass<Service>
+		where Service : class {
 		/// <summary>
 		/// The resolver.
 		/// </summary>
@@ -35,17 +35,17 @@ namespace MediaMotion.Resolver.Activators {
 		/// <summary>
 		/// The instance.
 		/// </summary>
-		private T instance;
+		private Service instance;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TypeActivatorClass{T}"/> class.
+		/// Initializes a new instance of the <see cref="TypeActivatorClass{Service}"/> class.
 		/// </summary>
 		/// <param name="resolver">
 		/// The resolver.
 		/// </param>
 		public TypeActivatorClass(Resolver resolver) {
 			this.resolver = resolver;
-			this.globalType = typeof(T);
+			this.globalType = typeof(Service);
 			this.SingleInstance = false;
 		}
 
@@ -58,11 +58,10 @@ namespace MediaMotion.Resolver.Activators {
 		/// The build.
 		/// </summary>
 		public void Build() {
-			var constructorInfos = this.globalType.GetConstructors();
-			foreach (var info in constructorInfos) {
-				var parameters = info.GetParameters();
-				var isValidConstructor = parameters.All(parameter => this.resolver.IsRegisterType(parameter.ParameterType));
-				if (!isValidConstructor) {
+			foreach (ConstructorInfo info in this.globalType.GetConstructors()) {
+				ParameterInfo[] parameters = info.GetParameters();
+
+				if (!parameters.All(parameter => this.resolver.IsRegisterType(parameter.ParameterType))) {
 					continue;
 				}
 				this.constructorInfo = info;
@@ -76,23 +75,23 @@ namespace MediaMotion.Resolver.Activators {
 		/// The resolve the dependencies
 		/// </summary>
 		/// <returns>
-		/// The <see cref="T"/> class generate
+		/// The <see cref="Service"/> class generate
 		/// </returns>
-		public T Resolve() {
-			T result;
+		public Service Get() {
+			Service result;
+
 			if (this.SingleInstance && this.instance != null) {
 				return this.instance;
 			}
 			if (!this.parametersTypes.Any()) {
-				result = (T)Activator.CreateInstance(this.globalType);
-			}
-			else {
-				result = (T)this.constructorInfo.Invoke(this.ResolveParameters());
+				result = (Service)Activator.CreateInstance(this.globalType);
+			} else {
+				result = (Service)this.constructorInfo.Invoke(this.ResolveParameters());
 			}
 			if (this.SingleInstance) {
 				this.instance = result;
 			}
-			return result;
+			return (result);
 		}
 
 		/// <summary>
@@ -102,11 +101,12 @@ namespace MediaMotion.Resolver.Activators {
 		/// The array of parameters
 		/// </returns>
 		private object[] ResolveParameters() {
-			var parameters = new object[this.parametersTypes.Count()];
-			for (var i = 0; i < this.parametersTypes.Count(); ++i) {
-				parameters[i] = this.resolver.Resolve(this.parametersTypes[i].ParameterType);
+			object[] parameters = new object[this.parametersTypes.Count()];
+
+			for (Int32 i = 0; i < this.parametersTypes.Count(); ++i) {
+				parameters[i] = this.resolver.Get(this.parametersTypes[i].ParameterType);
 			}
-			return parameters;
+			return (parameters);
 		}
 	}
 }

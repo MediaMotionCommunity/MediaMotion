@@ -1,6 +1,6 @@
 using System;
 
-namespace MediaMotion.Resolver.Exceptions {
+namespace MediaMotion.Core.Resolver.Exceptions {
 	/// <summary>
 	/// The injectable constructor not found exception.
 	/// </summary>

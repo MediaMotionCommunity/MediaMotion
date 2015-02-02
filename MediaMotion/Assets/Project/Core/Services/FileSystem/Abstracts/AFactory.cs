@@ -1,6 +1,5 @@
 ﻿using System;
 using MediaMotion.Core.Models.FileManager.Interfaces;
-using MediaMotion.Core.Services.FileSystem.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem.Abstracts {
 	/// <summary>
