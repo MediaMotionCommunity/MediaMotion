@@ -1,10 +1,25 @@
-﻿using MediaMotion.Core.Resolver.Registrations.Interfaces;
+﻿using System.Collections.Generic;
+using MediaMotion.Core.Resolver.Registrations.Interfaces;
 
 namespace MediaMotion.Core.Resolver.Containers.Interfaces {
 	/// <summary>
 	/// Container builder interface
 	/// </summary>
 	public interface IContainerBuilder {
+		/// <summary>
+		/// Adds the builder.
+		/// </summary>
+		/// <param name="builder">The builder.</param>
+		/// <returns></returns>
+		IContainerBuilder Add(IContainerBuilder builder);
+
+		/// <summary>
+		/// Adds the container.
+		/// </summary>
+		/// <param name="container">The container.</param>
+		/// <returns>The builder</returns>
+		IContainerBuilder Add(IContainer container);
+
 		/// <summary>
 		/// Registers a service
 		/// </summary>
@@ -21,8 +36,15 @@ namespace MediaMotion.Core.Resolver.Containers.Interfaces {
 		IRegistration Register<Service>(Service instance) where Service : class;
 
 		/// <summary>
+		/// Gets the registrations.
+		/// </summary>
+		/// <returns>the registrations</returns>
+		IEnumerable<IRegistration> GetRegistrations();
+
+		/// <summary>
 		/// Build the container
 		/// </summary>
+		/// <param name="container">The container.</param>
 		/// <returns>The container</returns>
 		IContainer Build();
 	}

@@ -8,6 +8,7 @@ using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
+using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer.View;
 using MediaMotion.Motion.Actions;
@@ -59,14 +60,19 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private int CurrentIndex;
 
 		/// <summary>
-		/// The file service
-		/// </summary>
-		private IFileSystemService FileService;
-
-		/// <summary>
 		/// The input
 		/// </summary>
 		private IInputService inputService;
+
+		/// <summary>
+		/// The file service
+		/// </summary>
+		private IFileSystemService fileSystemService;
+
+		/// <summary>
+		/// The module manager service
+		/// </summary>
+		private IModuleManagerService moduleManagerService;
 
 		/// <summary>
 		/// The texture map
@@ -123,9 +129,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="inputService">The input service.</param>
 		/// <param name="fileSystemService">The file system service.</param>
-		public void Init(IInputService inputService, IFileSystemService fileSystemService) {
+		/// <param name="moduleManagerService">The module manager service.</param>
+		public void Init(IInputService inputService, IFileSystemService fileSystemService, IModuleManagerService moduleManagerService) {
 			this.inputService = inputService;
-			this.FileService = fileSystemService;
+			this.fileSystemService = fileSystemService;
+			this.moduleManagerService = moduleManagerService;
 
 			this.CamPos = new Vector3(0, 0, 0);
 			this.Tiles = new List<GameObject>();
@@ -445,8 +453,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// The destination.
 		/// </param>
 		private void EnterDirectory(IFolder Destination = null) {
-			this.FileService.ChangeDirectory(Destination);
-			this.Content = this.FileService.GetDirectoryContent(null);
+			this.fileSystemService.ChangeDirectory(Destination);
+			this.Content = this.fileSystemService.GetDirectoryContent(null);
 			this.DisplayContent();
 		}
 
@@ -460,7 +468,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 						this.EnterDirectory(this.Content[this.CurrentIndex] as IFolder);
 						break;
 					default:
-						MediaMotionCore.Core.LoadModule<DefaultViewerModule>(new string[] { this.Content[this.CurrentIndex].GetName() });
+						this.moduleManagerService.LoadModule<DefaultViewerModule>(new IElement[] { this.Content[this.CurrentIndex] });
 						break;
 				}
 			}
@@ -485,8 +493,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Backs this instance.
 		/// </summary>
 		private void Back() {
-			this.FileService.ChangeDirectory(this.FileService.CurrentFolder.GetParentPath() ?? this.FileService.CurrentFolder.GetPath());
-			this.Content = this.FileService.GetDirectoryContent(null);
+			this.fileSystemService.ChangeDirectory(this.fileSystemService.CurrentFolder.GetParentPath() ?? this.fileSystemService.CurrentFolder.GetPath());
+			this.Content = this.fileSystemService.GetDirectoryContent(null);
 			this.DisplayContent();
 		}
 	}

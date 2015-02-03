@@ -52,11 +52,9 @@ namespace MediaMotion.Core.Resolver.Registrations {
 		/// <summary>
 		/// The build.
 		/// </summary>
-		/// <returns>The registration</returns>
-		public IRegistration Build() {
-			this.activatorClass.Build();
-
-			return (this);
+		/// <param name="resolver">The resolver.</param>
+		public void Build(Resolver resolver) {
+			this.activatorClass.Build(resolver);
 		}
 
 		/// <summary>

@@ -37,7 +37,8 @@ namespace MediaMotion.Core.Resolver.Registrations.Interfaces {
 		/// <summary>
 		/// The build.
 		/// </summary>
-		IRegistration Build();
+		/// <param name="resolver">The resolver.</param>
+		void Build(Resolver resolver);
 
 		/// <summary>
 		/// The single instance.
