@@ -326,26 +326,23 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="position">
 		/// The position.
 		/// </param>
-		/// <param name="color">
-		/// The color.
-		/// </param>
 		/// <param name="range">
 		/// The range.
 		/// </param>
-		/// <returns>
-		/// The <see cref="GameObject"/>.
-		/// </returns>
-		private GameObject AddLight(Vector3 position, Color color, float range) {
+		/// <param name="intensity">
+		/// The intensity.
+		/// </param>
+		private void AddLight(Vector3 position, float range = 9f, float intensity = 1) {
 			GameObject lightC = new GameObject();
 
 			lightC.AddComponent<Light>();
 			lightC.light.name = "light_" + position.x + "_" + position.y + "_" + position.z;
 			lightC.light.transform.position = position;
-			lightC.light.color = color;
+			lightC.light.color = new Color(0.9f, 1, 1);
 			lightC.light.range = range;
-			lightC.light.intensity = 1.4f;
+			lightC.light.intensity = intensity;
 			lightC.light.renderMode = LightRenderMode.ForcePixel;
-			return lightC;
+			this.Lights.Add(lightC);
 		}
 
 		/// <summary>
@@ -357,6 +354,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			float z = this.OriginZ;
 
 			this.Clear();
+
+			if (this.Content.Count == 0) {
+				this.AddLight(new Vector3(-1, 5, z), 14f, 1.2f);
+				this.AddLight(new Vector3(1, 5, z), 14f, 1.2f);
+			}
+
 			foreach (IElement file in this.Content) {
 				GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Plane);
 				GameObject tileText = new GameObject();
@@ -415,14 +418,15 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				if (i % this.RowSize == 0) {
 					z += this.IncrementZ;
 				}
-
 				if (i == 1) {
-					this.Lights.Add(this.AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f));
-					this.Lights.Add(this.AddLight(new Vector3(0, 5, z - 1.5f), new Color(0.9f, 1, 1), 9f));
-					this.Lights.Add(this.AddLight(new Vector3(0, 5, z - 3f), new Color(0.9f, 1, 1), 14f));
+					for (int idx = 0; idx < 5; idx++) {
+						this.AddLight(new Vector3(-3, 5, z - idx * 1.5f));
+						this.AddLight(new Vector3(3, 5, z - idx * 1.5f));
+					}
 				}
 				if (i % 5 == 0) {
-					this.Lights.Add(this.AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f));
+					this.AddLight(new Vector3(-3, 5, z));
+					this.AddLight(new Vector3(3, 5, z));
 				}
 
 				this.HighlightCurrent(this.Tiles[this.CurrentIndex]);
