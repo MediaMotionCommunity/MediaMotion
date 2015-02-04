@@ -11,7 +11,8 @@
 		ScrollIn,
 		ScrollOut,
 		Select,
-		Back
+		Back,
+		Leave
 	}
 
 	/// <summary>

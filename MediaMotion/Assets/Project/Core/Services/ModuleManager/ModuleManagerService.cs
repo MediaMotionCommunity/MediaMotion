@@ -73,16 +73,19 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// </returns>
 		public bool UnloadModule() {
 			lock (this.locker) {
-				this.modules.Pop().Unload();
 				if (this.modules.Count > 0) {
-					IModule loadModule = this.modules.Peek();
+					this.modules.Pop().Unload();
+					if (this.modules.Count > 0) {
+						IModule loadModule = this.modules.Peek();
 
-					loadModule.WakeUp();
-					Application.LoadLevel(loadModule.Configuration.Scene);
-				} else {
-					Application.LoadLevel("Loader");
+						loadModule.WakeUp();
+						Application.LoadLevel(loadModule.Configuration.Scene);
+					} else {
+						Application.LoadLevel("Loader");
+					}
+					return (true);
 				}
-				return (true);
+				return (false);
 			}
 		}
 
