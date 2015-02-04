@@ -14,11 +14,8 @@ namespace MediaMotion.Core.Services.History {
 		private Dictionary<IIdentifier, IIdentifierHistory> Histories;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="HistoryService"/> class.
+		/// Initializes a new instance of the <see cref="HistoryService" /> class.
 		/// </summary>
-		/// <param name="Core">
-		/// The core.
-		/// </param>
 		public HistoryService() {
 			this.Histories = new Dictionary<IIdentifier, IIdentifierHistory>();
 		}

@@ -54,8 +54,8 @@ namespace MediaMotion.Core.Resolver.Activators {
 		/// <summary>
 		/// The build.
 		/// </summary>
-		/// <param name="resolver"></param>
-		/// <exception cref="InjectableConstructorNotFoundException">The class doesn't have any constructor injectable</exception>
+		/// <param name="resolver">The resolver.</param>
+		/// <exception cref="MediaMotion.Core.Resolver.Exceptions.InjectableConstructorNotFoundException">The class ' + this.globalType.Name + ' doesn't have any constructor injectable</exception>
 		public void Build(Resolver resolver) {
 			this.resolver = resolver;
 
@@ -104,7 +104,7 @@ namespace MediaMotion.Core.Resolver.Activators {
 		private object[] ResolveParameters() {
 			object[] parameters = new object[this.parametersTypes.Count()];
 
-			for (Int32 i = 0; i < this.parametersTypes.Count(); ++i) {
+			for (int i = 0; i < this.parametersTypes.Count(); ++i) {
 				parameters[i] = this.resolver.Get(this.parametersTypes[i].ParameterType);
 			}
 			return (parameters);

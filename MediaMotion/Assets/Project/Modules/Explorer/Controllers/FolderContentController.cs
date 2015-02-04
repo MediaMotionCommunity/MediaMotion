@@ -127,13 +127,13 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Initializes the specified input service.
 		/// </summary>
-		/// <param name="inputService">The input service.</param>
-		/// <param name="fileSystemService">The file system service.</param>
-		/// <param name="moduleManagerService">The module manager service.</param>
-		public void Init(IInputService inputService, IFileSystemService fileSystemService, IModuleManagerService moduleManagerService) {
-			this.inputService = inputService;
-			this.fileSystemService = fileSystemService;
-			this.moduleManagerService = moduleManagerService;
+		/// <param name="input">The input service.</param>
+		/// <param name="fileSystem">The file system service.</param>
+		/// <param name="moduleManager">The module manager service.</param>
+		public void Init(IInputService input, IFileSystemService fileSystem, IModuleManagerService moduleManager) {
+			this.inputService = input;
+			this.fileSystemService = fileSystem;
+			this.moduleManagerService = moduleManager;
 
 			this.CamPos = new Vector3(0, 0, 0);
 			this.Tiles = new List<GameObject>();
@@ -420,8 +420,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				}
 				if (i == 1) {
 					for (int idx = 0; idx < 5; idx++) {
-						this.AddLight(new Vector3(-3, 5, z - idx * 1.5f));
-						this.AddLight(new Vector3(3, 5, z - idx * 1.5f));
+						this.AddLight(new Vector3(-3, 5, z - (idx * 1.5f)));
+						this.AddLight(new Vector3(3, 5, z - (idx * 1.5f)));
 					}
 				}
 				if (i % 5 == 0) {
@@ -438,12 +438,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private void Clear() {
 			foreach (GameObject light in this.Lights) {
-				Object.Destroy(light);
+				UnityEngine.Object.Destroy(light);
 			}
 			this.Camera.transform.position = new Vector3(0, 5, -15);
 			this.CamPos = this.Camera.transform.position;
 			foreach (GameObject tile in this.Tiles) {
-				Object.Destroy(tile);
+				UnityEngine.Object.Destroy(tile);
 			}
 			this.Tiles.Clear();
 			this.CurrentIndex = 0;

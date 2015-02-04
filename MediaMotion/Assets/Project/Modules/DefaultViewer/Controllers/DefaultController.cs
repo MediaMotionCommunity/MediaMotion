@@ -15,8 +15,9 @@ namespace MediaMotion.Modules.DefaultViewer.Controllers {
 		/// Initializes the specified module.
 		/// </summary>
 		/// <param name="module">The module.</param>
-		public void Init(DefaultViewerModule module, IInputService inputService) {
-			this.inputService = inputService;
+		/// <param name="input">The input.</param>
+		public void Init(DefaultViewerModule module, IInputService input) {
+			this.inputService = input;
 			this.gameObject.guiText.text = ((module.Parameters.Length > 0) ? (module.Parameters[0].GetName()) : ("No parameter"));
 		}
 

@@ -1,12 +1,17 @@
 ﻿using System;
 
 namespace MediaMotion.Core.Resolver.Containers.Interfaces {
+	/// <summary>
+	/// Container interface
+	/// </summary>
 	public interface IContainer {
 		/// <summary>
 		/// Gets this instance.
 		/// </summary>
-		/// <typeparam name="Service">The type of the ervice.</typeparam>
-		/// <returns></returns>
+		/// <typeparam name="Service">The type of the service.</typeparam>
+		/// <returns>
+		/// The service
+		/// </returns>
 		Service Get<Service>() where Service : class;
 
 		/// <summary>

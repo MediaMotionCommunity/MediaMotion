@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using MediaMotion.Core.Resolver.Exceptions;
 using MediaMotion.Core.Resolver.Activators;
 using MediaMotion.Core.Resolver.Activators.Interfaces;
+using MediaMotion.Core.Resolver.Exceptions;
 using MediaMotion.Core.Resolver.Registrations.Interfaces;
 
 namespace MediaMotion.Core.Resolver.Registrations {

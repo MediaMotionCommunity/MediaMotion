@@ -11,9 +11,8 @@ namespace MediaMotion.Modules.Explorer {
 	/// </summary>
 	public sealed class ExplorerModule : AModule {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultViewerModule"/> class.
+		/// Initializes a new instance of the <see cref="ExplorerModule"/> class.
 		/// </summary>
-		/// <param name="builder">The builder.</param>
 		public ExplorerModule()
 			: base() {
 		}

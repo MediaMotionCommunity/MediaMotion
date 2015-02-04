@@ -15,9 +15,9 @@ namespace MediaMotion.Core.Controllers.Loader {
 		/// <summary>
 		/// Initializes the specified input service.
 		/// </summary>
-		/// <param name="inputService">The input service.</param>
-		public void Init(IInputService inputService) {
-			this.inputService = inputService;
+		/// <param name="input">The input service.</param>
+		public void Init(IInputService input) {
+			this.inputService = input;
 		}
 
 		/// <summary>

@@ -48,7 +48,7 @@ namespace MediaMotion.Core.Resolver {
 		/// When the type is not register in builder
 		/// </exception>
 		public object Get(Type type) {
-			Debug.Assert(this.registrations != null);
+			Debug.Assert(this.registrations != null, "Registration is null");
 			IRegistration registration = this.registrations.FirstOrDefault(r => r.IsType(type));
 
 			if (registration == null) {

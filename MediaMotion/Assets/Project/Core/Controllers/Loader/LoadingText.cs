@@ -17,7 +17,7 @@ namespace MediaMotion.Core.Controllers.Loader {
 		/// <summary>
 		/// The module manager
 		/// </summary>
-		private IModuleManagerService moduleManager;
+		private IModuleManagerService moduleManagerService;
 
 		/// <summary>
 		/// The cumulative delta time
@@ -39,7 +39,7 @@ namespace MediaMotion.Core.Controllers.Loader {
 		/// </summary>
 		/// <param name="moduleManager">The module manager.</param>
 		public void Init(IModuleManagerService moduleManager) {
-			this.moduleManager = moduleManager;
+			this.moduleManagerService = moduleManager;
 			this.messages = new List<string>();
 
 			this.messages.Add("Loading.");
@@ -70,7 +70,7 @@ namespace MediaMotion.Core.Controllers.Loader {
 					this.currentMessage.MoveNext();
 
 					if (!this.moduleLoaded) {
-						this.moduleLoaded = this.moduleManager.LoadModule<ExplorerModule>(null);
+						this.moduleLoaded = this.moduleManagerService.LoadModule<ExplorerModule>(null);
 					}
 				}
 			}

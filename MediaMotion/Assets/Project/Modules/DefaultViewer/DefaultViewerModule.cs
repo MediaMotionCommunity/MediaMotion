@@ -10,9 +10,8 @@ namespace MediaMotion.Modules.DefaultViewer {
 	/// </summary>
 	public class DefaultViewerModule : AModule {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultViewerModule"/> class.
+		/// Initializes a new instance of the <see cref="DefaultViewerModule" /> class.
 		/// </summary>
-		/// <param name="builder">The builder.</param>
 		public DefaultViewerModule()
 			: base() {
 		}

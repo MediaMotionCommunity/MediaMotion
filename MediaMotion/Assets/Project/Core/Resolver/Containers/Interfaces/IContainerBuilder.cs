@@ -10,7 +10,7 @@ namespace MediaMotion.Core.Resolver.Containers.Interfaces {
 		/// Adds the builder.
 		/// </summary>
 		/// <param name="builder">The builder.</param>
-		/// <returns></returns>
+		/// <returns>The builder</returns>
 		IContainerBuilder Add(IContainerBuilder builder);
 
 		/// <summary>
@@ -44,8 +44,9 @@ namespace MediaMotion.Core.Resolver.Containers.Interfaces {
 		/// <summary>
 		/// Build the container
 		/// </summary>
-		/// <param name="container">The container.</param>
-		/// <returns>The container</returns>
+		/// <returns>
+		/// The container
+		/// </returns>
 		IContainer Build();
 	}
 }

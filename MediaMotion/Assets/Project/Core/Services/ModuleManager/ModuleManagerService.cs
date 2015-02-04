@@ -41,7 +41,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// <summary>
 		/// Loads the module.
 		/// </summary>
-		/// <typeparam name="Module">The type of the odule.</typeparam>
+		/// <typeparam name="Module">The type of the module.</typeparam>
 		/// <param name="parameters">The parameters.</param>
 		/// <returns>
 		///   <c>true</c> if the module is correctly loaded, <c>false</c> otherwise
@@ -92,7 +92,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// <summary>
 		/// Registers the and load.
 		/// </summary>
-		/// <typeparam name="Module">The type of the odule.</typeparam>
+		/// <typeparam name="Module">The type of the module.</typeparam>
 		/// <returns>The module instance</returns>
 		private IModule RegisterAndLoad<Module>() where Module : class, IModule {
 			IContainerBuilder modulebuilder = this.core.GetServicesContainer().Get<IContainerBuilder>();

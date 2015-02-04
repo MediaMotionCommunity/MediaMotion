@@ -8,9 +8,8 @@ namespace MediaMotion.Core.Models.Module.Abstracts {
 	/// </summary>
 	public abstract class AModule : IModule {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="AModule"/> class.
+		/// Initializes a new instance of the <see cref="AModule" /> class.
 		/// </summary>
-		/// <param name="builder">The builder.</param>
 		public AModule() {
 			this.Configuration = new Configuration();
 			this.Configure();

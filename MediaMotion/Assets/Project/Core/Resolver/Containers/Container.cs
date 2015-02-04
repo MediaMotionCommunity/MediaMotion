@@ -25,7 +25,7 @@ namespace MediaMotion.Core.Resolver.Containers {
 		/// Get the service
 		/// </summary>
 		/// <typeparam name="Service">The type of the service.</typeparam>
-		/// <returns></returns>
+		/// <returns>The service</returns>
 		public Service Get<Service>() where Service : class {
 			return (this.resolver.Get<Service>());
 		}
@@ -46,7 +46,7 @@ namespace MediaMotion.Core.Resolver.Containers {
 		/// <summary>
 		/// Gets the resolver.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The resolver</returns>
 		public Resolver GetResolver() {
 			return (this.resolver);
 		}

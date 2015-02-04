@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using MediaMotion.Core.Resolver.Activators;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
-using MediaMotion.Core.Resolver.Registrations.Interfaces;
 using MediaMotion.Core.Resolver.Registrations;
+using MediaMotion.Core.Resolver.Registrations.Interfaces;
 using UnityEngine;
 
 namespace MediaMotion.Core.Resolver.Containers {
@@ -36,7 +36,7 @@ namespace MediaMotion.Core.Resolver.Containers {
 		/// <param name="builder">The builder.</param>
 		/// <returns>The builder</returns>
 		public IContainerBuilder Add(IContainerBuilder builder) {
-			lock (locker) {
+			lock (this.locker) {
 				this.registrations.AddRange(builder.GetRegistrations());
 				return (this);
 			}
@@ -48,7 +48,7 @@ namespace MediaMotion.Core.Resolver.Containers {
 		/// <param name="container">The container.</param>
 		/// <returns>The builder</returns>
 		public IContainerBuilder Add(IContainer container) {
-			lock (locker) {
+			lock (this.locker) {
 				this.registrations.AddRange(container.GetResolver().GetRegistrations());
 				return (this);
 			}
@@ -60,7 +60,7 @@ namespace MediaMotion.Core.Resolver.Containers {
 		/// <typeparam name="Service">The type of the service.</typeparam>
 		/// <returns>The registration</returns>
 		public IRegistration Register<Service>() where Service : class {
-			lock (locker) {
+			lock (this.locker) {
 				Registration<Service> registration = new Registration<Service>(new TypeActivatorClass<Service>());
 
 				this.registrations.Add(registration);
@@ -76,7 +76,7 @@ namespace MediaMotion.Core.Resolver.Containers {
 		/// <returns>The registration</returns>
 		/// <exception cref="System.ArgumentNullException">instance must not be null</exception>
 		public IRegistration Register<Service>(Service instance) where Service : class {
-			lock (locker) {
+			lock (this.locker) {
 				if (instance == null) {
 					throw new ArgumentNullException("instance must not be null");
 				}
@@ -98,8 +98,11 @@ namespace MediaMotion.Core.Resolver.Containers {
 		/// <summary>
 		/// The build.
 		/// </summary>
+		/// <returns>
+		/// The container
+		/// </returns>
 		public IContainer Build() {
-			lock (locker) {
+			lock (this.locker) {
 				Resolver resolver = new Resolver(this.registrations);
 
 				foreach (IRegistration registration in this.registrations) {

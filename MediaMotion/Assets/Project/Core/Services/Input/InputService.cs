@@ -48,13 +48,13 @@ namespace MediaMotion.Core.Services.Input {
 		private Dictionary<KeyCode, IAction> defaultInput;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="InputService"/> class.
+		/// Initializes a new instance of the <see cref="InputService" /> class.
 		/// </summary>
-		/// <param name="Core">The core.</param>
-		/// <param name="fileSystemService"></param>
-		public InputService(IFileSystemService fileSystemService, IModuleManagerService moduleManagerService) {
-			this.fileSystemService = fileSystemService;
-			this.moduleManagerService = moduleManagerService;
+		/// <param name="fileSystem">The file system service.</param>
+		/// <param name="moduleManager">The module manager service.</param>
+		public InputService(IFileSystemService fileSystem, IModuleManagerService moduleManager) {
+			this.fileSystemService = fileSystem;
+			this.moduleManagerService = moduleManager;
 
 			this.lastFrame = null;
 			this.movements = new List<IAction>();

@@ -13,6 +13,7 @@
 		/// <summary>
 		/// The build.
 		/// </summary>
+		/// <param name="resolver">The resolver.</param>
 		void Build(Resolver resolver);
 
 		/// <summary>
