@@ -27,7 +27,7 @@ namespace MediaMotion.Core.Models.Scripts {
 				object[] parameters = new object[parametersInfo.Length];
 
 				for (Int32 i = 0; i < parametersInfo.Length; ++i) {
-					parameters[i] = MediaMotionCore.Core.ServicesContainer.Get(parametersInfo[i].ParameterType);
+					parameters[i] = MediaMotionCore.Core.GetServicesContainer().Get(parametersInfo[i].ParameterType);
 				}
 				method.Invoke(this as Script, parameters);
 			}

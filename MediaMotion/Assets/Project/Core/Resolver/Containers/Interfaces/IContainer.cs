@@ -19,5 +19,11 @@ namespace MediaMotion.Core.Resolver.Containers.Interfaces {
 		/// The <see cref="object"/>.
 		/// </returns>
 		object Get(Type type);
+
+		/// <summary>
+		/// Gets the resolver.
+		/// </summary>
+		/// <returns>The resolver</returns>
+		Resolver GetResolver();
 	}
 }

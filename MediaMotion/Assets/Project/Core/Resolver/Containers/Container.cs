@@ -42,5 +42,13 @@ namespace MediaMotion.Core.Resolver.Containers {
 		public object Get(Type type) {
 			return (this.resolver.Get(type));
 		}
+
+		/// <summary>
+		/// Gets the resolver.
+		/// </summary>
+		/// <returns></returns>
+		public Resolver GetResolver() {
+			return (this.resolver);
+		}
 	}
 }

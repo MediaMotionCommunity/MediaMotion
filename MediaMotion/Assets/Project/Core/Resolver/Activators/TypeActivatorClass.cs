@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using MediaMotion.Core.Resolver.Activators.Interfaces;
 using MediaMotion.Core.Resolver.Exceptions;
+using UnityEngine;
 
 namespace MediaMotion.Core.Resolver.Activators {
 	/// <summary>
@@ -15,7 +16,7 @@ namespace MediaMotion.Core.Resolver.Activators {
 		/// <summary>
 		/// The resolver.
 		/// </summary>
-		private readonly Resolver resolver;
+		private Resolver resolver = null;
 
 		/// <summary>
 		/// The global type.
@@ -40,11 +41,7 @@ namespace MediaMotion.Core.Resolver.Activators {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TypeActivatorClass{Service}"/> class.
 		/// </summary>
-		/// <param name="resolver">
-		/// The resolver.
-		/// </param>
-		public TypeActivatorClass(Resolver resolver) {
-			this.resolver = resolver;
+		public TypeActivatorClass() {
 			this.globalType = typeof(Service);
 			this.SingleInstance = false;
 		}
@@ -57,7 +54,11 @@ namespace MediaMotion.Core.Resolver.Activators {
 		/// <summary>
 		/// The build.
 		/// </summary>
-		public void Build() {
+		/// <param name="resolver"></param>
+		/// <exception cref="InjectableConstructorNotFoundException">The class doesn't have any constructor injectable</exception>
+		public void Build(Resolver resolver) {
+			this.resolver = resolver;
+
 			foreach (ConstructorInfo info in this.globalType.GetConstructors()) {
 				ParameterInfo[] parameters = info.GetParameters();
 
@@ -68,7 +69,7 @@ namespace MediaMotion.Core.Resolver.Activators {
 				this.parametersTypes = parameters;
 				return;
 			}
-			throw new InjectableConstructorNotFoundException("The class don't have any constructor injectable");
+			throw new InjectableConstructorNotFoundException("The class '" + this.globalType.Name + "' doesn't have any constructor injectable");
 		}
 
 		/// <summary>

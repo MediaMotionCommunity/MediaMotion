@@ -51,7 +51,8 @@ namespace MediaMotion.Core.Resolver.Activators {
 		/// <summary>
 		/// The build.
 		/// </summary>
-		public void Build() {
+		/// <param name="resolver"></param>
+		public void Build(Resolver resolver) {
 		}
 
 		/// <summary>

@@ -52,7 +52,7 @@ namespace MediaMotion.Core.Resolver {
 			IRegistration registration = this.registrations.FirstOrDefault(r => r.IsType(type));
 
 			if (registration == null) {
-				throw new TypeNotFoundException("This type is not register");
+				throw new TypeNotFoundException("The type '" + type.Name + "' is not registered.");
 			}
 			return (registration.Get());
 		}
@@ -80,6 +80,14 @@ namespace MediaMotion.Core.Resolver {
 		/// </returns>
 		public bool IsRegisterType(Type type) {
 			return (this.registrations.Any(r => r.IsType(type)));
+		}
+
+		/// <summary>
+		/// Gets the registrations.
+		/// </summary>
+		/// <returns>The registrations</returns>
+		public IEnumerable<IRegistration> GetRegistrations() {
+			return (this.registrations);
 		}
 	}
 }

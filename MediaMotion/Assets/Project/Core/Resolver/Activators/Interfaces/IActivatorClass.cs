@@ -13,7 +13,7 @@
 		/// <summary>
 		/// The build.
 		/// </summary>
-		void Build();
+		void Build(Resolver resolver);
 
 		/// <summary>
 		/// The resolve.

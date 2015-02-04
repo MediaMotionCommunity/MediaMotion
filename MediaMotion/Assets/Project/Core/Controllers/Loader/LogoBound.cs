@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using MediaMotion.Core.Models.Scripts;
+using UnityEngine;
 
-namespace MediaMotion.Core.View.Loader {
+namespace MediaMotion.Core.Controllers.Loader {
 	/// <summary>
 	/// Logo bound
 	/// </summary>
-	public class LogoBound : MonoBehaviour {
+	public class LogoBound : BaseUnityScript<LogoBound> {
 		/// <summary>
 		/// The direction
 		/// </summary>
@@ -16,9 +17,9 @@ namespace MediaMotion.Core.View.Loader {
 		private float Factor;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="LogoBound"/> class.
+		/// Initializes this instance.
 		/// </summary>
-		public void Start() {
+		public void Init() {
 			this.Factor = 0.1f;
 			float InitialAngle = Random.Range(0, 359) * Mathf.Deg2Rad;
 

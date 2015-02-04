@@ -9,25 +9,23 @@ namespace MediaMotion.Core.Models.Core {
 	/// </summary>
 	public interface ICore {
 		/// <summary>
+		/// Adds the service builder.
+		/// </summary>
+		/// <param name="builder">The builder.</param>
+		/// <returns>The service container</returns>
+		IContainer AddServices(IContainerBuilder builder);
+
+		/// <summary>
+		/// Adds the services.
+		/// </summary>
+		/// <param name="container">The container.</param>
+		/// <returns>The service container</returns>
+		IContainer AddServices(IContainer container);
+
+		/// <summary>
 		/// Gets the services container.
 		/// </summary>
-		/// <value>
-		/// The services container.
-		/// </value>
-		IContainer ServicesContainer { get; }
-
-		/// <summary>
-		/// Loads the module.
-		/// </summary>
-		/// <typeparam name="Module">The type of the odule.</typeparam>
-		/// <param name="parameters">The parameters.</param>
-		/// <returns></returns>
-		bool LoadModule<Module>(string[] parameters) where Module : class, IModule;
-
-		/// <summary>
-		/// Unloads the module.
-		/// </summary>
-		/// <returns></returns>
-		bool UnloadModule();
+		/// <returns>The service container</returns>
+		IContainer GetServicesContainer();
 	}
 }
