@@ -13,26 +13,8 @@ namespace MediaMotion.Modules.DefaultViewer {
 		/// Initializes a new instance of the <see cref="DefaultViewerModule"/> class.
 		/// </summary>
 		/// <param name="builder">The builder.</param>
-		public DefaultViewerModule(IContainerBuilder builder)
-			: base(builder) {
-		}
-
-		/// <summary>
-		/// Load another module.
-		/// </summary>
-		public override void Sleep() {
-		}
-
-		/// <summary>
-		/// Back to the module.
-		/// </summary>
-		public override void WakeUp() {
-		}
-
-		/// <summary>
-		/// Unloads the module.
-		/// </summary>
-		public override void Unload() {
+		public DefaultViewerModule()
+			: base() {
 		}
 
 		/// <summary>

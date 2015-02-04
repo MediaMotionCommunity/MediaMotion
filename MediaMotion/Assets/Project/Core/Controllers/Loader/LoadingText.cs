@@ -69,7 +69,9 @@ namespace MediaMotion.Core.Controllers.Loader {
 					this.currentMessage = this.messages.GetEnumerator();
 					this.currentMessage.MoveNext();
 
-					this.moduleLoaded = this.moduleManager.LoadModule<ExplorerModule>(null);
+					if (!this.moduleLoaded) {
+						this.moduleLoaded = this.moduleManager.LoadModule<ExplorerModule>(null);
+					}
 				}
 			}
 		}

@@ -14,28 +14,13 @@ namespace MediaMotion.Modules.Explorer {
 		/// Initializes a new instance of the <see cref="DefaultViewerModule"/> class.
 		/// </summary>
 		/// <param name="builder">The builder.</param>
-		public ExplorerModule(IContainerBuilder builder)
-			: base(builder) {
+		public ExplorerModule()
+			: base() {
 		}
 
 		/// <summary>
-		/// Load another module.
+		/// Configures this instance.
 		/// </summary>
-		public override void Sleep() {
-		}
-
-		/// <summary>
-		/// Back to the module.
-		/// </summary>
-		public override void WakeUp() {
-		}
-
-		/// <summary>
-		/// Called when the module is unloaded
-		/// </summary>
-		public override void Unload() {
-		}
-
 		protected override void Configure() {
 			this.Configuration.Name = "File browser";
 			this.Configuration.Scene = "Explorer";

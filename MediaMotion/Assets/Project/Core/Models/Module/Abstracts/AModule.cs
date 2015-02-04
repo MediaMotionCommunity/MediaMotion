@@ -11,7 +11,7 @@ namespace MediaMotion.Core.Models.Module.Abstracts {
 		/// Initializes a new instance of the <see cref="AModule"/> class.
 		/// </summary>
 		/// <param name="builder">The builder.</param>
-		public AModule(IContainerBuilder builder) {
+		public AModule() {
 			this.Configuration = new Configuration();
 			this.Configure();
 		}
@@ -34,24 +34,27 @@ namespace MediaMotion.Core.Models.Module.Abstracts {
 		/// Loads the specified files.
 		/// </summary>
 		/// <param name="parameters">The parameters.</param>
-		public void Load(IElement[] parameters = null) {
+		public virtual void Load(IElement[] parameters = null) {
 			this.Parameters = parameters;
 		}
 
 		/// <summary>
 		/// Load another module.
 		/// </summary>
-		public abstract void Sleep();
+		public virtual void Sleep() {
+		}
 
 		/// <summary>
 		/// Back to the module.
 		/// </summary>
-		public abstract void WakeUp();
+		public virtual void WakeUp() {
+		}
 
 		/// <summary>
 		/// Unloads the module.
 		/// </summary>
-		public abstract void Unload();
+		public virtual void Unload() {
+		}
 
 		/// <summary>
 		/// Configures this instance.

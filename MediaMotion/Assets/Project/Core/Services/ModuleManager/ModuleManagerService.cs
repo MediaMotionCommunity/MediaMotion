@@ -73,8 +73,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// </returns>
 		public bool UnloadModule() {
 			lock (this.locker) {
-				IModule unloadModule = this.modules.Pop();
-
+				this.modules.Pop().Unload();
 				if (this.modules.Count > 0) {
 					IModule loadModule = this.modules.Peek();
 
@@ -94,7 +93,6 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// <returns>The module instance</returns>
 		private IModule RegisterAndLoad<Module>() where Module : class, IModule {
 			IContainerBuilder modulebuilder = this.core.GetServicesContainer().Get<IContainerBuilder>();
-			IContainerBuilder serviceBuilder = this.core.GetServicesContainer().Get<IContainerBuilder>();
 			IModule module = null;
 
 			modulebuilder.Register<Module>().SingleInstance();
