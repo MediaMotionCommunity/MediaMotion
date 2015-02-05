@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Leap;
 using MediaMotion.Motion.Actions;
-using Action = MediaMotion.Motion.Actions.Action;
+using MediaMotion.Motion.LeapMotion.Core;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
@@ -65,25 +62,25 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		#endregion
 
 		#region Methods
+
 		/// <summary>
 		/// Detection of PinchSelection
 		/// </summary>
 		/// <param name="frame">Leap Frame</param>
+		/// <param name="actionCollection"></param>
 		/// <returns>List of IAction</returns>
-		public IEnumerable<IAction> Detection(Frame frame) {
-			List<IAction> list = new List<IAction>();
-			bool detected = false;
-
+		public void Detection(Frame frame, IActionCollection actionCollection) {
+			var detected = false;
 			if (this.detectionState) {
 				if (!frame.Hands.IsEmpty) {
-					foreach (Hand hand in frame.Hands) {
+					foreach (var hand in frame.Hands) {
 						if (hand.IsValid) {
 							detected = this.ValidDetection(hand.IsRight ? 0 : 1, hand.PinchStrength) || detected;
 						}
 					}
 				}
 				if (detected) {
-					list.Add(new Action(ActionType.Select, null));
+					actionCollection.Add(ActionType.Select);
 					this.detectionState = false;
 					this.lastAction = DateTime.Now;
 				}
@@ -91,7 +88,6 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			else if (DateTime.Now - this.lastAction > this.ReleaseTimeMax) {
 				this.detectionState = true;
 			}
-			return list;
 		}
 
 		/// <summary>

@@ -33,6 +33,10 @@
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\ActionCollection.cs" />
+    <Compile Include="Core\DetectionContainer.cs" />
+    <Compile Include="Core\IActionCollection.cs" />
+    <Compile Include="Core\IDetectionContainer.cs" />
     <Compile Include="MovementsDetection\ASecureLeapDetection.cs" />
     <Compile Include="MovementsDetection\EasyFileBrowsingDetection.cs" />
     <Compile Include="MovementsDetection\ICustomDetection.cs" />

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using Leap;
+﻿using Leap;
 using MediaMotion.Motion.Actions;
-using Action = MediaMotion.Motion.Actions.Action;
+using MediaMotion.Motion.LeapMotion.Core;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
@@ -25,24 +24,22 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		#endregion
 
 		#region Methods
+
 		/// <summary>
 		/// Detection of swipe
 		/// </summary>
 		/// <param name="gesture">Leap Gesture</param>
+		/// <param name="actionCollection"></param>
 		/// <returns>List of IAction</returns>
-		protected override IEnumerable<IAction> SecureDetection(Gesture gesture) {
-			var list = new List<IAction>();
-
+		protected override void SecureDetection(Gesture gesture, IActionCollection actionCollection) {
 			var swipe = new SwipeGesture(gesture);
 
 			if (!this.IsStateValid(swipe.State)) {
-				return list;
+				return;
 			}
 			if (swipe.Direction.x > MinVal || swipe.Direction.x < -MinVal) {
-				list.Add(new Action(ActionType.Return, null));
+				actionCollection.Add(ActionType.Return);
 			}
-
-			return list;
 		}
 
 		#endregion

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Leap;
-using MediaMotion.Motion.Actions;
+﻿using Leap;
+using MediaMotion.Motion.LeapMotion.Core;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
@@ -14,12 +13,14 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		protected Gesture.GestureType Type;
 		#endregion
 		#region Methods
+
 		/// <summary>
 		/// To implement, do the detection and return a list of IAction
 		/// </summary>
 		/// <param name="gesture">Leap Gesture</param>
+		/// <param name="actionCollection"></param>
 		/// <returns>list of IAction</returns>
-		public abstract IEnumerable<IAction> Detection(Gesture gesture);
+		public abstract void Detection(Gesture gesture, IActionCollection actionCollection);
 
 		/// <summary>
 		/// The type of gesture used

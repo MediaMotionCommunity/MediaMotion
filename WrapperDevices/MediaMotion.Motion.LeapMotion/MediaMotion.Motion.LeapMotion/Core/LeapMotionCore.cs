@@ -27,7 +27,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// <summary>
 		/// The movement detection class
 		/// </summary>
-		private Detections movementsDetection;
+		private readonly Detections movementsDetection;
 
 		#endregion
 

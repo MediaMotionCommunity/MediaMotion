@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Leap;
-using MediaMotion.Motion.Actions;
+﻿using Leap;
+using MediaMotion.Motion.LeapMotion.Core;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
@@ -12,7 +11,8 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// Method for detect action, return list of IAction
 		/// </summary>
 		/// <param name="frame">Leap Frame</param>
+		/// <param name="actionCollection"></param>
 		/// <returns>List of IAction</returns>
-		IEnumerable<IAction> Detection(Frame frame);
+		void Detection(Frame frame, IActionCollection actionCollection);
 	}
 }

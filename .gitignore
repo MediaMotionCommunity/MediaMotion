@@ -37,3 +37,16 @@ ehthumbs.db
 Thumbs.db
 *.*~
 *.sln
+
+# ============ #
+#    Custom    #
+# ============ #
+/MediaMotion/Leap.dll
+/MediaMotion/Leap.lib
+/MediaMotion/LeapCSharp.dll
+/MediaMotion/Leapd.dll
+/MediaMotion/Leapd.lib
+*packages/
+StyleCop.Cache
+/MediaMotion/WrapperDevicesLibraries/*.dll
+/MediaMotion/Assets/MediaMotion.Motion.dll
