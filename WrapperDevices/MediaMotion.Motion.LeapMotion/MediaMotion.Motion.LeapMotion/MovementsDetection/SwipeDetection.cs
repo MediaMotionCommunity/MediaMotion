@@ -38,7 +38,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 				return;
 			}
 			if (swipe.Direction.x > MinVal || swipe.Direction.x < -MinVal) {
-				actionCollection.Add(ActionType.Return);
+				actionCollection.Add(ActionType.Back);
 			}
 		}
 
