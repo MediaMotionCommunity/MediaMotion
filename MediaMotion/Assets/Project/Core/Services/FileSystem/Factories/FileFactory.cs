@@ -22,7 +22,6 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 			if (file == null) {
 				throw new Exception("File '" + path + "' doesn't exist");
 			}
-			UnityEngine.Debug.Log(file.Extension);
 			switch (file.Extension) {
 				case ".pdf":
 					return (new PDF(file));

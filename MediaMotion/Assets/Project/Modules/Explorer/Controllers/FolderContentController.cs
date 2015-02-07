@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Timers;
 using MediaMotion.Core;
+using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Scripts;
@@ -11,6 +12,7 @@ using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer.View;
+using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
@@ -471,8 +473,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					case ElementType.Folder:
 						this.EnterDirectory(this.Content[this.CurrentIndex] as IFolder);
 						break;
-					default:
-						this.moduleManagerService.LoadModule<DefaultViewerModule>(new IElement[] { this.Content[this.CurrentIndex] });
+					case ElementType.File:
+						IFile file = this.Content[this.CurrentIndex] as IFile;
+
+						switch (file.GetFileType()) {
+							case FileType.Image:
+								this.moduleManagerService.LoadModule<ImageViewerModule>(new IElement[] { file });
+								break;
+							default:
+								this.moduleManagerService.LoadModule<DefaultViewerModule>(new IElement[] { this.Content[this.CurrentIndex] });
+								break;
+						}
 						break;
 				}
 			}

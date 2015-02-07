@@ -136,7 +136,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 			List<IFile> directoryContent = new List<IFile>();
 
 			foreach (string filePath in Directory.GetFiles(path ?? this.CurrentFolder.GetPath()).Where(file => filterExtension.Contains(Path.GetExtension(file)))) {
-				directoryContent.Add(this.FileFactory.Create(path) as IFile);
+				directoryContent.Add(this.FileFactory.Create(filePath) as IFile);
 			}
 			return (directoryContent);
 		}

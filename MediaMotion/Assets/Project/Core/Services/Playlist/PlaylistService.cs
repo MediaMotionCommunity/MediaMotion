@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Module.Abstracts;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Core.Services.Playlist {
 	/// <summary>
@@ -17,7 +21,12 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <summary>
 		/// The file list
 		/// </summary>
-		private List<IFile> filesList;
+		private IFile[] filesList;
+
+		/// <summary>
+		/// The index
+		/// </summary>
+		private int index;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PlaylistService"/> class.
@@ -44,11 +53,30 @@ namespace MediaMotion.Core.Services.Playlist {
 		public bool Loop { get; set; }
 
 		/// <summary>
+		/// Gets the length.
+		/// </summary>
+		/// <value>
+		/// The length.
+		/// </value>
+		public int Length { get; private set; }
+
+		/// <summary>
 		/// Configures the directory.
 		/// </summary>
-		/// <param name="file">The file</param>
-		public void Configure(IFile file, string[] filterExtension) {
-			this.filesList = this.fileSystemService.GetContent(filterExtension, file.GetParent());
+		/// <param name="element">The file or the directory.</param>
+		/// <param name="filterExtension">The filter extension.</param>
+		public void Configure(IElement element, string[] filterExtension) {
+			if (element.GetElementType() == ElementType.File) {
+				this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetParent()).ToArray();
+				this.index = Array.IndexOf(this.filesList, element);
+			} else {
+				this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetPath()).ToArray();
+				this.index = 0;
+			}
+			if (this.index < 0) {
+				this.index = 0;
+			}
+			this.Length = this.filesList.Length;
 		}
 
 		/// <summary>
@@ -58,7 +86,7 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// The file
 		/// </returns>
 		public IFile Current() {
-			return (default(IFile));
+			return (this.filesList[this.index]);
 		}
 
 		/// <summary>
@@ -68,7 +96,8 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// The file
 		/// </returns>
 		public IFile Previous() {
-			return (default(IFile));
+			this.index = ((this.index - 1 < 0) ? (this.Length) : (this.index)) - 1;
+			return (this.Current());
 		}
 
 		/// <summary>
@@ -78,7 +107,8 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// The file
 		/// </returns>
 		public IFile Next() {
-			return (default(IFile));
+			this.index = ((this.index + 1 >= this.Length) ? (0) : (this.index + 1));
+			return (this.Current());
 		}
 	}
 }

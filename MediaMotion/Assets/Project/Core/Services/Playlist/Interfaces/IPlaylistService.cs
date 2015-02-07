@@ -22,11 +22,19 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 		bool Loop { get; set; }
 
 		/// <summary>
+		/// Gets the length.
+		/// </summary>
+		/// <value>
+		/// The length.
+		/// </value>
+		int Length { get; }
+
+		/// <summary>
 		/// Configure the playlist
 		/// </summary>
-		/// <param name="file">The file.</param>
+		/// <param name="element">The file or the directory.</param>
 		/// <param name="filterExtension">The filter extension.</param>
-		void Configure(IFile file, string[] filterExtension);
+		void Configure(IElement element, string[] filterExtension);
 
 		/// <summary>
 		/// Current file in the list.

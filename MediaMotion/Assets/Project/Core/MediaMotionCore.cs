@@ -9,6 +9,8 @@ using MediaMotion.Core.Services.Input;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
+using MediaMotion.Core.Services.Playlist;
+using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Core.Services.PluginDatabase;
 using MediaMotion.Core.Services.PluginDatabase.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
@@ -48,6 +50,7 @@ namespace MediaMotion.Core {
 			
 			// Services
 			this.servicesContainerBuilder.Register<FileSystemService>().As<IFileSystemService>();
+			this.servicesContainerBuilder.Register<PlaylistService>().As<IPlaylistService>();
 			this.servicesContainerBuilder.Register<HistoryService>().As<IHistoryService>().SingleInstance();
 			this.servicesContainerBuilder.Register<InputService>().As<IInputService>().SingleInstance();
 			this.servicesContainerBuilder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance();
