@@ -16,11 +16,13 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 		/// <param name="Path">The path.</param>
 		/// <returns>The created element</returns>
 		/// <exception cref="System.Exception">Directory ' + Path + ' doesn't exist</exception>
-		public IElement Create(string Path) {
-			if (!Directory.Exists(Path)) {
-				throw new Exception("Directory '" + Path + "' doesn't exist");
+		public IElement Create(string path) {
+			DirectoryInfo directoryInfo = new DirectoryInfo(path);
+
+			if (directoryInfo == null) {
+				throw new Exception("Directory '" + path + "' doesn't exist");
 			}
-			return (new Folder(Path, this.GetName(Path)));
+			return (new Folder(directoryInfo));
 		}
 	}
 }

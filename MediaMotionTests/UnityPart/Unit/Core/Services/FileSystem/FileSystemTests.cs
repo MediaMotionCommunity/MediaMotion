@@ -26,28 +26,29 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 		[Test()]
 		public void GetHomeDirectoryTest() {
 			string HomePath = (Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty) ? Environment.GetFolderPath(Environment.SpecialFolder.Personal) : (Environment.GetFolderPath(Environment.SpecialFolder.System));
-			IFolder HomeFolder = this.FileSystemService.GetHomeDirectory();
+			string HomeFolder = this.FileSystemService.GetHome();
 
 			this.FileSystemService.ChangeDirectory(HomeFolder);
-			Assert.AreEqual(HomeFolder.GetName(), this.FileSystemService.CurrentFolder.GetName());
-			Assert.AreEqual(HomeFolder.GetPath(), this.FileSystemService.CurrentFolder.GetPath());
+			Assert.AreEqual(HomeFolder, this.FileSystemService.CurrentFolder.GetPath());
 			Assert.AreEqual(HomePath, this.FileSystemService.CurrentFolder.GetPath());
-			Assert.AreEqual(HomePath, HomeFolder.GetPath());
+			Assert.AreEqual(HomePath, HomeFolder);
 		}
 
 		[Test()]
 		public void ChangeDirectoryTest() {
-
 			// Testing valid values
 			IFolder newDirectory = null;
-			IFolder initialDirectory = this.FileSystemService.GetHomeDirectory();
-			this.FileSystemService.ChangeDirectory(this.FileSystemService.GetHomeDirectory());
+			IFolder initialDirectory = null;
+
+			this.FileSystemService.ChangeDirectory(this.FileSystemService.GetHome());
+			initialDirectory = this.FileSystemService.CurrentFolder;
 			Assert.AreEqual(ElementType.Folder, initialDirectory.GetElementType());
-			List<IElement> directoryContent = this.FileSystemService.GetDirectoryContent(this.FileSystemService.CurrentFolder);
+
+			List<IElement> directoryContent = this.FileSystemService.GetContent(this.FileSystemService.CurrentFolder.GetPath());
 			foreach (IElement element in directoryContent) {
 				if (element.GetElementType().Equals(ElementType.Folder)) {
 					newDirectory = element as IFolder;
-					this.FileSystemService.ChangeDirectory(element as IFolder);
+					this.FileSystemService.ChangeDirectory(element.GetPath());
 					break;
 				}
 			}

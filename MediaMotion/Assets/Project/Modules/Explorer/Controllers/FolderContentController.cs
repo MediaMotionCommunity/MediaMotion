@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Timers;
 using MediaMotion.Core;
+using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Scripts;
@@ -11,6 +12,7 @@ using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer.View;
+using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
@@ -456,9 +458,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="Destination">
 		/// The destination.
 		/// </param>
-		private void EnterDirectory(IFolder Destination = null) {
-			this.fileSystemService.ChangeDirectory(Destination);
-			this.Content = this.fileSystemService.GetDirectoryContent(null);
+		private void EnterDirectory(IFolder destination = null) {
+			this.fileSystemService.ChangeDirectory((destination == null) ? (null) : (destination.GetPath()));
+			this.Content = this.fileSystemService.GetContent(null);
 			this.DisplayContent();
 		}
 
@@ -471,8 +473,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					case ElementType.Folder:
 						this.EnterDirectory(this.Content[this.CurrentIndex] as IFolder);
 						break;
-					default:
-						this.moduleManagerService.LoadModule<DefaultViewerModule>(new IElement[] { this.Content[this.CurrentIndex] });
+					case ElementType.File:
+						IFile file = this.Content[this.CurrentIndex] as IFile;
+
+						switch (file.GetFileType()) {
+							case FileType.Image:
+								this.moduleManagerService.LoadModule<ImageViewerModule>(new IElement[] { file });
+								break;
+							default:
+								this.moduleManagerService.LoadModule<DefaultViewerModule>(new IElement[] { this.Content[this.CurrentIndex] });
+								break;
+						}
 						break;
 				}
 			}
@@ -497,8 +508,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Backs this instance.
 		/// </summary>
 		private void Back() {
-			this.fileSystemService.ChangeDirectory(this.fileSystemService.CurrentFolder.GetParentPath() ?? this.fileSystemService.CurrentFolder.GetPath());
-			this.Content = this.fileSystemService.GetDirectoryContent(null);
+			this.fileSystemService.ChangeDirectory(this.fileSystemService.CurrentFolder.GetParent() ?? this.fileSystemService.CurrentFolder.GetPath());
+			this.Content = this.fileSystemService.GetContent(null);
 			this.DisplayContent();
 		}
 	}

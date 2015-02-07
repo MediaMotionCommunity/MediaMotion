@@ -23,31 +23,32 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		IFolder CurrentFolder { get; }
 
 		/// <summary>
-		/// Get the home directory
+		/// Get the home path
 		/// </summary>
-		/// <returns>Home directory</returns>
-		IFolder GetHomeDirectory();
-
-		/// <summary>
-		/// Change directory to the Home or the <see cref="IFolder" /> provide in parameter
-		/// </summary>
-		/// <param name="Folder">New working directory</param>
-		/// <returns>True if the action succeed, False otherwise</returns>
-		bool ChangeDirectory(IFolder Folder = null);
+		/// <returns>the home path</returns>
+		string GetHome();
 
 		/// <summary>
 		/// Changes the directory.
 		/// </summary>
 		/// <param name="Path">The path.</param>
 		/// <returns>True if the action succeed, False otherwise</returns>
-		bool ChangeDirectory(string Path = null);
+		bool ChangeDirectory(string path = null);
 
 		/// <summary>
 		/// Get the content of the current directory or the <see cref="IFolder"/> provide in parameter
 		/// </summary>
 		/// <param name="Folder">A specific folder to use</param>
 		/// <returns>List of elements</returns>
-		List<IElement> GetDirectoryContent(IFolder Folder);
+		List<IElement> GetContent(string folder = null);
+
+		/// <summary>
+		/// Gets the content.
+		/// </summary>
+		/// <param name="FilterExtension">The filter extension.</param>
+		/// <param name="Folder">The folder.</param>
+		/// <returns>List of files</returns>
+		List<IFile> GetContent(string[] filterExtension, string folder);
 
 		/// <summary>
 		/// Copy an <see cref="IElement" /> to the specific <see cref="IFolder" />

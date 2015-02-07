@@ -13,6 +13,12 @@ namespace MediaMotion.Core.Models.FileManager.Interfaces {
 		ElementType GetElementType();
 
 		/// <summary>
+		/// Gets the parent.
+		/// </summary>
+		/// <returns>The parent path</returns>
+		string GetParent();
+
+		/// <summary>
 		/// Gets the path.
 		/// </summary>
 		/// <returns>The element path</returns>
