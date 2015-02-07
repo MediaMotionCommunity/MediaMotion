@@ -42,11 +42,13 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			var swipeDetection = new SwipeDetection();
 			var easyFileBrowsingDetection = new EasyFileBrowsingDetection();
 			var pinchSelectionDetection = new PinchSelectionDetection();
+			var pinchGrabDetection = new PinchGrabDetection();
 
 			this.detectionContainer.Register(swipeDetection);
 
 			this.detectionContainer.Register(easyFileBrowsingDetection);
 			this.detectionContainer.Register(pinchSelectionDetection);
+			this.detectionContainer.Register(pinchGrabDetection);
 		}
 		#endregion
 	}

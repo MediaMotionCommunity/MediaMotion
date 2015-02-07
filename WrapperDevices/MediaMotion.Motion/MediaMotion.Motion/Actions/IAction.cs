@@ -15,6 +15,8 @@
 		BrowsingHighlight,
 		BrowsingScroll,
 		BrowsingCursor,
+		GrabStart,
+		GrabStop
 	}
 
 	/// <summary>

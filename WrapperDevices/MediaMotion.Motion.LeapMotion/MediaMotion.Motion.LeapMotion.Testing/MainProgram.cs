@@ -43,7 +43,8 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 		private static void DisplayAction(IEnumerable<IAction> list) {
 			var i = 0;
 			foreach (var ac in list) {
-				Console.WriteLine(i + ": " + GetActionName(ac));
+				if (ac.Type != ActionType.BrowsingCursor && ac.Type != ActionType.BrowsingHighlight && ac.Type != ActionType.BrowsingScroll)
+					Console.WriteLine(i + ": " + GetActionName(ac));
 				i++;
 			}
 		}
@@ -65,7 +66,9 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 				{ActionType.Return, "Return"},
 				{ActionType.BrowsingCursor, "BrowsingCursor"},
 				{ActionType.BrowsingHighlight, "BrowsingHighlight"},
-				{ActionType.BrowsingScroll, "BrowsingScroll"}
+				{ActionType.BrowsingScroll, "BrowsingScroll"},
+				{ActionType.GrabStart, "GrabStart"},
+				{ActionType.GrabStop, "GrabStop"}
 			};
 
 			return list[ac.Type];
