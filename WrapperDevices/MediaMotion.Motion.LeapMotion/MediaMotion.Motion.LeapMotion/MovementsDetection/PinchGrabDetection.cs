@@ -53,15 +53,17 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			if (streng < this.ThresholdDetection && this.states[hand]) {
 				this.states[hand] = false;
 				this.lastDetections[hand] = DateTime.Now;
-			} else if (streng >= this.ThresholdDetection && !this.states[hand]) {
+			}
+			else if (streng >= this.ThresholdDetection && !this.states[hand]) {
 				this.states[hand] = true;
 				this.lastDetections[hand] = DateTime.Now;
 			}
 
-			if (this.states[hand] && !this.perfomGrab[hand] && ( DateTime.Now - this.lastDetections[hand]) >= this.ReleadTimeMin) {
+			if (this.states[hand] && !this.perfomGrab[hand] && (DateTime.Now - this.lastDetections[hand]) >= this.ReleadTimeMin) {
 				actionCollection.Add(ActionType.GrabStart);
 				this.perfomGrab[hand] = true;
-			} else if (!this.states[hand] && this.perfomGrab[hand]) {
+			}
+			else if (!this.states[hand] && this.perfomGrab[hand]) {
 				actionCollection.Add(ActionType.GrabStop);
 				this.detectionState = false;
 				this.perfomGrab[hand] = false;
