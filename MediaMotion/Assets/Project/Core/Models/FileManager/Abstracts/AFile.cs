@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
@@ -9,24 +10,36 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 	/// </summary>
 	public abstract class AFile : AElement, IFile {
 		/// <summary>
-		/// The file type
-		/// </summary>
-		protected FileType FileType;
-
-		/// <summary>
 		/// The extension
 		/// </summary>
-		private string Extension;
+		private FileInfo fileInfo;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="AFile"/> class.
+		/// The file type
 		/// </summary>
-		/// <param name="Path">The path.</param>
-		/// <param name="Name">The name.</param>
-		/// <param name="Extension">The extension.</param>
-		public AFile(string Path, string Name, string Extension)
-			: base(ElementType.File, Path, Name) {
-			this.Extension = Extension;
+		protected FileType fileType;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AFile" /> class.
+		/// </summary>
+		/// <param name="fileInfo">The file information.</param>
+		/// <param name="fileType">Type of the file.</param>
+		/// <exception cref="System.NullReferenceException">fileInfo must not be null</exception>
+		public AFile(FileInfo fileInfo, FileType fileType = FileType.Regular)
+			: base(ElementType.File) {
+			if (fileInfo == null) {
+				throw new NullReferenceException("fileInfo must not be null");
+			}
+			this.fileInfo = fileInfo;
+			this.fileType = fileType;
+		}
+
+		/// <summary>
+		/// Gets the parent.
+		/// </summary>
+		/// <returns>The parent folder</returns>
+		public sealed override string GetParent() {
+			return (this.fileInfo.DirectoryName);
 		}
 
 		/// <summary>
@@ -34,15 +47,31 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// </summary>
 		/// <returns>The element Type</returns>
 		public FileType GetFileType() {
-			return (this.FileType);
+			return (this.fileType);
+		}
+
+		/// <summary>
+		/// Gets the path.
+		/// </summary>
+		/// <returns>The path of the element</returns>
+		public sealed override string GetPath() {
+			return (this.fileInfo.FullName);
+		}
+
+		/// <summary>
+		/// Gets the name.
+		/// </summary>
+		/// <returns>The name of the element</returns>
+		public sealed override string GetName() {
+			return (this.fileInfo.Name);
 		}
 
 		/// <summary>
 		/// Gets the extension.
 		/// </summary>
-		/// <returns>The extension of the element</returns>
+		/// <returns>The element extension</returns>
 		public string GetExtension() {
-			return (this.Extension);
+			return (this.fileInfo.Extension);
 		}
 	}
 }

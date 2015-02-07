@@ -13,22 +13,19 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 		/// <summary>
 		/// Creates the specified path.
 		/// </summary>
-		/// <param name="Path">The path.</param>
+		/// <param name="path">The path.</param>
 		/// <returns>The created element</returns>
 		/// <exception cref="System.Exception">File ' + Path + ' doesn't exist</exception>
-		public IElement Create(string Path) {
-			IElement Element;
-			string Name = this.GetName(Path);
-			string Extension = this.GetExtension(Name);
+		public IElement Create(string path) {
+			FileInfo file = new FileInfo(path);
 
-			if (!File.Exists(Path)) {
-				throw new Exception("File '" + Path + "' doesn't exist");
+			if (file == null) {
+				throw new Exception("File '" + path + "' doesn't exist");
 			}
-
-			switch (Extension) {
+			UnityEngine.Debug.Log(file.Extension);
+			switch (file.Extension) {
 				case ".pdf":
-					Element = new PDF(Path, Name, Extension);
-					break;
+					return (new PDF(file));
 				case ".png":
 				case ".bmp":
 				case ".jpg":
@@ -36,23 +33,16 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 				case ".svg":
 				case ".tiff":
 				case ".jpeg":
-					Element = new Image(Path, Name, Extension);
-					break;
+					return (new Image(file));
 				case ".mp3":
-					Element = new Sound(Path, Name, Extension);
-					break;
+					return (new Sound(file));
 				case ".avi":
 				case ".mp4":
-					Element = new Video(Path, Name, Extension);
-					break;
+					return (new Video(file));
 				case ".txt":
-					Element = new Text(Path, Name, Extension);
-					break;
-				default:
-					Element = new Regular(Path, Name, Extension);
-					break;
+					return (new Text(file));
 			}
-			return (Element);
+			return (new Regular(file));
 		}
 	}
 }

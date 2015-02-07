@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using MediaMotion.Core.Models.FileManager.Abstracts;
 using MediaMotion.Core.Models.FileManager.Enums;
+using MediaMotion.Core.Models.FileManager.Interfaces;
 
 namespace MediaMotion.Core.Models.FileManager {
 	/// <summary>
@@ -8,14 +10,11 @@ namespace MediaMotion.Core.Models.FileManager {
 	/// </summary>
 	public class Video : AFile {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Video"/> class.
+		/// Initializes a new instance of the <see cref="Video" /> class.
 		/// </summary>
-		/// <param name="Path">The path.</param>
-		/// <param name="Name">The name.</param>
-		/// <param name="Extension">The extension.</param>
-		public Video(string Path, string Name, string Extension)
-			: base(Path, Name, Extension) {
-			this.FileType = FileType.Video;
+		/// <param name="fileInfo">The file information.</param>
+		public Video(FileInfo fileInfo)
+			: base(fileInfo, FileType.Video) {
 		}
 	}
 }

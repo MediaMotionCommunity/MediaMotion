@@ -456,9 +456,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="Destination">
 		/// The destination.
 		/// </param>
-		private void EnterDirectory(IFolder Destination = null) {
-			this.fileSystemService.ChangeDirectory(Destination);
-			this.Content = this.fileSystemService.GetDirectoryContent(null);
+		private void EnterDirectory(IFolder destination = null) {
+			this.fileSystemService.ChangeDirectory((destination == null) ? (null) : (destination.GetPath()));
+			this.Content = this.fileSystemService.GetContent(null);
 			this.DisplayContent();
 		}
 
@@ -497,8 +497,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Backs this instance.
 		/// </summary>
 		private void Back() {
-			this.fileSystemService.ChangeDirectory(this.fileSystemService.CurrentFolder.GetParentPath() ?? this.fileSystemService.CurrentFolder.GetPath());
-			this.Content = this.fileSystemService.GetDirectoryContent(null);
+			this.fileSystemService.ChangeDirectory(this.fileSystemService.CurrentFolder.GetParent() ?? this.fileSystemService.CurrentFolder.GetPath());
+			this.Content = this.fileSystemService.GetContent(null);
 			this.DisplayContent();
 		}
 	}

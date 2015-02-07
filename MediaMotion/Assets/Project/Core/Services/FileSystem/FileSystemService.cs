@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories;
@@ -81,62 +82,63 @@ namespace MediaMotion.Core.Services.FileSystem {
 		public IFolder CurrentFolder { get; private set; }
 
 		/// <summary>
-		/// Get the home directory
+		/// Get the home path
 		/// </summary>
-		/// <returns>Home directory</returns>
-		public IFolder GetHomeDirectory() {
-			return (this.FolderFactory.Create((Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty) ? (Environment.GetFolderPath(Environment.SpecialFolder.Personal)) : (Environment.GetFolderPath(Environment.SpecialFolder.System))) as IFolder);
+		/// <returns>Home path</returns>
+		public string GetHome() {
+			return ((Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty) ? (Environment.GetFolderPath(Environment.SpecialFolder.Personal)) : (Environment.GetFolderPath(Environment.SpecialFolder.System)));
 		}
 
 		/// <summary>
-		/// Change directory to the Home or the <see cref="IFolder"/> provide in parameter
+		/// Change directory to the Home or the <see cref="IFolder" /> provide in parameter
 		/// </summary>
-		/// <param name="Folder">
-		/// New working directory
-		/// </param>
-		/// <returns>
-		/// True if the action succeed, False otherwise
-		/// </returns>
-		public bool ChangeDirectory(IFolder Folder = null) {
-			this.CurrentFolder = ((Folder != null) ? (Folder) : (this.GetHomeDirectory()));
+		/// <param name="folder">The folder.</param>
+		/// <returns>True if the action succeed, False otherwise</returns>
+		public bool ChangeDirectory(string folder = null) {
+			folder = folder ?? this.GetHome();
 
-			return (true);
-		}
-
-		/// <summary>
-		/// Changes the directory.
-		/// </summary>
-		/// <param name="Path">
-		/// The path.
-		/// </param>
-		/// <returns>
-		/// True if the action succeed, False otherwise
-		/// </returns>
-		public bool ChangeDirectory(string Path = null) {
-			this.CurrentFolder = this.FolderFactory.Create(Path ?? this.GetHomeDirectory().GetPath()) as IFolder;
+			if (!Directory.Exists(folder)) {
+				return (false);
+			}
+			this.CurrentFolder = this.FolderFactory.Create(folder) as IFolder;
 			return (true);
 		}
 
 		/// <summary>
 		/// Get the content of the current directory or the <see cref="IFolder"/> provide in parameter
 		/// </summary>
-		/// <param name="Folder">
+		/// <param name="path">
 		/// A specific folder to use
 		/// </param>
 		/// <returns>
 		/// List of elements
 		/// </returns>
-		public List<IElement> GetDirectoryContent(IFolder Folder = null) {
-			List<IElement> DirectoryContent = new List<IElement>();
-			string Path = ((Folder != null) ? (Folder) : (this.CurrentFolder)).GetPath();
+		public List<IElement> GetContent(string path = null) {
+			List<IElement> directoryContent = new List<IElement>();
 
-			foreach (string DirectoryPath in Directory.GetDirectories(Path)) {
-				DirectoryContent.Add(this.FolderFactory.Create(DirectoryPath));
+			path = path ?? this.CurrentFolder.GetPath();
+			foreach (string DirectoryPath in Directory.GetDirectories(path)) {
+				directoryContent.Add(this.FolderFactory.Create(DirectoryPath));
 			}
-			foreach (string FilePath in Directory.GetFiles(Path)) {
-				DirectoryContent.Add(this.FileFactory.Create(FilePath));
+			foreach (string FilePath in Directory.GetFiles(path)) {
+				directoryContent.Add(this.FileFactory.Create(FilePath));
 			}
-			return (DirectoryContent);
+			return (directoryContent);
+		}
+
+		/// <summary>
+		/// Gets the content.
+		/// </summary>
+		/// <param name="filterExtension"></param>
+		/// <param name="path"></param>
+		/// <returns>List of files</returns>
+		public List<IFile> GetContent(string[] filterExtension, string path) {
+			List<IFile> directoryContent = new List<IFile>();
+
+			foreach (string filePath in Directory.GetFiles(path ?? this.CurrentFolder.GetPath()).Where(file => filterExtension.Contains(Path.GetExtension(file)))) {
+				directoryContent.Add(this.FileFactory.Create(path) as IFile);
+			}
+			return (directoryContent);
 		}
 
 		/// <summary>
