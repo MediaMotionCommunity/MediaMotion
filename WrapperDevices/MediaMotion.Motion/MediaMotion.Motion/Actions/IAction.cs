@@ -12,6 +12,7 @@
 		ScrollOut,
 		Select,
 		Back,
+		Leave,
 		BrowsingHighlight,
 		BrowsingScroll,
 		BrowsingCursor,

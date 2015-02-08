@@ -183,7 +183,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					case ActionType.Select:
 						this.Open();
 						break;
-					case ActionType.Return:
+					case ActionType.Back:
 						this.Back();
 						break;
 					default:
