@@ -11,9 +11,7 @@ namespace MediaMotion.Core.Models.FileManager {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Folder" /> class.
 		/// </summary>
-		/// <param name="Path">The path.</param>
-		/// <param name="Name">The name.</param>
-		/// <param name="Parent">The parent.</param>
+		/// <param name="directoryInfo">The directory information.</param>
 		public Folder(DirectoryInfo directoryInfo)
 			: base(directoryInfo) {
 		}

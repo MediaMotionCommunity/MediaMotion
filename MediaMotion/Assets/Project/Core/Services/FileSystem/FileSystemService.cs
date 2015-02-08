@@ -129,9 +129,11 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// Gets the content.
 		/// </summary>
-		/// <param name="filterExtension"></param>
-		/// <param name="path"></param>
-		/// <returns>List of files</returns>
+		/// <param name="filterExtension">The filter extension.</param>
+		/// <param name="path">The path.</param>
+		/// <returns>
+		/// List of files
+		/// </returns>
 		public List<IFile> GetContent(string[] filterExtension, string path) {
 			List<IFile> directoryContent = new List<IFile>();
 

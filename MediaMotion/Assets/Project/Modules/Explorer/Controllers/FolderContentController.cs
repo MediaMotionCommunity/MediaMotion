@@ -149,7 +149,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.Line = 0;
 			this.CurrentIndex = 0;
 			this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-			this.Camera = GameObject.Find("Camera/Main");
+			this.Camera = GameObject.Find("ReferenceFrame/Camera/Main");
 			this.Camera.AddComponent("FileInfoUI");
 
 			this.Popup = this.Camera.GetComponent<FileInfoUI>();
@@ -439,11 +439,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Clears this instance.
 		/// </summary>
 		private void Clear() {
+			GameObject.Find("ReferenceFrame").GetComponent<ReferenceFrameController>().Reset = true;
 			foreach (GameObject light in this.Lights) {
 				UnityEngine.Object.Destroy(light);
 			}
-			this.Camera.transform.position = new Vector3(0, 5, -15);
-			this.CamPos = this.Camera.transform.position;
+			this.Camera.transform.localPosition = new Vector3(0, 5, -15);
+			this.CamPos = this.Camera.transform.localPosition;
 			foreach (GameObject tile in this.Tiles) {
 				UnityEngine.Object.Destroy(tile);
 			}
@@ -455,9 +456,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Enters the directory.
 		/// </summary>
-		/// <param name="Destination">
-		/// The destination.
-		/// </param>
+		/// <param name="destination">The destination.</param>
 		private void EnterDirectory(IFolder destination = null) {
 			this.fileSystemService.ChangeDirectory((destination == null) ? (null) : (destination.GetPath()));
 			this.Content = this.fileSystemService.GetContent(null);

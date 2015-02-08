@@ -12,11 +12,9 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		private ElementType ElementType;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="AElement"/> class.
+		/// Initializes a new instance of the <see cref="AElement" /> class.
 		/// </summary>
 		/// <param name="ElementType">Type of the element.</param>
-		/// <param name="Path">The path.</param>
-		/// <param name="Name">The name.</param>
 		public AElement(ElementType ElementType) {
 			this.ElementType = ElementType;
 		}

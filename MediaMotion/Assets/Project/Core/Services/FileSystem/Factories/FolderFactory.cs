@@ -13,8 +13,10 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 		/// <summary>
 		/// Creates the specified path.
 		/// </summary>
-		/// <param name="Path">The path.</param>
-		/// <returns>The created element</returns>
+		/// <param name="path">The path.</param>
+		/// <returns>
+		/// The created element
+		/// </returns>
 		/// <exception cref="System.Exception">Directory ' + Path + ' doesn't exist</exception>
 		public IElement Create(string path) {
 			DirectoryInfo directoryInfo = new DirectoryInfo(path);

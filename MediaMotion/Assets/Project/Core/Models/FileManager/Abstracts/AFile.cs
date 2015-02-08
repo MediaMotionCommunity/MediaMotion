@@ -17,7 +17,7 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// <summary>
 		/// The file type
 		/// </summary>
-		protected FileType fileType;
+		private FileType fileType;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AFile" /> class.

@@ -10,7 +10,7 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// <summary>
 		/// The directory information
 		/// </summary>
-		DirectoryInfo directoryInfo;
+		private DirectoryInfo directoryInfo;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AFolder" /> class.

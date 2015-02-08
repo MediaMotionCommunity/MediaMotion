@@ -11,7 +11,6 @@ namespace MediaMotion.Core.Models.Wrapper.Events {
 		/// Initializes a new instance of the <see cref="ActionDetectedEventArgs"/> class.
 		/// </summary>
 		/// <param name="Action">The action.</param>
-
 		public ActionDetectedEventArgs(IAction Action) {
 			this.Action = Action;
 		}
