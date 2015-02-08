@@ -12,25 +12,13 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		private ElementType ElementType;
 
 		/// <summary>
-		/// The path
-		/// </summary>
-		private string Path;
-
-		/// <summary>
-		/// The name
-		/// </summary>
-		private string Name;
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="AElement"/> class.
 		/// </summary>
 		/// <param name="ElementType">Type of the element.</param>
 		/// <param name="Path">The path.</param>
 		/// <param name="Name">The name.</param>
-		public AElement(ElementType ElementType, string Path, string Name) {
+		public AElement(ElementType ElementType) {
 			this.ElementType = ElementType;
-			this.Path = Path;
-			this.Name = Name;
 		}
 
 		/// <summary>
@@ -42,19 +30,21 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		}
 
 		/// <summary>
+		/// Gets the parent.
+		/// </summary>
+		/// <returns>The parent path</returns>
+		public abstract string GetParent();
+
+		/// <summary>
 		/// Gets the path.
 		/// </summary>
 		/// <returns>The path of the element</returns>
-		public string GetPath() {
-			return (this.Path);
-		}
+		public abstract string GetPath();
 
 		/// <summary>
 		/// Gets the name.
 		/// </summary>
 		/// <returns>The name of the element</returns>
-		public string GetName() {
-			return (this.Name);
-		}
+		public abstract string GetName();
 	}
 }

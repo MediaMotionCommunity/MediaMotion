@@ -1,4 +1,6 @@
-﻿using MediaMotion.Core.Models.Wrapper.Events;
+﻿using MediaMotion.Core.Models.FileManager.Interfaces;
+using MediaMotion.Core.Models.Wrapper.Events;
+using MediaMotion.Core.Resolver.Containers.Interfaces;
 
 namespace MediaMotion.Core.Models.Module.Interfaces {
 	/// <summary>
@@ -6,27 +8,39 @@ namespace MediaMotion.Core.Models.Module.Interfaces {
 	/// </summary>
 	public interface IModule {
 		/// <summary>
-		/// Gets a value indicating whether [keep in background].
+		/// Gets the configuration.
 		/// </summary>
 		/// <value>
-		///   <c>true</c> if [keep in background]; otherwise, <c>false</c>.
+		/// The configuration.
 		/// </value>
-		bool KeepInBackground { get; }
+		Configuration Configuration { get; }
 
 		/// <summary>
-		/// Registers this instance.
+		/// Gets the parameters.
 		/// </summary>
-		/// <param name="ModuleConfiguration">The module configuration.</param>
-		void Register(out Configuration ModuleConfiguration);
+		/// <value>
+		/// The parameters.
+		/// </value>
+		IElement[] Parameters { get; }
 
 		/// <summary>
-		/// Loads the specified files.
+		/// Load the module with specified parameters.
 		/// </summary>
-		/// <param name="Files">The files.</param>
-		void Load(string[] Files = null);
+		/// <param name="parameters">The parameters.</param>
+		void Load(IElement[] parameters = null);
 
 		/// <summary>
-		/// Unloads this instance.
+		/// Load another module.
+		/// </summary>
+		void Sleep();
+
+		/// <summary>
+		/// Back to the module.
+		/// </summary>
+		void WakeUp();
+
+		/// <summary>
+		/// Unloads the module.
 		/// </summary>
 		void Unload();
 	}

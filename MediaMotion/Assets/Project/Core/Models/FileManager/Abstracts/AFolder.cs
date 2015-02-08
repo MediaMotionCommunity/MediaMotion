@@ -8,25 +8,41 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 	/// </summary>
 	public abstract class AFolder : AElement, IFolder {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="AFolder"/> class.
+		/// The directory information
 		/// </summary>
-		/// <param name="Path">The path.</param>
-		/// <param name="Name">The name.</param>
-		public AFolder(string Path, string Name)
-			: base(ElementType.Folder, Path, Name) {
+		DirectoryInfo directoryInfo;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AFolder" /> class.
+		/// </summary>
+		/// <param name="directoryInfo">The directory information.</param>
+		public AFolder(DirectoryInfo directoryInfo)
+			: base(ElementType.Folder) {
+			this.directoryInfo = directoryInfo;
 		}
 
 		/// <summary>
-		/// Gets the parent path.
+		/// Gets the parent.
 		/// </summary>
-		/// <returns>The path of the parent or null</returns>
-		public string GetParentPath() {
-			DirectoryInfo Parent = Directory.GetParent(this.GetPath());
-			
-			if (Parent != null) {
-				return (Parent.FullName);
-			}
-			return (null);
+		/// <returns>The parent path</returns>
+		public override string GetParent() {
+			return (this.directoryInfo.Parent.FullName);
+		}
+
+		/// <summary>
+		/// Gets the path.
+		/// </summary>
+		/// <returns>The path of the element</returns>
+		public override string GetPath() {
+			return (this.directoryInfo.FullName);
+		}
+
+		/// <summary>
+		/// Gets the name.
+		/// </summary>
+		/// <returns>The name of the element</returns>
+		public override string GetName() {
+			return (this.directoryInfo.Name);
 		}
 	}
 }

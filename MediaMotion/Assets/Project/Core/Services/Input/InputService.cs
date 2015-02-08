@@ -5,10 +5,9 @@ using System.Linq;
 using System.Reflection;
 using MediaMotion.Core.Exceptions;
 using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Models.Service;
-using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
+using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Motion;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
@@ -17,39 +16,49 @@ namespace MediaMotion.Core.Services.Input {
 	/// <summary>
 	/// LeapMotion Service
 	/// </summary>
-	public class InputService : ServiceBase, IInputService {
+	public class InputService : IInputService {
+		/// <summary>
+		/// The file system service
+		/// </summary>
 		private readonly IFileSystemService fileSystemService;
+
+		/// <summary>
+		/// The module manager service
+		/// </summary>
+		private readonly IModuleManagerService moduleManagerService;
 
 		/// <summary>
 		/// The wrapper
 		/// </summary>
-		private IWrapperDevice Wrapper;
+		private IWrapperDevice wrapper;
 
 		/// <summary>
 		/// The last frame
 		/// </summary>
-		private int? LastFrame;
+		private int? lastFrame;
 
 		/// <summary>
 		/// The movements
 		/// </summary>
-		private List<IAction> Movements;
+		private List<IAction> movements;
 
 		/// <summary>
 		/// The default input
 		/// </summary>
-		private Dictionary<KeyCode, IAction> DefaultInput;
+		private Dictionary<KeyCode, IAction> defaultInput;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="InputService"/> class.
+		/// Initializes a new instance of the <see cref="InputService" /> class.
 		/// </summary>
-		/// <param name="Core">The core.</param>
-		/// <param name="fileSystemService"></param>
-		public InputService(IFileSystemService fileSystemService) {
-			this.fileSystemService = fileSystemService;
-			this.LastFrame = null;
-			this.Movements = new List<IAction>();
-			this.DefaultInput = new Dictionary<KeyCode, IAction>();
+		/// <param name="fileSystem">The file system service.</param>
+		/// <param name="moduleManager">The module manager service.</param>
+		public InputService(IFileSystemService fileSystem, IModuleManagerService moduleManager) {
+			this.fileSystemService = fileSystem;
+			this.moduleManagerService = moduleManager;
+
+			this.lastFrame = null;
+			this.movements = new List<IAction>();
+			this.defaultInput = new Dictionary<KeyCode, IAction>();
 
 			this.AddDefaultInput(KeyCode.LeftArrow, new MediaMotion.Motion.Actions.Action(ActionType.Left, null));
 			this.AddDefaultInput(KeyCode.RightArrow, new MediaMotion.Motion.Actions.Action(ActionType.Right, null));
@@ -57,6 +66,7 @@ namespace MediaMotion.Core.Services.Input {
 			this.AddDefaultInput(KeyCode.DownArrow, new MediaMotion.Motion.Actions.Action(ActionType.ScrollOut, null));
 			this.AddDefaultInput(KeyCode.Space, new MediaMotion.Motion.Actions.Action(ActionType.Select, null));
 			this.AddDefaultInput(KeyCode.Backspace, new MediaMotion.Motion.Actions.Action(ActionType.Return, null));
+			this.AddDefaultInput(KeyCode.Escape, new MediaMotion.Motion.Actions.Action(ActionType.Leave, null));
 
 			this.LoadWrapper();
 		}
@@ -81,7 +91,7 @@ namespace MediaMotion.Core.Services.Input {
 			if (!Types.Any()) {
 				throw new WrapperNotFoundException("Bad Wrapper Library");
 			}
-			this.Wrapper = Activator.CreateInstance(Types.FirstOrDefault()) as IWrapperDevice;
+			this.wrapper = Activator.CreateInstance(Types.FirstOrDefault()) as IWrapperDevice;
 		}
 
 		/// <summary>
@@ -90,10 +100,10 @@ namespace MediaMotion.Core.Services.Input {
 		/// <param name="Key">The key.</param>
 		/// <param name="Movement">The movement.</param>
 		public void AddDefaultInput(KeyCode Key, IAction Movement) {
-			if (this.DefaultInput.ContainsKey(Key)) {
-				this.DefaultInput.Remove(Key);
+			if (this.defaultInput.ContainsKey(Key)) {
+				this.defaultInput.Remove(Key);
 			}
-			this.DefaultInput.Add(Key, Movement);
+			this.defaultInput.Add(Key, Movement);
 		}
 
 		/// <summary>
@@ -101,20 +111,32 @@ namespace MediaMotion.Core.Services.Input {
 		/// </summary>
 		/// <returns>The movements</returns>
 		public List<IAction> GetMovements() {
-			if (this.LastFrame == null || this.LastFrame != Time.frameCount) {
-				this.LastFrame = Time.frameCount;
-				this.Movements.Clear();
+			if (this.lastFrame == null || this.lastFrame != Time.frameCount) {
+				this.lastFrame = Time.frameCount;
+				this.movements.Clear();
 
-				foreach (IAction Action in this.Wrapper.GetActions()) {
-					this.Movements.Add(Action);
+				foreach (IAction action in this.wrapper.GetActions()) {
+					this.AddMovement(action);
 				}
-				foreach (KeyValuePair<KeyCode, IAction> Input in this.DefaultInput) {
-					if (UnityEngine.Input.GetKeyDown(Input.Key)) {
-						this.Movements.Add(Input.Value);
+				foreach (KeyValuePair<KeyCode, IAction> input in this.defaultInput) {
+					if (UnityEngine.Input.GetKeyDown(input.Key)) {
+						this.AddMovement(input.Value);
 					}
 				}
 			}
-			return (this.Movements);
+			return (this.movements);
+		}
+
+		/// <summary>
+		/// Adds the movement.
+		/// </summary>
+		/// <param name="action">The action.</param>
+		private void AddMovement(IAction action) {
+			if (action.Type == ActionType.Leave) {
+				this.moduleManagerService.UnloadModule();
+			} else {
+				this.movements.Add(action);
+			}
 		}
 	}
 }

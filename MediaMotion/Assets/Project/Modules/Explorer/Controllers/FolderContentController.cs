@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Timers;
-
 using MediaMotion.Core;
+using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
+using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
+using MediaMotion.Core.Services.ModuleManager.Interfaces;
+using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer.View;
+using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Motion.Actions;
-
 using UnityEngine;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Explorer Controller
 	/// </summary>
-	public class FolderContentController : AUnityObject {
+	public class FolderContentController : BaseUnityScript<FolderContentController> {
 		/// <summary>
 		/// The row size
 		/// </summary>
@@ -59,14 +62,19 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private int CurrentIndex;
 
 		/// <summary>
-		/// The file service
-		/// </summary>
-		private IFileSystemService FileService;
-
-		/// <summary>
 		/// The input
 		/// </summary>
 		private IInputService inputService;
+
+		/// <summary>
+		/// The file service
+		/// </summary>
+		private IFileSystemService fileSystemService;
+
+		/// <summary>
+		/// The module manager service
+		/// </summary>
+		private IModuleManagerService moduleManagerService;
 
 		/// <summary>
 		/// The texture map
@@ -119,17 +127,15 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private List<GameObject> Lights;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FolderContentController"/> class.
+		/// Initializes the specified input service.
 		/// </summary>
-		/// <param name="inputService">
-		/// The input Service.
-		/// </param>
-		/// <param name="fileSystemService">
-		/// The file System Service.
-		/// </param>
-		public FolderContentController(IInputService inputService, IFileSystemService fileSystemService) {
-			this.inputService = inputService;
-			this.FileService = fileSystemService;
+		/// <param name="input">The input service.</param>
+		/// <param name="fileSystem">The file system service.</param>
+		/// <param name="moduleManager">The module manager service.</param>
+		public void Init(IInputService input, IFileSystemService fileSystem, IModuleManagerService moduleManager) {
+			this.inputService = input;
+			this.fileSystemService = fileSystem;
+			this.moduleManagerService = moduleManager;
 
 			this.CamPos = new Vector3(0, 0, 0);
 			this.Tiles = new List<GameObject>();
@@ -139,12 +145,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.TextureMap = new Dictionary<ElementType, string>();
 			this.TextureMap.Add(ElementType.File, "File-icon");
 			this.TextureMap.Add(ElementType.Folder, "Folder-icon");
-		}
 
-		/// <summary>
-		/// Starts this instance.
-		/// </summary>
-		public override void Start() {
 			this.Line = 0;
 			this.CurrentIndex = 0;
 			this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
@@ -164,7 +165,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Actions the handle.
 		/// </summary>
-		public override void Update() {
+		public void Update() {
 			foreach (IAction Action in this.inputService.GetMovements()) {
 				switch (Action.Type) {
 					case ActionType.Left:
@@ -327,26 +328,23 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="position">
 		/// The position.
 		/// </param>
-		/// <param name="color">
-		/// The color.
-		/// </param>
 		/// <param name="range">
 		/// The range.
 		/// </param>
-		/// <returns>
-		/// The <see cref="GameObject"/>.
-		/// </returns>
-		private GameObject AddLight(Vector3 position, Color color, float range) {
+		/// <param name="intensity">
+		/// The intensity.
+		/// </param>
+		private void AddLight(Vector3 position, float range = 9f, float intensity = 1) {
 			GameObject lightC = new GameObject();
 
 			lightC.AddComponent<Light>();
 			lightC.light.name = "light_" + position.x + "_" + position.y + "_" + position.z;
 			lightC.light.transform.position = position;
-			lightC.light.color = color;
+			lightC.light.color = new Color(0.9f, 1, 1);
 			lightC.light.range = range;
-			lightC.light.intensity = 1.4f;
+			lightC.light.intensity = intensity;
 			lightC.light.renderMode = LightRenderMode.ForcePixel;
-			return lightC;
+			this.Lights.Add(lightC);
 		}
 
 		/// <summary>
@@ -358,6 +356,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			float z = this.OriginZ;
 
 			this.Clear();
+
+			if (this.Content.Count == 0) {
+				this.AddLight(new Vector3(-1, 5, z), 14f, 1.2f);
+				this.AddLight(new Vector3(1, 5, z), 14f, 1.2f);
+			}
+
 			foreach (IElement file in this.Content) {
 				GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Plane);
 				GameObject tileText = new GameObject();
@@ -416,14 +420,15 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				if (i % this.RowSize == 0) {
 					z += this.IncrementZ;
 				}
-
 				if (i == 1) {
-					this.Lights.Add(this.AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f));
-					this.Lights.Add(this.AddLight(new Vector3(0, 5, z - 1.5f), new Color(0.9f, 1, 1), 9f));
-					this.Lights.Add(this.AddLight(new Vector3(0, 5, z - 3f), new Color(0.9f, 1, 1), 14f));
+					for (int idx = 0; idx < 5; idx++) {
+						this.AddLight(new Vector3(-3, 5, z - (idx * 1.5f)));
+						this.AddLight(new Vector3(3, 5, z - (idx * 1.5f)));
+					}
 				}
 				if (i % 5 == 0) {
-					this.Lights.Add(this.AddLight(new Vector3(0, 5, z), new Color(0.9f, 1, 1), 9f));
+					this.AddLight(new Vector3(-3, 5, z));
+					this.AddLight(new Vector3(3, 5, z));
 				}
 
 				this.HighlightCurrent(this.Tiles[this.CurrentIndex]);
@@ -435,12 +440,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private void Clear() {
 			foreach (GameObject light in this.Lights) {
-				this.Destroy(light);
+				UnityEngine.Object.Destroy(light);
 			}
 			this.Camera.transform.position = new Vector3(0, 5, -15);
 			this.CamPos = this.Camera.transform.position;
 			foreach (GameObject tile in this.Tiles) {
-				this.Destroy(tile);
+				UnityEngine.Object.Destroy(tile);
 			}
 			this.Tiles.Clear();
 			this.CurrentIndex = 0;
@@ -453,9 +458,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="Destination">
 		/// The destination.
 		/// </param>
-		private void EnterDirectory(IFolder Destination = null) {
-			this.FileService.ChangeDirectory(Destination);
-			this.Content = this.FileService.GetDirectoryContent(null);
+		private void EnterDirectory(IFolder destination = null) {
+			this.fileSystemService.ChangeDirectory((destination == null) ? (null) : (destination.GetPath()));
+			this.Content = this.fileSystemService.GetContent(null);
 			this.DisplayContent();
 		}
 
@@ -468,7 +473,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					case ElementType.Folder:
 						this.EnterDirectory(this.Content[this.CurrentIndex] as IFolder);
 						break;
-					default:
+					case ElementType.File:
+						IFile file = this.Content[this.CurrentIndex] as IFile;
+
+						switch (file.GetFileType()) {
+							case FileType.Image:
+								this.moduleManagerService.LoadModule<ImageViewerModule>(new IElement[] { file });
+								break;
+							default:
+								this.moduleManagerService.LoadModule<DefaultViewerModule>(new IElement[] { this.Content[this.CurrentIndex] });
+								break;
+						}
 						break;
 				}
 			}
@@ -493,8 +508,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Backs this instance.
 		/// </summary>
 		private void Back() {
-			this.FileService.ChangeDirectory(this.FileService.CurrentFolder.GetParentPath() ?? this.FileService.CurrentFolder.GetPath());
-			this.Content = this.FileService.GetDirectoryContent(null);
+			this.fileSystemService.ChangeDirectory(this.fileSystemService.CurrentFolder.GetParent() ?? this.fileSystemService.CurrentFolder.GetPath());
+			this.Content = this.fileSystemService.GetContent(null);
 			this.DisplayContent();
 		}
 	}

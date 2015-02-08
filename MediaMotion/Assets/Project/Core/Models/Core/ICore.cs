@@ -1,6 +1,7 @@
 ﻿using System;
-
-using MediaMotion.Core.Models.Service;
+using System.Reflection;
+using MediaMotion.Core.Models.Module.Interfaces;
+using MediaMotion.Core.Resolver.Containers.Interfaces;
 
 namespace MediaMotion.Core.Models.Core {
 	/// <summary>
@@ -8,24 +9,23 @@ namespace MediaMotion.Core.Models.Core {
 	/// </summary>
 	public interface ICore {
 		/// <summary>
-		/// The get service.
+		/// Adds the service builder.
 		/// </summary>
-		/// <typeparam name="T">
-		/// </typeparam>
-		/// <returns>
-		/// The <see cref="T"/>.
-		/// </returns>
-		T Resolve<T>() where T : class;
+		/// <param name="builder">The builder.</param>
+		/// <returns>The service container</returns>
+		IContainer AddServices(IContainerBuilder builder);
 
 		/// <summary>
-		/// The get service.
+		/// Adds the services.
 		/// </summary>
-		/// <param name="type">
-		/// The type.
-		/// </param>
-		/// <returns>
-		/// The <see cref="object"/>.
-		/// </returns>
-		object Resolve(Type type);
+		/// <param name="container">The container.</param>
+		/// <returns>The service container</returns>
+		IContainer AddServices(IContainer container);
+
+		/// <summary>
+		/// Gets the services container.
+		/// </summary>
+		/// <returns>The service container</returns>
+		IContainer GetServicesContainer();
 	}
 }

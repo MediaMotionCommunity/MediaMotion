@@ -1,25 +1,21 @@
 ﻿using System.Collections.Generic;
 
 using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Models.Service;
 using MediaMotion.Core.Services.History.Interfaces;
 
 namespace MediaMotion.Core.Services.History {
 	/// <summary>
 	/// History Service
 	/// </summary>
-	public sealed class HistoryService : ServiceBase, IHistoryService {
+	public sealed class HistoryService : IHistoryService {
 		/// <summary>
 		/// The histories
 		/// </summary>
 		private Dictionary<IIdentifier, IIdentifierHistory> Histories;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="HistoryService"/> class.
+		/// Initializes a new instance of the <see cref="HistoryService" /> class.
 		/// </summary>
-		/// <param name="Core">
-		/// The core.
-		/// </param>
 		public HistoryService() {
 			this.Histories = new Dictionary<IIdentifier, IIdentifierHistory>();
 		}
