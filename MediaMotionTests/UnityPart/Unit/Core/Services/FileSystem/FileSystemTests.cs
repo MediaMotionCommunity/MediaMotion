@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
-
 using NUnit.Framework;
 
 namespace MediaMotion.Core.Services.FileSystem.Tests {
@@ -15,7 +14,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 
 		[SetUp]
 		public void Init() {
-			this.FileSystemService = new FileSystemService();
+			this.FileSystemService = new FileSystemService(new FolderFactory(), new FileFactory());
 		}
 
 		[Test()]

@@ -2,6 +2,7 @@
 using MediaMotion.Core.Resolver.Containers;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
 using MediaMotion.Core.Services.FileSystem;
+using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.History;
 using MediaMotion.Core.Services.History.Interfaces;
@@ -45,14 +46,24 @@ namespace MediaMotion.Core {
 			// Core
 			this.servicesContainerBuilder.Register<MediaMotionCore>(this).As<ICore>().SingleInstance();
 
-			// Builders
+			// Container
 			this.servicesContainerBuilder.Register<ContainerBuilder>().As<IContainerBuilder>();
 			
-			// Services
+			// FileSystem
 			this.servicesContainerBuilder.Register<FileSystemService>().As<IFileSystemService>();
+			this.servicesContainerBuilder.Register<FolderFactory>().SingleInstance();
+			this.servicesContainerBuilder.Register<FileFactory>().SingleInstance();
+
+			// Playlist
 			this.servicesContainerBuilder.Register<PlaylistService>().As<IPlaylistService>();
+
+			// History
 			this.servicesContainerBuilder.Register<HistoryService>().As<IHistoryService>().SingleInstance();
+
+			// Input
 			this.servicesContainerBuilder.Register<InputService>().As<IInputService>().SingleInstance();
+
+			// Modules
 			this.servicesContainerBuilder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance();
 			this.servicesContainerBuilder.Register<PluginDatabaseService>().As<IPluginDatabaseService>().SingleInstance();
 

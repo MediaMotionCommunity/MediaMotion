@@ -13,57 +13,23 @@ namespace MediaMotion.Core.Services.FileSystem {
 	/// </summary>
 	public sealed class FileSystemService : IFileSystemService {
 		/// <summary>
-		/// The folder factory
-		/// </summary>
-		private IFactory FolderFactoryInstance;
-
-		/// <summary>
 		/// The file factory
 		/// </summary>
-		private IFactory FileFactoryInstance;
+		private IFactory fileFactory;
+
+		/// <summary>
+		/// The folder factory
+		/// </summary>
+		private IFactory folderFactory;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileSystemService"/> class.
 		/// </summary>
-		public FileSystemService() {
+		public FileSystemService(FolderFactory folderFactory, FileFactory fileFactory) {
+			this.folderFactory = folderFactory;
+			this.fileFactory = fileFactory;
 			this.DisplayHidden = false;
-			this.FileFactory = new FileFactory();
-			this.FolderFactory = new FolderFactory();
-			this.InitialFolder = this.CurrentFolder = this.FolderFactory.Create(Directory.GetCurrentDirectory()) as IFolder;
-		}
-
-		/// <summary>
-		/// Gets or sets the folder factory.
-		/// </summary>
-		/// <value>
-		/// The folder factory.
-		/// </value>
-		public IFactory FolderFactory {
-			private get {
-				return (this.FolderFactoryInstance);
-			}
-			set {
-				if (value != null) {
-					this.FolderFactoryInstance = value;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the file factory.
-		/// </summary>
-		/// <value>
-		/// The file factory.
-		/// </value>
-		public IFactory FileFactory {
-			private get {
-				return (this.FileFactoryInstance);
-			}
-			set {
-				if (value != null) {
-					this.FileFactoryInstance = value;
-				}
-			}
+			this.InitialFolder = this.CurrentFolder = this.folderFactory.Create(Directory.GetCurrentDirectory()) as IFolder;
 		}
 
 		/// <summary>
@@ -109,7 +75,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 			if (!Directory.Exists(folder)) {
 				return (false);
 			}
-			this.CurrentFolder = this.FolderFactory.Create(folder) as IFolder;
+			this.CurrentFolder = this.folderFactory.Create(folder) as IFolder;
 			return (true);
 		}
 
@@ -127,10 +93,10 @@ namespace MediaMotion.Core.Services.FileSystem {
 			DirectoryInfo directory = new DirectoryInfo(path ?? this.CurrentFolder.GetPath());
 
 			foreach (DirectoryInfo directoryInfos in directory.GetDirectories().Where(file => (file.Attributes & FileAttributes.Hidden) == 0 || this.DisplayHidden)) {
-				directoryContent.Add(this.FolderFactory.Create(directoryInfos.FullName));
+				directoryContent.Add(this.folderFactory.Create(directoryInfos.FullName));
 			}
 			foreach (FileInfo fileInfos in directory.GetFiles().Where(file => (file.Attributes & FileAttributes.Hidden) == 0 || this.DisplayHidden)) {
-				directoryContent.Add(this.FileFactory.Create(fileInfos.FullName));
+				directoryContent.Add(this.fileFactory.Create(fileInfos.FullName));
 			}
 			return (directoryContent);
 		}
@@ -147,7 +113,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 			List<IFile> directoryContent = new List<IFile>();
 
 			foreach (string filePath in Directory.GetFiles(path ?? this.CurrentFolder.GetPath()).Where(file => filterExtension.Contains(Path.GetExtension(file)))) {
-				directoryContent.Add(this.FileFactory.Create(filePath) as IFile);
+				directoryContent.Add(this.fileFactory.Create(filePath) as IFile);
 			}
 			return (directoryContent);
 		}
