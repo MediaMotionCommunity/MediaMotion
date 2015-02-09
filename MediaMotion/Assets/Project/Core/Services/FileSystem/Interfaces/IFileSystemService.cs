@@ -23,6 +23,14 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		IFolder CurrentFolder { get; }
 
 		/// <summary>
+		/// Gets or sets a value indicating whether [display hidden].
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if [display hidden]; otherwise, <c>false</c>.
+		/// </value>
+		bool DisplayHidden { get; set; }
+
+		/// <summary>
 		/// Get the home path
 		/// </summary>
 		/// <returns>the home path</returns>

@@ -26,6 +26,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// Initializes a new instance of the <see cref="FileSystemService"/> class.
 		/// </summary>
 		public FileSystemService() {
+			this.DisplayHidden = false;
 			this.FileFactory = new FileFactory();
 			this.FolderFactory = new FolderFactory();
 			this.InitialFolder = this.CurrentFolder = this.FolderFactory.Create(Directory.GetCurrentDirectory()) as IFolder;
@@ -82,6 +83,14 @@ namespace MediaMotion.Core.Services.FileSystem {
 		public IFolder CurrentFolder { get; private set; }
 
 		/// <summary>
+		/// Gets or sets a value indicating whether [display hidden].
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if [display hidden]; otherwise, <c>false</c>.
+		/// </value>
+		public bool DisplayHidden { get; set; }
+
+		/// <summary>
 		/// Get the home path
 		/// </summary>
 		/// <returns>Home path</returns>
@@ -115,13 +124,13 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </returns>
 		public List<IElement> GetContent(string path = null) {
 			List<IElement> directoryContent = new List<IElement>();
+			DirectoryInfo directory = new DirectoryInfo(path ?? this.CurrentFolder.GetPath());
 
-			path = path ?? this.CurrentFolder.GetPath();
-			foreach (string DirectoryPath in Directory.GetDirectories(path)) {
-				directoryContent.Add(this.FolderFactory.Create(DirectoryPath));
+			foreach (DirectoryInfo directoryInfos in directory.GetDirectories().Where(file => (file.Attributes & FileAttributes.Hidden) == 0 || this.DisplayHidden)) {
+				directoryContent.Add(this.FolderFactory.Create(directoryInfos.FullName));
 			}
-			foreach (string FilePath in Directory.GetFiles(path)) {
-				directoryContent.Add(this.FileFactory.Create(FilePath));
+			foreach (FileInfo fileInfos in directory.GetFiles().Where(file => (file.Attributes & FileAttributes.Hidden) == 0 || this.DisplayHidden)) {
+				directoryContent.Add(this.FileFactory.Create(fileInfos.FullName));
 			}
 			return (directoryContent);
 		}
