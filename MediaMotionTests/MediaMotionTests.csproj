@@ -60,26 +60,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="UnityPart\Unit\Core\Controller\FolderContentControllerTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Models\FileManager\FolderTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Models\FileManager\ImageTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Models\FileManager\PDFTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Models\FileManager\RegularTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Models\FileManager\SoundTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Models\FileManager\TextTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Models\FileManager\VideoTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Services\FileSystem\Factories\FileFactoryTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Services\FileSystem\Factories\FolderFactoryTests.cs" />
-    <Compile Include="UnityPart\Unit\Core\Services\FileSystem\FileSystemTests.cs" />
-    <Compile Include="UnityPart\Unit\Modules\Components\Playlist\PlaylistTests.cs" />
-    <Compile Include="UnityPart\Unit\Modules\Components\Rotate\RotateTests.cs" />
-    <Compile Include="UnityPart\Unit\Modules\Components\Volume\VolumeTests.cs" />
-    <Compile Include="UnityPart\Unit\Modules\Components\Zoom\ZoomTests.cs" />
-    <Compile Include="UnityPart\Unit\Modules\MediaPlayer\MusicPlayer\MusicPlayerTests.cs" />
-    <Compile Include="UnityPart\Unit\Modules\MediaPlayer\VideoPlayer\VideoPlayerTests.cs" />
-    <Compile Include="UnityPart\Unit\Resolver\ContainerBuilderTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MediaMotion\Assembly-CSharp-firstpass.csproj">
       <Project>{84ec80a4-08fb-75a8-e509-cfaa3781c530}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
@@ -95,6 +75,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Project\Core\Services\FileSystem\FileSystemServiceTests.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
