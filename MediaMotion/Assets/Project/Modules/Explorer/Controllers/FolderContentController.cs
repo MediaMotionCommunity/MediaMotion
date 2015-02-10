@@ -343,7 +343,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			lightC.light.color = new Color(0.9f, 1, 1);
 			lightC.light.range = range;
 			lightC.light.intensity = intensity;
-			lightC.light.renderMode = LightRenderMode.ForcePixel;
+			lightC.light.renderMode = LightRenderMode.ForceVertex;
 			this.Lights.Add(lightC);
 		}
 

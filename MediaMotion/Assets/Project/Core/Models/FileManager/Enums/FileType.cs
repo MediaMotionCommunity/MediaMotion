@@ -5,11 +5,11 @@ namespace MediaMotion.Core.Models.FileManager.Enums {
 	/// File Type enumeration
 	/// </summary>
 	public enum FileType {
-		Image,
-		PDF,
 		Regular,
+		Image,
+		Video,
 		Sound,
 		Text,
-		Video
+		PDF
 	}
 }
