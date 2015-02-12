@@ -14,27 +14,24 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private IInputService inputService;
 
 		/// <summary>
-		/// The reset
-		/// </summary>
-		public bool Reset { get; set; }
-
-		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
 		/// <param name="inputService">The input service.</param>
 		public void Init(IInputService inputService) {
-			this.Reset = false;
 			this.inputService = inputService;
+		}
+
+		/// <summary>
+		/// Reset position.
+		/// </summary>
+		public void ResetPosition() {
+			this.gameObject.transform.position = new Vector3(0, 0, 0);
 		}
 
 		/// <summary>
 		/// Updates this instance.
 		/// </summary>
 		public void Update() {
-			if (this.Reset) {
-				this.gameObject.transform.position = new Vector3(0, 0, 0);
-				this.Reset = false;
-			}
 			foreach (IAction action in this.inputService.GetMovements(ActionType.BrowsingScroll)) {
 					MediaMotion.Motion.Actions.Parameters.Vector3 parameter = action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
 

@@ -84,7 +84,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Clears this instance.
 		/// </summary>
 		public void Clear() {
-			this.referenceFrameController.Reset = true;
+			this.referenceFrameController.ResetPosition();
 			for (int current = this.transform.childCount - 1; current >= 0; --current) {
 				GameObject.Destroy(transform.GetChild(current).gameObject);
 			}

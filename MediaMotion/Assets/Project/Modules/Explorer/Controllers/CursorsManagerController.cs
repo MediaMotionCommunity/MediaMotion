@@ -16,6 +16,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public const int DeleteDelay = 5;
 
 		/// <summary>
+		/// The cursor prefabs
+		/// </summary>
+		public GameObject BaseCursor;
+
+		/// <summary>
 		/// The cursors
 		/// </summary>
 		private Dictionary<int, CursorData> cursors;
@@ -44,12 +49,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				if (this.cursors.ContainsKey(id)) {
 					this.cursors[id].Update();
 				} else {
-					CursorData cursor = new CursorData(GameObject.CreatePrimitive(PrimitiveType.Sphere));
+					CursorData cursor = new CursorData(Instantiate(this.BaseCursor) as GameObject);
 
 					cursor.GameObject.name = "cursor_" + id;
 					cursor.GameObject.transform.parent = this.gameObject.transform;
-					cursor.GameObject.transform.localPosition = new Vector3(0, 0, 0);
+					cursor.GameObject.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+
 					cursor.GameObject.AddComponent<CursorController>().Id = id;
+					
 					this.cursors.Add(id, cursor);
 				}
 			}

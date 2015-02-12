@@ -439,7 +439,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Clears this instance.
 		/// </summary>
 		private void Clear() {
-			GameObject.Find("ReferenceFrame").GetComponent<ReferenceFrameController>().Reset = true;
+			GameObject.Find("ReferenceFrame").GetComponent<ReferenceFrameController>().ResetPosition();
 			foreach (GameObject light in this.Lights) {
 				UnityEngine.Object.Destroy(light);
 			}
