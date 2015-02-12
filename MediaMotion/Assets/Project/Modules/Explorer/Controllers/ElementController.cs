@@ -42,14 +42,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Selects this instance.
 		/// </summary>
 		public void Select() {
-			this.gameObject.transform.Translate(new Vector3(0.0f, 1.0f, 0.0f));
+			iTween.MoveTo(this.gameObject, new Vector3(this.gameObject.transform.position.x, 3.0f, this.gameObject.transform.position.z), 0.5f);
 		}
 
 		/// <summary>
 		/// Deselects this instance.
 		/// </summary>
 		public void Deselect() {
-			this.gameObject.transform.Translate(new Vector3(0.0f, -1.0f, 0.0f));
+			iTween.MoveTo(this.gameObject, new Vector3(this.gameObject.transform.position.x, 2.0f, this.gameObject.transform.position.z), 0.5f);
 		}
 
 		/// <summary>

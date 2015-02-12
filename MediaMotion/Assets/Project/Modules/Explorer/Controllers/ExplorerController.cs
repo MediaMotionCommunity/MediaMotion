@@ -4,9 +4,11 @@ using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
+using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.ImageViewer;
+using MediaMotion.Motion.Actions;
 using UnityEngine;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
@@ -45,6 +47,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private IFileSystemService fileSystemService;
 
 		/// <summary>
+		/// The input service
+		/// </summary>
+		private IInputService inputService;
+
+		/// <summary>
 		/// The module manager service
 		/// </summary>
 		private IModuleManagerService moduleManagerService;
@@ -62,10 +69,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
-		public void Init(FolderFactory folderFactory, IFileSystemService fileSystemService, IModuleManagerService moduleManagerService) {
+		public void Init(FolderFactory folderFactory, IFileSystemService fileSystemService, IInputService inputService, IModuleManagerService moduleManagerService) {
 			// services
 			this.folderFactory = folderFactory;
 			this.fileSystemService = fileSystemService;
+			this.inputService = inputService;
 			this.moduleManagerService = moduleManagerService;
 
 			// game object
@@ -76,29 +84,20 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		}
 
 		/// <summary>
-		/// Opens the specified element.
+		/// Updates this instance.
 		/// </summary>
-		/// <param name="element">The element.</param>
-		public void Open(IElement element) {
-			this.Clear();
-			switch (element.GetElementType()) {
-				case ElementType.Folder:
-					this.OpenDirectory(element as IFolder);
-					break;
-				case ElementType.File:
-					this.OpenFile(element as IFile);
-					break;
-			}
-		}
-
-		/// <summary>
-		/// Backs this instance.
-		/// </summary>
-		public void Back() {
-			string parentPath = this.fileSystemService.CurrentFolder.GetParent();
-
-			if (parentPath != null) {
-				this.Open(this.folderFactory.Create(parentPath));
+		public void Update() {
+			foreach (IAction action in this.inputService.GetMovements()) {
+				switch (action.Type) {
+					case ActionType.Select:
+						if (this.selectedElement != null) {
+							this.Open(this.selectedElement.gameObject.GetComponent<ElementController>().Element);
+						}
+						break;
+					case ActionType.Back:
+						this.Back();
+						break;
+				}
 			}
 		}
 
@@ -127,9 +126,37 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Clears this instance.
 		/// </summary>
 		private void Clear() {
+			this.selectedElement = null;
 			this.referenceFrameController.ResetPosition();
 			for (int current = this.transform.childCount - 1; current >= 0; --current) {
 				GameObject.Destroy(transform.GetChild(current).gameObject);
+			}
+		}
+
+		/// <summary>
+		/// Opens the specified element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		private void Open(IElement element) {
+			this.Clear();
+			switch (element.GetElementType()) {
+				case ElementType.Folder:
+					this.OpenDirectory(element as IFolder);
+					break;
+				case ElementType.File:
+					this.OpenFile(element as IFile);
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Backs this instance.
+		/// </summary>
+		private void Back() {
+			string parentPath = this.fileSystemService.CurrentFolder.GetParent();
+
+			if (parentPath != null) {
+				this.Open(this.folderFactory.Create(parentPath));
 			}
 		}
 
@@ -148,7 +175,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				uiElement.name = "Element_" + element.GetName();
 				uiElement.transform.parent = this.transform;
 
-				uiElement.transform.position = new Vector3(((count % FilePerLine) - (FilePerLine / 2)) * FileSpacing, 2.0f, (count / FilePerLine) * LineSpacing);
+				uiElement.transform.localPosition = new Vector3(((count % FilePerLine) - (FilePerLine / 2)) * FileSpacing, 0.0f, (count / FilePerLine) * LineSpacing);
 				uiElement.AddComponent<ElementController>().SetElement(element);
 				++count;
 			}
