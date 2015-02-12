@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Core.Models.FileManager.Abstracts {
 	/// <summary>
@@ -16,8 +17,9 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// Initializes a new instance of the <see cref="AFolder" /> class.
 		/// </summary>
 		/// <param name="directoryInfo">The directory information.</param>
-		public AFolder(DirectoryInfo directoryInfo)
-			: base(ElementType.Folder) {
+		/// <param name="texture2D">The texture2 d.</param>
+		public AFolder(DirectoryInfo directoryInfo, Texture2D texture2D = null)
+			: base(ElementType.Folder, texture2D) {
 			this.directoryInfo = directoryInfo;
 		}
 
