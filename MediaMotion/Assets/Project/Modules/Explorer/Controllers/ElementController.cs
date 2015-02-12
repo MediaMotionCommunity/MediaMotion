@@ -59,5 +59,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				this.Element = element;
 			}
 		}
+
 	}
 }

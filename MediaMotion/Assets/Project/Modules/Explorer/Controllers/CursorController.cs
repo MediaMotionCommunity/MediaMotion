@@ -19,12 +19,18 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <value>The identifier.</value>
 		public int Id { get; set; }
 
+        /// <summary>
+        /// Reference to the ExplorerController containing the FileSystem.
+        /// </summary>
+        public ExplorerController Controller = null;
+
 		/// <summary>
 		/// Initializes the specified input service.
 		/// </summary>
 		/// <param name="inputService">The input service.</param>
 		public void Init(IInputService inputService) {
 			this.inputService = inputService;
+            this.Controller = UnityEngine.GameObject.Find("Explorer").GetComponent<ExplorerController>();
 		}
 
 		/// <summary>
@@ -39,5 +45,13 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				this.gameObject.transform.localPosition = new UnityEngine.Vector3((float)(parameter.X) / 10, (float)(parameter.Y) / 10, -(float)parameter.Z / 10);
 			}
 		}
+
+        /// <summary>
+        /// Function that is called after collision with a file.
+        /// </summary>
+        /// <param name="collision"></param>
+        public void OnTriggerEnter(UnityEngine.Collider other) {
+            UnityEngine.Debug.Log("Hey it's me," + other.GetComponentInParent<ElementController>().Element.GetName() + "!");
+        }
 	}
 }

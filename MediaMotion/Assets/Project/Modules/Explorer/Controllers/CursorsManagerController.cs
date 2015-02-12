@@ -50,12 +50,15 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					this.cursors[id].Update();
 				} else {
 					CursorData cursor = new CursorData(Instantiate(this.BaseCursor) as GameObject);
+                    Rigidbody cursorBody;
 
 					cursor.GameObject.name = "cursor_" + id;
 					cursor.GameObject.transform.parent = this.gameObject.transform;
 					cursor.GameObject.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
 					cursor.GameObject.AddComponent<CursorController>().Id = id;
+                    cursorBody = cursor.GameObject.AddComponent<Rigidbody>();
+                    cursorBody.isKinematic = true;
 					
 					this.cursors.Add(id, cursor);
 				}
