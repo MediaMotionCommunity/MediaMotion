@@ -20,8 +20,22 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Initializes this instance.
 		/// </summary>
 		public void Init() {
-			this.InitTile();
-			this.InitText();
+			GameObject tile = GameObject.Find(this.gameObject.name + "/Content/Tile");
+			GameObject text = GameObject.Find(this.gameObject.name + "/Content/Name");
+			TextMesh tileTextMesh = text.GetComponent<TextMesh>();
+
+			// texture
+			tile.renderer.material.mainTexture = this.Element.GetTexture2D();
+			tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
+			tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
+
+			// text
+			tileTextMesh.text = this.Element.GetName();
+			tileTextMesh.color = new Color(0.8f, 0.9f, 1.0f);
+
+			if (tile.renderer.bounds.size.x < text.renderer.bounds.size.x) {
+				tileTextMesh.text = this.Element.GetName().Substring(0, 10) + "...";
+			}
 		}
 
 		/// <summary>
@@ -31,32 +45,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public void SetElement(IElement element) {
 			if (this.Element == null) {
 				this.Element = element;
-			}
-		}
-
-		/// <summary>
-		/// Initializes the tile.
-		/// </summary>
-		private void InitTile() {
-			GameObject tile = GameObject.Find(this.gameObject.name + "/Content/Tile");
-
-			tile.renderer.material.mainTexture = this.Element.GetTexture2D();
-			tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
-			tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
-		}
-
-		/// <summary>
-		/// Initializes the text.
-		/// </summary>
-		private void InitText() {
-			GameObject text = GameObject.Find(this.gameObject.name + "/Content/Name");
-			TextMesh tileTextMesh = text.GetComponent<TextMesh>();
-
-			tileTextMesh.text = this.Element.GetName();
-			tileTextMesh.color = new Color(0.8f, 0.9f, 1.0f);
-
-			if (this.renderer.bounds.size.x < text.renderer.bounds.size.x) {
-				tileTextMesh.text = this.Element.GetName().Substring(0, 10) + "...";
 			}
 		}
 	}
