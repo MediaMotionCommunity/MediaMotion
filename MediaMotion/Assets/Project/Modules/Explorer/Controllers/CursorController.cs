@@ -44,7 +44,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			if ((action = this.inputService.GetCursorMovement(this.Id)) != null) {
 				Vector3 parameter = action.Parameter as Vector3;
 
-				this.gameObject.transform.localPosition = new UnityEngine.Vector3((float)(parameter.X) / 10, (float)(parameter.Y) / 10, -(float)parameter.Z / 10);
+				this.gameObject.transform.localPosition = new UnityEngine.Vector3((float)(parameter.X) / 10, (float)(parameter.Y) / 10, -(float)parameter.Z / 25);
 			}
 		}
 
