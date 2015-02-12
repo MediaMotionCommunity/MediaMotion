@@ -150,9 +150,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.CurrentIndex = 0;
 			this.ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 			this.Camera = GameObject.Find("ReferenceFrame/Camera/Main");
-			this.Camera.AddComponent("FileInfoUI");
 
-			this.Popup = this.Camera.GetComponent<FileInfoUI>();
+			this.Popup = this.Camera.AddComponent<FileInfoUI>();
 			this.PopupTime = 2000;
 			this.PopupTimer = new Timer(this.PopupTime);
 			this.PopupTimer.Elapsed += this.DisplayFilePopup;

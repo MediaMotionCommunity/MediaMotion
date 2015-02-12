@@ -16,7 +16,7 @@ namespace MediaMotion.Core.Models.FileManager.Interfaces {
 		/// <summary>
 		/// Gets the 2D texture.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The texture 2D</returns>
 		Texture2D GetTexture2D();
 
 		/// <summary>

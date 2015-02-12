@@ -69,6 +69,10 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
+		/// <param name="folderFactory">The folder factory.</param>
+		/// <param name="fileSystemService">The file system service.</param>
+		/// <param name="inputService">The input service.</param>
+		/// <param name="moduleManagerService">The module manager service.</param>
 		public void Init(FolderFactory folderFactory, IFileSystemService fileSystemService, IInputService inputService, IModuleManagerService moduleManagerService) {
 			// services
 			this.folderFactory = folderFactory;
@@ -134,6 +138,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		}
 
 		/// <summary>
+		/// Backs this instance.
+		/// </summary>
+		private void Back() {
+			string parentPath = this.fileSystemService.CurrentFolder.GetParent();
+
+			if (parentPath != null) {
+				this.Open(this.folderFactory.Create(parentPath));
+			}
+		}
+
+		/// <summary>
 		/// Opens the specified element.
 		/// </summary>
 		/// <param name="element">The element.</param>
@@ -146,17 +161,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				case ElementType.File:
 					this.OpenFile(element as IFile);
 					break;
-			}
-		}
-
-		/// <summary>
-		/// Backs this instance.
-		/// </summary>
-		private void Back() {
-			string parentPath = this.fileSystemService.CurrentFolder.GetParent();
-
-			if (parentPath != null) {
-				this.Open(this.folderFactory.Create(parentPath));
 			}
 		}
 

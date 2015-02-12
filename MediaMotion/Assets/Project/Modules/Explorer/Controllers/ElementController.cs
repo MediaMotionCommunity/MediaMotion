@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
-	/// 
+	/// Element controller
 	/// </summary>
 	public class ElementController : BaseUnityScript<ElementController> {
 		/// <summary>

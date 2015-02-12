@@ -107,6 +107,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Sets the main cursor.
 		/// </summary>
+		/// <param name="cursor">The cursor.</param>
 		private void SetMainCursor(CursorData cursor) {
 			cursor.GameObject.tag = MainCursorTag;
 		}

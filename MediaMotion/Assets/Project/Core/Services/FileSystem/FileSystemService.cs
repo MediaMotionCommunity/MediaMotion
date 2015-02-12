@@ -23,8 +23,10 @@ namespace MediaMotion.Core.Services.FileSystem {
 		private IFactory folderFactory;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FileSystemService"/> class.
+		/// Initializes a new instance of the <see cref="FileSystemService" /> class.
 		/// </summary>
+		/// <param name="folderFactory">The folder factory.</param>
+		/// <param name="fileFactory">The file factory.</param>
 		public FileSystemService(FolderFactory folderFactory, FileFactory fileFactory) {
 			this.folderFactory = folderFactory;
 			this.fileFactory = fileFactory;
