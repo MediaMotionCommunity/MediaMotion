@@ -55,6 +55,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private ReferenceFrameController referenceFrameController;
 
 		/// <summary>
+		/// The selected element
+		/// </summary>
+		private GameObject selectedElement;
+
+		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
 		public void Init(FolderFactory folderFactory, IFileSystemService fileSystemService, IModuleManagerService moduleManagerService) {
@@ -68,16 +73,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 			// Open directory
 			this.Open(this.folderFactory.Create(this.fileSystemService.GetHome()));
-		}
-
-		/// <summary>
-		/// Clears this instance.
-		/// </summary>
-		public void Clear() {
-			this.referenceFrameController.ResetPosition();
-			for (int current = this.transform.childCount - 1; current >= 0; --current) {
-				GameObject.Destroy(transform.GetChild(current).gameObject);
-			}
 		}
 
 		/// <summary>
@@ -104,6 +99,37 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 			if (parentPath != null) {
 				this.Open(this.folderFactory.Create(parentPath));
+			}
+		}
+
+		/// <summary>
+		/// Selects the specified element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		public void Select(GameObject element) {
+			this.Deselect(this.selectedElement);
+			this.selectedElement = element;
+			this.selectedElement.GetComponent<ElementController>().Select();
+		}
+
+		/// <summary>
+		/// Deselects the specified element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		public void Deselect(GameObject element) {
+			if (this.selectedElement != null && this.selectedElement.Equals(element)) {
+				this.selectedElement.GetComponent<ElementController>().Deselect();
+				this.selectedElement = null;
+			}
+		}
+
+		/// <summary>
+		/// Clears this instance.
+		/// </summary>
+		private void Clear() {
+			this.referenceFrameController.ResetPosition();
+			for (int current = this.transform.childCount - 1; current >= 0; --current) {
+				GameObject.Destroy(transform.GetChild(current).gameObject);
 			}
 		}
 

@@ -39,6 +39,20 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		}
 
 		/// <summary>
+		/// Selects this instance.
+		/// </summary>
+		public void Select() {
+			this.gameObject.transform.Translate(new Vector3(0.0f, 1.0f, 0.0f));
+		}
+
+		/// <summary>
+		/// Deselects this instance.
+		/// </summary>
+		public void Deselect() {
+			this.gameObject.transform.Translate(new Vector3(0.0f, -1.0f, 0.0f));
+		}
+
+		/// <summary>
 		/// Sets the element.
 		/// </summary>
 		/// <param name="element">The element.</param>

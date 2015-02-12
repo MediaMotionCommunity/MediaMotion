@@ -16,9 +16,19 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public const int DeleteDelay = 5;
 
 		/// <summary>
+		/// The main cursor tag
+		/// </summary>
+		public const string MainCursorTag = "MainCursor";
+
+		/// <summary>
 		/// The cursor prefabs
 		/// </summary>
 		public GameObject BaseCursor;
+
+		/// <summary>
+		/// The input service
+		/// </summary>
+		private IInputService inputService;
 
 		/// <summary>
 		/// The cursors
@@ -26,9 +36,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private Dictionary<int, CursorData> cursors;
 
 		/// <summary>
-		/// The input service
+		/// The explorer
 		/// </summary>
-		private IInputService inputService;
+		private ExplorerController explorer;
 
 		/// <summary>
 		/// Initializes the specified input service.
@@ -37,6 +47,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public void Init(IInputService inputService) {
 			this.inputService = inputService;
 			this.cursors = new Dictionary<int, CursorData>();
+			this.explorer = GameObject.Find("Explorer").GetComponent<ExplorerController>();
 		}
 
 		/// <summary>
@@ -50,20 +61,54 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					this.cursors[id].Update();
 				} else {
 					CursorData cursor = new CursorData(Instantiate(this.BaseCursor) as GameObject);
-                    Rigidbody cursorBody;
+					CursorController cursorController;
 
+					// init
 					cursor.GameObject.name = "cursor_" + id;
 					cursor.GameObject.transform.parent = this.gameObject.transform;
 					cursor.GameObject.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
-					cursor.GameObject.AddComponent<CursorController>().Id = id;
-                    cursorBody = cursor.GameObject.AddComponent<Rigidbody>();
-                    cursorBody.isKinematic = true;
-					
+					// script
+					cursorController = cursor.GameObject.AddComponent<CursorController>();
+					cursorController.Id = id;
+					cursorController.Manager = this;
+
+					if (this.cursors.Count == 0) {
+						this.SetMainCursor(cursor);
+					}
 					this.cursors.Add(id, cursor);
 				}
 			}
 			this.CleanCursors();
+		}
+
+		/// <summary>
+		/// Selections the specified game object.
+		/// </summary>
+		/// <param name="cursor">The cursor.</param>
+		/// <param name="gameObject">The game object.</param>
+		public void Select(GameObject cursor, GameObject gameObject) {
+			if (cursor.tag.CompareTo(MainCursorTag) == 0) {
+				this.explorer.Select(gameObject);
+			}
+		}
+
+		/// <summary>
+		/// Releases the specified game object.
+		/// </summary>
+		/// <param name="cursor">The cursor.</param>
+		/// <param name="gameObject">The game object.</param>
+		public void Deselect(GameObject cursor, GameObject gameObject) {
+			if (cursor.tag.CompareTo(MainCursorTag) == 0) {
+				this.explorer.Deselect(gameObject);
+			}
+		}
+
+		/// <summary>
+		/// Sets the main cursor.
+		/// </summary>
+		private void SetMainCursor(CursorData cursor) {
+			cursor.GameObject.tag = MainCursorTag;
 		}
 
 		/// <summary>
@@ -76,8 +121,15 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				UnityEngine.Object.Destroy(cursor.Value.GameObject);
 				toRemove.Add(cursor.Key);
 			}
-			foreach (int id in toRemove) {
-				this.cursors.Remove(id);
+			if (toRemove.Count > 0) {
+				foreach (int id in toRemove) {
+					this.cursors.Remove(id);
+				}
+
+				// if no more main cursor
+				if (!this.cursors.Any(cursorData => cursorData.Value.GameObject.tag.CompareTo(MainCursorTag) == 0) && this.cursors.Count > 0) {
+					this.SetMainCursor(this.cursors.First(cursorData => true).Value);
+				}
 			}
 		}
 

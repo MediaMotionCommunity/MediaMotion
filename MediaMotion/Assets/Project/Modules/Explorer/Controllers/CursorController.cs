@@ -19,10 +19,13 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <value>The identifier.</value>
 		public int Id { get; set; }
 
-        /// <summary>
-        /// Reference to the ExplorerController containing the FileSystem.
-        /// </summary>
-        public ExplorerController Controller = null;
+		/// <summary>
+		/// Gets or sets the manager.
+		/// </summary>
+		/// <value>
+		/// The manager.
+		/// </value>
+		public CursorsManagerController Manager { get; set; }
 
 		/// <summary>
 		/// Initializes the specified input service.
@@ -30,7 +33,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="inputService">The input service.</param>
 		public void Init(IInputService inputService) {
 			this.inputService = inputService;
-            this.Controller = UnityEngine.GameObject.Find("Explorer").GetComponent<ExplorerController>();
 		}
 
 		/// <summary>
@@ -46,12 +48,24 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			}
 		}
 
-        /// <summary>
-        /// Function that is called after collision with a file.
-        /// </summary>
-        /// <param name="collision"></param>
-        public void OnTriggerEnter(UnityEngine.Collider other) {
-            UnityEngine.Debug.Log("Hey it's me," + other.GetComponentInParent<ElementController>().Element.GetName() + "!");
-        }
+		/// <summary>
+		/// Function that is called after collision with a file.
+		/// </summary>
+		/// <param name="collider">The collider.</param>
+		public void OnTriggerEnter(UnityEngine.Collider collider) {
+			if (string.Compare("Element", 0, collider.gameObject.name, 0, 7) == 0) {
+				this.Manager.Select(this.gameObject, collider.gameObject);
+			}
+		}
+
+		/// <summary>
+		/// Called when [trigger exit].
+		/// </summary>
+		/// <param name="collider">The collider.</param>
+		public void OnTriggerExit(UnityEngine.Collider collider) {
+			if (string.Compare("Element", 0, collider.gameObject.name, 0, 7) == 0) {
+				this.Manager.Deselect(this.gameObject, collider.gameObject);
+			}
+		}
 	}
 }
