@@ -2,6 +2,7 @@ using System.IO;
 using MediaMotion.Core.Models.FileManager.Abstracts;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Core.Models.FileManager {
 	/// <summary>
@@ -13,7 +14,7 @@ namespace MediaMotion.Core.Models.FileManager {
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		public Regular(FileInfo fileInfo)
-			: base(fileInfo, FileType.Regular) {
+			: base(fileInfo, FileType.Regular, Resources.Load<Texture2D>("File-icon")) {
 		}
 	}
 }

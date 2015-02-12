@@ -2,6 +2,7 @@ using System.IO;
 using MediaMotion.Core.Models.FileManager.Abstracts;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Core.Models.FileManager {
 	/// <summary>
@@ -13,7 +14,7 @@ namespace MediaMotion.Core.Models.FileManager {
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		public PDF(FileInfo fileInfo)
-			: base(fileInfo, FileType.PDF) {
+			: base(fileInfo, FileType.PDF, Resources.Load<Texture2D>("PDF-icon")) {
 		}
 	}
 }

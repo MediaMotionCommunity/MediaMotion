@@ -30,6 +30,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public const float LineSpacing = 1.5f;
 
 		/// <summary>
+		/// The base element
+		/// </summary>
+		public GameObject BaseElement;
+
+		/// <summary>
 		/// The folder factory
 		/// </summary>
 		private FolderFactory folderFactory;
@@ -50,11 +55,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private ReferenceFrameController referenceFrameController;
 
 		/// <summary>
-		/// The texture name
-		/// </summary>
-		private Dictionary<KeyValuePair<ElementType, FileType?>, string> textureName;
-
-		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
 		public void Init(FolderFactory folderFactory, IFileSystemService fileSystemService, IModuleManagerService moduleManagerService) {
@@ -65,16 +65,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 			// game object
 			this.referenceFrameController = GameObject.Find("ReferenceFrame").GetComponent<ReferenceFrameController>();
-
-			// texture
-			this.textureName = new Dictionary<KeyValuePair<ElementType, FileType?>, string>();
-			this.textureName.Add(new KeyValuePair<ElementType, FileType?>(ElementType.Folder, null), "Folder-icon");
-			this.textureName.Add(new KeyValuePair<ElementType, FileType?>(ElementType.File, FileType.Regular), "File-icon");
-			this.textureName.Add(new KeyValuePair<ElementType, FileType?>(ElementType.File, FileType.Image), "Image-icon");
-			this.textureName.Add(new KeyValuePair<ElementType, FileType?>(ElementType.File, FileType.Video), "Video-icon");
-			this.textureName.Add(new KeyValuePair<ElementType, FileType?>(ElementType.File, FileType.Sound), "Music-icon");
-			this.textureName.Add(new KeyValuePair<ElementType, FileType?>(ElementType.File, FileType.Text), "File-icon");
-			this.textureName.Add(new KeyValuePair<ElementType, FileType?>(ElementType.File, FileType.PDF), "PDF-icon");
 
 			// Open directory
 			this.Open(this.folderFactory.Create(this.fileSystemService.GetHome()));
@@ -126,29 +116,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 			this.fileSystemService.ChangeDirectory(folder.GetPath());
 			foreach (IElement element in this.fileSystemService.GetContent(null)) {
-				ElementController uiElementScript;
 				GameObject uiElement;
 
-				// creation
-				uiElement = GameObject.CreatePrimitive(PrimitiveType.Plane);
-				uiElement.name = "element_" + element.GetName();
+				uiElement = Instantiate(this.BaseElement) as GameObject;
+				uiElement.name = "Element_" + element.GetName();
 				uiElement.transform.parent = this.transform;
 
-				// position
-				uiElement.transform.position = new Vector3(((count % FilePerLine) - (FilePerLine / 2)) * FileSpacing, 1.0f, (count / FilePerLine) * LineSpacing);
-				uiElement.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-				uiElement.transform.eulerAngles = new Vector3(60, 180, 0);
-
-				// renderer
-				uiElement.renderer.material.mainTexture = this.FindTexture(element);
-				uiElement.renderer.material.shader = Shader.Find("Transparent/Diffuse");
-				uiElement.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
-
-				// script
-				uiElementScript = uiElement.AddComponent<ElementController>();
-				uiElementScript.SetElement(element);
-
-				// counter
+				uiElement.transform.position = new Vector3(((count % FilePerLine) - (FilePerLine / 2)) * FileSpacing, 2.0f, (count / FilePerLine) * LineSpacing);
+				uiElement.AddComponent<ElementController>().SetElement(element);
 				++count;
 			}
 		}
@@ -166,25 +141,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					this.moduleManagerService.LoadModule<DefaultViewerModule>(new IElement[] { file });
 					break;
 			}
-		}
-
-		/// <summary>
-		/// Finds the texture.
-		/// </summary>
-		/// <param name="element">The element.</param>
-		/// <returns>The texture</returns>
-		private Texture2D FindTexture(IElement element) {
-			string textureName = null;
-
-			switch (element.GetElementType()) {
-				case ElementType.Folder:
-					textureName = this.textureName[new KeyValuePair<ElementType, FileType?>(ElementType.Folder, null)];
-					break;
-				case ElementType.File:
-					textureName = this.textureName[new KeyValuePair<ElementType, FileType?>(ElementType.File, (element as IFile).GetFileType())];
-					break;
-			}
-			return (Resources.Load<Texture2D>(textureName));
 		}
 	}
 }

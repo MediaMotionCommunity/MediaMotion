@@ -20,34 +20,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Initializes this instance.
 		/// </summary>
 		public void Init() {
-			GameObject text;
-			TextMesh tileTextMesh;
-
-			text = new GameObject();
-			text.name = "filename";
-			text.transform.parent = this.transform;
-			text.transform.localPosition = new Vector3(4.5f, 0.0f, 5.5f);
-			text.transform.localEulerAngles = new Vector3(90.0f, 180.0f, 0.0f);
-			text.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
-
-			tileTextMesh = text.AddComponent(typeof(TextMesh)) as TextMesh;
-			tileTextMesh.transform.parent = text.transform;
-			tileTextMesh.font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-			tileTextMesh.fontSize = 16;
-			tileTextMesh.renderer.material = tileTextMesh.font.material;
-			tileTextMesh.text = this.Element.GetName();
-
-			Hashtable color = new Hashtable();
-			color.Add("r", 0.8f);
-			color.Add("g", 0.9f);
-			color.Add("b", 1.0f);
-			color.Add("time", 0.1f);
-			iTween.ColorTo(text, color);
-
-			color = new Hashtable();
-			if (this.renderer.bounds.size.x < text.renderer.bounds.size.x) {
-				tileTextMesh.text = this.Element.GetName().Substring(0, 10) + "...";
-			}
+			this.InitTile();
+			this.InitText();
 		}
 
 		/// <summary>
@@ -60,5 +34,30 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// Initializes the tile.
+		/// </summary>
+		private void InitTile() {
+			GameObject tile = GameObject.Find(this.gameObject.name + "/Content/Tile");
+
+			tile.renderer.material.mainTexture = this.Element.GetTexture2D();
+			tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
+			tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
+		}
+
+		/// <summary>
+		/// Initializes the text.
+		/// </summary>
+		private void InitText() {
+			GameObject text = GameObject.Find(this.gameObject.name + "/Content/Name");
+			TextMesh tileTextMesh = text.GetComponent<TextMesh>();
+
+			tileTextMesh.text = this.Element.GetName();
+			tileTextMesh.color = new Color(0.8f, 0.9f, 1.0f);
+
+			if (this.renderer.bounds.size.x < text.renderer.bounds.size.x) {
+				tileTextMesh.text = this.Element.GetName().Substring(0, 10) + "...";
+			}
+		}
 	}
 }

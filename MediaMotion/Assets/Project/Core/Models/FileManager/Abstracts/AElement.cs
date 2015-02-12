@@ -1,5 +1,6 @@
 ﻿using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Core.Models.FileManager.Abstracts {
 	/// <summary>
@@ -12,11 +13,18 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		private ElementType ElementType;
 
 		/// <summary>
+		/// The texture2 d
+		/// </summary>
+		private Texture2D texture2D;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="AElement" /> class.
 		/// </summary>
 		/// <param name="ElementType">Type of the element.</param>
-		public AElement(ElementType ElementType) {
+		/// <param name="texture2D">The texture 2D.</param>
+		public AElement(ElementType ElementType, Texture2D texture2D = null) {
 			this.ElementType = ElementType;
+			this.texture2D = texture2D;
 		}
 
 		/// <summary>
@@ -25,6 +33,14 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// <returns>The element Type</returns>
 		public ElementType GetElementType() {
 			return (this.ElementType);
+		}
+
+		/// <summary>
+		/// Gets the 2D texture.
+		/// </summary>
+		/// <returns>The texture 2D</returns>
+		public Texture2D GetTexture2D() {
+			return (this.texture2D);
 		}
 
 		/// <summary>
