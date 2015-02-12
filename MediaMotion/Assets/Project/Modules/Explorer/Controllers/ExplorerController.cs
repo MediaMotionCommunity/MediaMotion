@@ -62,6 +62,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private ReferenceFrameController referenceFrameController;
 
 		/// <summary>
+		/// The popup controller
+		/// </summary>
+		private PopupController popupController;
+
+		/// <summary>
 		/// The selected element
 		/// </summary>
 		private GameObject selectedElement;
@@ -82,6 +87,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 			// game object
 			this.referenceFrameController = GameObject.Find("ReferenceFrame").GetComponent<ReferenceFrameController>();
+			this.popupController = GameObject.Find("ReferenceFrame/Cameras/Main").GetComponent<PopupController>();
 
 			// Open directory
 			this.Open(this.folderFactory.Create(this.fileSystemService.GetHome()));
@@ -110,9 +116,13 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="element">The element.</param>
 		public void Select(GameObject element) {
+			ElementController elementController;
+			
 			this.Deselect(this.selectedElement);
 			this.selectedElement = element;
-			this.selectedElement.GetComponent<ElementController>().Select();
+			elementController = this.selectedElement.GetComponent<ElementController>();
+			elementController.Select();
+			this.popupController.SetFile(elementController.Element);
 		}
 
 		/// <summary>
@@ -122,6 +132,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public void Deselect(GameObject element) {
 			if (this.selectedElement != null && this.selectedElement.Equals(element)) {
 				this.selectedElement.GetComponent<ElementController>().Deselect();
+				this.popupController.UnsetFile();
 				this.selectedElement = null;
 			}
 		}
@@ -131,6 +142,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private void Clear() {
 			this.selectedElement = null;
+			this.popupController.UnsetFile();
 			this.referenceFrameController.ResetPosition();
 			for (int current = this.transform.childCount - 1; current >= 0; --current) {
 				GameObject.Destroy(transform.GetChild(current).gameObject);
