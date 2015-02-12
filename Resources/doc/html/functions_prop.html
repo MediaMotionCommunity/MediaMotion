@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">MediaMotion
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">2.0</span>
    </div>
   </td>
  </tr>
@@ -97,8 +97,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>Action
 : <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_events_1_1_action_detected_event_args.html#a71a98c40cc17be7a8e58083150bbe064">MediaMotion.Core.Models.Wrapper.Events.ActionDetectedEventArgs</a>
 </li>
-<li>BackgroundMovements
-: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#a8d9c656bfdb646b3cc8bec3b0bbf2822">MediaMotion.Core.Models.Module.Configuration</a>
+<li>Configuration
+: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_module_1_1_abstracts_1_1_a_module.html#a9555afc5a77fe2443c2a29b3abc690fd">MediaMotion.Core.Models.Module.Abstracts.AModule</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#a8b3fb0a3872ced5f1769a2e72d70f881">MediaMotion.Core.Models.Module.Interfaces.IModule</a>
 </li>
 <li>Core
 : <a class="el" href="class_media_motion_1_1_core_1_1_media_motion_core.html#ae6fe5d7b20b95a63fa8af610c14ecca2">MediaMotion.Core.MediaMotionCore</a>
@@ -107,37 +108,62 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#a9df54ba8954ba5a03414349f7bdf98a8">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system_service.html#a35c41d0fe3a95c56ae12394d616b845e">MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystemService</a>
 </li>
+<li>Delay
+: <a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_popup_controller.html#ae79efbbd6d06bc1250c563c7df5100e4">MediaMotion.Modules.Explorer.Controllers.PopupController</a>
+</li>
 <li>Description
 : <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#a36abb96dc6f02d57c6b1558d6eb0f540">MediaMotion.Core.Models.Module.Configuration</a>
 </li>
-<li>FileFactory
-: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#ae7181f34f0440d3ef42fd5ff93d4551d">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
+<li>DisplayHidden
+: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#a3c521aabbd5575562f242a7506021878">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system_service.html#a58c41bf3955fcb92497f65bb80b8f1b7">MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystemService</a>
 </li>
-<li>FolderFactory
-: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#a2f40b0661886303c13cbd79702c642b0">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
+<li>Element
+: <a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_element_controller.html#a61e9b3b3d54d08a0da3a632563f532c0">MediaMotion.Modules.Explorer.Controllers.ElementController</a>
+</li>
+<li>Id
+: <a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursor_controller.html#a80efd32498024f5aa84f3fccb9caaabc">MediaMotion.Modules.Explorer.Controllers.CursorController</a>
 </li>
 <li>InitialFolder
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#ab7f4d2ed0ff493a3b79d4c3dd974e382">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system_service.html#aa5f34cbd2503d6242ab46f59e3bde529">MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystemService</a>
 </li>
-<li>KeepInBackground
-: <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#ab40e503cae6d92c1419eddcae66445e6">MediaMotion.Core.Models.Module.Interfaces.IModule</a>
-, <a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_explorer_module.html#ae3d0970df1a092f0b89e183d1589bd58">MediaMotion.Modules.Explorer.ExplorerModule</a>
+<li>Length
+: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_playlist_1_1_interfaces_1_1_i_playlist_service.html#a2b9659015a745b997d20144d4c1245ec">MediaMotion.Core.Services.Playlist.Interfaces.IPlaylistService</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_playlist_1_1_playlist_service.html#a96dc983cc4a672b5fe2c1e3e1eae41e1">MediaMotion.Core.Services.Playlist.PlaylistService</a>
 </li>
-<li>Movements
-: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#a12aac9252d338596b74d0240bbaf1e6a">MediaMotion.Core.Models.Module.Configuration</a>
+<li>Loop
+: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_playlist_1_1_interfaces_1_1_i_playlist_service.html#a679539ad61937b3e43f06f40d8855cf8">MediaMotion.Core.Services.Playlist.Interfaces.IPlaylistService</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_playlist_1_1_playlist_service.html#af1099abfb813dc7fe04c4a8c44d0ef95">MediaMotion.Core.Services.Playlist.PlaylistService</a>
+</li>
+<li>Manager
+: <a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursor_controller.html#a6c9f54e0ecdc1a09bc757c99140f96ad">MediaMotion.Modules.Explorer.Controllers.CursorController</a>
 </li>
 <li>Name
 : <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#a1555add3bcbb4eeff7263e80f5908e99">MediaMotion.Core.Models.Module.Configuration</a>
 </li>
+<li>Parameters
+: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_module_1_1_abstracts_1_1_a_module.html#ad0c89a8117744dc10163dec8dab92203">MediaMotion.Core.Models.Module.Abstracts.AModule</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_module_1_1_interfaces_1_1_i_module.html#ad6a1193defd044b07d06a0635494e481">MediaMotion.Core.Models.Module.Interfaces.IModule</a>
+</li>
+<li>Random
+: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_playlist_1_1_interfaces_1_1_i_playlist_service.html#a7917e2464c9c06be3c4ec94fd72587ac">MediaMotion.Core.Services.Playlist.Interfaces.IPlaylistService</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_playlist_1_1_playlist_service.html#af1f4bbb02892baba76d8e29832788830">MediaMotion.Core.Services.Playlist.PlaylistService</a>
+</li>
 <li>Scene
 : <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#af8d00b9411a868fe2b18f98a84bc2381">MediaMotion.Core.Models.Module.Configuration</a>
+</li>
+<li>ServicesContainer
+: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#ae18031d1897f2c7c63d78035c94cadb7">MediaMotion.Core.Models.Module.Configuration</a>
+</li>
+<li>Visibility
+: <a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_popup_controller.html#adcc1e126872ad6aa9b7fc1d989ab90b5">MediaMotion.Modules.Explorer.Controllers.PopupController</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 29 2015 18:13:55 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 12 2015 20:43:26 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
