@@ -88,9 +88,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Unsets the file.
 		/// </summary>
 		public void UnsetFile() {
-			this.element = null;
-			this.timer.Enabled = false;
-			this.Hide();
+			if (this.timer != null) {
+				this.element = null;
+				this.timer.Enabled = false;
+				this.Hide();
+			}
 		}
 
 		/// <summary>
