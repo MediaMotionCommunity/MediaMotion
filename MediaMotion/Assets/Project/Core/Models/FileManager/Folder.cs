@@ -2,7 +2,6 @@
 using MediaMotion.Core.Models.FileManager.Abstracts;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
-using UnityEngine;
 
 namespace MediaMotion.Core.Models.FileManager {
 	/// <summary>
@@ -14,7 +13,7 @@ namespace MediaMotion.Core.Models.FileManager {
 		/// </summary>
 		/// <param name="directoryInfo">The directory information.</param>
 		public Folder(DirectoryInfo directoryInfo)
-			: base(directoryInfo, Resources.Load<Texture2D>("Folder-icon")) {
+			: base(directoryInfo, "Folder-icon") {
 		}
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
-using UnityEngine;
 
 namespace MediaMotion.Core.Models.FileManager.Abstracts {
 	/// <summary>
@@ -10,21 +9,21 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// <summary>
 		/// The element type
 		/// </summary>
-		private ElementType ElementType;
+		private ElementType elementType;
 
 		/// <summary>
 		/// The texture2 d
 		/// </summary>
-		private Texture2D texture2D;
+		private string resourceId;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AElement" /> class.
 		/// </summary>
 		/// <param name="ElementType">Type of the element.</param>
-		/// <param name="texture2D">The texture 2D.</param>
-		public AElement(ElementType ElementType, Texture2D texture2D = null) {
-			this.ElementType = ElementType;
-			this.texture2D = texture2D;
+		/// <param name="resourceId">The resource Id.</param>
+		public AElement(ElementType ElementType, string resourceId = null) {
+			this.elementType = ElementType;
+			this.resourceId = resourceId;
 		}
 
 		/// <summary>
@@ -32,15 +31,17 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// </summary>
 		/// <returns>The element Type</returns>
 		public ElementType GetElementType() {
-			return (this.ElementType);
+			return (this.elementType);
 		}
 
 		/// <summary>
-		/// Gets the 2D texture.
+		/// Gets the resource id.
 		/// </summary>
-		/// <returns>The texture 2D</returns>
-		public Texture2D GetTexture2D() {
-			return (this.texture2D);
+		/// <returns>
+		/// The resource id
+		/// </returns>
+		public string GetResourceId() {
+			return (this.resourceId);
 		}
 
 		/// <summary>

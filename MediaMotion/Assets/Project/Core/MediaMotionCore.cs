@@ -14,6 +14,8 @@ using MediaMotion.Core.Services.Playlist;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Core.Services.PluginDatabase;
 using MediaMotion.Core.Services.PluginDatabase.Interfaces;
+using MediaMotion.Core.Services.ResourcesManager;
+using MediaMotion.Core.Services.ResourcesManager.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer;
 
@@ -62,6 +64,9 @@ namespace MediaMotion.Core {
 
 			// Input
 			this.servicesContainerBuilder.Register<InputService>().As<IInputService>().SingleInstance();
+
+			// Resources
+			this.servicesContainerBuilder.Register<ResourceManagerService>().As<IResourceManagerService>().SingleInstance();
 
 			// Modules
 			this.servicesContainerBuilder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance();
