@@ -3,7 +3,6 @@ using System.IO;
 using MediaMotion.Core.Models.FileManager;
 using MediaMotion.Core.Models.FileManager.Enums;
 using MediaMotion.Core.Models.FileManager.Interfaces;
-using UnityEngine;
 
 namespace MediaMotion.Core.Models.FileManager.Abstracts {
 	/// <summary>
@@ -25,10 +24,10 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		/// <param name="fileType">Type of the file.</param>
-		/// <param name="texture2D">The texture 2D.</param>
+		/// <param name="resourceId">The resource Id.</param>
 		/// <exception cref="System.NullReferenceException">fileInfo must not be null</exception>
-		public AFile(FileInfo fileInfo, FileType fileType = FileType.Regular, Texture2D texture2D = null)
-			: base(ElementType.File, texture2D) {
+		public AFile(FileInfo fileInfo, FileType fileType = FileType.Regular, string resourceId = null)
+			: base(ElementType.File, resourceId) {
 			if (fileInfo == null) {
 				throw new NullReferenceException("fileInfo must not be null");
 			}

@@ -1,6 +1,5 @@
 using System;
 using MediaMotion.Core.Models.FileManager.Enums;
-using UnityEngine;
 
 namespace MediaMotion.Core.Models.FileManager.Interfaces {
 	/// <summary>
@@ -14,10 +13,10 @@ namespace MediaMotion.Core.Models.FileManager.Interfaces {
 		ElementType GetElementType();
 
 		/// <summary>
-		/// Gets the 2D texture.
+		/// Gets the resource id.
 		/// </summary>
-		/// <returns>The texture 2D</returns>
-		Texture2D GetTexture2D();
+		/// <returns>The resource id</returns>
+		string GetResourceId();
 
 		/// <summary>
 		/// Gets the parent.
