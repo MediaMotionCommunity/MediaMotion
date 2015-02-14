@@ -5,6 +5,11 @@ namespace MediaMotion.Motion.Actions.Parameters {
 	/// 3D vector representation
 	/// </summary>
 	public class Vector3 : IVector3 {
+
+		public double X { get; set; }
+		public double Y { get; set; }
+		public double Z { get; set; }
+
 		public Vector3(double x, double y, double z) {
 			this.X = x;
 			this.Y = y;
@@ -16,10 +21,6 @@ namespace MediaMotion.Motion.Actions.Parameters {
 			this.Y = v.Y;
 			this.Z = v.Z;
 		}
-
-		public double X { get; set; }
-		public double Y { get; set; }
-		public double Z { get; set; }
 
 		public static Vector3 operator *(Vector3 v, float scale) {
 			return new Vector3(

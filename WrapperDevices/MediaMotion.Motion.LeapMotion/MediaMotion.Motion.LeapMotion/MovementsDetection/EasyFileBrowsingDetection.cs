@@ -9,15 +9,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
     /// Class for browsing prototype action detection
     /// </summary>
     public class EasyFileBrowsingDetection : ICustomDetection {
-	    /// <summary>
-	    /// Height of the virtual browser plan (in mm)
+		/// <summary>
+	    /// Physical height of the virtual browser plan (in mm)
 	    /// </summary>
-	    private const double BrowserPlanHeight = 150;
+	    private const double BrowserPlanHeight = 140;
 
 	    /// <summary>
 	    /// Height of the virtual browser plan (in degrees)
 	    /// </summary>
-	    private const double BrowserPlanAngle = 0; // TMP Ignore
+	    private const double BrowserPlanAngle = 5;
 
 		/// <summary>
 		/// Previous frame saved
@@ -31,7 +31,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	    /// <param name="actionCollection"></param>
 	    /// <returns>List of IAction</returns>
 	    public void Detection(Frame frame, IActionCollection actionCollection) {
-            //// Every hand in independantly generating events
+			//// Every hand in independantly generating events
             foreach (var hand in frame.Hands) {
                 //// Get the true hand position
                 var id = hand.Id;
@@ -40,10 +40,10 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
                 //// Correct the position
                 var ppos = this.BrowserPlanPosition(pos);
                 //// Create the cursor action (every frame, every hand)
-				actionCollection.Add(ActionType.BrowsingCursor, ppos);
+				actionCollection.Add(ActionType.BrowsingCursor, new Object3(id, ppos));
                 //// Possible highlight event (highlight elements if hand is over the plan)
                 if (ppos.Y > 0) {
-					actionCollection.Add(ActionType.BrowsingHighlight, ppos);
+					actionCollection.Add(ActionType.BrowsingHighlight, new Object3(id, ppos));
                 }
                 //// Check for possible scroll event (if hand under the plan, scroll)
 	            if (!(ppos.Y <= 0)) {
@@ -67,7 +67,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	            var prevPpos = this.BrowserPlanPosition(prevPos);
 	            //// Scrolling events if under plan
 	            if (prevPpos.Y <= BrowserPlanHeight) {
-					actionCollection.Add(ActionType.BrowsingScroll, ppos - prevPpos);
+					actionCollection.Add(ActionType.BrowsingScroll, new Object3(id, ppos - prevPpos));
 	            }
             }
             //// Prepare for next frame
@@ -83,7 +83,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			var rotated = new Vector3(pos);
 			const double Height = BrowserPlanHeight;
 			const double Angle = -BrowserPlanAngle * 0.0174532925; // to radians
-			// Simply rotate the position using the plan origin as the rotation origin
+			// Simply rotate the position using the plan origin as the rotation point
 			var y = rotated.Y - Height;
 			var z = rotated.Z;
 			var ry = (y * Math.Cos(Angle)) - (z * Math.Sin(Angle));
