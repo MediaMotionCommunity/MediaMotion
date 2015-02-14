@@ -1,56 +1,277 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
+/// <summary>
+/// ArcMaker from freeform-menu
+/// </summary>
 public class ArcMaker : MonoBehaviour
 {
+    /// <summary>
+    /// The start angle
+    /// </summary>
+    public float StartAngle;
 
-    public float _startAngle;
-    public float _endAngle;
-    public float _bottom;
-    public float _top;
-    public int _quadCount;
-    public bool _drawMesh = false;
-    public float _contentScaleFactor = 0.2f;
+    /// <summary>
+    /// The end angle
+    /// </summary>
+    public float EndAngle;
 
-    private GameObject _activeSprite;
-    private GameObject _inactiveSprite;
-    private GameObject _textLabel;
-    private Shader _trasparent = Shader.Find("Transparent/Diffuse");
-    private MenuBehavior.MenuType _arcType;
-    private bool _isActive = false;
-    private bool _inactiveSpriteAvailible = false;
-    private float _spriteScalingFactor = 1.0f;
+    /// <summary>
+    /// The bottom
+    /// </summary>
+    public float Bottom;
 
+    /// <summary>
+    /// The top
+    /// </summary>
+    public float Top;
 
-    MeshFilter mf;
-    Mesh mesh;
-    Vector3[] verticies;
-    int[] tris;
-    Vector3[] normals;
-    Vector2[] uvs;
+    /// <summary>
+    /// The quad count
+    /// </summary>
+    public int QuadCount;
 
-    public bool isActive
+    /// <summary>
+    /// The draw mesh
+    /// </summary>
+    public bool DrawMesh = false;
+
+    /// <summary>
+    /// The content scale factor
+    /// </summary>
+    public float ContentScaleFactor = 0.2f;
+
+    /// <summary>
+    /// The active sprite
+    /// </summary>
+    private GameObject activeSprite;
+
+    /// <summary>
+    /// The inactive sprite
+    /// </summary>
+    private GameObject inactiveSprite;
+
+    /// <summary>
+    /// The text label
+    /// </summary>
+    private GameObject textLabel;
+
+    /// <summary>
+    /// The transparent
+    /// </summary>
+    private Shader transparent = Shader.Find("Transparent/Diffuse");
+
+    /// <summary>
+    /// The arc type
+    /// </summary>
+    private MenuBehavior.MenuType arcType;
+
+    /// <summary>
+    /// The is active
+    /// </summary>
+    private bool isActive = false;
+
+    /// <summary>
+    /// The inactive sprite available
+    /// </summary>
+    private bool inactiveSpriteAvailable = false;
+
+    /// <summary>
+    /// The sprite scaling factor
+    /// </summary>
+    private float spriteScalingFactor = 1.0f;
+
+    /// <summary>
+    /// The mf
+    /// </summary>
+    private MeshFilter mf;
+
+    /// <summary>
+    /// The mesh
+    /// </summary>
+    private Mesh mesh;
+
+    /// <summary>
+    /// The vertices
+    /// </summary>
+    private Vector3[] vertices;
+
+    /// <summary>
+    /// An array of integer
+    /// </summary>
+    private int[] tris;
+
+    /// <summary>
+    /// An array of normal
+    /// </summary>
+    private Vector3[] normals;
+
+    /// <summary>
+    /// An array of vector
+    /// </summary>
+    private Vector2[] uvs;
+
+    /// <summary>
+    /// Gets a value indicating whether this instance is active.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this instance is active; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsActive
     {
-        get { return _isActive; }
+        get { return this.isActive; }
     }
 
-    // Use this for initialization
-    void Start()
+    /// <summary>
+    /// Creates the mesh.
+    /// </summary>
+    /// <param name="quadCount">The quad count.</param>
+    /// <param name="startAngle">The start angle.</param>
+    /// <param name="endAngle">The end angle.</param>
+    /// <param name="bottom">The bottom.</param>
+    /// <param name="top">The top.</param>
+    public void CreateMesh(int quadCount = 50, float startAngle = 0, float endAngle = 360, float bottom = 1, float top = 5)
     {
-        if (_textLabel == null || _activeSprite == null || _inactiveSprite == null) { findChildren(); }
+        if (startAngle != -1) {
+            this.StartAngle = startAngle; 
+        }
+        if (endAngle != -1) {
+            this.EndAngle = endAngle; 
+        }
+        if (bottom != -1) {
+            this.Bottom = bottom; 
+        }
+        if (top != -1) {
+            this.Top = top; 
+        }
+        this.QuadCount = quadCount;
 
-        gameObject.layer = 8;
-        gameObject.renderer.material.shader = _trasparent;
+        this.DrawMesh = true;
+    }
 
-        if (_quadCount > 0)
+    /// <summary>
+    /// Sets the content.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    public void SetContent(string text)
+    {
+        if (this.textLabel == null)
         {
-            mf = GetComponent(typeof(MeshFilter)) as MeshFilter;
-            mesh = new Mesh();
-            verticies = new Vector3[(_quadCount * 2) + 2];
-            tris = new int[_quadCount * 6];
-            normals = new Vector3[(_quadCount * 2) + 2];
-            uvs = new Vector2[(_quadCount * 2) + 2];
-            mf.mesh = mesh;
+            this.FindChildren(); 
+        }
+        this.arcType = MenuBehavior.MenuType.TEXT;
+        (this.textLabel.GetComponent(typeof(TextMesh)) as TextMesh).text = text;
+        this.textLabel.renderer.enabled = true;
+    }
+
+    /// <summary>
+    /// Sets the content.
+    /// </summary>
+    /// <param name="activeSprite">The active sprite.</param>
+    /// <param name="inactiveSprite">The inactive sprite.</param>
+    /// <param name="scalingFactor">The scaling factor.</param>
+    public void SetContent(Sprite activeSprite, Sprite inactiveSprite = null, float scalingFactor = 1.0f)
+    {
+        this.spriteScalingFactor = scalingFactor;
+        if (this.activeSprite == null || this.inactiveSprite == null)
+        {
+            this.FindChildren(); 
+        }
+        this.arcType = MenuBehavior.MenuType.ICON;
+        (this.activeSprite.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer).sprite = activeSprite;
+        if (inactiveSprite != null)
+        {
+            this.inactiveSpriteAvailable = true;
+            (this.inactiveSprite.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer).sprite = inactiveSprite;
+            this.inactiveSprite.renderer.enabled = true;
+        }
+        else
+        {
+            this.activeSprite.renderer.enabled = true;
+        }
+    }
+
+    /// <summary>
+    /// Sets the content.
+    /// </summary>
+    /// <param name="tex">The tex.</param>
+    public void SetContent(Texture2D tex)
+    {
+        gameObject.renderer.material.mainTexture = tex;
+    }
+
+    /// <summary>
+    /// Makes the active.
+    /// </summary>
+    public void MakeActive()
+    {
+        switch (this.arcType)
+        {
+            case MenuBehavior.MenuType.ICON:
+                if (this.inactiveSpriteAvailable)
+                {
+                    this.activeSprite.renderer.enabled = true;
+                    this.inactiveSprite.renderer.enabled = false;
+                }
+                else
+                {
+                    this.activeSprite.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                }
+                break;
+            case MenuBehavior.MenuType.TEXT:
+                break;
+            case MenuBehavior.MenuType.TEXTURE:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Makes the inactive.
+    /// </summary>
+    public void MakeInactive()
+    {
+        switch (this.arcType)
+        {
+            case MenuBehavior.MenuType.ICON:
+                if (this.inactiveSpriteAvailable)
+                {
+                    this.activeSprite.renderer.enabled = false;
+                    this.inactiveSprite.renderer.enabled = true;
+                }
+                else
+                {
+                    this.activeSprite.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
+                }
+                break;
+            case MenuBehavior.MenuType.TEXT:
+                break;
+            case MenuBehavior.MenuType.TEXTURE:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Starts this instance.
+    /// </summary>
+    private void Start()
+    {
+        if (this.textLabel == null || this.activeSprite == null || this.inactiveSprite == null)
+        {
+            this.FindChildren();
+        }
+
+        this.gameObject.layer = 8;
+        this.gameObject.renderer.material.shader = this.transparent;
+
+        if (this.QuadCount > 0)
+        {
+            this.mf = GetComponent(typeof(MeshFilter)) as MeshFilter;
+            this.mesh = new Mesh();
+            this.vertices = new Vector3[(this.QuadCount * 2) + 2];
+            this.tris = new int[this.QuadCount * 6];
+            this.normals = new Vector3[(this.QuadCount * 2) + 2];
+            this.uvs = new Vector2[(this.QuadCount * 2) + 2];
+            this.mf.mesh = this.mesh;
         }
         else
         {
@@ -58,20 +279,120 @@ public class ArcMaker : MonoBehaviour
         }
     }
 
-    private void findChildren()
+    /// <summary>
+    /// Updates this instance.
+    /// Currently redraws the mesh each frame. Better would be to create the verticals once and deform after that.
+    /// </summary>
+    private void Update()
+    {
+        if (this.DrawMesh && this.QuadCount > 0)
+        {
+            Vector2 min = new Vector2(float.MaxValue, float.MaxValue);
+            Vector2 max = new Vector2(0, 0);
+
+            for (int i = 0; i < this.vertices.Length; i++)
+            {
+                float angle = this.EndAngle + ((this.StartAngle - this.EndAngle) * (float)((Mathf.Floor(i / 2.0f) / (float)Mathf.Floor((this.vertices.Length - 1) / 2.0f))));
+                angle = angle * Mathf.Deg2Rad;
+                Vector2 point = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                point = point.normalized * (i % 2 == 0 ? this.Bottom : this.Top);
+                this.vertices[i] = new Vector3(point.x, point.y, 0);
+
+                if (point.x < min.x) {
+                    min.x = point.x; 
+                }
+                if (point.x > max.x) { 
+                    max.x = point.x; 
+                }
+                if (point.y < min.y) {
+                    min.y = point.y;
+                }
+                if (point.y > max.y) { 
+                    max.y = point.y; 
+                }
+            }
+
+            if (max.x - min.x > max.y - min.y) {
+                max.y = min.y + (max.x - min.x);
+            }
+            else {
+                max.x = min.x + (max.y - min.y);
+            }
+
+            for (int i = 0; i < this.QuadCount; i++)
+            {
+                this.tris[(i * 6) + 0] = (i * 2) + 0;
+                this.tris[(i * 6) + 1] = (i * 2) + 1;
+                this.tris[(i * 6) + 2] = (i * 2) + 2;
+
+                this.tris[(i * 6) + 3] = (i * 2) + 1;
+                this.tris[(i * 6) + 4] = (i * 2) + 3;
+                this.tris[(i * 6) + 5] = (i * 2) + 2;
+            }
+
+            for (int i = 0; i < this.vertices.Length; i++)
+            {
+                this.normals[i] = -Vector3.forward; 
+            }
+            for (int i = 0; i < this.vertices.Length; i++)
+            {
+                Vector2 normLocation = new Vector2(Mathf.Clamp((this.vertices[i].x - min.x) / (max.x - min.x), 0.0f, 1.0f), Mathf.Clamp((this.vertices[i].y - min.y) / (max.y - min.y), 0.0f, 1.0f));
+                this.uvs[i] = normLocation;
+            }
+
+            this.mesh.vertices = this.vertices;
+            this.mesh.triangles = this.tris;
+            this.mesh.normals = this.normals;
+            this.mesh.uv = this.uvs;
+
+            float contentAngle = this.StartAngle + ((this.EndAngle - this.StartAngle) / 2.0f);
+            contentAngle = contentAngle * Mathf.Deg2Rad;
+            float contentDist = this.Bottom + ((this.Top - this.Bottom) * 0.5f);
+            Vector2 contentPoint = new Vector2(Mathf.Cos(contentAngle), Mathf.Sin(contentAngle));
+            contentPoint = contentPoint.normalized * contentDist;
+
+            switch (this.arcType)
+            {
+                case MenuBehavior.MenuType.ICON:
+                    this.activeSprite.transform.localPosition = new Vector3(contentPoint.x, contentPoint.y, -1f);
+                    this.inactiveSprite.transform.localPosition = new Vector3(contentPoint.x, contentPoint.y, -1f);
+                    this.activeSprite.transform.localScale = new Vector3(
+                        1.0f * this.ContentScaleFactor * this.spriteScalingFactor,
+                        1.0f * this.ContentScaleFactor * this.spriteScalingFactor,
+                        1.0f);
+                    this.inactiveSprite.transform.localScale = new Vector3(
+                        1.0f * this.ContentScaleFactor * this.spriteScalingFactor,
+                        1.0f * this.ContentScaleFactor * this.spriteScalingFactor,
+                        1.0f);
+                    break;
+                case MenuBehavior.MenuType.TEXT:
+                    this.textLabel.transform.localPosition = new Vector3(contentPoint.x, contentPoint.y, -1f);
+                    this.textLabel.transform.localScale = new Vector3(
+                        1.0f * this.ContentScaleFactor,
+                        1.0f * this.ContentScaleFactor,
+                        1.0f);
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Finds the children.
+    /// </summary>
+    private void FindChildren()
     {
         foreach (Transform child in gameObject.transform)
         {
             switch (child.name)
             {
                 case "activeSprite":
-                    _activeSprite = child.gameObject;
+                    this.activeSprite = child.gameObject;
                     break;
                 case "inactiveSprite":
-                    _inactiveSprite = child.gameObject;
+                    this.inactiveSprite = child.gameObject;
                     break;
                 case "textLabel":
-                    _textLabel = child.gameObject;
+                    this.textLabel = child.gameObject;
                     break;
                 default:
                     Debug.LogError("Unknown child name: " + child.name);
@@ -79,180 +400,8 @@ public class ArcMaker : MonoBehaviour
             }
         }
 
-        _activeSprite.renderer.enabled = false;
-        _inactiveSprite.renderer.enabled = false;
-        _textLabel.renderer.enabled = false;
-    }
-
-    public void CreateMesh(int quadCount = 50, float startAngle = 0, float endAngle = 360, float bottom = 1, float top = 5)
-    {
-
-        if (startAngle != -1) { _startAngle = startAngle; }
-        if (endAngle != -1) { _endAngle = endAngle; }
-        if (bottom != -1) { _bottom = bottom; }
-        if (top != -1) { _top = top; }
-        _quadCount = quadCount;
-
-        _drawMesh = true;
-    }
-
-    public void setContent(string text)
-    {
-        if (_textLabel == null) { findChildren(); }
-        _arcType = MenuBehavior.MenuType.TEXT;
-        (_textLabel.GetComponent(typeof(TextMesh)) as TextMesh).text = text;
-        _textLabel.renderer.enabled = true;
-    }
-
-    public void setContent(Sprite activeSprite, Sprite inactiveSprite = null, float scalingFactor = 1.0f)
-    {
-        _spriteScalingFactor = scalingFactor;
-        if (_activeSprite == null || _inactiveSprite == null) { findChildren(); }
-        _arcType = MenuBehavior.MenuType.ICON;
-        (_activeSprite.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer).sprite = activeSprite;
-        if (inactiveSprite != null)
-        {
-            _inactiveSpriteAvailible = true;
-            (_inactiveSprite.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer).sprite = inactiveSprite;
-            _inactiveSprite.renderer.enabled = true;
-        }
-        else
-        {
-            _activeSprite.renderer.enabled = true;
-        }
-    }
-
-    public void setContent(Texture2D tex)
-    {
-        gameObject.renderer.material.mainTexture = tex;
-    }
-
-    public void makeActive()
-    {
-        switch (_arcType)
-        {
-            case MenuBehavior.MenuType.ICON:
-                if (_inactiveSpriteAvailible)
-                {
-                    _activeSprite.renderer.enabled = true;
-                    _inactiveSprite.renderer.enabled = false;
-                }
-                else
-                {
-                    _activeSprite.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-                }
-                break;
-            case MenuBehavior.MenuType.TEXT:
-                break;
-            case MenuBehavior.MenuType.TEXTURE:
-                break;
-        }
-    }
-
-    public void makeInactive()
-    {
-        switch (_arcType)
-        {
-            case MenuBehavior.MenuType.ICON:
-                if (_inactiveSpriteAvailible)
-                {
-                    _activeSprite.renderer.enabled = false;
-                    _inactiveSprite.renderer.enabled = true;
-                }
-                else
-                {
-                    _activeSprite.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
-                }
-                break;
-            case MenuBehavior.MenuType.TEXT:
-                break;
-            case MenuBehavior.MenuType.TEXTURE:
-                break;
-        }
-    }
-
-    // Currently redraws the mesh each frame. Better would be to create the verts once and deform after that.
-    void Update()
-    {
-        if (_drawMesh && _quadCount > 0)
-        {
-            Vector2 min = new Vector2(float.MaxValue, float.MaxValue);
-            Vector2 max = new Vector2(0, 0);
-
-
-
-            for (int i = 0; i < verticies.Length; i++)
-            {
-                float angle = _endAngle + ((_startAngle - _endAngle) * (float)((Mathf.Floor(i / 2.0f) / (float)Mathf.Floor((verticies.Length - 1) / 2.0f))));
-                angle = angle * Mathf.Deg2Rad;
-                Vector2 point = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-                point = point.normalized * (i % 2 == 0 ? _bottom : _top);
-                verticies[i] = new Vector3(point.x, point.y, 0);
-
-                if (point.x < min.x) { min.x = point.x; }
-                if (point.x > max.x) { max.x = point.x; }
-                if (point.y < min.y) { min.y = point.y; }
-                if (point.y > max.y) { max.y = point.y; }
-            }
-
-            if (max.x - min.x > max.y - min.y)
-            {
-                max.y = min.y + (max.x - min.x);
-
-            }
-            else
-            {
-                max.x = min.x + (max.y - min.y);
-            }
-
-            for (int i = 0; i < _quadCount; i++)
-            {
-                tris[(i * 6) + 0] = (i * 2) + 0;
-                tris[(i * 6) + 1] = (i * 2) + 1;
-                tris[(i * 6) + 2] = (i * 2) + 2;
-
-                tris[(i * 6) + 3] = (i * 2) + 1;
-                tris[(i * 6) + 4] = (i * 2) + 3;
-                tris[(i * 6) + 5] = (i * 2) + 2;
-            }
-
-            for (int i = 0; i < verticies.Length; i++) { normals[i] = -Vector3.forward; }
-            for (int i = 0; i < verticies.Length; i++)
-            {
-                Vector2 normLocation = new Vector2(Mathf.Clamp((verticies[i].x - min.x) / (max.x - min.x), 0.0f, 1.0f), Mathf.Clamp((verticies[i].y - min.y) / (max.y - min.y), 0.0f, 1.0f));
-                uvs[i] = normLocation;
-            }
-
-            mesh.vertices = verticies;
-            mesh.triangles = tris;
-            mesh.normals = normals;
-            mesh.uv = uvs;
-
-            float contentAngle = _startAngle + ((_endAngle - _startAngle) / 2.0f);
-            contentAngle = contentAngle * Mathf.Deg2Rad;
-            float contentDist = _bottom + ((_top - _bottom) * 0.5f);
-            Vector2 contentPoint = new Vector2(Mathf.Cos(contentAngle), Mathf.Sin(contentAngle));
-            contentPoint = contentPoint.normalized * contentDist;
-
-            switch (_arcType)
-            {
-                case MenuBehavior.MenuType.ICON:
-                    _activeSprite.transform.localPosition = new Vector3(contentPoint.x, contentPoint.y, -1f);
-                    _inactiveSprite.transform.localPosition = new Vector3(contentPoint.x, contentPoint.y, -1f);
-                    _activeSprite.transform.localScale = new Vector3(1.0f * _contentScaleFactor * _spriteScalingFactor,
-                                                                  1.0f * _contentScaleFactor * _spriteScalingFactor,
-                                                                  1.0f);
-                    _inactiveSprite.transform.localScale = new Vector3(1.0f * _contentScaleFactor * _spriteScalingFactor,
-                                                                  1.0f * _contentScaleFactor * _spriteScalingFactor,
-                                                                  1.0f);
-                    break;
-                case MenuBehavior.MenuType.TEXT:
-                    _textLabel.transform.localPosition = new Vector3(contentPoint.x, contentPoint.y, -1f);
-                    _textLabel.transform.localScale = new Vector3(1.0f * _contentScaleFactor,
-                                                                  1.0f * _contentScaleFactor,
-                                                                  1.0f);
-                    break;
-            }
-        }
+        this.activeSprite.renderer.enabled = false;
+        this.inactiveSprite.renderer.enabled = false;
+        this.textLabel.renderer.enabled = false;
     }
 }
