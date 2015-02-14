@@ -3,7 +3,7 @@ using MediaMotion.Core.Resolver.Containers;
 using MediaMotion.Core.Resolver.Registrations.Interfaces;
 using NUnit.Framework;
 
-namespace MediaMotionTests.UnityPart.Unit.Resolver {
+namespace MediaMotionTests.Core.Resolver {
 	/// <summary>
 	/// The container builder tests.
 	/// </summary>
@@ -66,7 +66,7 @@ namespace MediaMotionTests.UnityPart.Unit.Resolver {
 			var @object = container.Get<ObjectWithoutDependency>();
 
 			Assert.IsNotNull(@object);
-			Assert.IsTrue(@object is ObjectWithoutDependency);			
+			Assert.IsTrue(@object is ObjectWithoutDependency);
 		}
 
 		[Test]
@@ -102,7 +102,7 @@ namespace MediaMotionTests.UnityPart.Unit.Resolver {
 			var @object = container.Get<IObjectWithoutDependency>();
 
 			Assert.IsNotNull(@object);
-			Assert.IsTrue(@object is ObjectWithoutDependency);						
+			Assert.IsTrue(@object is ObjectWithoutDependency);
 		}
 
 		#region Internal Class
