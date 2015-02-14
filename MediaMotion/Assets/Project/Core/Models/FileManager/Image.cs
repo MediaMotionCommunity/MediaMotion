@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using MediaMotion.Core.Models.FileManager.Abstracts;
 using MediaMotion.Core.Models.FileManager.Enums;
@@ -14,7 +13,7 @@ namespace MediaMotion.Core.Models.FileManager {
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		public Image(FileInfo fileInfo)
-			: base(fileInfo, FileType.Image) {
+			: base(fileInfo, FileType.Image, "Image-icon;" + fileInfo.FullName) {
 		}
 	}
 }

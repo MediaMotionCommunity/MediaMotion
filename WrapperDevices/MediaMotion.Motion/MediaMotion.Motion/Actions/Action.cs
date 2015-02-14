@@ -18,12 +18,6 @@ namespace MediaMotion.Motion.Actions {
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Action"/> class.
-		/// </summary>
-		public Action() {
-		}
-
-		/// <summary>
 		/// Gets the type.
 		/// </summary>
 		public ActionType Type { get; private set; }
@@ -32,5 +26,12 @@ namespace MediaMotion.Motion.Actions {
 		/// Gets the parameter.
 		/// </summary>
 		public object Parameter { get; private set; }
+
+        /// <summary>
+        /// Action string representation
+        /// </summary>
+        public override string ToString() {
+            return "Action: " + this.Type.ToString() + " Params: " + this.Parameter.ToString();
+        }
     }
 }

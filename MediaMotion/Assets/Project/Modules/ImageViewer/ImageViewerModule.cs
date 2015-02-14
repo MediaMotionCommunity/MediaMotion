@@ -10,9 +10,8 @@ namespace MediaMotion.Modules.ImageViewer {
 	/// </summary>
 	public class ImageViewerModule : AModule {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultViewerModule"/> class.
+		/// Initializes a new instance of the <see cref="ImageViewerModule"/> class.
 		/// </summary>
-		/// <param name="builder">The builder.</param>
 		public ImageViewerModule()
 			: base() {
 		}

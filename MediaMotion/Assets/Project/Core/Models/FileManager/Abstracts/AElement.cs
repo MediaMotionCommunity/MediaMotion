@@ -9,16 +9,21 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// <summary>
 		/// The element type
 		/// </summary>
-		private ElementType ElementType;
+		private ElementType elementType;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="AElement"/> class.
+		/// The texture2 d
+		/// </summary>
+		private string resourceId;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AElement" /> class.
 		/// </summary>
 		/// <param name="ElementType">Type of the element.</param>
-		/// <param name="Path">The path.</param>
-		/// <param name="Name">The name.</param>
-		public AElement(ElementType ElementType) {
-			this.ElementType = ElementType;
+		/// <param name="resourceId">The resource Id.</param>
+		public AElement(ElementType ElementType, string resourceId = null) {
+			this.elementType = ElementType;
+			this.resourceId = resourceId;
 		}
 
 		/// <summary>
@@ -26,7 +31,17 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// </summary>
 		/// <returns>The element Type</returns>
 		public ElementType GetElementType() {
-			return (this.ElementType);
+			return (this.elementType);
+		}
+
+		/// <summary>
+		/// Gets the resource id.
+		/// </summary>
+		/// <returns>
+		/// The resource id
+		/// </returns>
+		public string GetResourceId() {
+			return (this.resourceId);
 		}
 
 		/// <summary>

@@ -12,7 +12,7 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// <summary>
 		/// The module instance
 		/// </summary>
-		ImageViewerModule moduleInstance;
+		private ImageViewerModule moduleInstance;
 
 		/// <summary>
 		/// The input service
@@ -75,6 +75,9 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 			this.imageUrl = new WWW("file:///" + this.playlistService.Current().GetPath());
 		}
 
+		/// <summary>
+		/// Checks the image download.
+		/// </summary>
 		private void CheckImageDownload() {
 			if (this.imageUrl != null && this.imageUrl.isDone) {
 				this.imageTexture = this.imageUrl.texture;

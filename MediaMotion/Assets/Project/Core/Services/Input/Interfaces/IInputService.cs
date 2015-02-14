@@ -25,5 +25,19 @@ namespace MediaMotion.Core.Services.Input.Interfaces {
 		/// </summary>
 		/// <returns>The movements</returns>
 		List<IAction> GetMovements();
+
+		/// <summary>
+		/// Gets the specific movements.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>The movements</returns>
+		List<IAction> GetMovements(ActionType type);
+
+		/// <summary>
+		/// Gets the cursor.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns>The action</returns>
+		IAction GetCursorMovement(int id);
 	}
 }

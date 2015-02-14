@@ -9,13 +9,11 @@ namespace MediaMotion.Core.Models.FileManager {
 	/// </summary>
 	public class Sound : AFile {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Sound"/> class.
+		/// Initializes a new instance of the <see cref="Sound" /> class.
 		/// </summary>
-		/// <param name="Path">The path.</param>
-		/// <param name="Name">The name.</param>
-		/// <param name="Extension">The extension.</param>
+		/// <param name="fileInfo">The file information.</param>
 		public Sound(FileInfo fileInfo)
-			: base(fileInfo, FileType.Sound) {
+			: base(fileInfo, FileType.Sound, "Music-icon") {
 		}
 	}
 }

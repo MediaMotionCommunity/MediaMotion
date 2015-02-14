@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Leap;
 using MediaMotion.Motion.Actions;
+using MediaMotion.Motion.LeapMotion.Core;
 using Action = MediaMotion.Motion.Actions.Action;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
@@ -18,19 +19,19 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		#endregion
 
 		#region Methods
+
 		/// <summary>
 		/// Detection of KeyTap
 		/// </summary>
 		/// <param name="gesture">Leap Gesture</param>
+		/// <param name="actionCollection"></param>
 		/// <returns>List of IAction</returns>
-		protected override IEnumerable<IAction> SecureDetection(Gesture gesture) {
-			List<IAction> list = new List<IAction>();
-			KeyTapGesture swipe = new KeyTapGesture(gesture);
+		protected override void SecureDetection(Gesture gesture, IActionCollection actionCollection) {
+			var swipe = new KeyTapGesture(gesture);
 
 			if (this.IsStateValid(swipe.State)) {
-				list.Add(new Action(ActionType.Select, null));
+				actionCollection.Add(ActionType.Select);
 			}
-			return list;
 		}
 		#endregion
 	}

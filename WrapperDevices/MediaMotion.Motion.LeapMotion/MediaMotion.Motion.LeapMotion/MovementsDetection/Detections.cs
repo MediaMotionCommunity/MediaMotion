@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Leap;
 using MediaMotion.Motion.Actions;
+using MediaMotion.Motion.LeapMotion.Core;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
@@ -11,27 +10,8 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// </summary>
 	public class Detections {
 		#region Fields
-		/// <summary>
-		/// List of detection class for default leap gesture
-		/// </summary>
-		private readonly Dictionary<Gesture.GestureType, Func<Gesture, IEnumerable<IAction>>> leapDetections;
+		private readonly IDetectionContainer detectionContainer;
 
-		/// <summary>
-		/// List of detection class for custom gesture
-		/// </summary>
-		private readonly List<Func<Frame, IEnumerable<IAction>>> customDetections;
-
-		#region Detection class
-		/// <summary>
-		/// Detection class for swipe gesture
-		/// </summary>
-		private SwipeDetection swipeDetection;
-
-		/// <summary>
-		/// Detection class for keyTap gesture
-		/// </summary>
-		private KeyTapDetection keyTapDetection;
-		#endregion
 		#endregion
 
 		#region Constructor
@@ -39,14 +19,8 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// Initializes a new instance of the <see cref="Detections" /> class.
 		/// </summary>
 		public Detections() {
-			this.swipeDetection = new SwipeDetection();
-			this.keyTapDetection = new KeyTapDetection();
-
-			this.leapDetections = new Dictionary<Gesture.GestureType, Func<Gesture, IEnumerable<IAction>>>();
-			this.customDetections = new List<Func<Frame, IEnumerable<IAction>>>();
-
-			this.leapDetections.Add(this.swipeDetection.GetGestureType(), this.swipeDetection.Detection);
-			this.leapDetections.Add(this.keyTapDetection.GetGestureType(), this.keyTapDetection.Detection);
+			this.detectionContainer = new DetectionContainer();
+			this.Configuration();
 		}
 		#endregion
 
@@ -57,12 +31,24 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <param name="frame">Leap Frame</param>
 		/// <returns>List of IAction</returns>
 		public IEnumerable<IAction> MovementsDetection(Frame frame) {
-			IEnumerable<IAction> list = new List<IAction>();
-			var gestures = frame.Gestures();
+			var actions = new ActionCollection();
+			this.detectionContainer.DetectMouvement(frame, actions);
+			return actions;
+		}
+		#endregion
 
-			list = gestures.Where(t => this.leapDetections.ContainsKey(t.Type)).Aggregate(list, (current, t) => current.Concat(this.leapDetections[t.Type](t)));
+		#region Privates Methods
+		private void Configuration() {
+			var swipeDetection = new SwipeDetection();
+			var easyFileBrowsingDetection = new EasyFileBrowsingDetection();
+			var pinchSelectionDetection = new PinchSelectionDetection();
+			var pinchGrabDetection = new PinchGrabDetection();
 
-			return this.customDetections.Aggregate(list, (current, func) => current.Concat(func(frame)));
+			this.detectionContainer.Register(swipeDetection);
+
+			this.detectionContainer.Register(easyFileBrowsingDetection);
+			this.detectionContainer.Register(pinchSelectionDetection);
+			this.detectionContainer.Register(pinchGrabDetection);
 		}
 		#endregion
 	}

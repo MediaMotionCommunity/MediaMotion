@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['core',['Core',['../class_media_motion_1_1_core_1_1_media_motion_core.html#ae6fe5d7b20b95a63fa8af610c14ecca2',1,'MediaMotion::Core::MediaMotionCore']]],
-  ['currentfolder',['CurrentFolder',['../class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#a9df54ba8954ba5a03414349f7bdf98a8',1,'MediaMotion.Core.Services.FileSystem.FileSystemService.CurrentFolder()'],['../interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system_service.html#a35c41d0fe3a95c56ae12394d616b845e',1,'MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystemService.CurrentFolder()']]]
+  ['delay',['Delay',['../class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_popup_controller.html#ae79efbbd6d06bc1250c563c7df5100e4',1,'MediaMotion::Modules::Explorer::Controllers::PopupController']]],
+  ['description',['Description',['../class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#a36abb96dc6f02d57c6b1558d6eb0f540',1,'MediaMotion::Core::Models::Module::Configuration']]],
+  ['displayhidden',['DisplayHidden',['../class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#a3c521aabbd5575562f242a7506021878',1,'MediaMotion.Core.Services.FileSystem.FileSystemService.DisplayHidden()'],['../interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system_service.html#a58c41bf3955fcb92497f65bb80b8f1b7',1,'MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystemService.DisplayHidden()']]]
 ];

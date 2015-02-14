@@ -27,7 +27,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// <summary>
 		/// The movement detection class
 		/// </summary>
-		private Detections movementsDetection;
+		private readonly Detections movementsDetection;
 
 		#endregion
 
@@ -63,9 +63,6 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// The configuration of controller.
 		/// </summary>
 		private void Configuration() {
-			this.controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE);
-			this.controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP);
-			this.controller.EnableGesture(Gesture.GestureType.TYPE_SCREEN_TAP);
 			this.controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE);
 		}
 

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Leap;
-using MediaMotion.Motion.Actions;
+using MediaMotion.Motion.LeapMotion.Core;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
@@ -34,19 +33,18 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		#endregion
 
 		#region Methods
+
 		/// <summary>
 		/// Return the list of IAction detected
 		/// </summary>
 		/// <param name="gesture">Leap Gesture</param>
+		/// <param name="actionCollection"></param>
 		/// <returns>list of IAction</returns>
-		public override IEnumerable<IAction> Detection(Gesture gesture) {
-			IEnumerable<IAction> list = new List<IAction>();
-
+		public override void Detection(Gesture gesture, IActionCollection actionCollection) {
 			if (DateTime.Now - this.lastDetection > this.timeInterval) {
-				list = this.SecureDetection(gesture);
+				this.SecureDetection(gesture, actionCollection);
 			}
 			this.lastDetection = DateTime.Now;
-			return list;
 		}
 
 		/// <summary>
@@ -54,8 +52,9 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// Need to be implemented.
 		/// </summary>
 		/// <param name="gesture">Leap Gesture</param>
+		/// <param name="actionCollection"></param>
 		/// <returns>list of IAction</returns>
-		protected abstract IEnumerable<IAction> SecureDetection(Gesture gesture);
+		protected abstract void SecureDetection(Gesture gesture, IActionCollection actionCollection);
 		#endregion
 	}
 }

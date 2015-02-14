@@ -8,7 +8,8 @@
     <RootNamespace>MediaMotion.Motion</RootNamespace>
     <AssemblyName>MediaMotion.Motion</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
     <NuGetPackageImportStamp>fd1b3e73</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,7 +37,8 @@
     <Compile Include="Actions\Action.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Actions\Parameters\Cursor.cs" />
-    <Compile Include="Actions\Parameters\ICursor.cs" />
+    <Compile Include="Actions\Parameters\IVector3.cs" />
+    <Compile Include="Actions\Parameters\Vector3.cs" />
     <Compile Include="Exceptions\WrapperLoadException.cs" />
     <Compile Include="Exceptions\WrapperUnloadException.cs" />
     <Compile Include="IWrapperDevice.cs" />

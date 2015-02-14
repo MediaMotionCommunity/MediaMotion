@@ -12,7 +12,12 @@
 		ScrollOut,
 		Select,
 		Back,
-		Leave
+		Leave,
+		BrowsingHighlight,
+		BrowsingScroll,
+		BrowsingCursor,
+		GrabStart,
+		GrabStop
 	}
 
 	/// <summary>

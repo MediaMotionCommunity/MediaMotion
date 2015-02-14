@@ -17,16 +17,17 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// <summary>
 		/// The file type
 		/// </summary>
-		protected FileType fileType;
+		private FileType fileType;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AFile" /> class.
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		/// <param name="fileType">Type of the file.</param>
+		/// <param name="resourceId">The resource Id.</param>
 		/// <exception cref="System.NullReferenceException">fileInfo must not be null</exception>
-		public AFile(FileInfo fileInfo, FileType fileType = FileType.Regular)
-			: base(ElementType.File) {
+		public AFile(FileInfo fileInfo, FileType fileType = FileType.Regular, string resourceId = null)
+			: base(ElementType.File, resourceId) {
 			if (fileInfo == null) {
 				throw new NullReferenceException("fileInfo must not be null");
 			}

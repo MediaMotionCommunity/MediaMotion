@@ -33,11 +33,19 @@
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\ActionCollection.cs" />
+    <Compile Include="Core\DetectionContainer.cs" />
+    <Compile Include="Core\IActionCollection.cs" />
+    <Compile Include="Core\IDetectionContainer.cs" />
+    <Compile Include="MovementsDetection\APinchDetection.cs" />
     <Compile Include="MovementsDetection\ASecureLeapDetection.cs" />
+    <Compile Include="MovementsDetection\EasyFileBrowsingDetection.cs" />
     <Compile Include="MovementsDetection\ICustomDetection.cs" />
     <Compile Include="MovementsDetection\ALeapDetection.cs" />
     <Compile Include="MovementsDetection\Detections.cs" />
     <Compile Include="MovementsDetection\KeyTapDetection.cs" />
+    <Compile Include="MovementsDetection\PinchGrabDetection.cs" />
+    <Compile Include="MovementsDetection\PinchSelectionDetection.cs" />
     <Compile Include="MovementsDetection\SwipeDetection.cs" />
     <Compile Include="Core\LeapMotionCore.cs" />
     <Compile Include="LeapMotion.cs" />

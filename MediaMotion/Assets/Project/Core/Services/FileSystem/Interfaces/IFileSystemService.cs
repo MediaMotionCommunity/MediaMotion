@@ -23,6 +23,14 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		IFolder CurrentFolder { get; }
 
 		/// <summary>
+		/// Gets or sets a value indicating whether [display hidden].
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if [display hidden]; otherwise, <c>false</c>.
+		/// </value>
+		bool DisplayHidden { get; set; }
+
+		/// <summary>
 		/// Get the home path
 		/// </summary>
 		/// <returns>the home path</returns>
@@ -31,23 +39,29 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// <summary>
 		/// Changes the directory.
 		/// </summary>
-		/// <param name="Path">The path.</param>
-		/// <returns>True if the action succeed, False otherwise</returns>
+		/// <param name="path">The path.</param>
+		/// <returns>
+		/// True if the action succeed, False otherwise
+		/// </returns>
 		bool ChangeDirectory(string path = null);
 
 		/// <summary>
-		/// Get the content of the current directory or the <see cref="IFolder"/> provide in parameter
+		/// Get the content of the current directory or the <see cref="IFolder" /> provide in parameter
 		/// </summary>
-		/// <param name="Folder">A specific folder to use</param>
-		/// <returns>List of elements</returns>
+		/// <param name="folder">The folder.</param>
+		/// <returns>
+		/// List of elements
+		/// </returns>
 		List<IElement> GetContent(string folder = null);
 
 		/// <summary>
 		/// Gets the content.
 		/// </summary>
-		/// <param name="FilterExtension">The filter extension.</param>
-		/// <param name="Folder">The folder.</param>
-		/// <returns>List of files</returns>
+		/// <param name="filterExtension">The filter extension.</param>
+		/// <param name="folder">The folder.</param>
+		/// <returns>
+		/// List of files
+		/// </returns>
 		List<IFile> GetContent(string[] filterExtension, string folder);
 
 		/// <summary>
