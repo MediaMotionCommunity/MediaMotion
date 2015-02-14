@@ -2,7 +2,8 @@
 using UnityEngine;
 
 /// <summary>
-/// ArcMaker from freeform-menu
+/// ArcMaker
+/// from: <see href="https://github.com/leapmotion-examples/unity/tree/master/v1/freeform-menus">LeapMotion examples</see>
 /// </summary>
 public class ArcMaker : MonoBehaviour
 {

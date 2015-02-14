@@ -1,88 +1,173 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
+/// <summary>
+/// MenuMover behavior
+/// from: <see href="https://github.com/leapmotion-examples/unity/tree/master/v1/freeform-menus">LeapMotion examples</see>
+/// </summary>
 public class MenuMoverBehavior : MonoBehaviour
 {
-    public bool _handSweepEnabled;
-    public float _fullThrowDistance;
-    public AnimationCurve _throwFilter;
-    public float _throwSpeed; //speed to move from 0 to 1 on the filter.
-    public float _fadeInTime;
-    public float _fadeOutTime;
-    public AnimationCurve _fadeCurve;
-    public float _fadeThrowDistance;
-    public Vector2 _layoutOriginalAspectRatio;
+    /// <summary>
+    /// The hand sweep enabled
+    /// </summary>
+    public bool HandSweepEnabled;
 
-    private GameObject[] _menuRoots;
-    private GameObject[] _menus;
-    private float _throwLocation;
-    private float _fadePushPercent;
-    private float _fadeStartPercent;
-    private GameObject _activeMenu;
-    private MoverState _currentState;
-    private float _fadeStartTime;
-    private Matrix4x4 _guiMatrix;
+    /// <summary>
+    /// The full throw distance
+    /// </summary>
+    public float FullThrowDistance;
 
-    private enum MoverState { FADING_IN, FADING_OUT, PASSIVE };
+    /// <summary>
+    /// The throw filter
+    /// </summary>
+    public AnimationCurve ThrowFilter;
 
-    void Start()
+    /// <summary>
+    /// The throw speed to move from 0 to 1 on the filter.
+    /// </summary>
+    public float ThrowSpeed;
+
+    /// <summary>
+    /// The fade in time
+    /// </summary>
+    public float FadeInTime;
+
+    /// <summary>
+    /// The fade out time
+    /// </summary>
+    public float FadeOutTime;
+
+    /// <summary>
+    /// The fade curve
+    /// </summary>
+    public AnimationCurve FadeCurve;
+
+    /// <summary>
+    /// The fade throw distance
+    /// </summary>
+    public float FadeThrowDistance;
+
+    /// <summary>
+    /// The layout original aspect ratio
+    /// </summary>
+    public Vector2 LayoutOriginalAspectRatio;
+
+    /// <summary>
+    /// The menu roots
+    /// </summary>
+    private GameObject[] menuRoots;
+
+    /// <summary>
+    /// The menus
+    /// </summary>
+    private GameObject[] menus;
+
+    /// <summary>
+    /// The throw location
+    /// </summary>
+    private float throwLocation;
+
+    /// <summary>
+    /// The fade push percent
+    /// </summary>
+    private float fadePushPercent;
+
+    /// <summary>
+    /// The fade start percent
+    /// </summary>
+    private float fadeStartPercent;
+
+    /// <summary>
+    /// The active menu
+    /// </summary>
+    private GameObject activeMenu;
+
+    /// <summary>
+    /// The current state
+    /// </summary>
+    private MoverState currentState;
+
+    /// <summary>
+    /// The fade start time
+    /// </summary>
+    private float fadeStartTime;
+
+    /// <summary>
+    /// The GUI matrix
+    /// </summary>
+    private Matrix4x4 guiMatrix;
+
+    /// <summary>
+    /// Mover state enumeration
+    /// </summary>
+    private enum MoverState { 
+        FADING_IN, FADING_OUT, PASSIVE 
+    }
+
+    /// <summary>
+    /// Starts this instance.
+    /// </summary>
+    private void Start()
     {
-        _menuRoots = GameObject.FindGameObjectsWithTag("MenuRoot");
-        _menus = GameObject.FindGameObjectsWithTag("Menu");
-        _currentState = MoverState.PASSIVE;
+        this.menuRoots = GameObject.FindGameObjectsWithTag("MenuRoot");
+        this.menus = GameObject.FindGameObjectsWithTag("Menu");
+        this.currentState = MoverState.PASSIVE;
 
-        //Account for differing aspect ratios
+        ////Account for differing aspect ratios
         Vector2 screenSize = new Vector2(Screen.width, Screen.height);
-        Vector2 screenDiff = _layoutOriginalAspectRatio - screenSize;
+        Vector2 screenDiff = this.LayoutOriginalAspectRatio - screenSize;
 
         if (Mathf.Abs(screenDiff.x) < Mathf.Abs(screenDiff.y))
         {
-            float amt = _layoutOriginalAspectRatio.x / screenSize.x;
+            float amt = this.LayoutOriginalAspectRatio.x / screenSize.x;
             screenSize *= amt;
         }
         else
         {
-            float amt = _layoutOriginalAspectRatio.y / screenSize.y;
+            float amt = this.LayoutOriginalAspectRatio.y / screenSize.y;
             screenSize *= amt;
         }
 
-        float horizRatio = screenSize.x / (float)_layoutOriginalAspectRatio.x;
-        float vertRatio = screenSize.y / (float)_layoutOriginalAspectRatio.y;
+        float horizRatio = screenSize.x / (float)this.LayoutOriginalAspectRatio.x;
+        float vertRatio = screenSize.y / (float)this.LayoutOriginalAspectRatio.y;
 
-        _guiMatrix = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity, new Vector3(horizRatio, vertRatio, 1));
+        this.guiMatrix = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity, new Vector3(horizRatio, vertRatio, 1));
 
-        foreach (GameObject menu in _menus)
+        foreach (GameObject menu in this.menus)
         {
             MenuBehavior menuScript = menu.GetComponent(typeof(MenuBehavior)) as MenuBehavior;
-            menuScript.baseLocation = _guiMatrix.MultiplyPoint(menuScript.baseLocation);
+            menuScript.BaseLocation = this.guiMatrix.MultiplyPoint(menuScript.BaseLocation);
         }
     }
 
-    void Update()
+    /// <summary>
+    /// Updates this instance.
+    /// </summary>
+    private void Update()
     {
         bool menuIsActive = false;
         bool menuIsClosing = false;
 
-        foreach (GameObject menu in _menus)
+        foreach (GameObject menu in this.menus)
         {
             MenuBehavior menuBehavior = menu.GetComponent(typeof(MenuBehavior)) as MenuBehavior;
-            if (menuBehavior.currentState == MenuBehavior.MenuState.ACTIVE || menuBehavior.currentState == MenuBehavior.MenuState.ACTIVATING)
+            if (menuBehavior.CurrentState == MenuBehavior.MenuState.ACTIVE || menuBehavior.CurrentState == MenuBehavior.MenuState.ACTIVATING)
             {
                 menuIsActive = true;
-                _activeMenu = menu;
+                this.activeMenu = menu;
             }
-            else if (menuBehavior.currentState == MenuBehavior.MenuState.DEACTIVATION || menuBehavior.currentState == MenuBehavior.MenuState.SELECTION)
+            else if (menuBehavior.CurrentState == MenuBehavior.MenuState.DEACTIVATION || menuBehavior.CurrentState == MenuBehavior.MenuState.SELECTION)
             {
                 menuIsClosing = true;
             }
         }
 
-        switch (_currentState)
+        switch (this.currentState)
         {
             case MoverState.FADING_IN:
-                _fadePushPercent = Mathf.Clamp((Time.time - _fadeStartTime) / (_fadeInTime * _fadeStartPercent), 0.0f, 1.0f);
+                this.fadePushPercent = Mathf.Clamp((Time.time - this.fadeStartTime) / (this.FadeInTime * this.fadeStartPercent), 0.0f, 1.0f);
 
-                foreach (GameObject menuRoot in _menuRoots)
+                foreach (GameObject menuRoot in this.menuRoots)
                 {
                     GameObject menu = null;
                     MenuBehavior menuRootBehavior = null;
@@ -95,30 +180,31 @@ public class MenuMoverBehavior : MonoBehaviour
                         }
                     }
 
-                    if (menu != _activeMenu)
+                    if (menu != this.activeMenu)
                     {
-                        Vector3 awayVector = new Vector3(menuRoot.transform.position.x - _activeMenu.transform.position.x,
-                                                         menuRoot.transform.position.y - _activeMenu.transform.position.y,
-                                                         0).normalized * _fadeCurve.Evaluate(1 - _fadePushPercent) * _fadeThrowDistance;
+                        Vector3 awayVector = new Vector3(
+                            menuRoot.transform.position.x - this.activeMenu.transform.position.x,
+                            menuRoot.transform.position.y - this.activeMenu.transform.position.y,
+                            0).normalized * this.FadeCurve.Evaluate(1 - this.fadePushPercent) * this.FadeThrowDistance;
 
                         if (menuRootBehavior != null)
                         {
-                            menuRoot.transform.position = menuRootBehavior.baseLocation + awayVector;
-                            menuRootBehavior.setOpacity(_fadePushPercent);
+                            menuRoot.transform.position = menuRootBehavior.BaseLocation + awayVector;
+                            menuRootBehavior.SetOpacity(this.fadePushPercent);
                         }
                     }
                 }
 
-                if (Time.time > _fadeStartTime + (_fadeInTime * _fadeStartPercent))
+                if (Time.time > this.fadeStartTime + (this.FadeInTime * this.fadeStartPercent))
                 {
-                    _currentState = MoverState.PASSIVE;
+                    this.currentState = MoverState.PASSIVE;
 
-                    foreach (GameObject menu in _menus)
+                    foreach (GameObject menu in this.menus)
                     {
-                        if (menu != _activeMenu)
+                        if (menu != this.activeMenu)
                         {
                             MenuBehavior menuBehavior = menu.GetComponent(typeof(MenuBehavior)) as MenuBehavior;
-                            menuBehavior.currentState = MenuBehavior.MenuState.INACTIVE;
+                            menuBehavior.CurrentState = MenuBehavior.MenuState.INACTIVE;
                         }
                     }
                     return;
@@ -126,17 +212,17 @@ public class MenuMoverBehavior : MonoBehaviour
 
                 break;
             case MoverState.FADING_OUT:
-                _fadePushPercent = Mathf.Clamp((Time.time - _fadeStartTime) / _fadeOutTime, 0.0f, 1.0f);
+                this.fadePushPercent = Mathf.Clamp((Time.time - this.fadeStartTime) / this.FadeOutTime, 0.0f, 1.0f);
 
                 if (!menuIsActive)
                 {
-                    _fadeStartTime = Time.time;
-                    _fadeStartPercent = _fadePushPercent;
-                    _currentState = MoverState.FADING_IN;
+                    this.fadeStartTime = Time.time;
+                    this.fadeStartPercent = this.fadePushPercent;
+                    this.currentState = MoverState.FADING_IN;
                     return;
                 }
 
-                foreach (GameObject menuRoot in _menuRoots)
+                foreach (GameObject menuRoot in this.menuRoots)
                 {
                     GameObject menu = null;
                     MenuBehavior menuRootBehavior = null;
@@ -149,15 +235,16 @@ public class MenuMoverBehavior : MonoBehaviour
                         }
                     }
 
-                    if (menu != _activeMenu)
+                    if (menu != this.activeMenu)
                     {
-                        Vector3 awayVector = new Vector3(menuRoot.transform.position.x - _activeMenu.transform.position.x,
-                                                         menuRoot.transform.position.y - _activeMenu.transform.position.y,
-                                                         0).normalized * _fadeCurve.Evaluate(_fadePushPercent) * _fadeThrowDistance;
+                        Vector3 awayVector = new Vector3(
+                            menuRoot.transform.position.x - this.activeMenu.transform.position.x,
+                            menuRoot.transform.position.y - this.activeMenu.transform.position.y,
+                            0).normalized * this.FadeCurve.Evaluate(this.fadePushPercent) * this.FadeThrowDistance;
                         if (menuRootBehavior != null)
                         {
-                            menuRoot.transform.position = menuRootBehavior.baseLocation + awayVector;
-                            menuRootBehavior.setOpacity(1.0f - _fadePushPercent);
+                            menuRoot.transform.position = menuRootBehavior.BaseLocation + awayVector;
+                            menuRootBehavior.SetOpacity(1.0f - this.fadePushPercent);
                         }
                     }
                 }
@@ -165,25 +252,25 @@ public class MenuMoverBehavior : MonoBehaviour
             case MoverState.PASSIVE:
                 if (menuIsActive && !menuIsClosing)
                 {
-                    _fadeStartTime = Time.time;
-                    _currentState = MoverState.FADING_OUT;
+                    this.fadeStartTime = Time.time;
+                    this.currentState = MoverState.FADING_OUT;
 
-                    foreach (GameObject menu in _menus)
+                    foreach (GameObject menu in this.menus)
                     {
-                        if (menu != _activeMenu)
+                        if (menu != this.activeMenu)
                         {
                             MenuBehavior menuBehavior = menu.GetComponent(typeof(MenuBehavior)) as MenuBehavior;
-                            menuBehavior.currentState = MenuBehavior.MenuState.DISABLED;
+                            menuBehavior.CurrentState = MenuBehavior.MenuState.DISABLED;
                         }
                     }
                     return;
                 }
 
-                if (_handSweepEnabled)
+                if (this.HandSweepEnabled)
                 {
-                    _throwLocation = Mathf.Clamp(_throwLocation, 0, 1.0f);
+                    this.throwLocation = Mathf.Clamp(this.throwLocation, 0, 1.0f);
 
-                    foreach (GameObject menuRoot in _menuRoots)
+                    foreach (GameObject menuRoot in this.menuRoots)
                     {
                         MenuBehavior menuRootBehavior = null;
                         foreach (Transform child in menuRoot.transform)
@@ -194,12 +281,13 @@ public class MenuMoverBehavior : MonoBehaviour
                             }
                         }
 
-                        Vector3 awayVector = new Vector3(menuRoot.transform.position.x - gameObject.transform.position.x,
-                                                         menuRoot.transform.position.y - gameObject.transform.position.y,
-                                                         0).normalized * _throwFilter.Evaluate(_throwLocation) * _fullThrowDistance;
+                        Vector3 awayVector = new Vector3(
+                            menuRoot.transform.position.x - gameObject.transform.position.x,
+                            menuRoot.transform.position.y - gameObject.transform.position.y,
+                            0).normalized * this.ThrowFilter.Evaluate(this.throwLocation) * this.FullThrowDistance;
                         if (menuRootBehavior != null)
                         {
-                            menuRoot.transform.position = menuRootBehavior.baseLocation + awayVector;
+                            menuRoot.transform.position = menuRootBehavior.BaseLocation + awayVector;
                         }
                     }
                 }
