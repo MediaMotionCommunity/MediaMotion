@@ -1,7 +1,7 @@
 ﻿using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion.Actions;
-using UnityEngine;
+using MediaMotion.Motion.Actions.Parameters;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
@@ -25,7 +25,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Reset position.
 		/// </summary>
 		public void ResetPosition() {
-			this.gameObject.transform.position = new Vector3(0, 0, 0);
+			this.gameObject.transform.position = new UnityEngine.Vector3(0, 0, 0);
 		}
 
 		/// <summary>
@@ -33,9 +33,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		public void Update() {
 			foreach (IAction action in this.inputService.GetMovements(ActionType.BrowsingScroll)) {
-					MediaMotion.Motion.Actions.Parameters.Vector3 parameter = action.Parameter as MediaMotion.Motion.Actions.Parameters.Vector3;
-
-					this.gameObject.transform.Translate(0, 0, (float)parameter.Z / 20, Space.World);
+				this.gameObject.transform.Translate(0, 0, (action.Parameter as Object3).Pos.Z / 20, UnityEngine.Space.World);
 			}
 		}
 	}
