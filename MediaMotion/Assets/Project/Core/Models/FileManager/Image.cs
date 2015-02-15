@@ -13,7 +13,7 @@ namespace MediaMotion.Core.Models.FileManager {
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		public Image(FileInfo fileInfo)
-			: base(fileInfo, FileType.Image, "Image-icon;" + fileInfo.FullName) {
+			: base(fileInfo, FileType.Image, "Image") {
 		}
 	}
 }
