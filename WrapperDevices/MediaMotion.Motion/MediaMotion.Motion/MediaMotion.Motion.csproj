@@ -36,13 +36,13 @@
   <ItemGroup>
     <Compile Include="Actions\Action.cs" />
     <Compile Include="Actions\IAction.cs" />
-    <Compile Include="Actions\Parameters\Cursor.cs" />
     <Compile Include="Actions\Parameters\IVector3.cs" />
     <Compile Include="Actions\Parameters\Vector3.cs" />
     <Compile Include="Exceptions\WrapperLoadException.cs" />
     <Compile Include="Exceptions\WrapperUnloadException.cs" />
     <Compile Include="IWrapperDevice.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Actions\Parameters\Object3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
