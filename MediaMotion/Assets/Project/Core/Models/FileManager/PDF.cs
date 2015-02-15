@@ -13,7 +13,7 @@ namespace MediaMotion.Core.Models.FileManager {
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		public PDF(FileInfo fileInfo)
-			: base(fileInfo, FileType.PDF, "PDF-icon") {
+			: base(fileInfo, FileType.PDF, "PDF") {
 		}
 	}
 }
