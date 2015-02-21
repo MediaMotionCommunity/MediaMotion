@@ -21,7 +21,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// The texture
 		/// </summary>
-		private IResourceContainer<Texture2D> texture;
+		private IResourceContainer<Material> texture;
 
 		/// <summary>
 		/// The tile
@@ -40,12 +40,10 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			tileTextMesh = text.GetComponent<TextMesh>();
 
 			// texture container
-			this.texture = resourceManagerService.GetContainer<Texture2D>(this.Element.GetResourceId());
+			this.texture = resourceManagerService.GetContainer<Material>(this.Element.GetResourceId());
 
 			// texture
-			this.tile.renderer.material.mainTexture = this.texture.Get();
-			this.tile.renderer.material.shader = Shader.Find("Transparent/Diffuse");
-			this.tile.renderer.material.color = new Color(0.3f, 0.6f, 0.9f, 1);
+			this.tile.renderer.material = this.texture.Get();
 
 			// text
 			tileTextMesh.text = this.Element.GetName();

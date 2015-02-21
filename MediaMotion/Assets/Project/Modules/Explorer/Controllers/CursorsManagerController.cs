@@ -55,7 +55,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		public void Update() {
 			foreach (IAction action in this.inputService.GetMovements(ActionType.BrowsingCursor)) {
-				int id = 1; // (action.Parameter as MediaMotion.Motion.Actions.Parameters.Cursor).Id;
+				int id = (action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Id;
 
 				if (this.cursors.ContainsKey(id)) {
 					this.cursors[id].Update();
@@ -119,7 +119,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			List<int> toRemove = new List<int>();
 
 			foreach (KeyValuePair<int, CursorData> cursor in this.cursors.Where(cursorData => (cursorData.Value.LastFrameUpdate + DeleteDelay) < Time.frameCount)) {
-				UnityEngine.Object.Destroy(cursor.Value.GameObject);
+				GameObject.Destroy(cursor.Value.GameObject);
 				toRemove.Add(cursor.Key);
 			}
 			if (toRemove.Count > 0) {
