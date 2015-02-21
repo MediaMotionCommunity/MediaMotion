@@ -13,7 +13,7 @@ namespace MediaMotion.Core.Models.FileManager {
 		/// </summary>
 		/// <param name="directoryInfo">The directory information.</param>
 		public Folder(DirectoryInfo directoryInfo)
-			: base(directoryInfo, "Folder-icon") {
+			: base(directoryInfo, "Folder") {
 		}
 	}
 }
