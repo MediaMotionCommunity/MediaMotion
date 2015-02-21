@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using MediaMotion.Core;
+using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine;
 /// Menu script
 /// from: <see href="https://github.com/leapmotion-examples/unity/tree/master/v1/freeform-menus">LeapMotion examples</see>
 /// </summary>
-public class MenuBehavior : MonoBehaviour
+public class MenuBehavior : BaseUnityScript<MenuBehavior>
 {
     /*
      * Public Configuration Options
@@ -185,6 +186,11 @@ public class MenuBehavior : MonoBehaviour
     public float SelectionCooldown;
 
     /// <summary>
+    /// The _input
+    /// </summary>
+    public IInputService Input;
+
+    /// <summary>
     /// The input
     /// </summary>
     private IInputService input;
@@ -355,14 +361,15 @@ public class MenuBehavior : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts this instance.
+    /// Initializes the specified input.
     /// </summary>
-    private void Start()
+    /// <param name="input">The input.</param>
+    public void Init(IInputService input)
     {
         //// Get references to the main scene and UI cameras.
         this.uiCam = this.mainCam = (GameObject.Find("Cameras/Main") as GameObject).GetComponent(typeof(Camera)) as Camera;
         this.baseLocation = gameObject.transform.parent.position;
-        //// this._input = MediaMotionCore.Core.GetService("InputService") as IInputService;
+        this.Input = input;
 
         //// Get a reference to the subLabel
         foreach (Transform child in gameObject.transform.parent)
@@ -445,15 +452,12 @@ public class MenuBehavior : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        foreach (IAction Action in this.input.GetMovements())
+        foreach (IAction Action in this.Input.GetMovements())
         {
             if (Action.Type == ActionType.Cursor)
             {
-                float x = (float)(Action.Parameter as MediaMotion.Motion.Actions.Parameters.Cursor).X;
-                float y = (float)(Action.Parameter as MediaMotion.Motion.Actions.Parameters.Cursor).Y;
-
-                x = float.IsPositiveInfinity(x) ? float.MaxValue : float.IsNegativeInfinity(x) ? float.MinValue : x;
-                y = float.IsPositiveInfinity(y) ? float.MaxValue : float.IsNegativeInfinity(y) ? float.MinValue : y;
+                float x = (Action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Pos.X;
+                float y = (Action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Pos.Y;
 
                 Vector2 leapScreen = new Vector2(x, y);
 
@@ -473,7 +477,7 @@ public class MenuBehavior : MonoBehaviour
                 {
                     case MenuState.INACTIVE:
 
-                        if (parentToFinger.magnitude < this.ActivationRadius && (Action.Parameter as MediaMotion.Motion.Actions.Parameters.Cursor).Z > this.DeactivateZ)
+                        if (parentToFinger.magnitude < this.ActivationRadius && (Action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Pos.Z > this.DeactivateZ)
                         {
                             this.activationStartTime = Time.time;
                             this.currentState = MenuState.ACTIVATING;
@@ -504,7 +508,7 @@ public class MenuBehavior : MonoBehaviour
                         }
                         break;
                     case MenuState.ACTIVE:
-                        if ((Action.Parameter as MediaMotion.Motion.Actions.Parameters.Cursor).Z < this.DeactivateZ)
+                        if ((Action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Pos.Z < this.DeactivateZ)
                         {
                             this.selectionMade = false;
                             this.scalingFactor = 1.0f;
