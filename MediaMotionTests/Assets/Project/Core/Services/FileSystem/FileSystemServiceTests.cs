@@ -228,7 +228,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests
 
             files = this.FileSystemService.GetContent(this.PathToTmp);
             Assert.AreEqual(2, files.Count, "move in other dir failed");
-            
+
             res = this.FileSystemService.Move(folder, folder); // FAIL used by another process. Should catch the exception and return false move a folder inside himself should not be possible.
             Assert.AreEqual(false, res);
 
