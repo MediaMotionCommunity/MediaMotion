@@ -233,7 +233,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests
             Assert.AreEqual(false, res);
 
             IFolder folderToMove = (IFolder)this.FolderFactory.Create(this.PathToTmp + "/dirIsBack");
-            res = this.FileSystemService.Move(folderToMove, folder); // FAIL Access deny ? Probleme with directory copy ?
+            res = this.FileSystemService.Move(folderToMove, folder);
             files = this.FileSystemService.GetContent(this.PathToTmp);
             Assert.AreEqual(true, res);
             Assert.AreEqual(1, files.Count, "move in other dir failed");
@@ -241,7 +241,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests
             files = this.FileSystemService.GetContent(folder.GetPath());
             Assert.AreEqual(2, files.Count);
             Assert.AreEqual("dirIsBack", files[0].GetName());
-            Assert.AreEqual(true, files[0].GetPath().StartsWith(folder.GetPath()), "folder moved has a wrong path"); // FAIL Should we update the path of
+            Assert.AreEqual(true, files[0].GetPath().StartsWith(folder.GetPath()), "folder moved has a wrong path");
 
             //IFolder invalidFolder = (IFolder)this.FolderFactory.Create("/Invalid/folder"); // FAIL With used by another process, don't know why
             //res = this.FileSystemService.Move(files[0], folder); // FAIL Should handle exception and return false
