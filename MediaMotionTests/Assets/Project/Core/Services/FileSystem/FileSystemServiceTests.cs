@@ -140,7 +140,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests
             Assert.AreEqual(results.Count, this.FilesCreated, "Hidden file should not be there");
 
             fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp); // FAIL, should not return hidden files
-            //Assert.AreEqual(this.FilesCreated, fileResults.Count);
+            Assert.AreEqual(this.FilesCreated, fileResults.Count);
 
             this.FileSystemService.DisplayHidden = true;
 
@@ -150,8 +150,8 @@ namespace MediaMotion.Core.Services.FileSystem.Tests
             fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp);
             Assert.AreEqual(fileResults.Count, this.FilesCreated + 1, "Hidden file is missing (with filters)");
 
-            //results = this.FileSystemService.GetContent("/invalid/Path"); // FAIL should return null?
-            //Assert.AreEqual(null, results);
+            results = this.FileSystemService.GetContent("/invalid/Path"); // FAIL should return null?
+            Assert.AreEqual(null, results);
 
             System.IO.Directory.CreateDirectory(this.PathToTmp + "/testFolder");
 
@@ -169,29 +169,84 @@ namespace MediaMotion.Core.Services.FileSystem.Tests
             System.GC.Collect();                                // Needed use file with success
             System.GC.WaitForPendingFinalizers();               // If not, file is still in used by the process and copy fails.
 
-            //this.FileSystemService.Copy(files[0], folder);
+            this.FileSystemService.Copy(files[0], folder);
             files = this.FileSystemService.GetContent(this.PathToTmp);
-            //Assert.AreEqual(files.Count, 2, "copy in same dir failed"); // FAIL should create a copy in same directory with a differente name or replace (passign a boolean to the method ?)
+            Assert.AreEqual(files.Count, 2, "copy in same dir failed"); // FAIL should create a copy in same directory with a differente name or replace (passign a boolean to the method ?)
 
             System.IO.Directory.CreateDirectory(this.PathToTmp + "/testDir");
 
             folder = (IFolder)this.FolderFactory.Create(this.PathToTmp + "/testDir");
-            this.FileSystemService.Copy(files[0], folder);
+            bool res = this.FileSystemService.Copy(files[0], folder);
             files = this.FileSystemService.GetContent(this.PathToTmp + "/testDir");
+            Assert.AreEqual(true, res, "result should be true");
             Assert.AreEqual(1, files.Count, "copy in other dir failed");
             Assert.AreEqual("fileToCopy.test", files[0].GetName(), "copy has a wrong name, is it the correct file ?");
+            Assert.AreEqual(true, files[0].GetPath().StartsWith(folder.GetPath()));
 
             files = this.FileSystemService.GetContent(this.PathToTmp);
             Assert.AreEqual(2, files.Count, "original file is missing");
             Assert.AreEqual("fileToCopy.test", files[1].GetName(), "original has a wrong name, is it the correct file ?");
 
-            //this.FileSystemService.Copy(folder, folder); // FAIL Access deny ? Probleme with directory copy ?
+            res = this.FileSystemService.Copy(folder, folder); // FAIL Access deny ? Probleme with directory copy ?
+            Assert.AreEqual(true, res);
             files = this.FileSystemService.GetContent(this.PathToTmp + "/testDir");
-            //Assert.AreEqual(2, files.Count, "folder copy is missing"); 
+            Assert.AreEqual(2, files.Count, "folder copy is missing"); 
 
-            // this.FileSystemService.Copy(null, folder); // FAIL Should handle null ?
-            // this.FileSystemService.Copy(null, null); // FAIL Should handle null ?
-            // this.FileSystemService.Copy(files[0], null); // FAIL Should handle null ?
+            this.FileSystemService.Copy(null, folder); // FAIL Should handle null and return false ?
+            this.FileSystemService.Copy(null, null);
+            this.FileSystemService.Copy(files[0], null);
+
+            folder = (IFolder)this.FolderFactory.Create("/Invalid/folder");
+            res = this.FileSystemService.Copy(files[0], folder); // FAIL Should hande exception and return false
+            Assert.AreEqual(false, res);
+        }
+
+        [Test()]
+        public void MoveTest()
+        {
+            System.IO.File.Create(this.PathToTmp + "/fileToMove.test");
+            List<IElement> files = this.FileSystemService.GetContent(this.PathToTmp);
+            Assert.AreEqual(1, files.Count, "should contain only one file");
+            IFolder folder = (IFolder)this.FolderFactory.Create(this.PathToTmp);
+
+            System.GC.Collect();                                // Needed use file with success
+            System.GC.WaitForPendingFinalizers();               // If not, file is still in used by the process and copy fails.
+
+            System.IO.Directory.CreateDirectory(this.PathToTmp + "/testDir");
+
+            folder = (IFolder)this.FolderFactory.Create(this.PathToTmp + "/testDir");
+            bool res = this.FileSystemService.Move(files[0], folder);
+            files = this.FileSystemService.GetContent(this.PathToTmp + "/testDir");
+            Assert.AreEqual(true, res, "result should be true");
+            Assert.AreEqual(1, files.Count, "move in other dir failed");
+            Assert.AreEqual("fileToMove.test", files[0].GetName(), "copy has a wrong name, is it the correct file ?");
+
+            files = this.FileSystemService.GetContent(this.PathToTmp);
+            Assert.AreEqual(1, files.Count, "original file is still here");
+
+            System.IO.Directory.CreateDirectory(this.PathToTmp + "/dirIsBack");
+
+            files = this.FileSystemService.GetContent(this.PathToTmp);
+            Assert.AreEqual(2, files.Count, "move in other dir failed");
+            
+            res = this.FileSystemService.Move(folder, folder); // FAIL used by another process. Should catch the exception and return false move a folder inside himself should not be possible.
+            Assert.AreEqual(false, res);
+
+            IFolder folderToMove = (IFolder)this.FolderFactory.Create(this.PathToTmp + "/dirIsBack");
+            res = this.FileSystemService.Move(folderToMove, folder); // FAIL Access deny ? Probleme with directory copy ?
+            files = this.FileSystemService.GetContent(this.PathToTmp);
+            Assert.AreEqual(true, res);
+            Assert.AreEqual(1, files.Count, "move in other dir failed");
+
+            files = this.FileSystemService.GetContent(folder.GetPath());
+            Assert.AreEqual(2, files.Count);
+            Assert.AreEqual("dirIsBack", files[0].GetName());
+            Assert.AreEqual(true, files[0].GetPath().StartsWith(folder.GetPath()), "folder moved has a wrong path"); // FAIL Should we update the path of
+
+            //IFolder invalidFolder = (IFolder)this.FolderFactory.Create("/Invalid/folder"); // FAIL With used by another process, don't know why
+            //res = this.FileSystemService.Move(files[0], folder); // FAIL Should handle exception and return false
+            //Assert.AreEqual(false, res);
+
         }
 
         [TearDown]
