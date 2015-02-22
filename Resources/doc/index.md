@@ -71,6 +71,7 @@ Only if you want run project testing
 ```$(GitDir)/Solution Items/x64/LeapCSharp.dll		-> $(GitDir)/WrapperDevices/MediaMotion.Motion.LeapMotion/MediaMotion.Motion.LeapMotion.Testing/bin/$(ConfigurationName)```
 
 For all plateforme:
+
 ```$(GitDir)/Solution Items/LeapCSharp.NET3.5.dll	-> "$(GitDir)/MediaMotion/WrapperDevicesLibraries/```
 
 ```MediaMotion.Motion.LeapMotion.dll 				-> $(GitDir)/MediaMotion/WrapperDevicesLibraries/```
