@@ -35,6 +35,7 @@ For 32Bits
 ```$(GitDir)/Solution Items/x86/LeapCSharp.dll		-> $(GitDir)/MediaMotion/```
 
 Only if you want run project testing
+
 ```$(GitDir)/Solution Items/x86/Leapd.dll			-> $(GitDir)/WrapperDevices/MediaMotion.Motion.LeapMotion/MediaMotion.Motion.LeapMotion.Testing/bin/$(ConfigurationName)```
 
 ```$(GitDir)/Solution Items/x86/Leapd.lib			-> $(GitDir)/WrapperDevices/MediaMotion.Motion.LeapMotion/MediaMotion.Motion.LeapMotion.Testing/bin/$(ConfigurationName)```
@@ -58,6 +59,7 @@ For 64Bits
 ```$(GitDir)/Solution Items/x64/LeapCSharp.dll		-> $(GitDir)/MediaMotion/```
 
 Only if you want run project testing
+
 ```$(GitDir)/Solution Items/x64/Leapd.dll			-> $(GitDir)/WrapperDevices/MediaMotion.Motion.LeapMotion/MediaMotion.Motion.LeapMotion.Testing/bin/$(ConfigurationName)```
 
 ```$(GitDir)/Solution Items/x64/Leapd.lib			-> $(GitDir)/WrapperDevices/MediaMotion.Motion.LeapMotion/MediaMotion.Motion.LeapMotion.Testing/bin/$(ConfigurationName)```
