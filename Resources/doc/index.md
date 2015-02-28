@@ -10,14 +10,19 @@ Mediamotion's wrapper are in folder *./WrapperDevices/*
 For this guide, we use LeapMotion wrapper in folder *./WrapperDevices/MediaMotion.Motion.LeapMotion/*
 
 Windows:
+
 1. Open solution with *Visual Studio* (vs2013+)
+
 2. Start compilation
 
 All file are automatically copied in project directory.
 
 Others:
+
 1. Open solution with *Xamarin Studio*
+
 2. Start Compilation
+
 3. Copy the listed files in project directory
 
 *$(ConfigurationName)* is Debug or Release in according of compilation mode.
