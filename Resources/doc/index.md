@@ -22,6 +22,14 @@ Others:
 
 *$(ConfigurationName)* is Debug or Release in according of compilation mode.
 
+For all plateforme:
+
+```$(GitDir)/Solution Items/LeapCSharp.NET3.5.dll	-> "$(GitDir)/MediaMotion/WrapperDevicesLibraries/```
+
+```MediaMotion.Motion.LeapMotion.dll 				-> $(GitDir)/MediaMotion/WrapperDevicesLibraries/```
+
+```MediaMotion.Motion.dll 				-> $(GitDir)/MediaMotion/Assets/```
+
 For 32Bits
 ------------
 ```$(GitDir)/Solution Items/x86/Leapd.dll			-> $(GitDir)/MediaMotion/```
@@ -69,10 +77,3 @@ Only if you want run project testing
 ```$(GitDir)/Solution Items/x64/Leap.lib			-> $(GitDir)/WrapperDevices/MediaMotion.Motion.LeapMotion/MediaMotion.Motion.LeapMotion.Testing/bin/$(ConfigurationName)```
 
 ```$(GitDir)/Solution Items/x64/LeapCSharp.dll		-> $(GitDir)/WrapperDevices/MediaMotion.Motion.LeapMotion/MediaMotion.Motion.LeapMotion.Testing/bin/$(ConfigurationName)```
-
-For all plateforme:
-
-```$(GitDir)/Solution Items/LeapCSharp.NET3.5.dll	-> "$(GitDir)/MediaMotion/WrapperDevicesLibraries/```
-
-```MediaMotion.Motion.LeapMotion.dll 				-> $(GitDir)/MediaMotion/WrapperDevicesLibraries/```
-
