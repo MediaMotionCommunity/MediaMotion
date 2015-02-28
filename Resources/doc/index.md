@@ -21,7 +21,7 @@ Others:
 
 1. Open solution with *Xamarin Studio*
 
-2. Start Compilation
+2. Start Compilation in Unix Debug / Unix Release
 
 3. Copy the listed files in project directory
 
