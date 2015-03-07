@@ -350,13 +350,13 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
     {
         opacity = Mathf.Clamp(opacity, 0.0f, 1.0f);
 
-        Color current = gameObject.transform.parent.renderer.material.color;
-        gameObject.transform.parent.renderer.material.color = new Color(current.r, current.g, current.b, opacity);
+        Color current = gameObject.transform.parent.GetComponent<Renderer>().material.color;
+        gameObject.transform.parent.GetComponent<Renderer>().material.color = new Color(current.r, current.g, current.b, opacity);
 
         if (this.hasSubLabel)
         {
-            current = this.subLabel.renderer.material.color;
-            this.subLabel.renderer.material.color = new Color(current.r, current.g, current.b, opacity);
+            current = this.subLabel.GetComponent<Renderer>().material.color;
+            this.subLabel.GetComponent<Renderer>().material.color = new Color(current.r, current.g, current.b, opacity);
         }
     }
 
@@ -562,9 +562,9 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
                         current.MakeInactive();
                         if (i == this.currentSelection)
                         {
-                            this.buttons[i].renderer.material.color = Color.Lerp(this.buttons[i].renderer.material.color, this.SelectedColor, 0.25f); 
+                            this.buttons[i].GetComponent<Renderer>().material.color = Color.Lerp(this.buttons[i].GetComponent<Renderer>().material.color, this.SelectedColor, 0.25f); 
                         } else {
-                            this.buttons[i].renderer.material.color = Color.Lerp(this.buttons[i].renderer.material.color, this.BaseColor, 0.25f);
+                            this.buttons[i].GetComponent<Renderer>().material.color = Color.Lerp(this.buttons[i].GetComponent<Renderer>().material.color, this.BaseColor, 0.25f);
                         }
                     }
 
@@ -582,7 +582,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
                             current.ContentScaleFactor = 1.0f;
                             break;
                         case MenuState.ACTIVE:
-                            Vector2 buttonCenter = this.uiCam.WorldToScreenPoint(this.buttons[i].renderer.bounds.center);
+                            Vector2 buttonCenter = this.uiCam.WorldToScreenPoint(this.buttons[i].GetComponent<Renderer>().bounds.center);
                             Vector2 toButton = (Vector2)leapScreen - (Vector2)buttonCenter;
 
                             if (Time.time >= this.selectionCooldownTime && toButton.magnitude < this.closestDistance)
@@ -682,9 +682,9 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 
                             float highlightPercent = Mathf.Clamp((worldDistance - this.FullHighlight) / (this.StartHighlight - this.FullHighlight), 0.0f, 1.0f);
                             if (this.closest == this.currentSelection) {
-                                this.buttons[this.closest].renderer.material.color = Color.Lerp(this.SelectedColor, this.HighlightColor, highlightPercent); 
+                                this.buttons[this.closest].GetComponent<Renderer>().material.color = Color.Lerp(this.SelectedColor, this.HighlightColor, highlightPercent); 
                             } else { 
-                                this.buttons[this.closest].renderer.material.color = Color.Lerp(this.BaseColor, this.HighlightColor, highlightPercent); 
+                                this.buttons[this.closest].GetComponent<Renderer>().material.color = Color.Lerp(this.BaseColor, this.HighlightColor, highlightPercent); 
                             }
                             selected.ContentScaleFactor = 1.0f + (highlightPercent * this.HighlightPercentGrowth);
                         }

@@ -162,7 +162,7 @@ public class ArcMaker : MonoBehaviour
         }
         this.arcType = MenuBehavior.MenuType.TEXT;
         (this.textLabel.GetComponent(typeof(TextMesh)) as TextMesh).text = text;
-        this.textLabel.renderer.enabled = true;
+        this.textLabel.GetComponent<Renderer>().enabled = true;
     }
 
     /// <summary>
@@ -184,11 +184,11 @@ public class ArcMaker : MonoBehaviour
         {
             this.inactiveSpriteAvailable = true;
             (this.inactiveSprite.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer).sprite = inactiveSprite;
-            this.inactiveSprite.renderer.enabled = true;
+            this.inactiveSprite.GetComponent<Renderer>().enabled = true;
         }
         else
         {
-            this.activeSprite.renderer.enabled = true;
+            this.activeSprite.GetComponent<Renderer>().enabled = true;
         }
     }
 
@@ -198,7 +198,7 @@ public class ArcMaker : MonoBehaviour
     /// <param name="tex">The tex.</param>
     public void SetContent(Texture2D tex)
     {
-        gameObject.renderer.material.mainTexture = tex;
+        gameObject.GetComponent<Renderer>().material.mainTexture = tex;
     }
 
     /// <summary>
@@ -211,12 +211,12 @@ public class ArcMaker : MonoBehaviour
             case MenuBehavior.MenuType.ICON:
                 if (this.inactiveSpriteAvailable)
                 {
-                    this.activeSprite.renderer.enabled = true;
-                    this.inactiveSprite.renderer.enabled = false;
+                    this.activeSprite.GetComponent<Renderer>().enabled = true;
+                    this.inactiveSprite.GetComponent<Renderer>().enabled = false;
                 }
                 else
                 {
-                    this.activeSprite.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                    this.activeSprite.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 }
                 break;
             case MenuBehavior.MenuType.TEXT:
@@ -236,12 +236,12 @@ public class ArcMaker : MonoBehaviour
             case MenuBehavior.MenuType.ICON:
                 if (this.inactiveSpriteAvailable)
                 {
-                    this.activeSprite.renderer.enabled = false;
-                    this.inactiveSprite.renderer.enabled = true;
+                    this.activeSprite.GetComponent<Renderer>().enabled = false;
+                    this.inactiveSprite.GetComponent<Renderer>().enabled = true;
                 }
                 else
                 {
-                    this.activeSprite.renderer.material.color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
+                    this.activeSprite.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
                 }
                 break;
             case MenuBehavior.MenuType.TEXT:
@@ -262,7 +262,7 @@ public class ArcMaker : MonoBehaviour
         }
 
         this.gameObject.layer = 8;
-        this.gameObject.renderer.material.shader = this.transparent;
+        this.gameObject.GetComponent<Renderer>().material.shader = this.transparent;
 
         if (this.QuadCount > 0)
         {
@@ -401,8 +401,8 @@ public class ArcMaker : MonoBehaviour
             }
         }
 
-        this.activeSprite.renderer.enabled = false;
-        this.inactiveSprite.renderer.enabled = false;
-        this.textLabel.renderer.enabled = false;
+        this.activeSprite.GetComponent<Renderer>().enabled = false;
+        this.inactiveSprite.GetComponent<Renderer>().enabled = false;
+        this.textLabel.GetComponent<Renderer>().enabled = false;
     }
 }
