@@ -485,7 +485,6 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 										                             this.uiCam.WorldToScreenPoint (gameObject.transform.position).y);
 
 								Vector2 parentToFinger = leapScreen - parentScreen;
-								Vector2 toFrontFinger = leapScreen - menuScreen;
 
 								// Menu Wide Updates per state
 								switch (this.currentState) {
@@ -503,10 +502,13 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 										this.selectionMade = false;
 										if (Time.time <= this.activationStartTime + this.ActivationTime) {
 												float currentScale = this.ActivationCurve.Evaluate ((Time.time - this.activationStartTime) / (this.ActivationTime));
+												float percent = currentScale * 100f;
+												//Debug.Log (percent);
+												currentScale = (0.2f * percent) / 100f;
 												gameObject.transform.localScale = new Vector3 (
 														currentScale,
 														currentScale,
-														1);
+														0.2f);
 										} else {
 												gameObject.transform.localScale = new Vector3 (0.2f, 0.2f, 0.2f);
 												currentState = MenuState.ACTIVE;
@@ -527,7 +529,6 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 										}
 										break;
 								case MenuState.SELECTION:
-										Debug.Log ("is Selection");
 										this.scalingFactor = Mathf.Clamp (this.scalingFactor - (this.ScaleDownSpeed * Time.deltaTime), 0.0f, 1.0f);
 										this.currentSelectionOffset = Mathf.Clamp ((float)(Time.time - this.selectionEndTime + this.SelectionDelayTime) / (float)(this.SelectionSnapTime), 0.0f, 1.0f) * this.SelectionSnapDistance;
 										if (Time.time >= this.selectionEndTime) {
@@ -541,7 +542,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 												gameObject.transform.localScale = new Vector3 (
 														gameObject.transform.localScale.x - (this.DeactivationSpeed * Time.deltaTime),
 														gameObject.transform.localScale.y - (this.DeactivationSpeed * Time.deltaTime),
-														1);
+														0.2f);
 										} else {
 												gameObject.transform.localScale = new Vector3 (0, 0, 1);
 												currentState = MenuState.INACTIVE;
