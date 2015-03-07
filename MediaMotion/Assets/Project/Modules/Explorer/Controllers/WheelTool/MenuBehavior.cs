@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using MediaMotion.Core;
-using MediaMotion.Core.Models.Scripts;
+﻿using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
 /// <summary>
 /// Menu script
-/// from: <see href="https://github.com/leapmotion-examples/unity/tree/master/v1/freeform-menus">LeapMotion examples</see>
+/// base is from: <see href="https://github.com/leapmotion-examples/unity/tree/master/v1/freeform-menus">LeapMotion examples</see>
 /// </summary>
 public class MenuBehavior : BaseUnityScript<MenuBehavior>
 {
@@ -191,11 +189,6 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		public IInputService Input;
 
 		/// <summary>
-		/// The input
-		/// </summary>
-		private IInputService input;
-
-		/// <summary>
 		/// The button count
 		/// </summary>
 		private int buttonCount;
@@ -214,11 +207,6 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		/// The current selection
 		/// </summary>
 		private int currentSelection = -1;
-
-		/// <summary>
-		/// The main cam
-		/// </summary>
-		private Camera mainCam;
 
 		/// <summary>
 		/// The UI cam
@@ -398,8 +386,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		/// <param name="input">The input.</param>
 		public void Init (IInputService input)
 		{
-				Debug.Log ("In init");
-				this.uiCam = this.mainCam = (GameObject.Find ("Cameras/Main") as GameObject).GetComponent (typeof(Camera)) as Camera;
+				this.uiCam = GameObject.Find ("Cameras/Main").GetComponent (typeof(Camera)) as Camera;
 				this.baseLocation = gameObject.transform.parent.position;
 				this.Input = input;
 
@@ -465,14 +452,9 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		private void Update ()
 		{
 				foreach (IAction Action in this.Input.GetMovements()) {
-						if (Action.Type == ActionType.BrowsingCursor) {
-								float x = (GameObject.FindGameObjectsWithTag("MainCursor")[0] as GameObject).transform.localPosition.x;
-								float y = (GameObject.FindGameObjectsWithTag("MainCursor")[0] as GameObject).transform.localPosition.y;
-								float z = (GameObject.FindGameObjectsWithTag("MainCursor")[0] as GameObject).transform.localPosition.z;
-
-								//(GameObject.Find ("Cursors") as GameObject).transform.position.x
-
-								Debug.Log ("x:" + x + " y:" + y + " z:" + z);
+						if (Action.Type == ActionType.BrowsingCursor && GameObject.FindGameObjectsWithTag("MainCursor").Length > 0) {
+								float x = GameObject.FindGameObjectsWithTag("MainCursor")[0].transform.localPosition.x;
+								float y = GameObject.FindGameObjectsWithTag("MainCursor")[0].transform.localPosition.y;
 
 								Vector2 leapScreen = new Vector2 (x, y);
 
@@ -530,7 +512,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 										break;
 								case MenuState.SELECTION:
 										this.scalingFactor = Mathf.Clamp (this.scalingFactor - (this.ScaleDownSpeed * Time.deltaTime), 0.0f, 1.0f);
-										this.currentSelectionOffset = Mathf.Clamp ((float)(Time.time - this.selectionEndTime + this.SelectionDelayTime) / (float)(this.SelectionSnapTime), 0.0f, 1.0f) * this.SelectionSnapDistance;
+										this.currentSelectionOffset = Mathf.Clamp ((Time.time - this.selectionEndTime + this.SelectionDelayTime) / this.SelectionSnapTime, 0.0f, 1.0f) * this.SelectionSnapDistance;
 										if (Time.time >= this.selectionEndTime) {
 												this.selectionMade = true;
 												this.currentState = MenuState.DEACTIVATION;
@@ -581,10 +563,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 										case MenuState.ACTIVE:
 												Vector2 buttonCenter = this.uiCam.WorldToScreenPoint (this.buttons [i].GetComponent<Renderer> ().bounds.center);
 												Vector2 leapCenter = this.uiCam.WorldToScreenPoint (leapScreen);
-												Vector2 toButton = (Vector2)leapCenter - buttonCenter;
-
-												Debug.Log ("Button Center:" + i + ":" + buttonCenter.normalized);
-												Debug.Log ("leap: " + leapCenter.normalized);
+												Vector2 toButton = leapCenter - buttonCenter;
 
 												if (Time.time >= this.selectionCooldownTime && toButton.magnitude < this.closestDistance) {
 														this.closestDistance = toButton.magnitude;
@@ -626,7 +605,8 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 										if (this.closest != -1) {
 												ArcMaker selected = this.buttons [this.closest].GetComponent (typeof(ArcMaker)) as ArcMaker;
 
-												float pixelDistance = (menuScreen - leapScreen).magnitude;
+												Vector2 leapCenter = this.uiCam.WorldToScreenPoint (leapScreen);
+												float pixelDistance = (menuScreen - leapCenter).magnitude;
 
 												// convert world distance from pixels to world units.
 												float worldDistance = pixelDistance * ((this.uiCam.orthographicSize * 2.0f) / (float)this.uiCam.pixelHeight);
@@ -644,16 +624,19 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 														if (this.hasSubLabel && this.closest != -1 && this.closest < this.Text.Length && this.Text [this.closest] != null) {
 																this.subLabel.text = this.Text [this.closest];
 														}
+																
 
 														// pull out wedge                                           
 														if (worldDistance - this.CaptureOffset > this.Radius) {
+
 																selected.Bottom = worldDistance - this.CaptureOffset - (this.Thickness / 2.0f);
 																selected.Top = worldDistance - this.CaptureOffset + (this.Thickness / 2.0f);
 
 																if (worldDistance - this.CaptureOffset > this.SelectionRadius) {
+
 																		this.selectionEndTime = Time.time + this.SelectionDelayTime;
 																		this.currentSelection = this.closest;
-																		this.scalingFactor = 1.0f;
+																		this.scalingFactor = 0.2f;
 
 																		if (this.EventHandler != null && this.closest < this.ButtonActions.Length) {
 																				this.EventHandler.ReceiveMenuEvent (this.ButtonActions [this.closest]);
@@ -677,3 +660,4 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 				}
 		}
 }
+

@@ -6,10 +6,7 @@ using UnityEngine;
 /// </summary>
 public class MenuEventHandler : MonoBehaviour
 {
-    /// <summary>
-    /// The event text
-    /// </summary>
-    private TextMesh eventText;
+
 
     /// <summary>
     /// The i
@@ -23,7 +20,7 @@ public class MenuEventHandler : MonoBehaviour
     public void ReceiveMenuEvent(MenuBehavior.ButtonAction action)
     {
         ++this.i;
-        this.eventText.text = "Events:\n" + this.i + ": " + action.ToString() + this.eventText.text.Substring(7);
+				Debug.Log("Events:\n" + this.i + ": " + action.ToString());
     }
 
     /// <summary>
@@ -31,6 +28,6 @@ public class MenuEventHandler : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        this.eventText = gameObject.GetComponent(typeof(TextMesh)) as TextMesh;
+
     }
 }
