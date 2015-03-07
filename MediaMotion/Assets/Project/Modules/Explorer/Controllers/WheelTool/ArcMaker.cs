@@ -40,7 +40,7 @@ public class ArcMaker : MonoBehaviour
     /// <summary>
     /// The content scale factor
     /// </summary>
-    public float ContentScaleFactor = 0.2f;
+    public float ContentScaleFactor = 1.0f;
 
     /// <summary>
     /// The active sprite
