@@ -312,28 +312,10 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 				EIGHT,
 				NINE,
 				TEN,
-				STRENGTH_LOW,
-				STRENGTH_MEDIUM,
-				STRENGTH_HIGH,
-				TOOL_FLATTEN,
-				TOOL_GROW,
-				TOOL_PAINT,
-				TOOL_PRESS,
-				TOOL_REPEL,
-				TOOL_SMOOTH,
-				TOOL_SWEEP,
-				ENV_ARCTIC,
-				ENV_DESERT,
-				ENV_ISLAND,
-				ENV_JUNGLE,
-				ENV_CLIFF,
-				ENV_REDWOOD,
-				ENV_RIVER,
-				MAT_CLAY,
-				MAT_GLASS,
-				MAT_PLASTIC,
-				MAT_PORCELAIN,
-				MAT_STEEL
+				COPY,
+				PASTE,
+				DELETE,
+				CANCEL
 		}
 
 		/// <summary>
@@ -443,7 +425,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 
 				gameObject.transform.localScale = new Vector3 (0.2f, 0.2f, 0.2f);
 				gameObject.transform.localRotation = new Quaternion (60, 0, 0, 180);
-				this.currentState = MenuState.ACTIVE;
+				this.currentState = MenuState.INACTIVE;
 		}
 
 		/// <summary>
@@ -452,9 +434,10 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		private void Update ()
 		{
 				foreach (IAction Action in this.Input.GetMovements()) {
-						if (Action.Type == ActionType.BrowsingCursor && GameObject.FindGameObjectsWithTag("MainCursor").Length > 0) {
+						if (GameObject.FindGameObjectsWithTag("MainCursor").Length > 0) {
 								float x = GameObject.FindGameObjectsWithTag("MainCursor")[0].transform.localPosition.x;
 								float y = GameObject.FindGameObjectsWithTag("MainCursor")[0].transform.localPosition.y;
+						float z = GameObject.FindGameObjectsWithTag("MainCursor")[0].transform.localPosition.z;
 
 								Vector2 leapScreen = new Vector2 (x, y);
 
@@ -471,7 +454,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 								// Menu Wide Updates per state
 								switch (this.currentState) {
 								case MenuState.INACTIVE:
-										if (parentToFinger.magnitude < this.ActivationRadius && (Action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Pos.Z > this.DeactivateZ) {
+										if (parentToFinger.magnitude < this.ActivationRadius && z > this.DeactivateZ) {
 												this.activationStartTime = Time.time;
 												this.currentState = MenuState.ACTIVATING;
 										}
@@ -498,7 +481,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 										}
 										break;
 								case MenuState.ACTIVE:
-										if ((Action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Pos.Z < this.DeactivateZ) {
+										if (z < this.DeactivateZ) {
 												this.selectionMade = false;
 												this.scalingFactor = 1.0f;
 												this.currentState = MenuState.DEACTIVATION;
