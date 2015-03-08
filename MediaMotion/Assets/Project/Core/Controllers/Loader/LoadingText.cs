@@ -63,7 +63,7 @@ namespace MediaMotion.Core.Controllers.Loader {
 
 			if (this.cumulativeDeltaTime > 0.2f) {
 				this.cumulativeDeltaTime = 0;
-				this.gameObject.guiText.text = this.currentMessage.Current;
+				this.gameObject.GetComponent<GUIText>().text = this.currentMessage.Current;
 
 				if (!this.currentMessage.MoveNext()) {
 					this.currentMessage = this.messages.GetEnumerator();

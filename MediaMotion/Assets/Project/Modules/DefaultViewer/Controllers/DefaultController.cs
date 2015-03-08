@@ -18,7 +18,7 @@ namespace MediaMotion.Modules.DefaultViewer.Controllers {
 		/// <param name="input">The input.</param>
 		public void Init(DefaultViewerModule module, IInputService input) {
 			this.inputService = input;
-			this.gameObject.guiText.text = ((module.Parameters.Length > 0) ? (module.Parameters[0].GetName()) : ("No parameter"));
+			this.gameObject.GetComponent<UnityEngine.GUIText>().text = ((module.Parameters.Length > 0) ? (module.Parameters[0].GetName()) : ("No parameter"));
 		}
 
 		/// <summary>

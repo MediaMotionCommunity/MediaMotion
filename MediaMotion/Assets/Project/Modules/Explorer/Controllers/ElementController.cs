@@ -43,13 +43,13 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.texture = resourceManagerService.GetContainer<Material>(this.Element.GetResourceId());
 
 			// texture
-			this.tile.renderer.material = this.texture.Get();
+			this.tile.GetComponent<Renderer>().material = this.texture.Get();
 
 			// text
 			tileTextMesh.text = this.Element.GetName();
 			tileTextMesh.color = new Color(0.8f, 0.9f, 1.0f);
 
-			if (this.tile.renderer.bounds.size.x < text.renderer.bounds.size.x) {
+			if (this.tile.GetComponent<Renderer>().bounds.size.x < text.GetComponent<Renderer>().bounds.size.x) {
 				tileTextMesh.text = this.Element.GetName().Substring(0, 10) + "...";
 			}
 		}

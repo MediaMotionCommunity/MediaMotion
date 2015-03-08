@@ -56,6 +56,7 @@ namespace MediaMotion.Core.Services.Input {
 			this.fileSystemService = fileSystem;
 			this.moduleManagerService = moduleManager;
 
+			this.IsLoaded = false;
 			this.lastFrame = null;
 			this.movements = new List<IAction>();
 			this.defaultInput = new Dictionary<KeyCode, IAction>();
@@ -72,26 +73,43 @@ namespace MediaMotion.Core.Services.Input {
 		}
 
 		/// <summary>
+		/// Gets a value indicating whether this instance is loaded.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if this input device is loaded; otherwise, <c>false</c>.
+		/// </value>
+		public bool IsLoaded { get; private set; }
+
+		/// <summary>
 		/// Loads the wrapper.
 		/// </summary>
 		/// <param name="Name">Name of the wrapper device.</param>
 		/// <param name="Path">The wrapper device path.</param>
 		/// <exception cref="WrapperNotFoundException">WrapperDevice library not found or Bad Wrapper Library</exception>
 		public void LoadWrapper(string Name = "MediaMotion.*.dll", string Path = null) {
-			Type Type = null;
-			string[] Files = null;
-			IEnumerable<Type> Types = null;
+			try {
+				Type type = null;
+				string[] files = null;
+				IEnumerable<Type> types = null;
 
-			Type = typeof(IWrapperDevice);
-			Files = Directory.GetFiles(Path ?? System.IO.Path.Combine(this.fileSystemService.InitialFolder.GetPath(), "WrapperDevicesLibraries"), Name);
-			if (Files.Length < 1) {
-				throw new WrapperNotFoundException("WrapperDevice library not found");
+				type = typeof(IWrapperDevice);
+				files = Directory.GetFiles(Path ?? System.IO.Path.Combine(this.fileSystemService.InitialFolder.GetPath(), "WrapperDevicesLibraries"), Name);
+				if (files.Length < 1) {
+					throw new WrapperNotFoundException("WrapperDevice library not found");
+				}
+				types = Assembly.LoadFrom(files[0]).GetTypes().Where(type.IsAssignableFrom);
+				if (!types.Any()) {
+					throw new WrapperNotFoundException("Bad Wrapper Library");
+				}
+				this.wrapper = Activator.CreateInstance(types.FirstOrDefault()) as IWrapperDevice;
+			} catch (WrapperNotFoundException exception) {
+				Debug.LogError("Wrapper not found: " + exception.Message);
+			} catch (DllNotFoundException exception) {
+				Debug.LogError("Dll not found: " + exception.Message);
+			} catch (Exception exception) {
+				Debug.LogError(exception);
 			}
-			Types = Assembly.LoadFrom(Files[0]).GetTypes().Where(Type.IsAssignableFrom);
-			if (!Types.Any()) {
-				throw new WrapperNotFoundException("Bad Wrapper Library");
-			}
-			this.wrapper = Activator.CreateInstance(Types.FirstOrDefault()) as IWrapperDevice;
+			this.IsLoaded = this.wrapper != null;
 		}
 
 		/// <summary>
@@ -115,8 +133,10 @@ namespace MediaMotion.Core.Services.Input {
 				this.lastFrame = Time.frameCount;
 				this.movements.Clear();
 
-				foreach (IAction action in this.wrapper.GetActions()) {
-					this.AddMovement(action);
+				if (this.IsLoaded) {
+					foreach (IAction action in this.wrapper.GetActions()) {
+						this.AddMovement(action);
+					}
 				}
 				foreach (KeyValuePair<KeyCode, IAction> input in this.defaultInput) {
 					if (UnityEngine.Input.GetKeyDown(input.Key)) {
