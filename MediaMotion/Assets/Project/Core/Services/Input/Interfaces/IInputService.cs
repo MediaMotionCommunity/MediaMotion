@@ -7,6 +7,14 @@ namespace MediaMotion.Core.Services.Input.Interfaces {
 	/// </summary>
 	public interface IInputService {
 		/// <summary>
+		/// Gets a value indicating whether this instance is loaded.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if this input device is loaded; otherwise, <c>false</c>.
+		/// </value>
+		bool IsLoaded { get; }
+
+		/// <summary>
 		/// Loads the wrapper.
 		/// </summary>
 		/// <param name="Name">The name.</param>
