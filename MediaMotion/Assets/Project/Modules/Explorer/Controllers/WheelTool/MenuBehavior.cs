@@ -435,213 +435,127 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		{
 
 				if (GameObject.FindGameObjectsWithTag ("MainCursor").Length > 0) {
-
-
-						Vector3 cursorPosition = GameObject.FindGameObjectsWithTag ("MainCursor") [0].transform.position;
-
-						Vector2 leapScreen = new Vector2 (
-														this.uiCam.WorldToScreenPoint (cursorPosition).x,
-														this.uiCam.WorldToScreenPoint (cursorPosition).y);
-
-						Vector2 parentScreen = new Vector2 (
-								                         this.uiCam.WorldToScreenPoint (gameObject.transform.parent.position).x,
-								                         this.uiCam.WorldToScreenPoint (gameObject.transform.parent.position).y);
-
-						Vector2 menuScreen = new Vector2 (
-								                       this.uiCam.WorldToScreenPoint (gameObject.transform.position).x,
-								                       this.uiCam.WorldToScreenPoint (gameObject.transform.position).y);
-
-						Vector2 parentToFinger = leapScreen - parentScreen;
-
-						// Menu Wide Updates per state
-						switch (this.currentState) {
-						case MenuState.INACTIVE:
-								MenuIsInactive (parentToFinger, cursorPosition);
-								break;
-						case MenuState.ACTIVATING:
-								MenuIsActivating ();
-								break;
-						case MenuState.ACTIVE:
-								MenuIsActive ();
-								break;
-						case MenuState.SELECTION:
-								MenuIsSelection ();
-								break;
-						case MenuState.DEACTIVATION:
-								MenuIsDeactivation ();
-								break;
-						}
-
-						// Per Button Updates per state
-						for (int i = 0; i < this.buttonCount; i++) {
-								ArcMaker current = this.buttons [i].GetComponent (typeof(ArcMaker)) as ArcMaker;
-								current.Bottom = this.Radius - (this.Thickness / 2.0f);
-								current.Top = this.Radius + (this.Thickness / 2.0f);
-
-								if (i != this.closest) {
-										current.MakeInactive ();
-										if (i == this.currentSelection) {
-												this.buttons [i].GetComponent<Renderer> ().material.color = new Color (0.204f, 0.349f, 0.698f, 1f);
-										} else {
-												this.buttons [i].GetComponent<Renderer> ().material.color = new Color (0.204f, 0.349f, 0.698f, 1f);
-										}
-								}
-
-								if (i == this.currentSelection) { 
-										current.MakeActive (); 
-								}
-
-								switch (this.currentState) {
-								case MenuState.INACTIVE:
-										this.buttons [i].SetActive (false);
-										break;
-								case MenuState.ACTIVATING:
-										this.buttons [i].SetActive (true);
-										current.ContentScaleFactor = 1.0f;
-										break;
-								case MenuState.ACTIVE:
-										Vector2 buttonCenter = this.uiCam.WorldToScreenPoint (this.buttons [i].GetComponent<Renderer> ().bounds.center);
-										Vector2 toButton = leapScreen - buttonCenter;
-
-										if (Time.time >= this.selectionCooldownTime && toButton.magnitude < this.closestDistance) {
-												this.closestDistance = toButton.magnitude;
-												this.closest = i;
-										}
-
-										current.ContentScaleFactor = 1.0f;
-										break;
-								case MenuState.SELECTION:
-										if (i != this.closest) {
-												current.Bottom *= this.scalingFactor;
-												current.Top *= this.scalingFactor;
-												current.ContentScaleFactor = this.scalingFactor;
-										} else {
-												current.Bottom = this.SelectionRadius + currentSelectionOffset - (this.Thickness / 2.0f);
-												current.Top = this.SelectionRadius + currentSelectionOffset + (this.Thickness / 2.0f);
-										}
-										break;
-								case MenuState.DEACTIVATION:
-										if (i != this.closest || !this.selectionMade) {
-												current.Bottom *= this.scalingFactor;
-												current.Top *= this.scalingFactor;
-										} else if (selectionMade) {
-												current.Bottom = this.SelectionRadius - (this.Thickness / 2.0f);
-												current.Top = this.SelectionRadius + (this.Thickness / 2.0f);
-										}
-										break;
-								}
-						}
-
-						// Behavior for selected item
-						if (this.currentState == MenuState.ACTIVE) {
-								if (this.closest != this.lastClosest) {
-										this.lastClosest = this.closest;
-										this.selectionCooldownTime = Time.time + this.SelectionCooldown;
-								}
-
-								// do things with the closest menu
-								if (this.closest != -1) {
-										ArcMaker selected = this.buttons [this.closest].GetComponent (typeof(ArcMaker)) as ArcMaker;
-
-										float pixelDistance = (menuScreen - leapScreen).magnitude;
-
-										// convert world distance from pixels to world units.
-										float worldDistance = pixelDistance * ((this.uiCam.orthographicSize * 2.0f) / (float)this.uiCam.pixelHeight);
-
-										if (this.ButtonActions [this.closest] == ButtonAction.NONE) {
-												if (worldDistance > this.Radius + (this.Thickness / 2.0f)) {
-														this.selectionMade = false;
-														this.scalingFactor = 1.0f;
-														this.currentState = MenuState.DEACTIVATION;
-														return;
-												}
-										} else {
-												selected.MakeActive ();
-
-												if (this.hasSubLabel && this.closest != -1 && this.closest < this.Text.Length && this.Text [this.closest] != null) {
-														this.subLabel.text = this.Text [this.closest];
-												}
-																
-
-												// pull out wedge                                           
-												if (worldDistance - this.CaptureOffset > this.Radius) {
-
-														selected.Bottom = worldDistance - this.CaptureOffset - (this.Thickness / 2.0f);
-														selected.Top = worldDistance - this.CaptureOffset + (this.Thickness / 2.0f);
-
-														if (worldDistance - this.CaptureOffset > this.SelectionRadius) {
-
-																this.selectionEndTime = Time.time + this.SelectionDelayTime;
-																this.currentSelection = this.closest;
-																this.scalingFactor = 0.2f;
-
-																if (this.EventHandler != null && this.closest < this.ButtonActions.Length) {
-																		this.EventHandler.ReceiveMenuEvent (this.ButtonActions [this.closest]);
-																}
-
-																this.currentState = MenuState.SELECTION;
-														}
-												}
-
-												float highlightPercent = Mathf.Clamp ((worldDistance - this.FullHighlight) / (this.StartHighlight - this.FullHighlight), 0.0f, 1.0f);
-												if (this.closest == this.currentSelection) {
-														this.buttons [this.closest].GetComponent<Renderer> ().material.color = new Color (0.298f, 0.502f, 1f, 1f);
-												} else { 
-														this.buttons [this.closest].GetComponent<Renderer> ().material.color = new Color (0.298f, 0.502f, 1f, 1f);
-												}
-												selected.ContentScaleFactor = 1.0f + (highlightPercent * this.HighlightPercentGrowth);
-										}
-								}
-						}
+						CursorIsPresent ();
 				} else {
-						if (this.currentState != MenuState.INACTIVE) {
-								this.CurrentState = MenuState.DEACTIVATION;		
-						}
-						switch (this.currentState) {
-						case MenuState.DEACTIVATION:
-								MenuIsDeactivation ();
-								for (int i = 0; i < this.buttonCount; i++) {
-										ArcMaker current = this.buttons [i].GetComponent (typeof(ArcMaker)) as ArcMaker;
-										current.Bottom = this.Radius - (this.Thickness / 2.0f);
-										current.Top = this.Radius + (this.Thickness / 2.0f);
-										if (i != this.closest || !this.selectionMade) {
-												current.Bottom *= this.scalingFactor;
-												current.Top *= this.scalingFactor;
-										} else if (selectionMade) {
-												current.Bottom = this.SelectionRadius - (this.Thickness / 2.0f);
-												current.Top = this.SelectionRadius + (this.Thickness / 2.0f);
-										}
-								}
-								break;
-						case MenuState.SELECTION:
-								this.scalingFactor = Mathf.Clamp (this.scalingFactor - (this.ScaleDownSpeed * Time.deltaTime), 0.0f, 1.0f);
-								this.currentSelectionOffset = Mathf.Clamp ((Time.time - this.selectionEndTime + this.SelectionDelayTime) / this.SelectionSnapTime, 0.0f, 1.0f) * this.SelectionSnapDistance;
-								if (Time.time >= this.selectionEndTime) {
-										this.selectionMade = true;
-										this.currentState = MenuState.DEACTIVATION;
-										return;
-								}
-								for (int i = 0; i < this.buttonCount; i++) {
-										ArcMaker current = this.buttons [i].GetComponent (typeof(ArcMaker)) as ArcMaker;
-										current.Bottom = this.Radius - (this.Thickness / 2.0f);
-										current.Top = this.Radius + (this.Thickness / 2.0f);
-										if (i != this.closest) {
-												current.Bottom *= this.scalingFactor;
-												current.Top *= this.scalingFactor;
-												current.ContentScaleFactor = this.scalingFactor;
-										} else {
-												current.Bottom = this.SelectionRadius + currentSelectionOffset - (this.Thickness / 2.0f);
-												current.Top = this.SelectionRadius + currentSelectionOffset + (this.Thickness / 2.0f);
-										}
-								}
-								break;
-						}
-
+						CursorIsAbscent ();
 				}
 		}
 
-		private void MenuIsInactive(Vector2 parentToFinger, Vector3 cursorPosition) {
-				if (parentToFinger.magnitude < this.ActivationRadius &&  this.uiCam.WorldToScreenPoint (cursorPosition).z > this.DeactivateZ) {
+		private void CursorIsPresent ()
+		{
+				Vector3 cursorPosition = GameObject.FindGameObjectsWithTag ("MainCursor") [0].transform.position;
+
+				Vector2 leapScreen = new Vector2 (
+						                     this.uiCam.WorldToScreenPoint (cursorPosition).x,
+						                     this.uiCam.WorldToScreenPoint (cursorPosition).y);
+
+				Vector2 parentScreen = new Vector2 (
+						                       this.uiCam.WorldToScreenPoint (gameObject.transform.parent.position).x,
+						                       this.uiCam.WorldToScreenPoint (gameObject.transform.parent.position).y);
+
+				Vector2 menuScreen = new Vector2 (
+						                     this.uiCam.WorldToScreenPoint (gameObject.transform.position).x,
+						                     this.uiCam.WorldToScreenPoint (gameObject.transform.position).y);
+
+				Vector2 parentToFinger = leapScreen - parentScreen;
+
+				// Menu Wide Updates per state
+				switch (this.currentState) {
+				case MenuState.INACTIVE:
+						MenuIsInactive (parentToFinger, cursorPosition);
+						break;
+				case MenuState.ACTIVATING:
+						MenuIsActivating ();
+						break;
+				case MenuState.ACTIVE:
+						MenuIsActive (cursorPosition);
+						break;
+				case MenuState.SELECTION:
+						MenuIsSelection ();
+						break;
+				case MenuState.DEACTIVATION:
+						MenuIsDeactivation ();
+						break;
+				}
+
+				// Per Button Updates per state
+				for (int i = 0; i < this.buttonCount; i++) {
+						ArcMaker current = RetrieveAndInitArcMaker (i);
+
+						if (i != this.closest) {
+								current.MakeInactive ();
+								this.buttons [i].GetComponent<Renderer> ().material.color = new Color (0.204f, 0.349f, 0.698f, 1f);
+						}
+								
+						if (i == this.currentSelection) { 
+								current.MakeActive (); 
+						}
+
+						switch (this.currentState) {
+						case MenuState.INACTIVE:
+								this.buttons [i].SetActive (false);
+								break;
+						case MenuState.ACTIVATING:
+								this.buttons [i].SetActive (true);
+								current.ContentScaleFactor = 1.0f;
+								break;
+						case MenuState.ACTIVE:
+								ButtonMenuIsActive (i, leapScreen, current);
+								break;
+						case MenuState.SELECTION:
+								ButtonMenuIsSelection (i, current);
+								break;
+						case MenuState.DEACTIVATION:
+								ButtonMenuIsDeactivation (i, current);
+								break;
+						}
+				}
+
+				if (this.currentState == MenuState.ACTIVE) {
+						if (this.closest != this.lastClosest) {
+								this.lastClosest = this.closest;
+								this.selectionCooldownTime = Time.time + this.SelectionCooldown;
+						}
+
+						if (this.closest != -1) {
+								DrawClosestMenu (menuScreen, leapScreen);
+						}
+				}
+		}
+
+		private void CursorIsAbscent ()
+		{
+				// If there is no cursor, there is no hand. We deactivate the wheeltool.
+				if (this.currentState != MenuState.INACTIVE) {
+						this.CurrentState = MenuState.DEACTIVATION;		
+				}
+				switch (this.currentState) {
+				case MenuState.DEACTIVATION:
+						MenuIsDeactivation ();
+						for (int i = 0; i < this.buttonCount; i++) {
+								ButtonMenuIsDeactivation (i, RetrieveAndInitArcMaker (i));
+						}
+						break;
+				case MenuState.SELECTION:
+						MenuIsSelection ();
+						for (int i = 0; i < this.buttonCount; i++) {
+								ButtonMenuIsSelection (i, RetrieveAndInitArcMaker (i));
+						}
+						break;
+				}
+		}
+
+		private ArcMaker RetrieveAndInitArcMaker (int i)
+		{
+				ArcMaker current = this.buttons [i].GetComponent (typeof(ArcMaker)) as ArcMaker;
+				current.Bottom = this.Radius - (this.Thickness / 2.0f);
+				current.Top = this.Radius + (this.Thickness / 2.0f);
+				return current;
+		}
+
+		private void MenuIsInactive (Vector2 parentToFinger, Vector3 cursorPosition)
+		{
+				if (parentToFinger.magnitude < this.ActivationRadius && this.uiCam.WorldToScreenPoint (cursorPosition).z > this.DeactivateZ) {
 
 						this.activationStartTime = Time.time;
 						this.currentState = MenuState.ACTIVATING;
@@ -652,7 +566,8 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 				}
 		}
 
-		private void MenuIsActivating() {
+		private void MenuIsActivating ()
+		{
 				this.selectionMade = false;
 				if (Time.time <= this.activationStartTime + this.ActivationTime) {
 						float currentScale = this.ActivationCurve.Evaluate ((Time.time - this.activationStartTime) / (this.ActivationTime));
@@ -669,7 +584,8 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 				}
 		}
 
-		private void MenuIsActive(Vector3 cursorPosition) {
+		private void MenuIsActive (Vector3 cursorPosition)
+		{
 				if (this.uiCam.WorldToScreenPoint (cursorPosition).z < this.DeactivateZ) {
 						this.selectionMade = false;
 						this.scalingFactor = 1.0f;
@@ -682,7 +598,9 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 						this.closestDistance = float.MaxValue;
 				}
 		}
-		private void MenuIsSelection() {
+
+		private void MenuIsSelection ()
+		{
 				this.scalingFactor = Mathf.Clamp (this.scalingFactor - (this.ScaleDownSpeed * Time.deltaTime), 0.0f, 1.0f);
 				this.currentSelectionOffset = Mathf.Clamp ((Time.time - this.selectionEndTime + this.SelectionDelayTime) / this.SelectionSnapTime, 0.0f, 1.0f) * this.SelectionSnapDistance;
 				if (Time.time >= this.selectionEndTime) {
@@ -692,7 +610,8 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 				}
 		}
 
-		private void MenuIsDeactivation() {
+		private void MenuIsDeactivation ()
+		{
 				if (gameObject.transform.localScale.x > 0) {
 						gameObject.transform.localScale = new Vector3 (
 								gameObject.transform.localScale.x - (this.DeactivationSpeed * Time.deltaTime),
@@ -702,6 +621,90 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 						gameObject.transform.localScale = new Vector3 (0, 0, 1);
 						currentState = MenuState.INACTIVE;
 						return;
+				}
+		}
+
+		private void ButtonMenuIsActive (int i, Vector2 leapScreen, ArcMaker current)
+		{
+				Vector2 buttonCenter = this.uiCam.WorldToScreenPoint (this.buttons [i].GetComponent<Renderer> ().bounds.center);
+				Vector2 toButton = leapScreen - buttonCenter;
+
+				if (Time.time >= this.selectionCooldownTime && toButton.magnitude < this.closestDistance) {
+						this.closestDistance = toButton.magnitude;
+						this.closest = i;
+				}
+
+				current.ContentScaleFactor = 1.0f;
+		}
+
+		private void ButtonMenuIsSelection (int i, ArcMaker current)
+		{
+				if (i != this.closest) {
+						current.Bottom *= this.scalingFactor;
+						current.Top *= this.scalingFactor;
+						current.ContentScaleFactor = this.scalingFactor;
+				} else {
+						current.Bottom = this.SelectionRadius + currentSelectionOffset - (this.Thickness / 2.0f);
+						current.Top = this.SelectionRadius + currentSelectionOffset + (this.Thickness / 2.0f);
+				}
+		}
+
+		private void ButtonMenuIsDeactivation (int i, ArcMaker current)
+		{
+				if (i != this.closest || !this.selectionMade) {
+						current.Bottom *= this.scalingFactor;
+						current.Top *= this.scalingFactor;
+				} else if (selectionMade) {
+						current.Bottom = this.SelectionRadius - (this.Thickness / 2.0f);
+						current.Top = this.SelectionRadius + (this.Thickness / 2.0f);
+				}
+		}
+
+		private void DrawClosestMenu (Vector2 menuScreen, Vector2 leapScreen)
+		{
+				ArcMaker selected = this.buttons [this.closest].GetComponent (typeof(ArcMaker)) as ArcMaker;
+
+				float pixelDistance = (menuScreen - leapScreen).magnitude;
+
+				// convert world distance from pixels to world units.
+				float worldDistance = pixelDistance * ((this.uiCam.orthographicSize * 2.0f) / (float)this.uiCam.pixelHeight);
+
+				if (this.ButtonActions [this.closest] == ButtonAction.NONE && worldDistance > this.Radius + (this.Thickness / 2.0f)) {
+						this.selectionMade = false;
+						this.scalingFactor = 1.0f;
+						this.currentState = MenuState.DEACTIVATION;
+						return;
+				} else {
+						selected.MakeActive ();
+
+						if (this.hasSubLabel && this.closest != -1 && this.closest < this.Text.Length && this.Text [this.closest] != null) {
+								this.subLabel.text = this.Text [this.closest];
+						}
+
+
+						// pull out wedge                                           
+						if (worldDistance - this.CaptureOffset > this.Radius) {
+
+								selected.Bottom = worldDistance - this.CaptureOffset - (this.Thickness / 2.0f);
+								selected.Top = worldDistance - this.CaptureOffset + (this.Thickness / 2.0f);
+
+								if (worldDistance - this.CaptureOffset > this.SelectionRadius) {
+
+										this.selectionEndTime = Time.time + this.SelectionDelayTime;
+										this.currentSelection = this.closest;
+										this.scalingFactor = 0.2f;
+
+										if (this.EventHandler != null && this.closest < this.ButtonActions.Length) {
+												this.EventHandler.ReceiveMenuEvent (this.ButtonActions [this.closest]);
+										}
+
+										this.currentState = MenuState.SELECTION;
+								}
+						}
+
+						float highlightPercent = Mathf.Clamp ((worldDistance - this.FullHighlight) / (this.StartHighlight - this.FullHighlight), 0.0f, 1.0f);
+						this.buttons [this.closest].GetComponent<Renderer> ().material.color = new Color (0.298f, 0.502f, 1f, 1f);
+						selected.ContentScaleFactor = 1.0f + (highlightPercent * this.HighlightPercentGrowth);
 				}
 		}
 }
