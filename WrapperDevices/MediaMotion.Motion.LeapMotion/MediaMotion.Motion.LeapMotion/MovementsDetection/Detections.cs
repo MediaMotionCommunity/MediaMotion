@@ -41,13 +41,14 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		#region Privates Methods
 		private void Configuration() {
 			var swipeDetection = new SwipeDetection();
-			var cursorDetection = new CursorDetection();
+			var easyFileBrowsingDetection = new EasyFileBrowsingDetection();
 			var pinchSelectionDetection = new PinchSelectionDetection();
 			var pinchGrabDetection = new PinchGrabDetection(cursorDetection);
+			var zoomDetection = new ZoomDetection();
 
+			this.detectionContainer.Register(zoomDetection);
 			this.detectionContainer.Register(swipeDetection);
-
-			this.detectionContainer.Register(cursorDetection);
+			this.detectionContainer.Register(easyFileBrowsingDetection);
 			this.detectionContainer.Register(pinchSelectionDetection);
 			this.detectionContainer.Register(pinchGrabDetection);
 		}

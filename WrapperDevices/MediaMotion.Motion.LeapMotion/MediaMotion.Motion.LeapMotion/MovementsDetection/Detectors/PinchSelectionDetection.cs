@@ -40,13 +40,13 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 		/// Check for valid detection of PinchSelection
 		/// </summary>
 		/// <param name="hand">int represent the hand use</param>
-		/// <param name="streng">float represent the streng of pinch</param>
+		/// <param name="strength">float represent the strength of pinch</param>
 		/// <returns>true if the movment is valid</returns>
-		protected override void ValidDetection(int hand, float streng, IActionCollection actionCollection) {
-			if (streng < this.ThresholdDetection && this.states[hand]) {
+		protected override void ValidDetection(int hand, float strength, IActionCollection actionCollection) {
+			if (strength < this.ThresholdDetection && this.states[hand]) {
 				this.states[hand] = false;
 			}
-			if (streng >= this.ThresholdDetection && !this.states[hand]) {
+			if (strength >= this.ThresholdDetection && !this.states[hand]) {
 				this.states[hand] = true;
 				this.lastDetections[hand] = DateTime.Now;
 			}

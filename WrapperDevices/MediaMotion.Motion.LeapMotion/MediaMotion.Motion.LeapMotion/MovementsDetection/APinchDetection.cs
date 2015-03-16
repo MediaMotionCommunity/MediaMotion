@@ -71,9 +71,10 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// Validate detection of pinch movement. Set detectionState to flase for stop detection for ReleaseTimeMax time.
 		/// </summary>
 		/// <param name="hand">int represent the hand use</param>
-		/// <param name="streng">float represent the streng of pinch</param>
+		/// <param name="strength">float represent the strength of pinch</param>
+		/// <param name="actionCollection"></param>
 		/// <returns>true if the movment is valid</returns>
-		protected abstract void ValidDetection(int hand, float streng, IActionCollection actionCollection);
+		protected abstract void ValidDetection(int hand, float strength, IActionCollection actionCollection);
 		#endregion
 	}
 }
