@@ -54,7 +54,9 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 		/// </summary>
 		/// <param name="ac"></param>
 		/// <returns></returns>
-		private static string GetActionName(IAction ac) {
+		private static string GetActionName(IAction ac)
+		{
+			return ac.Type.ToString();
 			var list = new Dictionary<ActionType, string> {
 				{ActionType.Down, "Down"},
 				{ActionType.Left, "Left"},

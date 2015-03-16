@@ -2,6 +2,7 @@
 using Leap;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
+using MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>

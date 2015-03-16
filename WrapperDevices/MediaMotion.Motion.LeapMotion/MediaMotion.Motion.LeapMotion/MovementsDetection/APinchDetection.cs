@@ -1,6 +1,7 @@
 ﻿using System;
 using Leap;
 using MediaMotion.Motion.LeapMotion.Core;
+using MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	public abstract class APinchDetection : ICustomDetection {

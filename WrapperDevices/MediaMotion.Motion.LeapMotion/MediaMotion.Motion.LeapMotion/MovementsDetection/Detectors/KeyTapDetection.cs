@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using Leap;
+﻿using Leap;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
 using Action = MediaMotion.Motion.Actions.Action;
 
-namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
+namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 	/// <summary>
 	/// Class for keyTap action detection
 	/// </summary>
