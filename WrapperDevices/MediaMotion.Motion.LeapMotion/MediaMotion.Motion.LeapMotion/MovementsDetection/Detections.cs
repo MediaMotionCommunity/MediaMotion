@@ -44,9 +44,10 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			var easyFileBrowsingDetection = new EasyFileBrowsingDetection();
 			var pinchSelectionDetection = new PinchSelectionDetection();
 			var pinchGrabDetection = new PinchGrabDetection();
+			var zoomDetection = new ZoomDetection();
 
+			this.detectionContainer.Register(zoomDetection);
 			this.detectionContainer.Register(swipeDetection);
-
 			this.detectionContainer.Register(easyFileBrowsingDetection);
 			this.detectionContainer.Register(pinchSelectionDetection);
 			this.detectionContainer.Register(pinchGrabDetection);
