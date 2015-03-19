@@ -33,6 +33,15 @@
     <Prefer32Bit>false</Prefer32Bit>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Unix Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Unix Debug\</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Actions\Action.cs" />
     <Compile Include="Actions\IAction.cs" />
@@ -48,13 +57,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System">
-      <HintPath>C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll</HintPath>
-    </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\Assets\" /Y</PostBuildEvent>
+    <PostBuildEvent>if "$(ConfigurationName)" == "UnixDebug"  (
+  echo "Unix"
+  cp -fv "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\Assets\"
+) else if "$(ConfigurationName)" == "UnixRelease"  (
+  echo "Unix"
+  cp -fv "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\Assets\"
+) else (
+  echo "Windows"
+  xcopy "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\Assets\" /Y
+)</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\MediaMotion.Motion.LeapMotion\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\MediaMotion.Motion.LeapMotion\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
