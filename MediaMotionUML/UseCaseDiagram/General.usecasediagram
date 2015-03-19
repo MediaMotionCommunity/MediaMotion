@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="b194f66c-e910-49ae-8759-5d67d5d86799" name="General" linkedPackageId="704e85e6-db19-4dd2-aadf-426c687e8bbe" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <ownedCommentsInternal>
+    <comment Id="86db79ea-5491-4b9b-9411-dff823cf513d">
+      <elementDefinition Id="ade182aa-06c4-406e-ac58-8de175782811" />
+      <body>Do an action</body>
+    </comment>
+    <comment Id="4244cf34-84e5-4c1d-82a2-2106b666300c">
+      <elementDefinition Id="f7bd7d06-c656-44b2-a39f-aab3592ca711" />
+      <body>Update View</body>
+    </comment>
+  </ownedCommentsInternal>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="369acde1-d616-43bb-8263-01b78d52d684" name="User" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e425b7c8-1cb7-4b04-89b4-a579fe96a05b" />
+        <targetEnds>
+          <association Id="4f8ee81a-cd82-4eb4-8a31-20f65f1ed6a7" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Action Detection" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="e90e34c1-82a0-4b77-8d28-e3a673a676f2" LastKnownName="Action Detection" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e42619ae-fb19-4687-ad22-9a9d78bc6ba6" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="0766599b-32c6-4d35-b7b9-ee386771b60e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="dd25807b-5359-4337-8180-258621e0ef16" name="Action Detection" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="8bd13c82-e50b-45ee-a935-778f5efb4c0c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a9c8fee2-7f6b-4e10-995f-1d7f06d1a581" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="e90e34c1-82a0-4b77-8d28-e3a673a676f2" name="Action Detection" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="513e3de7-5b57-4dde-bcaa-943ebe04e5ab" />
+        <targetEnds>
+          <association Id="b59080ee-cf8b-4e8e-be94-9315b15d6b33" isDerived="false" sourceEndRoleName="Action Detection" targetEndRoleName="Dispatch to active module" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="88feac40-1d99-41f4-9bcb-b662c10dbb2e" LastKnownName="Store the Action" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="36a83e0a-fc98-49c6-b717-170d93933e38" name="Action Detection" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="4db0b3ce-581f-426c-ba0a-47e0154e99c2" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="edc3fcbf-c379-4ef4-ae5c-a8784e6b3dbb" name="Dispatch to active module" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="b66002be-4799-42d0-9a2c-c0e27721e097" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="587212ef-8892-4c97-83d0-b9a2fe847dda" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="60d94f6b-dd0c-4981-95c6-77740658031a" LastKnownName="Wrapper" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="88feac40-1d99-41f4-9bcb-b662c10dbb2e" name="Store the Action" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="0821859f-4d4c-4a81-9305-1f0f0a82fc0a" />
+        <subjects>
+          <subsystemMoniker Id="da52ba29-4cb0-4ab8-9f13-745be1efede0" LastKnownName="Core" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="1809c42e-3074-4508-b00d-9142fc5ae0c4" name="Action Interpretation" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="7334ffc7-7ad9-4d93-ae83-7e0ab7b90572" />
+        <targetEnds>
+          <association Id="48c67737-402c-49c2-a764-7b1d54e1e03a" isDerived="false" sourceEndRoleName="Action Interpretation" targetEndRoleName="User" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="369acde1-d616-43bb-8263-01b78d52d684" LastKnownName="User" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0e42da89-c17c-4831-b5b0-602cd76ee626" name="Action Interpretation" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f10740bd-5631-49c2-a96a-7f4b7b271707" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="9f16732e-c491-4f25-b7b2-b7af9aef2efe" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="25511022-350f-41ba-b668-b943391f4232" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="009feb91-4f1d-4ff7-a0c8-f3aa60578440" />
+          </association>
+        </targetEnds>
+        <additions>
+          <include Id="fe313500-9da7-4226-85ed-44013f314240">
+            <useCaseMoniker Id="a47d83c4-c581-43a4-a331-3cc0f87bbf4a" LastKnownName="Provide Service" />
+            <elementDefinition Id="78685f95-7a60-4a0f-a447-346005f65535" />
+          </include>
+          <include Id="11788300-7b49-45a5-a49f-38740d56bf7f">
+            <useCaseMoniker Id="4be66306-4e11-4461-bfb7-2bebc02efb30" LastKnownName="Load Module" />
+            <elementDefinition Id="27f89d97-de83-4f75-a6a9-a6d67d71c0c4" />
+          </include>
+          <include Id="0c0a6332-9fe2-479e-83a4-a6cbf284cc6e">
+            <useCaseMoniker Id="88feac40-1d99-41f4-9bcb-b662c10dbb2e" LastKnownName="Store the Action" />
+            <elementDefinition Id="813f7002-c7ea-4550-af2b-2f231f0c097c" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="c1af8f6d-e0fb-4ab6-ae75-6bf518007fd5" LastKnownName="Module" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="60d94f6b-dd0c-4981-95c6-77740658031a" name="Wrapper" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f70f26f7-ca90-4c78-a157-0b3747f58705" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="da52ba29-4cb0-4ab8-9f13-745be1efede0" name="Core" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="5fdcda1e-4d9c-42ee-bc4d-fa07840d8b5a" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="c1af8f6d-e0fb-4ab6-ae75-6bf518007fd5" name="Module" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a13ba97d-9a1a-41e0-97f1-bbfa9e7f5e9e" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="a47d83c4-c581-43a4-a331-3cc0f87bbf4a" name="Provide Service" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="15ac6167-74c3-4e9f-b646-3bbfadfe39fd" />
+        <subjects>
+          <subsystemMoniker Id="da52ba29-4cb0-4ab8-9f13-745be1efede0" LastKnownName="Core" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="4be66306-4e11-4461-bfb7-2bebc02efb30" name="Load Module" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="98d999e7-7841-4a2c-a52f-8b7e775146cd" />
+        <subjects>
+          <subsystemMoniker Id="da52ba29-4cb0-4ab8-9f13-745be1efede0" LastKnownName="Core" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="704e85e6-db19-4dd2-aadf-426c687e8bbe" name="MediaMotionUML">
+    <elementDefinition Id="2a388fb0-d7bf-43c0-b132-2649a170e9be" />
+    <profileInstances>
+      <packageHasProfileInstances Id="76938b4f-ffe6-488f-b741-43d9a91cd3b6">
+        <profileInstance Id="b3eff4a1-af74-4184-936f-763fd144ad3e" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="0a4fcfd6-43e7-4f54-868f-abf72d3ef4bf">
+        <profileInstance Id="f4b9c4e0-1777-4b1e-987b-60581c509530" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="7a1ffcb7-36c7-45ae-bef5-9282c7d56fe8">
+        <profileInstance Id="431f309d-165c-4abd-8ae5-27543b3832b8" name="CSharpProfile">
+          <elementDefinition Id="c3a27958-a93e-4ec3-858c-756a8abca727" />
+        </profileInstance>
+        <elementDefinition Id="3c087bc3-7943-4fbf-acbf-5857189cd503" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</useCaseModelRoot>

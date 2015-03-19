@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="86bcd52a-a9a0-4a57-be71-d18690613f98"
+  name="Actions"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="d05a66a7-fa5d-47a5-8d17-3ec12c8e79aa"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMediaMotion.Motion.Actions"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <Interface
+        Id="a4c9bcfe-3623-4868-bd7e-c97cd74fa873"
+        name="IAction"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="6744a52a-2b7a-4f50-96fd-2fed4645b69a"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FAssets%2FMediaMotion.Motion.dll Namespace%3DMediaMotion.Motion.Actions Type%3DIAction"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="c4d68c23-0842-4a45-86ef-1051e5f61f3d"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="92a203a3-5569-49ed-a0fa-7c62ec8dad9d">
+                <propertyInstance
+                  Id="ebe16c07-4928-4dc0-a95f-a9c3d810ac48"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="823a69f5-21b9-4e2c-badf-a51bfcced761">
+                <propertyInstance
+                  Id="8b35b91a-1891-4a32-a2bd-5b569ff6ab71"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a1864d89-a5fe-4620-bb31-5f9290ade515">
+                <propertyInstance
+                  Id="fe496af0-9a9e-42a2-83ee-0d4f5a5e9c07"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cc07d503-a837-4459-9ad1-213163cd401b">
+                <propertyInstance
+                  Id="adad8737-79fa-4e7f-b545-69664103f399"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="1d22e14e-85ab-48c1-a99f-d5c349d5e07c"
+        name="ActionType"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="00b13cea-6eec-473f-93a7-05ee4dac3963"
+            handle="viewcode://./CodeSchema_Enum?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FAssets%2FMediaMotion.Motion.dll Namespace%3DMediaMotion.Motion.Actions Type%3DActionType"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="5c8b648b-5192-4bbe-ace1-fa43b19bcce9"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="707e467f-1443-4ce1-90a4-aabd77cb6938">
+                <propertyInstance
+                  Id="6f0c6eab-5bf3-4419-bb63-f59ddca9cee5"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a9ac6b42-7a6f-40fc-ba95-aa26121a51e0">
+                <propertyInstance
+                  Id="199b3699-c45b-4d51-92b4-29c782b1e039"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bb0c6221-052a-4c42-a1df-8d08b2507107">
+                <propertyInstance
+                  Id="e48258a6-51e0-43fe-b21d-59ae25badd1e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </enumeration>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

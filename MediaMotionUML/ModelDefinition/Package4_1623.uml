@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="df66dda8-e50c-4372-8be0-9b87c653cb19"
+  name="Models"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="b0aea2bf-18cd-496a-90bf-e8b447ae97d8"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMediaMotion.Core.Models"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="2ab9691a-eada-4027-9d01-6b3ca3b04d75"
+        LastKnownName="Core"
+        LastKnownLocation="Package5_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="963b8e4f-3eca-4d99-a403-ab448d40c48e"
+        LastKnownName="Scripts"
+        LastKnownLocation="Package11_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="793d805e-a904-4d15-a357-aa53497d5f62"
+        LastKnownName="FileManager"
+        LastKnownLocation="Package15_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="76c67366-d4e1-492c-b286-d613a65811df"
+        LastKnownName="Module"
+        LastKnownLocation="Package18_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="d7024185-6a13-427a-816b-a2b3fedde8b9"
+        LastKnownName="Wrapper"
+        LastKnownLocation="Package21_1623.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
