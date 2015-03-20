@@ -19,7 +19,7 @@ namespace MediaMotion.Modules.ImageViewer {
 		/// <summary>
 		/// Configures this instance.
 		/// </summary>
-		protected override void Configure() {
+		public override void Configure() {
 			this.Configuration.Name = "Image Viewer";
 			this.Configuration.Scene = "ImageViewer";
 			this.Configuration.Description = "Display your picture in a wonderfull slideshow";

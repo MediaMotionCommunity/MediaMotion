@@ -30,6 +30,11 @@ namespace MediaMotion.Core.Models.Module.Interfaces {
 		void Load(IElement[] parameters = null);
 
 		/// <summary>
+		/// Configures the module.
+		/// </summary>
+		void Configure();
+
+		/// <summary>
 		/// Load another module.
 		/// </summary>
 		void Sleep();

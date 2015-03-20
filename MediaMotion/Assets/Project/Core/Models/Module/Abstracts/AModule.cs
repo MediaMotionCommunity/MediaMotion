@@ -12,7 +12,6 @@ namespace MediaMotion.Core.Models.Module.Abstracts {
 		/// </summary>
 		public AModule() {
 			this.Configuration = new Configuration();
-			this.Configure();
 		}
 
 		/// <summary>
@@ -38,6 +37,11 @@ namespace MediaMotion.Core.Models.Module.Abstracts {
 		}
 
 		/// <summary>
+		/// Configures the module.
+		/// </summary>
+		public abstract void Configure();
+
+		/// <summary>
 		/// Load another module.
 		/// </summary>
 		public virtual void Sleep() {
@@ -54,10 +58,5 @@ namespace MediaMotion.Core.Models.Module.Abstracts {
 		/// </summary>
 		public virtual void Unload() {
 		}
-
-		/// <summary>
-		/// Configures this instance.
-		/// </summary>
-		protected abstract void Configure();
 	}
 }

@@ -83,7 +83,7 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 				this.imageTexture = this.imageUrl.texture;
 
 				this.imageTexture.wrapMode = TextureWrapMode.Clamp;
-				this.gameObject.renderer.material.mainTexture = this.imageTexture;
+				this.gameObject.GetComponent<Renderer>().material.mainTexture = this.imageTexture;
 				this.imageUrl = null;
 			}
 		}
