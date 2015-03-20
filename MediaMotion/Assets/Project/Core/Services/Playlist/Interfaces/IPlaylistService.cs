@@ -6,6 +6,14 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 	/// </summary>
 	public interface IPlaylistService {
 		/// <summary>
+		/// Gets a value indicating whether this instance is configured.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if this instance is configured; otherwise, <c>false</c>.
+		/// </value>
+		bool IsConfigured { get; }
+
+		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="IPlaylistService"/> is random.
 		/// </summary>
 		/// <value>
@@ -34,7 +42,8 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 		/// </summary>
 		/// <param name="element">The file or the directory.</param>
 		/// <param name="filterExtension">The filter extension.</param>
-		void Configure(IElement element, string[] filterExtension);
+		/// <returns><c>true</c> if the playlist is correctly configured otherwise, <c>false</c></returns>
+		bool Configure(IElement element, string[] filterExtension);
 
 		/// <summary>
 		/// Current file in the list.

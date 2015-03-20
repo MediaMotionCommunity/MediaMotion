@@ -33,8 +33,17 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// </summary>
 		/// <param name="fileSystem">The file system.</param>
 		public PlaylistService(IFileSystemService fileSystem) {
+			this.IsConfigured = false;
 			this.fileSystemService = fileSystem;
 		}
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is configured.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if this instance is configured; otherwise, <c>false</c>.
+		/// </value>
+		public bool IsConfigured { get; private set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="IPlaylistService" /> is random.
@@ -65,18 +74,38 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// </summary>
 		/// <param name="element">The file or the directory.</param>
 		/// <param name="filterExtension">The filter extension.</param>
-		public void Configure(IElement element, string[] filterExtension) {
-			if (element.GetElementType() == ElementType.File) {
-				this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetParent()).ToArray();
-				this.index = Array.IndexOf(this.filesList, this.filesList.First(file => file.GetPath().CompareTo(element.GetPath()) == 0));
-			} else {
-				this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetPath()).ToArray();
-				this.index = 0;
+		/// <returns><c>true</c> if the playlist is correctly configured otherwise, <c>false</c></returns>
+		public bool Configure(IElement element, string[] filterExtension) {
+			this.IsConfigured = false;
+			try {
+				if (element == null) {
+					throw new ArgumentNullException("element must not be null");
+				}
+				switch (element.GetElementType()) {
+					case ElementType.File:
+						this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetParent()).ToArray();
+						this.index = Array.IndexOf(this.filesList, this.filesList.First(file => file.GetPath().CompareTo(element.GetPath()) == 0));
+						if (this.index < 0) {
+							this.index = 0;
+						}
+						break;
+					case ElementType.Folder:
+						this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetPath()).ToArray();
+						this.index = 0;
+						break;
+					default:
+						throw new NotSupportedException("unsupported element type");
+				}
+				this.Length = this.filesList.Length;
+				this.IsConfigured = true;
+			} catch (ArgumentNullException) {
+				// TODO log message
+			} catch (NotSupportedException) {
+				// TODO log message
+			} catch (Exception) {
+				// TODO log message
 			}
-			if (this.index < 0) {
-				this.index = 0;
-			}
-			this.Length = this.filesList.Length;
+			return (this.IsConfigured);
 		}
 
 		/// <summary>
@@ -85,7 +114,11 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		/// The file
 		/// </returns>
+		/// <exception cref="System.InvalidOperationException">The playlist must be initialized</exception>
 		public IFile Current() {
+			if (!this.IsConfigured) {
+				throw new InvalidOperationException("The playlist must be initialized");
+			}
 			return (this.filesList[this.index]);
 		}
 
@@ -95,7 +128,11 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		/// The file
 		/// </returns>
+		/// <exception cref="System.InvalidOperationException">The playlist must be initialized</exception>
 		public IFile Previous() {
+			if (!this.IsConfigured) {
+				throw new InvalidOperationException("The playlist must be initialized");
+			}
 			this.index = ((this.index - 1 < 0) ? (this.Length) : (this.index)) - 1;
 			return (this.Current());
 		}
@@ -106,7 +143,11 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		/// The file
 		/// </returns>
+		/// <exception cref="System.InvalidOperationException">The playlist must be initialized</exception>
 		public IFile Next() {
+			if (!this.IsConfigured) {
+				throw new InvalidOperationException("The playlist must be initialized");
+			}
 			this.index = ((this.index + 1 >= this.Length) ? (0) : (this.index + 1));
 			return (this.Current());
 		}

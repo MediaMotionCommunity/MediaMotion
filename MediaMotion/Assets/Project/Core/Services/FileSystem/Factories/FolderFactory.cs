@@ -17,14 +17,17 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 		/// <returns>
 		/// The created element
 		/// </returns>
-		/// <exception cref="System.Exception">Directory ' + Path + ' doesn't exist</exception>
 		public IElement Create(string path) {
-			DirectoryInfo directoryInfo = new DirectoryInfo(path);
+			try {
+				DirectoryInfo directoryInfo = new DirectoryInfo(path);
 
-			if (directoryInfo == null) {
-				throw new Exception("Directory '" + path + "' doesn't exist");
+				if (directoryInfo == null) {
+					throw new ArgumentException("argument 'path' must be a valid path");
+				}
+				return (new Folder(directoryInfo));
+			} catch (ArgumentException) {
 			}
-			return (new Folder(directoryInfo));
+			return (null);
 		}
 	}
 }

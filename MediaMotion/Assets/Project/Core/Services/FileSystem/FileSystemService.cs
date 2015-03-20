@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using MediaMotion.Core.Models.FileManager.Enums;
@@ -114,6 +115,12 @@ namespace MediaMotion.Core.Services.FileSystem {
 		public List<IFile> GetContent(string[] filterExtension, string path) {
 			List<IFile> directoryContent = new List<IFile>();
 
+			if (filterExtension == null) {
+				throw new ArgumentNullException("filterExtension must not be null");
+			}
+			if (!filterExtension.All(extension => extension.StartsWith("."))) {
+				throw new ArgumentException("filterExtension must only contains extensions starting by '.'");
+			}
 			foreach (string filePath in Directory.GetFiles(path ?? this.CurrentFolder.GetPath()).Where(file => filterExtension.Contains(Path.GetExtension(file)))) {
 				directoryContent.Add(this.fileFactory.Create(filePath) as IFile);
 			}
