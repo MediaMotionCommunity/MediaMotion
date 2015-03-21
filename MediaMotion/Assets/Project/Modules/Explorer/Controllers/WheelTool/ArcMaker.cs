@@ -58,11 +58,6 @@ public class ArcMaker : MonoBehaviour
     private GameObject textLabel;
 
     /// <summary>
-    /// The transparent
-    /// </summary>
-    private Shader transparent = Shader.Find("Transparent/Diffuse");
-
-    /// <summary>
     /// The arc type
     /// </summary>
     private MenuBehavior.MenuType arcType;
@@ -262,7 +257,7 @@ public class ArcMaker : MonoBehaviour
         }
 
         this.gameObject.layer = 8;
-        this.gameObject.GetComponent<Renderer>().material.shader = this.transparent;
+		this.gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Diffuse");
 
         if (this.QuadCount > 0)
         {
