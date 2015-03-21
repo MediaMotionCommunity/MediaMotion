@@ -428,9 +428,9 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 						}
 				}
 
-				gameObject.transform.localScale = new Vector3 (0.2f, 0.2f, 0.2f);
+				gameObject.transform.localScale = new Vector3 (0f, 0f, 0f);
 				gameObject.transform.localRotation = new Quaternion (60, 0, 0, 180);
-				this.currentState = MenuState.ACTIVE;
+				this.currentState = MenuState.INACTIVE;
 		}
 
 		/// <summary>
@@ -730,7 +730,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 						}
 
 						float highlightPercent = Mathf.Clamp ((worldDistance - this.FullHighlight) / (this.StartHighlight - this.FullHighlight), 0.0f, 1.0f);
-						this.buttons [this.closest].GetComponent<Renderer> ().material.color = new Color (0.298f, 0.502f, 1f, 1f);
+						this.buttons [this.closest].GetComponent<Renderer> ().material.color = new Color (1f, 0.502f, 1f, 1f);
 						selected.ContentScaleFactor = 1.0f + (highlightPercent * this.HighlightPercentGrowth);
 				}
 		}
