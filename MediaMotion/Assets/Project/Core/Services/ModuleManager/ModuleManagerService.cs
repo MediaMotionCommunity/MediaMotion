@@ -101,6 +101,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 			modulebuilder.Register<Module>().SingleInstance();
 			this.core.AddServices(modulebuilder);
 			module = this.core.GetServicesContainer().Get<Module>();
+			module.Configure();
 			if (module.Configuration.ServicesContainer != null) {
 				this.core.AddServices(module.Configuration.ServicesContainer);
 			}

@@ -1,5 +1,6 @@
 ﻿using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.Input.Interfaces;
+using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.Actions.Parameters;
 
@@ -14,11 +15,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private IInputService inputService;
 
 		/// <summary>
+		/// The cursor manager service
+		/// </summary>
+		private ICursorManagerService cursorManagerService;
+
+		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
 		/// <param name="inputService">The input service.</param>
-		public void Init(IInputService inputService) {
+		public void Init(IInputService inputService, ICursorManagerService cursorManagerService) {
 			this.inputService = inputService;
+			this.cursorManagerService = cursorManagerService;
 		}
 
 		/// <summary>
@@ -32,8 +39,10 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Updates this instance.
 		/// </summary>
 		public void Update() {
-			foreach (IAction action in this.inputService.GetMovements(ActionType.BrowsingScroll)) {
-				this.gameObject.transform.Translate(0, 0, (action.Parameter as Object3).Pos.Z / 20, UnityEngine.Space.World);
+			if (this.cursorManagerService.IsEnabled) {
+				foreach (IAction action in this.inputService.GetMovements(ActionType.BrowsingScroll)) {
+					this.gameObject.transform.Translate(0, 0, (action.Parameter as Object3).Pos.Z / 20, UnityEngine.Space.World);
+				}
 			}
 		}
 	}

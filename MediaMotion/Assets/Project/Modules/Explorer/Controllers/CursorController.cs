@@ -1,5 +1,6 @@
 ﻿using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.Input.Interfaces;
+using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.Actions.Parameters;
 
@@ -20,12 +21,20 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public int Id { get; set; }
 
 		/// <summary>
-		/// Gets or sets the manager.
+		/// Gets or sets the select callback.
 		/// </summary>
 		/// <value>
-		/// The manager.
+		/// The select callback.
 		/// </value>
-		public CursorsManagerController Manager { get; set; }
+		public CursorEvent SelectCallback { get; set; }
+
+		/// <summary>
+		/// Gets or sets the unselect callback.
+		/// </summary>
+		/// <value>
+		/// The unselect callback.
+		/// </value>
+		public CursorEvent UnselectCallback { get; set; }
 
 		/// <summary>
 		/// Initializes the specified input service.
@@ -54,7 +63,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="collider">The collider.</param>
 		public void OnTriggerEnter(UnityEngine.Collider collider) {
 			if (string.Compare("Element", 0, collider.gameObject.name, 0, 7) == 0) {
-				this.Manager.Select(this.gameObject, collider.gameObject);
+				this.SelectCallback(this.gameObject, collider.gameObject);
 			}
 		}
 
@@ -64,7 +73,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="collider">The collider.</param>
 		public void OnTriggerExit(UnityEngine.Collider collider) {
 			if (string.Compare("Element", 0, collider.gameObject.name, 0, 7) == 0) {
-				this.Manager.Deselect(this.gameObject, collider.gameObject);
+				this.UnselectCallback(this.gameObject, collider.gameObject);
 			}
 		}
 	}
