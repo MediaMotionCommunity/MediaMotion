@@ -78,15 +78,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent Condition=" '$(OS)' == 'Unix' ">
+<PostBuildEvent Condition=" '$(OS)' == 'Unix' ">
 	mkdir -p "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\"
 	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\libLeapCSharp.dylib" "$(SolutionDir)../../MediaMotion/"
 	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\libLeap.dylib" "$(SolutionDir)../../MediaMotion/"
-	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\LeapCSharp.NET.3.5.dll" "$(SolutionDir)../../MediaMotion/WrapperDevicesLibraries/"
+	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\LeapCSharp.NET3.5.dll" "$(SolutionDir)../../MediaMotion/WrapperDevicesLibraries/"
 
 	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\libLeapCSharp.dylib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
 	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\libLeap.dylib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
-	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\LeapCSharp.NET.3.5.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\LeapCSharp.NET3.5.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
 
 	cp -vf "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\"
     </PostBuildEvent>

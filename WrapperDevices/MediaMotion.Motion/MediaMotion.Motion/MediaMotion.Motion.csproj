@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -62,11 +62,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent Condition=" '$(OS)' == 'Unix' ">
-	echo $(OS)
-  	cp -fv "$(TargetPath)" "$(SolutionDir)../../MediaMotion/Assets/"
+  	  cp -fv "$(TargetPath)" "$(SolutionDir)../../MediaMotion/Assets/"
     </PostBuildEvent>
     <PostBuildEvent Condition=" '$(OS)' != 'Unix' ">
-  	xcopy "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\Assets\" /Y
+  	  xcopy "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\Assets\" /Y
     </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\MediaMotion.Motion.LeapMotion\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\MediaMotion.Motion.LeapMotion\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" />
