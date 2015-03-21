@@ -1,6 +1,6 @@
 ﻿using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.Input.Interfaces;
-using MediaMotion.Motion.Actions;
+using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
 using UnityEngine;
 
 /// <summary>
@@ -273,6 +273,8 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		/// </summary>
 		private Vector3 baseLocation;
 
+	private ICursorManagerService CursorManagerService;
+
 		/// <summary>
 		/// Menu type enumeration
 		/// </summary>
@@ -366,8 +368,10 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		/// Initializes the specified input.
 		/// </summary>
 		/// <param name="input">The input.</param>
-		public void Init (IInputService input)
+		/// <param name="cursorManageService">The cursor manager service.</param>
+	public void Init (IInputService input, ICursorManagerService cursorManageService)
 		{
+				this.CursorManagerService = cursorManageService;
 				this.uiCam = GameObject.Find ("Cameras/Main").GetComponent (typeof(Camera)) as Camera;
 				this.baseLocation = gameObject.transform.parent.position;
 				this.Input = input;
@@ -434,7 +438,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		private void Update ()
 		{
 
-				if (GameObject.FindGameObjectsWithTag ("MainCursor").Length > 0) {
+				if (CursorManagerService.GetMainCursor() != null) {
 						CursorIsPresent ();
 				} else {
 						CursorIsAbscent ();
@@ -443,7 +447,8 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 
 		private void CursorIsPresent ()
 		{
-				Vector3 cursorPosition = GameObject.FindGameObjectsWithTag ("MainCursor") [0].transform.position;
+
+				Vector3 cursorPosition = CursorManagerService.GetMainCursor().transform.position;
 
 				Vector2 leapScreen = new Vector2 (
 						                     this.uiCam.WorldToScreenPoint (cursorPosition).x,
@@ -527,7 +532,8 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 		{
 				// If there is no cursor, there is no hand. We deactivate the wheeltool.
 				if (this.currentState != MenuState.INACTIVE) {
-						this.CurrentState = MenuState.DEACTIVATION;		
+						this.CurrentState = MenuState.DEACTIVATION;	
+						CursorManagerService.EnabledCursors ();
 				}
 				switch (this.currentState) {
 				case MenuState.DEACTIVATION:
@@ -559,6 +565,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 
 						this.activationStartTime = Time.time;
 						this.currentState = MenuState.ACTIVATING;
+						//CursorManagerService.DisabledCursors ();
 				}
 
 				if (this.hasSubLabel && this.currentSelection != -1 && this.currentSelection < this.Text.Length && this.Text [this.currentSelection] != null) {
@@ -590,6 +597,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 						this.selectionMade = false;
 						this.scalingFactor = 1.0f;
 						this.currentState = MenuState.DEACTIVATION;
+						CursorManagerService.EnabledCursors ();
 						return;
 				}
 
@@ -606,6 +614,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 				if (Time.time >= this.selectionEndTime) {
 						this.selectionMade = true;
 						this.currentState = MenuState.DEACTIVATION;
+						CursorManagerService.EnabledCursors ();
 						return;
 				}
 		}
@@ -673,6 +682,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 						this.selectionMade = false;
 						this.scalingFactor = 1.0f;
 						this.currentState = MenuState.DEACTIVATION;
+						CursorManagerService.EnabledCursors ();
 						return;
 				} else {
 						selected.MakeActive ();
