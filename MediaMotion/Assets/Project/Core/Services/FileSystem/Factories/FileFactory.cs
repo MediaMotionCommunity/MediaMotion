@@ -22,7 +22,7 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 			if (file == null) {
 				throw new Exception("File '" + path + "' doesn't exist");
 			}
-			switch (file.Extension) {
+			switch (file.Extension.ToLower()) {
 				case ".pdf":
 					return (new PDF(file));
 				case ".png":
@@ -35,6 +35,7 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 					return (new Image(file));
 				case ".mp3":
 					return (new Sound(file));
+				case ".mkv":
 				case ".avi":
 				case ".mp4":
 					return (new Video(file));

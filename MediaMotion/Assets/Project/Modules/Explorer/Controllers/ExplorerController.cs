@@ -8,6 +8,7 @@ using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.ImageViewer;
+using MediaMotion.Modules.VideoViewer;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
@@ -209,6 +210,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="file">The file.</param>
 		private void OpenFile(IFile file) {
 			switch (file.GetFileType()) {
+				case FileType.Video:
+					this.moduleManagerService.LoadModule<VideoViewerModule>(new IElement[] { file });
+					break;
 				case FileType.Image:
 					this.moduleManagerService.LoadModule<ImageViewerModule>(new IElement[] { file });
 					break;
