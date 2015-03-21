@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="db521323-afde-406c-b482-a1fab9942b1d"
+  name="Enums"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="d25e9c07-4fbe-450d-be79-5819a8d44199"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMediaMotion.Core.Models.FileManager.Enums"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <enumeration
+        Id="665a107b-a564-4168-b1c8-66f5653179d9"
+        name="ElementType"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="e0e0243a-957d-4283-9f04-5d46fb49be23"
+            handle="viewcode://./CodeSchema_Enum?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DElementType"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="ccc0d928-1890-4df1-bc06-a54eeab015d9"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b80ddbee-9f85-474b-b5ab-94ef338808de">
+                <propertyInstance
+                  Id="8ab6077b-5339-40a2-ba0f-3aa7eb47da60"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="70b175f2-a2dd-44d0-a821-2abdff8cd316">
+                <propertyInstance
+                  Id="886a55b8-c08c-4c9e-903c-b1c548e9d00f"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e8ce8d53-f72f-4b44-bae5-da4688fef54c">
+                <propertyInstance
+                  Id="2ef3f579-f903-4631-8571-c735b9d19782"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="fdd85b40-9f25-45e0-b88c-a8de0492f767"
+            name="File">
+            <referencesInternal>
+              <reference
+                Id="d81760f5-c936-407f-a8cf-6ddf12327c69"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DElementType Member%3DFile"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="7438e2af-8c22-4819-9d3e-7beab7c6651c"
+            name="Folder">
+            <referencesInternal>
+              <reference
+                Id="7ee896f9-e436-4c8a-b358-ab46fe25e8f0"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DElementType Member%3DFolder"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="cd420af0-5d8f-4cc5-a394-3c978b373c34"
+        name="FileType"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="edcdfbf4-cd4d-448c-9758-5580f6e26236"
+            handle="viewcode://./CodeSchema_Enum?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DFileType"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="3fbea957-7889-4b22-aef8-be4be7a94b3f"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cb5c1af1-5080-402d-b7c0-92a4a8922c2c">
+                <propertyInstance
+                  Id="82d6fb82-d7df-4b0c-ab55-820427620cf7"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9aa43c3c-1c46-4517-afda-d4daf918923d">
+                <propertyInstance
+                  Id="d5c4caa0-5cc9-4079-a1a8-f75ff1057195"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3c56b6b5-2a86-4153-a0c2-d30fb2d2c120">
+                <propertyInstance
+                  Id="3a1763e3-fb40-4966-8d55-05987235ab6e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="035690ae-6ee5-4fa4-841a-fcf11100eec3"
+            name="Image">
+            <referencesInternal>
+              <reference
+                Id="f5118dbc-3c21-4e70-ac62-87660e10f3c1"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DFileType Member%3DImage"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="c8aa2ad6-254f-484c-a12f-f54e3828e8c0"
+            name="PDF">
+            <referencesInternal>
+              <reference
+                Id="66738ea7-236f-47ec-95d0-2b8d8675f361"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DFileType Member%3DPDF"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="2f6d9155-12e3-4a6f-a560-b3f22b527a98"
+            name="Regular">
+            <referencesInternal>
+              <reference
+                Id="b9d385b6-86f3-430c-8c30-b76153e775aa"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DFileType Member%3DRegular"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="bb98f5e4-a7a3-414a-b1a6-5e6adb48ee44"
+            name="Sound">
+            <referencesInternal>
+              <reference
+                Id="16347366-1932-4336-b7d1-1daec2b84dc6"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DFileType Member%3DSound"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="3763224d-4a2d-44a7-8fc4-c52be1934b85"
+            name="Text">
+            <referencesInternal>
+              <reference
+                Id="a380dbc3-5f6f-4fd9-a368-86874755ac82"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DFileType Member%3DText"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="59a1717a-3eef-4756-a7c8-da0263174e0e"
+            name="Video">
+            <referencesInternal>
+              <reference
+                Id="361dc766-06e6-440e-9806-61dfbe38a838"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Enums Type%3DFileType Member%3DVideo"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

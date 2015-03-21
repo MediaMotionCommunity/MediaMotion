@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="0a549aa8-1e2f-4ca8-8759-63136e5cdadd"
+  name="MediaMotion"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="c9a53837-2d54-4a23-bc54-6a0793928033"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMediaMotion"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="888cdbe1-3385-41f1-b962-224288dd6952"
+        LastKnownName="Core"
+        LastKnownLocation="Package_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="d1aedc02-f662-424c-b085-63bb5a13009b"
+        LastKnownName="Motion"
+        LastKnownLocation="Package24_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="dbc5c44d-4dd3-41dd-8c0e-7e7072524307"
+        LastKnownName="Modules"
+        LastKnownLocation="Package2_1624.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

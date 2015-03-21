@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="dbc5c44d-4dd3-41dd-8c0e-7e7072524307"
+  name="Modules"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="8e29a1f7-d067-42c2-bc44-b374f4098b1e"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMediaMotion.Modules"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="30954fdc-8174-4405-906a-92c685d7c980"
+        LastKnownName="DefaultViewer"
+        LastKnownLocation="Package3_1624.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="e71ad973-e3ad-46d8-a1d9-cbbbb9563bd2"
+        LastKnownName="Explorer"
+        LastKnownLocation="Package5_1624.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="de51ef56-4540-490f-977d-2d80d598d566"
+        LastKnownName="ImageViewer"
+        LastKnownLocation="Package13_1624.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

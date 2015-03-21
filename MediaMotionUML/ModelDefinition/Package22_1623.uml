@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="faf95244-c32b-448a-a145-75f05eb34a30"
+  name="Enums"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="4195c35c-9afd-4365-86ac-933d42588ee1"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMediaMotion.Core.Models.Wrapper.Enums"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <enumeration
+        Id="fea700b9-9623-48d5-bd35-e1a948913a66"
+        name="ActionType"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="c838cab0-af9a-4d81-b7d6-d9dcdfa41a19"
+            handle="viewcode://./CodeSchema_Enum?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.Wrapper.Enums Type%3DActionType"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="9c67cc76-24c7-4edf-bc65-14a7d0c41c92"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a38acf66-c845-4772-be3b-8b75e9ceb5ab">
+                <propertyInstance
+                  Id="241a5322-df10-430e-b4df-944057aea578"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8729fe1b-3616-430a-8bab-cde5b69b6541">
+                <propertyInstance
+                  Id="4cfdcd9c-153c-4732-aac4-01de17b22879"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d364d369-157e-414a-8f74-48eba1304e37">
+                <propertyInstance
+                  Id="c93d07ad-4c6c-4e4a-bd06-177d0a43cec8"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="a3e754ce-1e12-406b-8bdd-e139323a3d2d"
+            name="Move">
+            <referencesInternal>
+              <reference
+                Id="e656ba0a-32c7-4345-8a38-3ec5b41a4c6c"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.Wrapper.Enums Type%3DActionType Member%3DMove"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="ff666836-b8cb-46e0-a192-f8e57afb64cb"
+            name="Select">
+            <referencesInternal>
+              <reference
+                Id="dc95ab17-dfc2-4a50-9464-b1c23f5c20c3"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.Wrapper.Enums Type%3DActionType Member%3DSelect"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
