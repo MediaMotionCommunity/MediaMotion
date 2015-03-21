@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using MediaMotion.Core.Models.FileManager.Interfaces;
 using UnityEngine;
 
 /// <summary>
@@ -17,10 +18,10 @@ public class MenuEventHandler : MonoBehaviour
     /// Receives the menu event.
     /// </summary>
     /// <param name="action">The action.</param>
-    public void ReceiveMenuEvent(MenuBehavior.ButtonAction action)
+    public void ReceiveMenuEvent(MenuBehavior.ButtonAction action, IElement selectedElement)
     {
         ++this.i;
-				Debug.Log("Events:\n" + this.i + ": " + action.ToString());
+		Debug.Log("Events:\n" + this.i + ": " + action.ToString() + " " + selectedElement.GetName());
     }
 
     /// <summary>

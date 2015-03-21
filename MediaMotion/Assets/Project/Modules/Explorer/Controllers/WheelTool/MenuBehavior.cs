@@ -1,6 +1,7 @@
 ﻿using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
+using MediaMotion.Core.Models.FileManager.Interfaces;
 using UnityEngine;
 
 /// <summary>
@@ -559,13 +560,29 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 				return current;
 		}
 
+	private IElement selectedElement;
+
+	public void ActiveWheelTool(IElement element) {
+		this.selectedElement = element;
+		this.activationStartTime = Time.time;
+		this.currentState = MenuState.ACTIVATING;
+		CursorManagerService.DisabledCursors ();
+	}
+
+	public void DeactiveWheelTool() {
+		this.selectionMade = false;
+		this.scalingFactor = 1.0f;
+		this.currentState = MenuState.DEACTIVATION;
+		CursorManagerService.EnabledCursors ();
+	}
+
 		private void MenuIsInactive (Vector2 parentToFinger, Vector3 cursorPosition)
 		{
 				if (parentToFinger.magnitude < this.ActivationRadius && this.uiCam.WorldToScreenPoint (cursorPosition).z > this.DeactivateZ) {
 
 						this.activationStartTime = Time.time;
 						this.currentState = MenuState.ACTIVATING;
-						//CursorManagerService.DisabledCursors ();
+						CursorManagerService.DisabledCursors ();
 				}
 
 				if (this.hasSubLabel && this.currentSelection != -1 && this.currentSelection < this.Text.Length && this.Text [this.currentSelection] != null) {
@@ -705,7 +722,7 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 										this.scalingFactor = 0.2f;
 
 										if (this.EventHandler != null && this.closest < this.ButtonActions.Length) {
-												this.EventHandler.ReceiveMenuEvent (this.ButtonActions [this.closest]);
+						this.EventHandler.ReceiveMenuEvent (this.ButtonActions [this.closest], this.selectedElement);
 										}
 
 										this.currentState = MenuState.SELECTION;
