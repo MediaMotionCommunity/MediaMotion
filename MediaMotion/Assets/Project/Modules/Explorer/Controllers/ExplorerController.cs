@@ -107,6 +107,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					case ActionType.Back:
 						this.Back();
 						break;
+					case ActionType.Left:
+						this.popupController.ShowSidebar();
+						break;
+					case ActionType.Right:
+						this.popupController.HideSidebar();
+						break;
 				}
 			}
 		}

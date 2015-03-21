@@ -19,7 +19,7 @@ namespace MediaMotion.Modules.DefaultViewer {
 		/// <summary>
 		/// Configures this instance.
 		/// </summary>
-		protected override void Configure() {
+		public override void Configure() {
 			this.Configuration.Name = "Default viewer";
 			this.Configuration.Scene = "Default";
 			this.Configuration.Description = "Default viewer, use for testing only";

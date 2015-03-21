@@ -24,12 +24,52 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Popup container
 		/// </summary>
-		private Rect windowRect;
+		private Rect popupRect;
+
+		/// <summary>
+		/// Sidebar container
+		/// </summary>
+		public Rect sidebarRect;
 
 		/// <summary>
 		/// The element
 		/// </summary>
 		private IElement element;
+
+		/// <summary>
+		/// Texture for file icon.
+		/// </summary>
+		private Texture2D fileTexture;
+
+		/// <summary>
+		/// Style for the sidebar container.
+		/// </summary>
+		public GUIStyle sidebarWindowStyle;
+
+		/// <summary>
+		/// Visibility of the popup.
+		/// </summary>
+		private bool sidebarVisibility;
+
+		/// <summary>
+		/// X coordinate of the sidebar when hidden.
+		/// </summary>
+		private int sidebarHiddenX;
+
+		/// <summary>
+		/// X coordinate of the sidebar when visible.
+		/// </summary>
+		private int sidebarVisibleX;
+
+		/// <summary>
+		/// Current X coordinate of the sidebar.
+		/// </summary>
+		private int sidebarX;
+
+		/// <summary>
+		/// Indicates wether the sidebar is moving or not.
+		/// </summary>
+		private bool sidebarStatus;
 
 		/// <summary>
 		/// Gets or sets the delay.
@@ -45,12 +85,20 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <value>
 		///   <c>true</c> if visibility; otherwise, <c>false</c>.
 		/// </value>
-		public bool Visibility { get; private set; }
+		public bool PopupVisibility { get; private set; }
 
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
 		public void Init() {
+			//sidebar
+			this.sidebarVisibility = false;
+			this.sidebarVisibleX = 1000;
+			this.sidebarHiddenX = 1125;
+			this.sidebarX = this.sidebarHiddenX;
+			this.sidebarRect = new Rect(this.sidebarHiddenX, 200, 160, 300);
+			this.sidebarStatus = false;
+
 			// timer
 			this.Delay = 500.0;
 			this.timer = new Timer(this.Delay);
@@ -59,7 +107,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			// gui element
 			this.propertyLabelStyle = new GUIStyle();
 			this.propertyLabelStyle.normal.textColor = Color.white;
-			this.windowRect = new Rect(20, 20, 300, 65);
+			this.popupRect = new Rect(20, 20, 300, 65);
+			this.fileTexture = Resources.Load<Texture2D>("Icons/File-icon");
+			this.sidebarWindowStyle = Resources.Load<GUISkin>("SidebarStyle").GetStyle("Box");
 
 			// element
 			this.element = null;
@@ -69,9 +119,30 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Called when [GUI].
 		/// </summary>
 		public void OnGUI() {
-			if (this.Visibility && this.element != null) {
-				this.windowRect = GUI.Window(0, this.windowRect, this.HydratePopupContent, "Information");
+			if (this.PopupVisibility && this.element != null) {
+				this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Information");
 			}
+			this.MoveSidebar();
+			GUI.Window(1, this.sidebarRect, this.PrintSidebar, "", this.sidebarWindowStyle);
+			this.PrintBuffer(0);
+		}
+
+		/// <summary>
+		/// Prints the copy-paste buffer.
+		/// </summary>
+		/// <param name="WindowID"></param>
+		public void PrintBuffer(int WindowID) {
+			GUI.color = new Color(1, 1, 1, 0.65f);
+			GUI.DrawTexture(new Rect(1010, 10, 125, 125), this.fileTexture, ScaleMode.StretchToFill, true);
+			GUI.Label(new Rect(1025, 140, 125, 30), "File.jpg");
+		}
+
+		/// <summary>
+		/// Prints the sidebar
+		/// </summary>
+		/// <param name="WindowID"></param>
+		public void PrintSidebar(int WindowID) {
+			//GUI.Label(new Rect(10, 20, 150, 20), "Prout");
 		}
 
 		/// <summary>
@@ -101,7 +172,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="source">The source.</param>
 		/// <param name="eventParams">The <see cref="ElapsedEventArgs"/> instance containing the event data.</param>
 		public void Show(object source = null, ElapsedEventArgs eventParams = null) {
-			this.Visibility = true;
+			this.PopupVisibility = true;
 			this.timer.Enabled = false;
 		}
 
@@ -109,7 +180,46 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Hides this instance.
 		/// </summary>
 		public void Hide() {
-			this.Visibility = false;
+			this.PopupVisibility = false;
+		}
+
+		/// <summary>
+		/// Handles sidebar movement.
+		/// </summary>
+		public void MoveSidebar() {
+			if (this.sidebarStatus == true) {
+				if (this.sidebarVisibility == true) {
+					this.sidebarX -= 2;
+					if (this.sidebarX <= this.sidebarVisibleX)
+						this.sidebarStatus = false;
+				}
+				else {
+					this.sidebarX += 2;
+					if (this.sidebarX >= this.sidebarHiddenX)
+						this.sidebarStatus = false;
+				}
+				this.sidebarRect = new Rect(this.sidebarX, 200, 160, 300);
+			}
+		}
+
+		/// <summary>
+		/// Shows the sidebar.
+		/// </summary>
+		public void ShowSidebar() {
+			if (this.sidebarVisibility == false) {
+				this.sidebarStatus = true;
+				this.sidebarVisibility = true;
+			}
+		}
+
+		/// <summary>
+		/// Hides the sidebar.
+		/// </summary>
+		public void HideSidebar() {
+			if (this.sidebarVisibility == true) {
+				this.sidebarStatus = true;
+				this.sidebarVisibility = false;
+			}
 		}
 
 		/// <summary>
