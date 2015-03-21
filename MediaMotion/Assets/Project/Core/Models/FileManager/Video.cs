@@ -13,7 +13,7 @@ namespace MediaMotion.Core.Models.FileManager {
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		public Video(FileInfo fileInfo)
-			: base(fileInfo, FileType.Video, "Movie") {
+			: base(fileInfo, FileType.Video, "Video") {
 		}
 	}
 }

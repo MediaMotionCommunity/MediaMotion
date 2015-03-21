@@ -35,8 +35,9 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 					return (new Image(file));
 				case ".mp3":
 					return (new Sound(file));
-				case ".avi":
+				case ".mkv":
 				case ".mp4":
+				case ".avi":
 					return (new Video(file));
 				case ".txt":
 					return (new Text(file));
