@@ -23,6 +23,8 @@ var searchData=
   ['iplaylistservice',['IPlaylistService',['../interface_media_motion_1_1_core_1_1_services_1_1_playlist_1_1_interfaces_1_1_i_playlist_service.html',1,'MediaMotion::Core::Services::Playlist::Interfaces']]],
   ['iplugindatabaseservice',['IPluginDatabaseService',['../interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database_service.html',1,'MediaMotion::Core::Services::PluginDatabase::Interfaces']]],
   ['iregistration',['IRegistration',['../interface_media_motion_1_1_core_1_1_resolver_1_1_registrations_1_1_interfaces_1_1_i_registration.html',1,'MediaMotion::Core::Resolver::Registrations::Interfaces']]],
+  ['iresourcecontainer_3c_20t_20_3e',['IResourceContainer&lt; T &gt;',['../interface_media_motion_1_1_core_1_1_services_1_1_resources_manager_1_1_container_1_1_interfaces_e91f4534837b127bf70380a51206b704.html',1,'MediaMotion::Core::Services::ResourcesManager::Container::Interfaces']]],
+  ['iresourcemanagerservice',['IResourceManagerService',['../interface_media_motion_1_1_core_1_1_services_1_1_resources_manager_1_1_interfaces_1_1_i_resource_manager_service.html',1,'MediaMotion::Core::Services::ResourcesManager::Interfaces']]],
   ['itween',['iTween',['../classi_tween.html',1,'']]],
   ['iwrapper',['IWrapper',['../interface_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_interfaces_1_1_i_wrapper.html',1,'MediaMotion::Core::Models::Wrapper::Interfaces']]]
 ];

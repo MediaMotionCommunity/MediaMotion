@@ -68,6 +68,9 @@ namespace MediaMotion.Core.Services.Input {
 			this.AddDefaultInput(KeyCode.Space, new MediaMotion.Motion.Actions.Action(ActionType.Select, null));
 			this.AddDefaultInput(KeyCode.Backspace, new MediaMotion.Motion.Actions.Action(ActionType.Back, null));
 			this.AddDefaultInput(KeyCode.Escape, new MediaMotion.Motion.Actions.Action(ActionType.Leave, null));
+			this.AddDefaultInput(KeyCode.KeypadPlus, new MediaMotion.Motion.Actions.Action(ActionType.ZoomIn, null));
+			this.AddDefaultInput(KeyCode.KeypadMinus, new MediaMotion.Motion.Actions.Action(ActionType.ZoomOut, null));
+			this.AddDefaultInput(KeyCode.R, new MediaMotion.Motion.Actions.Action(ActionType.Rotate, null));
 
 			this.LoadWrapper();
 		}
