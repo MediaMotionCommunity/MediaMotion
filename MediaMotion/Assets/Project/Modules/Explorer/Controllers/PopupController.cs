@@ -142,7 +142,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="WindowID"></param>
 		public void PrintSidebar(int WindowID) {
-			//GUI.Label(new Rect(10, 20, 150, 20), "Prout");
+			GUI.Label(new Rect(10, 20, 150, 20), "Prout");
 		}
 
 		/// <summary>
