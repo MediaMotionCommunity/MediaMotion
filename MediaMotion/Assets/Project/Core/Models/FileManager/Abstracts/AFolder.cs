@@ -20,7 +20,7 @@ namespace MediaMotion.Core.Models.FileManager.Abstracts {
 		/// <param name="resourceId">The resource Id.</param>
 		public AFolder(DirectoryInfo directoryInfo, string resourceId = null)
 			: base(ElementType.Folder, resourceId) {
-			if (this.directoryInfo == null) {
+			if (directoryInfo == null) {
 				throw new ArgumentException("directoryInfo must not be null");
 			}
 			this.directoryInfo = directoryInfo;
