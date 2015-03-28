@@ -7,8 +7,6 @@ using UnityEngine;
 /// </summary>
 public class MenuEventHandler : MonoBehaviour
 {
-
-
     /// <summary>
     /// The i
     /// </summary>
@@ -18,6 +16,7 @@ public class MenuEventHandler : MonoBehaviour
     /// Receives the menu event.
     /// </summary>
     /// <param name="action">The action.</param>
+    /// <param name="selectedElement">The selected element.</param>
     public void ReceiveMenuEvent(MenuBehavior.ButtonAction action, IElement selectedElement)
     {
         ++this.i;
@@ -27,8 +26,6 @@ public class MenuEventHandler : MonoBehaviour
     /// <summary>
     /// Starts this instance.
     /// </summary>
-    private void Start()
-    {
-
+    private void Start() { 
     }
 }
