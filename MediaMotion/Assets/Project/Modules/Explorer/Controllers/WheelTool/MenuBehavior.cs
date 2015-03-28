@@ -578,12 +578,13 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior>
 
 		private void MenuIsInactive (Vector2 parentToFinger, Vector3 cursorPosition)
 		{
-				if (parentToFinger.magnitude < this.ActivationRadius && this.uiCam.WorldToScreenPoint (cursorPosition).z > this.DeactivateZ) {
-
-						this.activationStartTime = Time.time;
-						this.currentState = MenuState.ACTIVATING;
-						CursorManagerService.DisabledCursors ();
-				}
+//				Activate the wheeltool when in the cursor is in a certain area of the screen. It's replaced by the Grab movement.
+//				if (parentToFinger.magnitude < this.ActivationRadius && this.uiCam.WorldToScreenPoint (cursorPosition).z > this.DeactivateZ) {
+//
+//						this.activationStartTime = Time.time;
+//						this.currentState = MenuState.ACTIVATING;
+//						CursorManagerService.DisabledCursors ();
+//				}
 
 				if (this.hasSubLabel && this.currentSelection != -1 && this.currentSelection < this.Text.Length && this.Text [this.currentSelection] != null) {
 						this.subLabel.text = this.Text [this.currentSelection];
