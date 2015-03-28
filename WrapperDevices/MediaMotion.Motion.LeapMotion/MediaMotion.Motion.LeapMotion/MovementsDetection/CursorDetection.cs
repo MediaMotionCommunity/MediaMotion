@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Leap;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.Actions.Parameters;
@@ -8,7 +9,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
 	/// Class for browsing prototype action detection
 	/// </summary>
-	public class EasyFileBrowsingDetection : ICustomDetection {
+	public class CursorDetection : ICustomDetection {
 		/// <summary>
 		/// Physical height of the virtual browser plan (in mm)
 		/// </summary>
@@ -24,6 +25,13 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// </summary>
 		private Frame lastFrame;
 
+		private List<KeyValuePair<ActionType, Object3>> previousActions = new List<KeyValuePair<ActionType, Object3>>();
+		private bool detectionInterrupted;
+
+		public void InterruptNextDetection() {
+			this.detectionInterrupted = true;
+		}
+
 		/// <summary>
 		/// Actual computation using the current frame
 		/// </summary>
@@ -31,6 +39,17 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <param name="actionCollection"></param>
 		/// <returns>List of IAction</returns>
 		public void Detection(Frame frame, IActionCollection actionCollection) {
+			if (this.detectionInterrupted) {
+				this.detectionInterrupted = false;
+				this.StorePreviousAction(actionCollection);
+			}
+			else {
+				this.previousActions.Clear();
+				this.AnalyseCurrentFrame(frame, actionCollection);
+			}
+		}
+
+		private void AnalyseCurrentFrame(Frame frame, IActionCollection actionCollection) {
 			//// Every hand in independantly generating events
 			foreach (var hand in frame.Hands) {
 				//// Get the true hand position
@@ -40,10 +59,10 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 				//// Correct the position
 				var ppos = this.BrowserPlanPosition(pos);
 				//// Create the cursor action (every frame, every hand)
-				actionCollection.Add(ActionType.BrowsingCursor, new Object3(id, ppos));
+				this.StoreAction(actionCollection, ActionType.BrowsingCursor, new Object3(id, ppos));
 				//// Possible highlight event (highlight elements if hand is over the plan)
 				if (ppos.Y > 0) {
-					actionCollection.Add(ActionType.BrowsingHighlight, new Object3(id, ppos));
+					this.StoreAction(actionCollection, ActionType.BrowsingHighlight, new Object3(id, ppos));
 				}
 				//// Check for possible scroll event (if hand under the plan, scroll)
 				if (!(ppos.Y <= 0)) {
@@ -67,7 +86,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 				var prevPpos = this.BrowserPlanPosition(prevPos);
 				//// Scrolling events if under plan
 				if (prevPpos.Y <= BrowserPlanHeight) {
-					actionCollection.Add(ActionType.BrowsingScroll, new Object3(id, ppos - prevPpos));
+					this.StoreAction(actionCollection, ActionType.BrowsingScroll, new Object3(id, ppos - prevPpos));
 				}
 			}
 			//// Prepare for next frame
@@ -92,6 +111,17 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			rotated.Y = ry;
 			rotated.Z = rz;
 			return rotated;
+		}
+
+		private void StoreAction(IActionCollection collection, ActionType type, Object3 value) {
+			this.previousActions.Add(new KeyValuePair<ActionType, Object3>(type, value));
+			collection.Add(type, value);
+		}
+
+		private void StorePreviousAction(IActionCollection collection) {
+			foreach (var action in this.previousActions) {
+				collection.Add(action.Key, action.Value);
+			}
 		}
 	}
 }
