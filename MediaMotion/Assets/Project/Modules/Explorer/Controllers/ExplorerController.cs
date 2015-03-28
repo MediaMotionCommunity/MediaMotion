@@ -118,7 +118,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 						break;
 					case ActionType.GrabStart:
 						if (this.selectedElement != null) {
-							this.wheelTool.ActiveWheelTool (this.selectedElement.gameObject.GetComponent<ElementController>().Element);
+						this.wheelTool.ActiveWheelTool (this.selectedElement.gameObject.GetComponent<ElementController>().Element);
 						}
 						break;
 					case ActionType.GrabStop:
