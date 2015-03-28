@@ -71,6 +71,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private GameObject selectedElement;
 
+		private MenuBehavior wheelTool;
+
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
@@ -88,6 +90,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			// game object
 			this.referenceFrameController = GameObject.Find("ReferenceFrame").GetComponent<ReferenceFrameController>();
 			this.popupController = GameObject.Find("ReferenceFrame/Cameras/Main").GetComponent<PopupController>();
+			this.wheelTool = GameObject.Find("ReferenceFrame/Cameras/Main/Menu").GetComponent<MenuBehavior>();
 
 			// Open directory
 			this.Open(this.folderFactory.Create(this.fileSystemService.GetHome()));
@@ -112,6 +115,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 						break;
 					case ActionType.Right:
 						this.popupController.HideSidebar();
+						break;
+					case ActionType.GrabStart:
+						if (this.selectedElement != null) {
+						this.wheelTool.ActiveWheelTool (this.selectedElement.gameObject.GetComponent<ElementController>().Element);
+						}
+						break;
+					case ActionType.GrabStop:
+						this.wheelTool.DeactiveWheelTool ();
 						break;
 				}
 			}
