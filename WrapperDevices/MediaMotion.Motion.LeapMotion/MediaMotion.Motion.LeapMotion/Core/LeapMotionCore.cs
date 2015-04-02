@@ -58,6 +58,19 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		public IEnumerable<IAction> Frame() {
 			return this.movementsDetection.MovementsDetection(this.controller.Frame());
         }
+
+		public void EnableAction(ActionType action) {
+			this.movementsDetection.DisableAllDetection();
+			this.movementsDetection.EnableDetectionByAction(action);
+		}
+
+		public void EnableAction(IEnumerable<ActionType> actions) {
+			this.movementsDetection.DisableAllDetection();
+			foreach (var action in actions) {
+				this.movementsDetection.EnableDetectionByAction(action);
+			}
+		}
+
 		#region Private
 		/// <summary>
 		/// The configuration of controller.

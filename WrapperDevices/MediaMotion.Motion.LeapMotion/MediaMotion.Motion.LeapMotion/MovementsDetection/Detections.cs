@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Leap;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
@@ -36,21 +37,23 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			this.detectionContainer.DetectMouvement(frame, actions);
 			return actions;
 		}
+
+		public void DisableAllDetection() {
+			this.detectionContainer.Clear();
+		}
+
+		public void EnableDetectionByAction(ActionType action) {
+			this.detectionContainer.Enable(action);
+		}
 		#endregion
 
 		#region Privates Methods
 		private void Configuration() {
-			var swipeDetection = new SwipeDetection();
-			var easyFileBrowsingDetection = new EasyFileBrowsingDetection();
-			var pinchSelectionDetection = new PinchSelectionDetection();
-			var pinchGrabDetection = new PinchGrabDetection();
-			var zoomDetection = new ZoomDetection();
-
-			this.detectionContainer.Register(zoomDetection);
-			this.detectionContainer.Register(swipeDetection);
-			this.detectionContainer.Register(easyFileBrowsingDetection);
-			this.detectionContainer.Register(pinchSelectionDetection);
-			this.detectionContainer.Register(pinchGrabDetection);
+			this.detectionContainer.Register<ZoomDetection>(ActionType.ZoomIn, ActionType.ZoomOut);
+			this.detectionContainer.Register<SwipeDetection>(ActionType.Back);
+			this.detectionContainer.Register<EasyFileBrowsingDetection>(ActionType.BrowsingCursor, ActionType.BrowsingHighlight, ActionType.BrowsingScroll);
+			this.detectionContainer.Register<PinchSelectionDetection>(ActionType.Select);
+			this.detectionContainer.Register<PinchGrabDetection>(ActionType.GrabStart, ActionType.GrabStop);
 		}
 		#endregion
 	}

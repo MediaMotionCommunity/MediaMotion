@@ -2,13 +2,13 @@
 
 namespace MediaMotion.Motion.LeapMotion.Core {
 	public static class HandExtension {
-		public enum eHand {
+		public enum HandDirection {
 			Right = 0,
 			Left = 1
 		}
 
-		public static eHand GetHand(this Hand hand) {
-			return hand.IsRight ? eHand.Right : eHand.Left;
+		public static HandDirection GetHand(this Hand hand) {
+			return hand.IsRight ? HandDirection.Right : HandDirection.Left;
 		}
 	}
 }
