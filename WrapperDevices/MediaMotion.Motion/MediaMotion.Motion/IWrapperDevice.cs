@@ -53,9 +53,24 @@ namespace MediaMotion.Motion
 		/// The get actions.
 		/// </summary>
 		/// <returns>
-		/// The <see cref="IEnumerable"/>.
+		/// The list of action detected by the library.
 		/// </returns>
 		IEnumerable<IAction> GetActions();
+
+		/// <summary>
+		/// Enable only one action.
+		/// Only enabled action will be return by <see cref="GetActions"/>
+		/// </summary>
+		/// <param name="action">action to enable</param>
+		void EnableAction(ActionType action);
+
+		/// <summary>
+		/// Enable list of action
+		/// Only enabled actions will be return by <see cref="GetActions"/>
+		/// </summary>
+		/// <param name="actions">action's list to enable</param>
+		void EnableActions(IEnumerable<ActionType> actions);
+
 		#endregion
 	}
 }

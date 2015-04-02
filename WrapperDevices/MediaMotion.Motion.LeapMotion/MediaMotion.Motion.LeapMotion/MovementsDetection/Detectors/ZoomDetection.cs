@@ -7,14 +7,16 @@ using MediaMotion.Motion.LeapMotion.Core;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 	public class ZoomDetection : ICustomDetection {
-		private Dictionary<HandExtension.eHand, float> handsData;
+		private Dictionary<HandExtension.HandDirection, float> handsData;
 
 		public ZoomDetection() {
-			this.handsData = new Dictionary<HandExtension.eHand, float>();
+			this.handsData = new Dictionary<HandExtension.HandDirection, float>();
 		}
 
 		public void Detection(Frame frame, IActionCollection actionCollection) {
-			if (frame.Hands.IsEmpty) return;
+			if (frame.Hands.IsEmpty) {
+				return;
+			}
 			foreach (var hand in frame.Hands.Where(hand => hand.IsValid)) {
 				this.DetectZoom(hand, actionCollection);
 			}
@@ -31,7 +33,6 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 				var result = hand.PinchStrength - this.handsData[hand.GetHand()];
 				this.handsData[hand.GetHand()] = hand.PinchStrength;
 				var action = result > 0 ? ActionType.ZoomIn : ActionType.ZoomOut;
-				//Console.WriteLine("{0}", Math.Abs(result));
 				actionCollection.Add(action, Math.Abs(result));
 			}
 		}

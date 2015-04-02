@@ -62,6 +62,8 @@
     <Compile Include="Core\LeapMotionCore.cs" />
     <Compile Include="LeapMotion.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="MovementsDetection\ILeapDetection.cs" />
+    <Compile Include="MovementsDetection\IMouvementDetection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MediaMotion.Motion\MediaMotion.Motion\MediaMotion.Motion.csproj">
