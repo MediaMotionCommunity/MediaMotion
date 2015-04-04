@@ -23,23 +23,12 @@ namespace MediaMotion.Modules.Explorer.Services.CursorManager {
 		}
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the selection is enabled.
+		/// Gets a value indicating whether this instance is enabled.
 		/// </summary>
 		/// <value>
 		/// <c>true</c> if this instance is enabled; otherwise, <c>false</c>.
 		/// </value>
 		public bool IsEnabled { get; private set; }
-
-		/// <summary>
-		/// Sets the tag.
-		/// </summary>
-		/// <param name="cursor">The cursor.</param>
-		/// <param name="main">if set to <c>true</c> [main].</param>
-		private void SetTag(CursorData cursor, bool main) {
-			string tag = ((main) ? ("Main") : (string.Empty)) + "Cursor" + ((this.IsEnabled) ? (string.Empty) : ("Disabled"));
-
-			cursor.GameObject.tag = tag;
-		}
 
 		/// <summary>
 		/// Updates the cursor.
@@ -50,6 +39,10 @@ namespace MediaMotion.Modules.Explorer.Services.CursorManager {
 			bool exist;
 
 			if (exist = this.cursors.ContainsKey(id)) {
+				if (this.cursors[id].GameObject == null) {
+					this.cursors.Remove(id);
+					return (false);
+				}
 				this.cursors[id].Update();
 			}
 			return (exist);
@@ -58,6 +51,7 @@ namespace MediaMotion.Modules.Explorer.Services.CursorManager {
 		/// <summary>
 		/// Adds the cursor.
 		/// </summary>
+		/// <param name="cursorObject">The cursor object.</param>
 		/// <param name="id">The identifier.</param>
 		/// <param name="selectCallback">The select.</param>
 		/// <param name="unselectCallback">The unselect.</param>
@@ -78,6 +72,7 @@ namespace MediaMotion.Modules.Explorer.Services.CursorManager {
 		/// <summary>
 		/// Cleans the cursors.
 		/// </summary>
+		/// <param name="delay">The delay</param>
 		public void CleanCursors(int delay = -1) {
 			List<int> toRemove = new List<int>();
 
@@ -130,7 +125,7 @@ namespace MediaMotion.Modules.Explorer.Services.CursorManager {
 		}
 
 		/// <summary>
-		/// Enableds the cursors.
+		/// Enabled the cursors.
 		/// </summary>
 		public void EnabledCursors() {
 			if (this.IsEnabled != true) {
@@ -139,12 +134,23 @@ namespace MediaMotion.Modules.Explorer.Services.CursorManager {
 		}
 
 		/// <summary>
-		/// Disableds the cursors.
+		/// Disabled the cursors.
 		/// </summary>
 		public void DisabledCursors() {
 			if (this.IsEnabled != false) {
 				this.ChangeCursorsState(false);
 			}
+		}
+
+		/// <summary>
+		/// Sets the tag.
+		/// </summary>
+		/// <param name="cursor">The cursor.</param>
+		/// <param name="main">if set to <c>true</c> [main].</param>
+		private void SetTag(CursorData cursor, bool main) {
+			string tag = ((main) ? ("Main") : (string.Empty)) + "Cursor" + ((this.IsEnabled) ? (string.Empty) : ("Disabled"));
+
+			cursor.GameObject.tag = tag;
 		}
 
 		/// <summary>

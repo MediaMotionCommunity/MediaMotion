@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
-using MediaMotion.Core.Models.FileManager.Enums;
-using MediaMotion.Core.Models.FileManager.Interfaces;
+using System.Linq;
 using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.FileSystem.Factories;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Enums;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.ImageViewer;
+using MediaMotion.Modules.ImageViewer.Models.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
@@ -37,9 +40,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public GameObject BaseElement;
 
 		/// <summary>
-		/// The folder factory
+		/// The element factory
 		/// </summary>
-		private FolderFactory folderFactory;
+		private IElementFactory elementFactory;
 
 		/// <summary>
 		/// The file system service
@@ -74,13 +77,13 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
-		/// <param name="folderFactory">The folder factory.</param>
+		/// <param name="elementFactory">The element factory.</param>
 		/// <param name="fileSystemService">The file system service.</param>
 		/// <param name="inputService">The input service.</param>
 		/// <param name="moduleManagerService">The module manager service.</param>
-		public void Init(FolderFactory folderFactory, IFileSystemService fileSystemService, IInputService inputService, IModuleManagerService moduleManagerService) {
+		public void Init(ExplorerModule explorerModule, IElementFactory elementFactory, IFileSystemService fileSystemService, IInputService inputService, IModuleManagerService moduleManagerService) {
 			// services
-			this.folderFactory = folderFactory;
+			this.elementFactory = elementFactory;
 			this.fileSystemService = fileSystemService;
 			this.inputService = inputService;
 			this.moduleManagerService = moduleManagerService;
@@ -90,7 +93,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.popupController = GameObject.Find("ReferenceFrame/Cameras/Main").GetComponent<PopupController>();
 
 			// Open directory
-			this.Open(this.folderFactory.Create(this.fileSystemService.GetHome()));
+			this.OpenDirectory(explorerModule.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
 		}
 
 		/// <summary>
@@ -123,7 +126,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="element">The element.</param>
 		public void Select(GameObject element) {
 			ElementController elementController;
-			
+
 			this.Deselect(this.selectedElement);
 			this.selectedElement = element;
 			elementController = this.selectedElement.GetComponent<ElementController>();
@@ -162,7 +165,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			string parentPath = this.fileSystemService.CurrentFolder.GetParent();
 
 			if (parentPath != null) {
-				this.Open(this.folderFactory.Create(parentPath));
+				this.Open(this.elementFactory.CreateFolder(parentPath));
 			}
 		}
 
@@ -171,15 +174,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="element">The element.</param>
 		private void Open(IElement element) {
-			this.Clear();
-			switch (element.GetElementType()) {
-				case ElementType.Folder:
-					this.OpenDirectory(element as IFolder);
-					break;
-				case ElementType.File:
-					this.OpenFile(element as IFile);
-					break;
-			}
+			this.moduleManagerService.LoadModule(new IElement[] { element });
 		}
 
 		/// <summary>
@@ -189,6 +184,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private void OpenDirectory(IFolder folder) {
 			int count = 0;
 
+			this.Clear();
 			this.fileSystemService.ChangeDirectory(folder.GetPath());
 			foreach (IElement element in this.fileSystemService.GetContent(null)) {
 				GameObject uiElement;
@@ -200,21 +196,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				uiElement.transform.localPosition = new Vector3(((count % FilePerLine) - (FilePerLine / 2)) * FileSpacing, 0.0f, (count / FilePerLine) * LineSpacing);
 				uiElement.AddComponent<ElementController>().SetElement(element);
 				++count;
-			}
-		}
-
-		/// <summary>
-		/// Opens the file.
-		/// </summary>
-		/// <param name="file">The file.</param>
-		private void OpenFile(IFile file) {
-			switch (file.GetFileType()) {
-				case FileType.Image:
-					this.moduleManagerService.LoadModule<ImageViewerModule>(new IElement[] { file });
-					break;
-				default:
-					this.moduleManagerService.LoadModule<DefaultViewerModule>(new IElement[] { file });
-					break;
 			}
 		}
 	}

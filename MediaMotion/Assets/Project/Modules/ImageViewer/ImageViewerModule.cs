@@ -2,6 +2,7 @@
 using MediaMotion.Core.Models.Module.Abstracts;
 using MediaMotion.Core.Models.Module.Interfaces;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
+using MediaMotion.Modules.ImageViewer.Observers;
 using UnityEngine;
 
 namespace MediaMotion.Modules.ImageViewer {
@@ -23,6 +24,7 @@ namespace MediaMotion.Modules.ImageViewer {
 			this.Configuration.Name = "Image Viewer";
 			this.Configuration.Scene = "ImageViewer";
 			this.Configuration.Description = "Display your picture in a wonderfull slideshow";
+			this.Configuration.ElementFactoryObserver = new ElementFactoryObserver();
 		}
 	}
 }

@@ -166,7 +166,6 @@ namespace MediaMotion.Core.Services.Input {
 		/// <returns>The action</returns>
 		IAction IInputService.GetCursorMovement(int id) {
 			return (this.GetMovements(ActionType.BrowsingCursor).Find(action => (action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Id == id));
-			// return (this.GetMovements(ActionType.BrowsingCursor).Find(action => true));
 		}
 
 		/// <summary>

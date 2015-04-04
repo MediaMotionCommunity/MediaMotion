@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Scripts;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager.Container.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager.Interfaces;
 using UnityEngine;
@@ -10,14 +10,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// Element controller
 	/// </summary>
 	public class ElementController : BaseUnityScript<ElementController> {
-		/// <summary>
-		/// Gets the element.
-		/// </summary>
-		/// <value>
-		/// The element.
-		/// </value>
-		public IElement Element { get; private set; }
-
 		/// <summary>
 		/// The texture
 		/// </summary>
@@ -29,8 +21,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private GameObject tile;
 
 		/// <summary>
+		/// Gets the element.
+		/// </summary>
+		/// <value>
+		/// The element.
+		/// </value>
+		public IElement Element { get; private set; }
+
+		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
+		/// <param name="resourceManagerService">The resource manager service.</param>
 		public void Init(IResourceManagerService resourceManagerService) {
 			GameObject text;
 			TextMesh tileTextMesh;
@@ -58,7 +59,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Updates this instance.
 		/// </summary>
 		public void Update() {
-			//this.tile.renderer.material.mainTexture = this.texture.Get();
+			// this.tile.renderer.material.mainTexture = this.texture.Get();
 		}
 
 		/// <summary>

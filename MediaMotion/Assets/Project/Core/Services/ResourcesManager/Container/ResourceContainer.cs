@@ -15,9 +15,9 @@ namespace MediaMotion.Core.Services.ResourcesManager.Container {
 		private Dictionary<string, InternalResourceContainer<T>> resources;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ResourcesContainer{T}"/> class.
+		/// Initializes a new instance of the <see cref="ResourceContainer{T}"/> class.
 		/// </summary>
-		/// <param name="resources">The resources.</param>
+		/// <param name="names">The names.</param>
 		public ResourceContainer(string[] names) {
 			this.resources = new Dictionary<string, InternalResourceContainer<T>>();
 			foreach (string name in names) {

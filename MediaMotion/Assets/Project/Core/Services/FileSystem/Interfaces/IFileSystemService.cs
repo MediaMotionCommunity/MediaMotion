@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MediaMotion.Core.Models.FileManager.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 	/// <summary>
@@ -35,6 +35,12 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// </summary>
 		/// <returns>the home path</returns>
 		string GetHome();
+
+		/// <summary>
+		/// Gets the home folder.
+		/// </summary>
+		/// <returns>the home folder</returns>
+		IFolder GetHomeFolder();
 
 		/// <summary>
 		/// Changes the directory.

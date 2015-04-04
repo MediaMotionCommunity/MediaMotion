@@ -40,6 +40,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Initializes the specified input service.
 		/// </summary>
 		/// <param name="inputService">The input service.</param>
+		/// <param name="cursorManagerService">The cursor manager service.</param>
 		public void Init(IInputService inputService, ICursorManagerService cursorManagerService) {
 			this.inputService = inputService;
 			this.cursorManagerService = cursorManagerService;

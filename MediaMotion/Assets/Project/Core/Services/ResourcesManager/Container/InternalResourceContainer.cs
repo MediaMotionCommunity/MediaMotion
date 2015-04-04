@@ -19,18 +19,9 @@ namespace MediaMotion.Core.Services.ResourcesManager.Container {
 		private T internalResource;
 
 		/// <summary>
-		/// Resource type
+		/// Initializes a new instance of the <see cref="InternalResourceContainer{T}"/> class.
 		/// </summary>
-		public enum ResourceType {
-			Internal,
-			Local,
-			Distant
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="InternalResourceContainer`1"/> class.
-		/// </summary>
-		/// <param name="name">The resource name.</param>
+		/// <param name="name">The name.</param>
 		public InternalResourceContainer(string name) {
 			this.Name = name;
 			if (this.Name.Contains("/") || this.Name.Contains("\\")) {
@@ -55,6 +46,15 @@ namespace MediaMotion.Core.Services.ResourcesManager.Container {
 				this.Type = ResourceType.Internal;
 				this.Path = name;
 			}
+		}
+
+		/// <summary>
+		/// Resource type
+		/// </summary>
+		public enum ResourceType {
+			Internal,
+			Local,
+			Distant
 		}
 
 		/// <summary>
@@ -128,9 +128,6 @@ namespace MediaMotion.Core.Services.ResourcesManager.Container {
 		/// <summary>
 		/// Loads the resource.
 		/// </summary>
-		/// <returns>
-		///   <c>true</c> if the resource is available, <c>false</c> otherwise
-		/// </returns>
 		private void LoadInternalResources() {
 			this.Resource = Resources.Load<T>(this.Path);
 		}

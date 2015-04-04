@@ -3,6 +3,7 @@ using MediaMotion.Core.Resolver.Containers;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Factories;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.History;
 using MediaMotion.Core.Services.History.Interfaces;
@@ -12,12 +13,11 @@ using MediaMotion.Core.Services.ModuleManager;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Core.Services.Playlist;
 using MediaMotion.Core.Services.Playlist.Interfaces;
-using MediaMotion.Core.Services.PluginDatabase;
-using MediaMotion.Core.Services.PluginDatabase.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager;
 using MediaMotion.Core.Services.ResourcesManager.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer;
+using MediaMotion.Modules.ImageViewer;
 
 namespace MediaMotion.Core {
 	/// <summary>
@@ -53,8 +53,8 @@ namespace MediaMotion.Core {
 			
 			// FileSystem
 			this.servicesContainerBuilder.Register<FileSystemService>().As<IFileSystemService>();
-			this.servicesContainerBuilder.Register<FolderFactory>().SingleInstance();
-			this.servicesContainerBuilder.Register<FileFactory>().SingleInstance();
+			this.servicesContainerBuilder.Register<ElementFactory>().As<IElementFactory>().SingleInstance();
+			this.servicesContainerBuilder.Register<ElementFactory>().SingleInstance();
 
 			// Playlist
 			this.servicesContainerBuilder.Register<PlaylistService>().As<IPlaylistService>();
@@ -70,9 +70,11 @@ namespace MediaMotion.Core {
 
 			// Modules
 			this.servicesContainerBuilder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance();
-			this.servicesContainerBuilder.Register<PluginDatabaseService>().As<IPluginDatabaseService>().SingleInstance();
 
 			this.servicesContainer = this.servicesContainerBuilder.Build();
+			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<DefaultViewerModule>();
+			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<ExplorerModule>();
+			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<ImageViewerModule>();
 		}
 
 		/// <summary>
