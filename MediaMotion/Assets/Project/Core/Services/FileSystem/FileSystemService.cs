@@ -22,8 +22,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// Initializes a new instance of the <see cref="FileSystemService" /> class.
 		/// </summary>
 		/// <param name="elementFactory">The element factory.</param>
-		/// <param name="fileFactory">The file factory.</param>
-		public FileSystemService(IElementFactory elementFactory, ElementFactory fileFactory) {
+		public FileSystemService(IElementFactory elementFactory) {
 			this.elementFactory = elementFactory;
 			this.DisplayHidden = false;
 			this.InitialFolder = this.CurrentFolder = this.elementFactory.CreateFolder(Directory.GetCurrentDirectory());
