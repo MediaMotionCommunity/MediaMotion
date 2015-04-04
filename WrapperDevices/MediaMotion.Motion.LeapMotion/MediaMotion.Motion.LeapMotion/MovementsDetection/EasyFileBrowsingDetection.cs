@@ -12,12 +12,17 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <summary>
 		/// Physical height of the virtual browser plan (in mm)
 		/// </summary>
-		private const float BrowserPlanHeight = 140.0f;
+		private const float BrowserPlanHeight = 135.0f;
 
 		/// <summary>
 		/// Height of the virtual browser plan (in degrees)
 		/// </summary>
-		private const float BrowserPlanAngle = 5.0f;
+		private const float BrowserPlanAngle = 3.0f;
+
+		/// <summary>
+		/// Scale of the virtual browser plan (in cm/unit)
+		/// </summary>
+		private const float BrowserPlanScale = 0.6;
 
 		/// <summary>
 		/// Previous frame saved
@@ -37,7 +42,6 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 				var id = hand.Id;
 				var palm = hand.PalmPosition;
 				var pos = new Vector3(palm.x, palm.y, palm.z);
-				//// Correct the position
 				var ppos = this.BrowserPlanPosition(pos);
 				//// Create the cursor action (every frame, every hand)
 				actionCollection.Add(ActionType.BrowsingCursor, new Object3(id, ppos));
@@ -88,10 +92,9 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			float z = rotated.Z;
 			float ry = (float)((y * Math.Cos(Angle)) - (z * Math.Sin(Angle)));
 			float rz = (float)((y * Math.Sin(Angle)) + (z * Math.Cos(Angle)));
-
 			rotated.Y = ry;
 			rotated.Z = rz;
-			return rotated;
+			return rotated * BrowserPlanScale;
 		}
 	}
 }
