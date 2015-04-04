@@ -16,9 +16,19 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private IResourceContainer<Material> texture;
 
 		/// <summary>
+		/// The content
+		/// </summary>
+		private GameObject content;
+
+		/// <summary>
 		/// The tile
 		/// </summary>
 		private GameObject tile;
+
+		/// <summary>
+		/// The text
+		/// </summary>
+		private GameObject text;
 
 		/// <summary>
 		/// Gets the element.
@@ -33,12 +43,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="resourceManagerService">The resource manager service.</param>
 		public void Init(IResourceManagerService resourceManagerService) {
-			GameObject text;
 			TextMesh tileTextMesh;
 
+			this.content = GameObject.Find(this.gameObject.name + "/Content");
 			this.tile = GameObject.Find(this.gameObject.name + "/Content/Tile");
-			text = GameObject.Find(this.gameObject.name + "/Content/Name");
-			tileTextMesh = text.GetComponent<TextMesh>();
+			this.text = GameObject.Find(this.gameObject.name + "/Content/Name");
+			tileTextMesh = this.text.GetComponent<TextMesh>();
 
 			// texture container
 			this.texture = resourceManagerService.GetContainer<Material>(this.Element.GetResourceId());
@@ -66,14 +76,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Selects this instance.
 		/// </summary>
 		public void Select() {
-			iTween.MoveTo(this.gameObject, new Vector3(this.gameObject.transform.position.x, 3.0f, this.gameObject.transform.position.z), 0.5f);
+			iTween.MoveTo(this.content, new Vector3(this.gameObject.transform.position.x, 2.0f, this.gameObject.transform.position.z), 0.5f);
 		}
 
 		/// <summary>
 		/// Deselects this instance.
 		/// </summary>
 		public void Deselect() {
-			iTween.MoveTo(this.gameObject, new Vector3(this.gameObject.transform.position.x, 2.0f, this.gameObject.transform.position.z), 0.5f);
+			iTween.MoveTo(this.content, new Vector3(this.gameObject.transform.position.x, 1.0f, this.gameObject.transform.position.z), 0.5f);
 		}
 
 		/// <summary>
