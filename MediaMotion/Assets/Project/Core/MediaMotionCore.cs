@@ -18,6 +18,7 @@ using MediaMotion.Core.Services.ResourcesManager.Interfaces;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
+using MediaMotion.Modules.VideoViewer;
 
 namespace MediaMotion.Core {
 	/// <summary>
@@ -75,6 +76,7 @@ namespace MediaMotion.Core {
 			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<DefaultViewerModule>();
 			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<ExplorerModule>();
 			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<ImageViewerModule>();
+			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<VideoViewerModule>();
 		}
 
 		/// <summary>

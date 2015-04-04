@@ -1,4 +1,5 @@
 using MediaMotion.Core.Models.Module.Abstracts;
+using MediaMotion.Modules.VideoViewer.Observers;
 
 namespace MediaMotion.Modules.VideoViewer {
 	/// <summary>
@@ -19,6 +20,7 @@ namespace MediaMotion.Modules.VideoViewer {
 			this.Configuration.Name = "Video Viewer";
 			this.Configuration.Scene = "VideoViewer";
 			this.Configuration.Description = "Watch your movies and videos";
+			this.Configuration.ElementFactoryObserver = new ElementFactoryObserver();
 		}
 
 	}
