@@ -1,5 +1,5 @@
-﻿using MediaMotion.Core.Models.FileManager.Interfaces;
-using MediaMotion.Core.Services.FileSystem.Interfaces;
+﻿using MediaMotion.Core.Services.FileSystem.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.History.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem.Bridges.History.Actions {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MediaMotion.Core.Models.FileManager.Enums;
-using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Module.Abstracts;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Enums;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using UnityEngine;
 

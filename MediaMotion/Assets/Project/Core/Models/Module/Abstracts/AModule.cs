@@ -1,6 +1,6 @@
-﻿using MediaMotion.Core.Models.FileManager.Interfaces;
-using MediaMotion.Core.Models.Module.Interfaces;
+﻿using MediaMotion.Core.Models.Module.Interfaces;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Models.Module.Abstracts {
 	/// <summary>
@@ -12,6 +12,7 @@ namespace MediaMotion.Core.Models.Module.Abstracts {
 		/// </summary>
 		public AModule() {
 			this.Configuration = new Configuration();
+			this.Configuration.Priority = 1;
 		}
 
 		/// <summary>
@@ -29,34 +30,54 @@ namespace MediaMotion.Core.Models.Module.Abstracts {
 		public IElement[] Parameters { get; private set; }
 
 		/// <summary>
-		/// Loads the specified files.
-		/// </summary>
-		/// <param name="parameters">The parameters.</param>
-		public virtual void Load(IElement[] parameters = null) {
-			this.Parameters = parameters;
-		}
-
-		/// <summary>
 		/// Configures the module.
 		/// </summary>
 		public abstract void Configure();
 
 		/// <summary>
+		/// Loads the specified files.
+		/// </summary>
+		/// <param name="parameters">The parameters.</param>
+		public virtual void Load(IElement[] parameters) {
+			this.Parameters = parameters;
+		}
+
+		/// <summary>
 		/// Load another module.
 		/// </summary>
-		public virtual void Sleep() {
+		/// <returns>
+		/// The parameters to restore
+		/// </returns>
+		public virtual IElement[] Sleep() {
+			return (this.Parameters);
 		}
 
 		/// <summary>
 		/// Back to the module.
 		/// </summary>
-		public virtual void WakeUp() {
+		/// <param name="parameters">The parameters.</param>
+		public virtual void WakeUp(IElement[] parameters) {
+			this.Parameters = parameters;
 		}
 
 		/// <summary>
 		/// Unloads the module.
 		/// </summary>
 		public virtual void Unload() {
+		}
+
+		/// <summary>
+		/// Supports the specified element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		/// <returns>
+		///   <c>true</c> if the element is supported, <c>false</c> otherwise
+		/// </returns>
+		public virtual bool Supports(IElement element) {
+			if (this.Configuration != null && this.Configuration.ElementFactoryObserver != null) {
+				return (this.Configuration.ElementFactoryObserver.Supports(element.GetPath()));
+			}
+			return (false);
 		}
 	}
 }

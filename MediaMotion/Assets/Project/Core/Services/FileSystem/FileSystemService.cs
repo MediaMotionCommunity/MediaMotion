@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using MediaMotion.Core.Models.FileManager.Enums;
-using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Enums;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem {
 	/// <summary>
@@ -15,23 +16,16 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// The file factory
 		/// </summary>
-		private IFactory fileFactory;
-
-		/// <summary>
-		/// The folder factory
-		/// </summary>
-		private IFactory folderFactory;
+		private IElementFactory elementFactory;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileSystemService" /> class.
 		/// </summary>
-		/// <param name="folderFactory">The folder factory.</param>
-		/// <param name="fileFactory">The file factory.</param>
-		public FileSystemService(FolderFactory folderFactory, FileFactory fileFactory) {
-			this.folderFactory = folderFactory;
-			this.fileFactory = fileFactory;
+		/// <param name="elementFactory">The element factory.</param>
+		public FileSystemService(IElementFactory elementFactory) {
+			this.elementFactory = elementFactory;
 			this.DisplayHidden = false;
-			this.InitialFolder = this.CurrentFolder = this.folderFactory.Create(Directory.GetCurrentDirectory()) as IFolder;
+			this.InitialFolder = this.CurrentFolder = this.elementFactory.CreateFolder(Directory.GetCurrentDirectory());
 		}
 
 		/// <summary>
@@ -67,6 +61,16 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
+		/// Gets the home folder.
+		/// </summary>
+		/// <returns>
+		/// the home folder
+		/// </returns>
+		public IFolder GetHomeFolder() {
+			return (this.elementFactory.CreateFolder(this.GetHome()));
+		}
+
+		/// <summary>
 		/// Change directory to the Home or the <see cref="IFolder" /> provide in parameter
 		/// </summary>
 		/// <param name="folder">The folder.</param>
@@ -77,7 +81,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 			if (!Directory.Exists(folder)) {
 				return (false);
 			}
-			this.CurrentFolder = this.folderFactory.Create(folder) as IFolder;
+			this.CurrentFolder = this.elementFactory.CreateFolder(folder);
 			return (true);
 		}
 
@@ -95,10 +99,10 @@ namespace MediaMotion.Core.Services.FileSystem {
 			DirectoryInfo directory = new DirectoryInfo(path ?? this.CurrentFolder.GetPath());
 
 			foreach (DirectoryInfo directoryInfos in directory.GetDirectories().Where(file => (file.Attributes & FileAttributes.Hidden) == 0 || this.DisplayHidden)) {
-				directoryContent.Add(this.folderFactory.Create(directoryInfos.FullName));
+				directoryContent.Add(this.elementFactory.CreateFolder(directoryInfos.FullName));
 			}
 			foreach (FileInfo fileInfos in directory.GetFiles().Where(file => (file.Attributes & FileAttributes.Hidden) == 0 || this.DisplayHidden)) {
-				directoryContent.Add(this.fileFactory.Create(fileInfos.FullName));
+				directoryContent.Add(this.elementFactory.CreateFile(fileInfos.FullName));
 			}
 			return (directoryContent);
 		}
@@ -115,7 +119,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 			List<IFile> directoryContent = new List<IFile>();
 
 			foreach (string filePath in Directory.GetFiles(path ?? this.CurrentFolder.GetPath()).Where(file => filterExtension.Contains(Path.GetExtension(file)))) {
-				directoryContent.Add(this.fileFactory.Create(filePath) as IFile);
+				directoryContent.Add(this.elementFactory.CreateFile(filePath));
 			}
 			return (directoryContent);
 		}
