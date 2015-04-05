@@ -9,19 +9,19 @@ namespace MediaMotion.Core.Services.FileSystem.Models.Abstracts {
 		/// <summary>
 		/// The element type
 		/// </summary>
-		private ElementType elementType;
+		private readonly ElementType elementType;
 
 		/// <summary>
 		/// The texture2 d
 		/// </summary>
-		private string resourceId;
+		private readonly string resourceId;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AElement" /> class.
 		/// </summary>
 		/// <param name="ElementType">Type of the element.</param>
 		/// <param name="resourceId">The resource Id.</param>
-		public AElement(ElementType ElementType, string resourceId = null) {
+		protected AElement(ElementType ElementType, string resourceId = null) {
 			this.elementType = ElementType;
 			this.resourceId = resourceId;
 		}

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Models.Module;
 using MediaMotion.Core.Models.Module.Interfaces;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
-using MediaMotion.Core.Resolver.Exceptions;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
@@ -30,22 +27,22 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// <summary>
 		/// The element factory
 		/// </summary>
-		private IElementFactory elementFactory;
+		private readonly IElementFactory elementFactory;
 
 		/// <summary>
 		/// The modules
 		/// </summary>
-		private List<IModule> availableModules;
+		private readonly List<IModule> availableModules;
 
 		/// <summary>
 		/// The background modules
 		/// </summary>
-		private Stack<ModuleInstance> backgroundModules;
+		private readonly Stack<ModuleInstance> backgroundModules;
 
 		/// <summary>
 		/// The loaded modules
 		/// </summary>
-		private Stack<ModuleInstance> stackedModules;
+		private readonly Stack<ModuleInstance> stackedModules;
 
 		/// <summary>
 		/// The current

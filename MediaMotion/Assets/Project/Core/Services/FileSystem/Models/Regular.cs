@@ -1,6 +1,5 @@
 using System.IO;
 using MediaMotion.Core.Services.FileSystem.Models.Abstracts;
-using MediaMotion.Core.Services.FileSystem.Models.Enums;
 
 namespace MediaMotion.Core.Services.FileSystem.Models {
 	/// <summary>

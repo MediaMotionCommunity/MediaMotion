@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
-using UnityEngine;
 
 namespace MediaMotion.Core.Services.FileSystem.Factories {
 	/// <summary>
@@ -15,7 +13,7 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 		/// <summary>
 		/// The observers priority list
 		/// </summary>
-		private SortedDictionary<int, List<IElementFactoryObserver>> observersPriorityList;
+		private readonly SortedDictionary<int, List<IElementFactoryObserver>> observersPriorityList;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ElementFactory"/> class.
@@ -75,11 +73,10 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 		/// <returns>The element or <c>null</c> if path does not point to any element</returns>
 		public IElement Create(string path) {
 			if (Directory.Exists(path) || File.Exists(path)) {
-				IElement model = null;
-
 				foreach (IElementFactoryObserver observer in this.observersPriorityList.OrderByDescending(observerList => observerList.Key).SelectMany(observerList => observerList.Value)) {
 					if (observer.Supports(path)) {
-						model = observer.Create(path);
+						IElement model = observer.Create(path);
+
 						if (model != null) {
 							return (model);
 						}

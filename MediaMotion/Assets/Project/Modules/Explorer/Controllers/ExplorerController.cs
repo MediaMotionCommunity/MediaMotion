@@ -1,16 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using MediaMotion.Core.Models.Scripts;
-using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
-using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
-using MediaMotion.Modules.DefaultViewer;
-using MediaMotion.Modules.ImageViewer;
-using MediaMotion.Modules.ImageViewer.Models.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
@@ -77,8 +71,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private MenuBehavior wheelTool;
 
 		/// <summary>
-		/// Initializes this instance.
+		/// Initializes the specified explorer module.
 		/// </summary>
+		/// <param name="explorerModule">The explorer module.</param>
 		/// <param name="elementFactory">The element factory.</param>
 		/// <param name="fileSystemService">The file system service.</param>
 		/// <param name="inputService">The input service.</param>

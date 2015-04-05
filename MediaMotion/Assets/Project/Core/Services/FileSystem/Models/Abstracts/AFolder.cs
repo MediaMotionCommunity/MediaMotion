@@ -10,14 +10,14 @@ namespace MediaMotion.Core.Services.FileSystem.Models.Abstracts {
 		/// <summary>
 		/// The directory information
 		/// </summary>
-		private DirectoryInfo directoryInfo;
+		private readonly DirectoryInfo directoryInfo;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AFolder" /> class.
 		/// </summary>
 		/// <param name="directoryInfo">The directory information.</param>
 		/// <param name="resourceId">The resource Id.</param>
-		public AFolder(DirectoryInfo directoryInfo, string resourceId = null)
+		protected AFolder(DirectoryInfo directoryInfo, string resourceId = null)
 			: base(ElementType.Folder, resourceId) {
 			this.directoryInfo = directoryInfo;
 		}

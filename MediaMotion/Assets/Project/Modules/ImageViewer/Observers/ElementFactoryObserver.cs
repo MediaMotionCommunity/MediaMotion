@@ -12,7 +12,7 @@ namespace MediaMotion.Modules.ImageViewer.Observers {
 		/// <summary>
 		/// The supported extensions
 		/// </summary>
-		private string[] supportedExtensions;
+		private readonly string[] supportedExtensions;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ElementFactoryObserver"/> class.

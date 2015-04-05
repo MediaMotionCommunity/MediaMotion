@@ -1,4 +1,3 @@
-using System;
 using MediaMotion.Core.Services.FileSystem.Models.Enums;
 
 namespace MediaMotion.Core.Services.FileSystem.Models.Interfaces {

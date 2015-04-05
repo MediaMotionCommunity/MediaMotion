@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using MediaMotion.Core.Services.FileSystem.Models.Abstracts;
-using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Modules.ImageViewer.Models.Interfaces;
 
 namespace MediaMotion.Modules.ImageViewer.Models.Abstract {
@@ -13,7 +12,7 @@ namespace MediaMotion.Modules.ImageViewer.Models.Abstract {
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		/// <param name="resourceId">The resource identifier.</param>
-		public AImage(FileInfo fileInfo, string resourceId = "Image")
+		protected AImage(FileInfo fileInfo, string resourceId = "Image")
 			: base(fileInfo, resourceId) {
 		}
 

@@ -27,12 +27,12 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// The video URL
 		/// </summary>
-		private WWW videoUrl = null;
+		private WWW videoUrl;
 
 		/// <summary>
 		/// The video texture
 		/// </summary>
-		private Texture2D videoTexture = null;
+		private Texture2D videoTexture;
 
 		/// <summary>
 		/// Initializes the specified module.

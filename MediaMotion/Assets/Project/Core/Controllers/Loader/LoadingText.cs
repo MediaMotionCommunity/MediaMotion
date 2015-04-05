@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using MediaMotion.Core.Models.Scripts;
+﻿using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
-using MediaMotion.Modules.Explorer;
-using UnityEngine;
 
 namespace MediaMotion.Core.Controllers.Loader {
 	/// <summary>
@@ -24,10 +21,11 @@ namespace MediaMotion.Core.Controllers.Loader {
 		/// <summary>
 		/// Initializes the specified module manager.
 		/// </summary>
-		/// <param name="moduleManager">The module manager.</param>
-		public void Init(IFileSystemService fileSystemService, IModuleManagerService moduleManager) {
+		/// <param name="fileSystemService">The file system service.</param>
+		/// <param name="moduleManagerService">The module manager service.</param>
+		public void Init(IFileSystemService fileSystemService, IModuleManagerService moduleManagerService) {
 			this.fileSystemService = fileSystemService;
-			this.moduleManagerService = moduleManager;
+			this.moduleManagerService = moduleManagerService;
 		}
 
 		/// <summary>

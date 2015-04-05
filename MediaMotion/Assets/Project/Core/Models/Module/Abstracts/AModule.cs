@@ -10,7 +10,7 @@ namespace MediaMotion.Core.Models.Module.Abstracts {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AModule" /> class.
 		/// </summary>
-		public AModule() {
+		protected AModule() {
 			this.Configuration = new Configuration();
 			this.Configuration.Priority = 1;
 		}

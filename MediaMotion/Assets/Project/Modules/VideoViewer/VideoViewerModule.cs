@@ -7,13 +7,6 @@ namespace MediaMotion.Modules.VideoViewer {
 	/// </summary>
 	public class VideoViewerModule : AModule {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="VideoViewerModule"/> class.
-		/// </summary>
-		public VideoViewerModule()
-			: base() {
-		}
-
-		/// <summary>
 		/// Configures this instance.
 		/// </summary>
 		public override void Configure() {
