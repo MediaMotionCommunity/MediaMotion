@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MediaMotion
-   &#160;<span id="projectnumber">2.1</span>
+   &#160;<span id="projectnumber">2.2</span>
    </div>
   </td>
  </tr>
@@ -127,9 +127,12 @@ Properties</h2></td></tr>
 <tr class="memitem:a80efd32498024f5aa84f3fccb9caaabc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursor_controller.html#a80efd32498024f5aa84f3fccb9caaabc">Id</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:a80efd32498024f5aa84f3fccb9caaabc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the identifier.  <a href="#a80efd32498024f5aa84f3fccb9caaabc">More...</a><br /></td></tr>
 <tr class="separator:a80efd32498024f5aa84f3fccb9caaabc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c9f54e0ecdc1a09bc757c99140f96ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursors_manager_controller.html">CursorsManagerController</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursor_controller.html#a6c9f54e0ecdc1a09bc757c99140f96ad">Manager</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a6c9f54e0ecdc1a09bc757c99140f96ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the manager.  <a href="#a6c9f54e0ecdc1a09bc757c99140f96ad">More...</a><br /></td></tr>
-<tr class="separator:a6c9f54e0ecdc1a09bc757c99140f96ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5b3510831d886798a346fa73af8e381"><td class="memItemLeft" align="right" valign="top">CursorEvent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursor_controller.html#ad5b3510831d886798a346fa73af8e381">SelectCallback</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:ad5b3510831d886798a346fa73af8e381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the select callback.  <a href="#ad5b3510831d886798a346fa73af8e381">More...</a><br /></td></tr>
+<tr class="separator:ad5b3510831d886798a346fa73af8e381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a090783ec6017f94bd0e43b59e172aa51"><td class="memItemLeft" align="right" valign="top">CursorEvent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursor_controller.html#a090783ec6017f94bd0e43b59e172aa51">UnselectCallback</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a090783ec6017f94bd0e43b59e172aa51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the unselect callback.  <a href="#a090783ec6017f94bd0e43b59e172aa51">More...</a><br /></td></tr>
+<tr class="separator:a090783ec6017f94bd0e43b59e172aa51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Cursor controller </p>
@@ -247,7 +250,7 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6c9f54e0ecdc1a09bc757c99140f96ad"></a>
+<a class="anchor" id="ad5b3510831d886798a346fa73af8e381"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -255,7 +258,7 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursors_manager_controller.html">CursorsManagerController</a> MediaMotion.Modules.Explorer.Controllers.CursorController.Manager</td>
+          <td class="memname">CursorEvent MediaMotion.Modules.Explorer.Controllers.CursorController.SelectCallback</td>
         </tr>
       </table>
   </td>
@@ -265,18 +268,41 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the manager. </p>
-<p>The manager. </p>
+<p>Gets or sets the select callback. </p>
+<p>The select callback. </p>
+
+</div>
+</div>
+<a class="anchor" id="a090783ec6017f94bd0e43b59e172aa51"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CursorEvent MediaMotion.Modules.Explorer.Controllers.CursorController.UnselectCallback</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets or sets the unselect callback. </p>
+<p>The unselect callback. </p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>O:/Projects/MediaMotion/Re7/MediaMotion/Assets/Project/Modules/Explorer/Controllers/CursorController.cs</li>
+<li>O:/Projects/MediaMotion/Merge/MediaMotion/Assets/Project/Modules/Explorer/Controllers/CursorController.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Mar 15 2015 12:28:42 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 5 2015 20:30:24 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
