@@ -5,7 +5,7 @@ using MediaMotion.Motion.LeapMotion.MovementsDetection;
 using Moq;
 using NUnit.Framework;
 
-namespace MediaMotion.Motion.LeapMotionTests.Core {
+namespace MediaMotion.Motion.LeapMotion.Tests.Core {
 	[TestFixture]
 	public class DetectionContainerTests {
 		private DetectionContainer _detectionContainer;
