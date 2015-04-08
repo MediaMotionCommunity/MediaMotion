@@ -2,6 +2,7 @@ using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Motion.Actions;
+using MediaMotion.Modules.VideoViewer.Observers;
 using UnityEngine;
 using System;
 using System.IO;
@@ -49,7 +50,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// VLC callback : Called when video frame is gonna be decoded
 		/// </summary>
-		static public IntPtr VideoLock(IntPtr opaque, ref IntPtr planes) {
+		static public IntPtr VideoLock(IntPtr opaque, ref IntPtr planes)
+		{
 			VideoPlayerController instance = (((GCHandle)opaque).Target as VideoPlayerController);
 			// Block and allocate buffer, or use already allocated buffer
 			instance.vlc_video_lock.WaitOne();
@@ -63,7 +65,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// VLC callback : Called when video frame is decoded
 		/// </summary>
-		static public void VideoUnlock(IntPtr opaque, IntPtr picture, ref IntPtr planes) {
+		static public void VideoUnlock(IntPtr opaque, IntPtr picture, ref IntPtr planes)
+		{
 			VideoPlayerController instance = (((GCHandle)opaque).Target as VideoPlayerController);
 			// Unlock buffer
 			instance.vlc_video_lock.ReleaseMutex();
@@ -72,7 +75,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// VLC callback : Called when video frame is ready to render
 		/// </summary>
-		static public void VideoDisplay(IntPtr opaque, IntPtr picture) {
+		static public void VideoDisplay(IntPtr opaque, IntPtr picture)
+		{
 			VideoPlayerController instance = (((GCHandle)opaque).Target as VideoPlayerController);
 			// Save the frame buffer pointer
 			instance.vlc_video_result_buffer = picture;
@@ -80,16 +84,17 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 			// Copy the picture content to texture pixels :)
 			if (pixels != IntPtr.Zero && picture != IntPtr.Zero) {
 				// Use memcpy as the destination texture and the vlc buffer are configured with the same memory pattern
-				LibVLC.memcpy(pixels, picture, (int)(instance.vlc_video_xsize * instance.vlc_video_ysize * 4));
+				LibVLC.memcpy(pixels, picture, (uint)(instance.vlc_video_xsize * instance.vlc_video_ysize * 4));
 			}
 		}
 
 		/// <summary>
 		/// VLC callback : Configure video frame format
 		/// </summary>
-		static public uint VideoFormat(ref IntPtr opaque, ref uint chroma, ref uint width, ref uint height, ref uint pitches, ref uint lines) {
+		static public uint VideoFormat(ref IntPtr opaque, ref uint chroma, ref uint width, ref uint height, ref uint pitches, ref uint lines)
+		{
 			VideoPlayerController instance = (((GCHandle)opaque).Target as VideoPlayerController);
-			// Set chroma
+			// Set color chroma ("BGRA")
 			chroma = 'B';
 			chroma <<= 8;
 			chroma += 'G';
@@ -108,7 +113,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// VLC callback : Ends video frame formating
 		/// </summary>
-		static public void VideoUnformat(IntPtr opaque) {
+		static public void VideoUnformat(IntPtr opaque)
+		{
 			VideoPlayerController instance = (((GCHandle)opaque).Target as VideoPlayerController);
 			return;
 		}
@@ -116,12 +122,13 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// Initializes the module.
 		/// </summary>
-		public void Init(VideoViewerModule module, IInputService input, IPlaylistService playlist) {
+		public void Init(VideoViewerModule module, IInputService input, IPlaylistService playlist)
+		{
 			// Configure module components
 			this.moduleInstance = module;
 			this.inputService = input;
 			this.playlistService = playlist;
-			this.playlistService.Configure(((this.moduleInstance.Parameters.Length > 0) ? (this.moduleInstance.Parameters[0]) : (null)), new string[] { ".mkv", ".avi", ".wav", ".mp4" });
+			this.playlistService.Configure(((this.moduleInstance.Parameters.Length > 0) ? (this.moduleInstance.Parameters[0]) : (null)), ElementFactoryObserver.supportedExtensions);
 			// Start VLC playing
 			this.Start();
 			this.LoadFile();
@@ -133,7 +140,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		public void Update()
 		{
-			// If video buffer ready apply copied texture on mesh
+			// If video buffer ready apply on mesh texture (flush VLC frame to Unity Frame)
 			if (vlc_video_result_buffer != IntPtr.Zero) {
 				vlc_video.SetPixels32(vlc_video_pixels, 0);
 				vlc_video.Apply();
@@ -248,7 +255,6 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		private void Play()
 		{
-			// If vlc player is ready
 			if (CheckPlayer()) {
 				// Call play on vlc media
 				LibVLC.libvlc_media_player_play(vlc_player);
@@ -260,7 +266,6 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		private void Pause()
 		{
-			// If vlc player is ready
 			if (CheckPlayer()) {
 				// Call pause on vlc media
 				LibVLC.libvlc_media_player_pause(vlc_player);
@@ -272,7 +277,6 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		private void Stop()
 		{
-			// If vlc player is ready
 			if (CheckPlayer()) {
 				// Call stop on vlc media
 				LibVLC.libvlc_media_player_stop(vlc_player);
@@ -280,11 +284,10 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		}
 
 		/// <summary>
-		/// Clear internal texture
+		/// Clear internal video texture / infos
 		/// </summary>
 		private void ClearTexture()
 		{
-			// Clear video infos
 			vlc_video_xsize = 0;
 			vlc_video_ysize = 0;
 			if (vlc_video != null) {
@@ -294,11 +297,10 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		}
 
 		/// <summary>
-		/// Clear internal buffer
+		/// Clear internal frame buffer
 		/// </summary>
 		private void ClearBuffer()
 		{
-			// Free frame buffer
 			if (vlc_video_buffer != IntPtr.Zero) {
 				Marshal.FreeHGlobal(vlc_video_buffer);
 				vlc_video_buffer = IntPtr.Zero;
@@ -310,7 +312,6 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		private void ClearSession()
 		{
-			// Clear vlc session
 			if (vlc_session != IntPtr.Zero) {
 				LibVLC.libvlc_release(vlc_session);
 				vlc_session = IntPtr.Zero;
@@ -322,7 +323,6 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		private void ClearPlayer()
 		{
-			// Clear vlc player
 			if (vlc_player != IntPtr.Zero) {
 				LibVLC.libvlc_media_player_release(vlc_player);
 				vlc_player = IntPtr.Zero;
@@ -334,7 +334,6 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		private void ClearMedia()
 		{
-			// Clear vlc media
 			if (vlc_media != IntPtr.Zero) {
 				LibVLC.libvlc_media_release(vlc_media);
 				vlc_media = IntPtr.Zero;
@@ -380,8 +379,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// Print an internal error
 		/// </summary>
-		private void Error(string msg) {
-			// Display an error
+		private void Error(string msg)
+		{
 			Debug.LogError(msg);
 		}
 	}
