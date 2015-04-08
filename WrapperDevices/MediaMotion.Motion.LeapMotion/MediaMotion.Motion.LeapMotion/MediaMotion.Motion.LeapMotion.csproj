@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -49,7 +49,7 @@
     <Compile Include="Core\IDetectionContainer.cs" />
     <Compile Include="MovementsDetection\APinchDetection.cs" />
     <Compile Include="MovementsDetection\ASecureLeapDetection.cs" />
-    <Compile Include="MovementsDetection\EasyFileBrowsingDetection.cs" />
+    <Compile Include="MovementsDetection\CursorDetection.cs" />
     <Compile Include="MovementsDetection\ICustomDetection.cs" />
     <Compile Include="MovementsDetection\ALeapDetection.cs" />
     <Compile Include="MovementsDetection\Detections.cs" />
@@ -78,52 +78,20 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if "$(ConfigurationName)" == "UnixDebug" (
-	echo "test"
-	goto :copyLinux
-) else if "$(ConfigurationName)" == "UnixRelease" (
-	:copyLinux
-	if "$(PlatformName)" == "x86" (
-		echo "copy for x86 plateforme"
-		:copySTDLinux
-		cp "$(SolutionDir)..\..\Solution Items\x86\Leapd.dll" "$(SolutionDir)..\..\MediaMotion\" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x86\Leapd.lib" "$(SolutionDir)..\..\MediaMotion\" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x86\Leap.dll" "$(SolutionDir)..\..\MediaMotion\" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x86\Leap.lib" "$(SolutionDir)..\..\MediaMotion\" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x86\LeapCSharp.dll" "$(SolutionDir)..\..\MediaMotion\" -vf
+<PostBuildEvent Condition=" '$(OS)' == 'Unix' ">
+	mkdir -p "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\"
+	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\libLeapCSharp.dylib" "$(SolutionDir)../../MediaMotion/"
+	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\libLeap.dylib" "$(SolutionDir)../../MediaMotion/"
+	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\LeapCSharp.NET3.5.dll" "$(SolutionDir)../../MediaMotion/WrapperDevicesLibraries/"
 
-		cp "$(SolutionDir)..\..\Solution Items\x86\Leapd.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x86\Leapd.lib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x86\Leap.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x86\Leap.lib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x86\LeapCSharp.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		goto :copyGlobalLinux
-	) else if "$(PlatformName)" == "x64" (
-		echo "copy for  x64 plateforme"
-		cp "$(SolutionDir)..\..\Solution Items\x64\Leapd.dll" "$(SolutionDir)..\..\MediaMotion\"  -vf
-		cp "$(SolutionDir)..\..\Solution Items\x64\Leapd.lib" "$(SolutionDir)..\..\MediaMotion\"  -vf
-		cp "$(SolutionDir)..\..\Solution Items\x64\Leap.dll" "$(SolutionDir)..\..\MediaMotion\"  -vf
-		cp "$(SolutionDir)..\..\Solution Items\x64\Leap.lib" "$(SolutionDir)..\..\MediaMotion\"  -vf
-		cp "$(SolutionDir)..\..\Solution Items\x64\LeapCSharp.dll" "$(SolutionDir)..\..\MediaMotion\"  -vf
+	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\libLeapCSharp.dylib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\libLeap.dylib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
+	cp -vf "$(SolutionDir)..\..\Solution Items\OSX\LeapCSharp.NET3.5.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)"
 
-		cp "$(SolutionDir)..\..\Solution Items\x64\Leapd.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x64\Leapd.lib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x64\Leap.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x64\Leap.lib" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		cp "$(SolutionDir)..\..\Solution Items\x64\LeapCSharp.dll" "$(SolutionDir)MediaMotion.Motion.LeapMotion.Testing\bin\$(ConfigurationName)" -vf
-		goto :copyGlobalLinux
-	) else if "$(PlatformName)" == "AnyCPU" (
-		echo "copy for Any CPU plateforme"
-		goto :copySTDLinux
-	)
-	:copyGlobalLinux
-	cp "$(SolutionDir)..\..\Solution Items\LeapCSharp.NET3.5.dll" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\"  -vf
-	cp "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\"  -vf
-) else if "$(ConfigurationName)" == "Debug" (
-	goto :copyWindows
-) else if "$(ConfigurationName)" == "Release" (
-	:copyWindows
-	if "$(PlatformName)" == "x86" (
+	cp -vf "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\"
+    </PostBuildEvent>
+    <PostBuildEvent Condition=" '$(OS)' != 'Unix' ">
+  	if "$(PlatformName)" == "x86" (
 		echo "copy for x86 plateforme"
 		:copySTDWindows
 		xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.dll" "$(SolutionDir)..\..\MediaMotion\" /Y
@@ -159,8 +127,7 @@
 	:copyGlobalWindows
 	xcopy "$(SolutionDir)..\..\Solution Items\LeapCSharp.NET3.5.dll" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\"  /Y
 	xcopy "$(TargetPath)" "$(SolutionDir)..\..\MediaMotion\WrapperDevicesLibraries\"  /Y
-)
-</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="b6c4308e-8bd3-4817-852d-4e1b9392772b"
+  name="Interfaces"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="cc21775f-749d-4e2b-9c4c-3b472acdd083"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMediaMotion.Core.Services.ModuleManager.Interfaces"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <Interface
+        Id="6ff38c1c-a5a2-458b-a3c8-2b836e7b8d71"
+        name="IModuleManagerService"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="01380698-a786-46ec-b542-6d507e62879b"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Services.ModuleManager.Interfaces Type%3DIModuleManagerService"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="831e7acc-bd83-42b3-a834-fe63fb238c8e"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6c98c0b5-7378-4480-89e7-c5ff99c838d8">
+                <propertyInstance
+                  Id="1a7d1e54-ba16-4765-bbab-88136e16cbc1"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="52c63449-04b0-4616-981d-acb3e81f3d43">
+                <propertyInstance
+                  Id="8f26dd5b-085c-4171-8520-465fa4c89321"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="57645800-74c6-4353-9bf4-f276b8886a28">
+                <propertyInstance
+                  Id="89065031-0f6a-4779-a1e0-6522f8cb64a0"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3eeb4645-0c95-49fc-83b6-367cc1fac6ec">
+                <propertyInstance
+                  Id="c40f5a69-7e2d-44a3-8176-076bd9130303"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperations>
+          <operation
+            Id="6692c281-94b2-4203-92fd-ef2baf46dd3a"
+            name="UnloadModule"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="b92fa0b4-7e82-4dad-b844-4669c99cbaab"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Services.ModuleManager.Interfaces Type%3DIModuleManagerService Member%3DUnloadModule"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="53602566-4b86-4906-97a2-eb6d6aedf843"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="851eeab9-9a27-419d-97b7-8826c6f6ffc1">
+                    <propertyInstance
+                      Id="247dbbe3-2d42-4fb5-8b2c-f6283874fe40"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d194a0cb-313a-4d7d-aba8-d381e5c9a537">
+                    <propertyInstance
+                      Id="7352dea1-bded-467b-900e-1012d317e442"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f61dc167-2c54-4d72-af46-81e023d76ae1">
+                    <propertyInstance
+                      Id="0ea30065-2913-4cdb-9e36-49bbc2aff2e1"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="55735d17-82c2-4e68-924c-015f95e02af1">
+                    <propertyInstance
+                      Id="9b1982a3-f2e5-4a96-8917-0be4cdffad08"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cf206fd6-feb5-4d2d-9e9f-8973dba86522">
+                    <propertyInstance
+                      Id="b9d23e5f-e625-4a22-96d5-995f6cee1400"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="58f40103-7643-4c7c-a53b-d216a57cc32a">
+                    <propertyInstance
+                      Id="20b35b4d-eb44-4da4-842a-caa375d82c77"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="73b26924-dc46-4a40-b202-38c7b9ce2246"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="75685636-50f9-4eef-b335-1ceeff8cf19f"
+            name="LoadModule‎&lt;Module‎&gt;"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="9c3ae495-732e-4672-a490-6c0a075b810d"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Services.ModuleManager.Interfaces Type%3DIModuleManagerService Member%3D(Name%3DLoadModule GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Interfaces Type%3D(Name%3DIElement ArrayRank%3D1 ParentType%3DIElement))])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="e9ea2e13-81fa-4680-939e-f5cf345c714f"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e7139cca-3d04-4222-9e09-284a38725851">
+                    <propertyInstance
+                      Id="db62e354-4091-4f68-b130-1acfeaea586f"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0c74fb0a-fd6e-4d62-8637-edee2ab75e25">
+                    <propertyInstance
+                      Id="f215bac4-8f15-411d-98b0-875f305ecc95"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="51dadd92-8353-41ce-9312-d656292d388f">
+                    <propertyInstance
+                      Id="60851f54-2e59-4c00-a419-4ac8ced6b948"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e0e45f18-ad17-444a-85e0-624589ab5f9a">
+                    <propertyInstance
+                      Id="a07e4ab0-eb75-441a-aa83-0c73f1d716b7"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="525ccbe4-e1a9-42b0-af99-aadc3a6db19a">
+                    <propertyInstance
+                      Id="ded69786-f47d-49da-a650-f31bf81a83d8"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0ad66fdd-1b6b-4fdd-a669-ea5acf73fc81">
+                    <propertyInstance
+                      Id="3e299299-e106-41be-b8c1-8b9ab9c7e41a"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="10638bd2-7f0e-4ca4-b570-e4d200d1bbd8"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="66fa49fd-e6ce-4f3f-864f-c64137429dfb"
+                  name="parameters"
+                  direction="In"
+                  isOrdered="true">
+                  <referencesInternal>
+                    <reference
+                      Id="2c52eed8-9aba-4fa4-b9d3-dff6ef3ae54c"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Services.ModuleManager.Interfaces Type%3DIModuleManagerService Member%3D(Name%3DLoadModule GenericParameterCount%3D1 OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Core.Models.FileManager.Interfaces Type%3D(Name%3DIElement ArrayRank%3D1 ParentType%3DIElement))]) ParameterIdentifier%3Dparameters"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <lowerValueInternal>
+                    <literalString
+                      Id="358d31cb-b976-4e0f-86a4-a6fac95a0a54"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="78d0b283-83c4-4c38-bf03-33a84e71a95a"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="b29e8bbc-a31c-4d91-94cc-8db6cb7706e2"
+                      LastKnownName="IElement"
+                      LastKnownLocation="Package16_1623.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

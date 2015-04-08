@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="b099ff32-8d21-4fc9-8ff0-a74cc8610b73" name="VideoPause" linkedPackageId="f0d92862-70f7-4861-be66-c4d6f98b6fc2" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <ownedCommentsInternal>
+    <comment Id="8ecdb541-18e2-4115-83ca-1e700de46b46">
+      <elementDefinition Id="b8037f56-f698-4e04-a19f-aef59be1d40d" />
+      <body>Open the hand</body>
+    </comment>
+    <comment Id="7ba53536-ba2f-458e-aaf7-0301912e9951">
+      <elementDefinition Id="7d434f4b-6d90-4b6d-aa27-ee7349b57107" />
+      <body>Update View</body>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="c425e537-f96e-48f8-8112-4daae52183d9">
+      <profileInstance Id="1daf8f58-3be0-4afa-adc3-3bec33366cd9" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="88ff5d31-a1ff-4859-a4fd-e16a4354edbe">
+      <profileInstance Id="afe93df9-7c6b-4375-ba79-734609c34a04" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="b81cee05-580b-4162-afd2-6d19ce74393a">
+      <profileInstance Id="f41a1e96-e2d7-4cab-a89a-bf4949ea466d" name="CSharpProfile">
+        <elementDefinition Id="c3a27958-a93e-4ec3-858c-756a8abca727" />
+      </profileInstance>
+      <elementDefinition Id="3c087bc3-7943-4fbf-acbf-5857189cd503" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="b44bfe9c-df45-4d11-981a-565f28dd6cb5" name="User" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="b3407e26-795f-4176-8e7a-ff0f2dbd04d7" />
+        <targetEnds>
+          <association Id="a6c7bfba-7743-4d39-a6ee-156738ea04d4" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Action Detection" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="1a0f80ed-d7a8-461b-9f30-010bf0fa19cc" LastKnownName="Action Detection" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="23fe53aa-a31c-4c22-a4b2-017a0422ac67" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="8e3f556d-b6f9-41d9-a967-4956db8c5343" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0010a195-0a2c-4e5a-8bb5-65cfb0aea9e0" name="Action Detection" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="4d8c4ff7-8bd4-42f1-97e1-7b6b6589af83" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a9221c75-3072-4757-9781-d05e7d732706" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="1a0f80ed-d7a8-461b-9f30-010bf0fa19cc" name="Action Detection" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d20ec99a-823e-4bd1-ae79-a18091b7370c" />
+        <targetEnds>
+          <association Id="4fdd48e5-8b8b-4b04-91bf-2536ded246b6" isDerived="false" sourceEndRoleName="Action Detection" targetEndRoleName="Dispatch to active module" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="44a1e07f-18b7-4c32-8491-8b1d63cc5e73" LastKnownName="Store the action" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="386fd41f-4354-4f6e-9bb8-d01237166a1b" name="Action Detection" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f81c5005-eb2a-491d-be62-8681de0dc05e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="a8f6beea-e97e-4edf-89ef-0c2490dd71a4" name="Dispatch to active module" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="1e951f28-06de-4344-8a41-c3d8af3d8695" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="e9892d29-f8b2-435a-8a89-3db98f167154" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="774d4622-295f-43f8-951c-19c0588c8b5f" LastKnownName="Wrapper" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="774d4622-295f-43f8-951c-19c0588c8b5f" name="Wrapper" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="4824b944-6313-473c-8aa3-d3db1d59ae6f" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="f6c43304-ece8-4119-ba92-c30fe9fa6b7d" name="Core" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="027ad024-31f3-4de6-9605-c1b8bd7f4467" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="44a1e07f-18b7-4c32-8491-8b1d63cc5e73" name="Store the action" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="cf0a5939-39a8-42c0-a230-141bcba885d2" />
+        <subjects>
+          <subsystemMoniker Id="f6c43304-ece8-4119-ba92-c30fe9fa6b7d" LastKnownName="Core" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="b1ed6111-75d2-4b1a-a77c-ba9f77d11ac9" name="VideoModule" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="8643a57c-37ac-4469-b632-90a57aed02d9" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="5e102ada-3ccf-4a90-9383-9e2b95fc4ff3" name="Action Interpretation" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="89fac828-da7b-4c79-8d1e-7053894c5b66" />
+        <additions>
+          <include Id="7db02245-5870-40f6-b360-02d0151e7593">
+            <useCaseMoniker Id="8b6c80e5-9e79-4925-85cf-ce4b6f2bcdaf" LastKnownName="Pause the Video" />
+            <elementDefinition Id="e5d51571-f0b8-42f7-94d1-37b015241be2" />
+          </include>
+          <include Id="ccca7e99-01c6-4409-a817-edba35ce19f0">
+            <useCaseMoniker Id="44a1e07f-18b7-4c32-8491-8b1d63cc5e73" LastKnownName="Store the action" />
+            <elementDefinition Id="fead4c31-45f9-4e0c-8aca-b0e5c3f59ebc" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="b1ed6111-75d2-4b1a-a77c-ba9f77d11ac9" LastKnownName="VideoModule" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="8b6c80e5-9e79-4925-85cf-ce4b6f2bcdaf" name="Pause the Video" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="7d92a817-d29b-4fef-89a3-dd5a39e6c91f" />
+        <additions>
+          <include Id="e8b37c14-79b3-466e-a253-19e8f7da583c">
+            <useCaseMoniker Id="3324c8c9-3d80-44ba-8090-e176ae4da7f7" LastKnownName="Display a pause sign" />
+            <elementDefinition Id="4d443423-9099-4497-b171-f5d811cb0929" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="b1ed6111-75d2-4b1a-a77c-ba9f77d11ac9" LastKnownName="VideoModule" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="3324c8c9-3d80-44ba-8090-e176ae4da7f7" name="Display a pause sign" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="9b2d4892-4e32-414e-bebe-2a4602dca3cf" />
+        <targetEnds>
+          <association Id="7e484fb0-e7d2-4c12-8a96-896ed9a134c4" isDerived="false" sourceEndRoleName="Display a pause sign" targetEndRoleName="User" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="b44bfe9c-df45-4d11-981a-565f28dd6cb5" LastKnownName="User" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8a744deb-3f33-487b-b68c-258ff4084122" name="Display a pause sign" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="e8ee35af-3230-4383-b16f-4cc048162bb4" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="505e7205-2e05-43b0-9e73-cd7f725b5513" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="124bc039-a150-4c2e-9f05-480c5494d38c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="9a1dbc4e-eddd-467d-9397-5a2440d5df79" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="b1ed6111-75d2-4b1a-a77c-ba9f77d11ac9" LastKnownName="VideoModule" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="f0d92862-70f7-4861-be66-c4d6f98b6fc2" name="MediaMotionUML">
+    <elementDefinition Id="2a388fb0-d7bf-43c0-b132-2649a170e9be" />
+  </package>
+</useCaseModelRoot>

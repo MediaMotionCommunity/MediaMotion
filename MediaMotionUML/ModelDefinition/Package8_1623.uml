@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="d0e6e7dd-7b17-4b44-89a8-57c958300532"
+  name="Services"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="0b57f543-6645-4e28-a95d-259c49193b10"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMediaMotion.Core.Services"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="64dd712b-0212-4eb4-8327-d550e6cefa10"
+        LastKnownName="Input"
+        LastKnownLocation="Package9_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="8620e3a5-54a3-4daf-8cf9-8c4fdf86e612"
+        LastKnownName="ModuleManager"
+        LastKnownLocation="Package12_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="0de4bfe1-2a74-4b2f-8be7-502cc107f63f"
+        LastKnownName="FileSystem"
+        LastKnownLocation="Package34_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="18185c31-34cf-43e6-89b6-033636efc62f"
+        LastKnownName="History"
+        LastKnownLocation="Package41_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="669692f1-3f8f-48b7-a0c9-fad6b1c0e253"
+        LastKnownName="Playlist"
+        LastKnownLocation="Package44_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="a55475c7-b007-4ebb-a2e3-af0b4eaea9cb"
+        LastKnownName="PluginDatabase"
+        LastKnownLocation="Package46_1623.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="be838626-146c-4973-bee4-3a33d6cb04af"
+        LastKnownName="ResourcesManager"
+        LastKnownLocation="Package48_1623.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

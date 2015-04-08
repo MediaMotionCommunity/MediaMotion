@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using MediaMotion.Core.Models.FileManager;
-using MediaMotion.Core.Models.FileManager.Enums;
-using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Enums;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using NUnit.Framework;
 namespace MediaMotion.Core.Services.FileSystem.Tests {
 	[TestFixture]
@@ -18,7 +17,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 
 		[SetUp]
 		public void Init() {
-			this.FileSystemService = new FileSystemService(new FolderFactory(), new FileFactory());
+			this.FileSystemService = new FileSystemService(new ElementFactory());
 			this.PathToTmp = Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty ? Environment.GetFolderPath(Environment.SpecialFolder.Personal) : Environment.GetFolderPath(Environment.SpecialFolder.System);
 			this.PathToTmp = this.PathToTmp + "/UnitTestMediaMotionTMP";
 			Random rnd = new Random();

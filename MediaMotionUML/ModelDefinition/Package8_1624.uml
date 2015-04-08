@@ -1,0 +1,1671 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="568e5271-a517-47b6-bad0-e2e79f3eaa76"
+  name="CursorManager"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="477e51c6-93b6-42ba-b181-cebcf14cad3b"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="a53ee964-d0cb-41bb-a1ef-74af640bb428"
+        LastKnownName="Interfaces"
+        LastKnownLocation="Package9_1624.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="7b2b1a4d-f0f9-4e3b-bd04-10ff9f0bce51"
+        name="CursorData"
+        visibility="Package"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="239b5d8f-7e55-4690-8010-d0d4cd11afac"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3D(Name%3DCursorData ParentType%3DCursorManagerService)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="fca52b68-3529-4843-9340-facd6b4ab78c"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="944fc37f-22d4-47d4-b76e-010b97134726">
+                <propertyInstance
+                  Id="43c5581a-5759-4dae-9703-237d880cf088"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c11b2e21-075d-4b8b-8eed-e816591ee104">
+                <propertyInstance
+                  Id="ee3128ca-2a4e-49cc-9d7f-73674e54154c"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0c62f940-da72-4680-b204-04fe841f1835">
+                <propertyInstance
+                  Id="909e14db-509e-48e2-8926-89952e58ac25"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6c3cfddd-ea8a-40cd-8341-ed8437e93789">
+                <propertyInstance
+                  Id="c066722d-2bdd-4d3f-bd4d-a3c2185bbd10"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b8bdc1d9-4246-42a9-81e8-e54e7abf1d24">
+                <propertyInstance
+                  Id="946f1712-079e-449f-80f8-1dc93095fb8a"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="460a40ec-955b-47a6-ac3d-c91031145ee4"
+            isDerived="false"
+            sourceEndRoleName="CursorData"
+            targetEndRoleName="GameObject"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="9f1f7a53-e364-41b7-85cb-8888a232c3e1"
+              LastKnownName="GameObject"
+              LastKnownLocation="Package_1621.uml" />
+            <description>Property GameObject references type GameObject.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="934904e8-fa00-4872-993e-95cdb5a6871c"
+                  name="CursorData"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="d15b94a6-8444-481c-bd71-e572349698a4"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="6ac7bc5e-e4e7-4200-8191-f599c12709aa"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="21303476-3bed-4d07-bdf3-d4b8d2281b49"
+                  name="GameObject"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="7de15ef2-5e1b-436f-a34c-38bbce4a2bcf"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="3aa01ef0-284e-48bf-90b5-08a40b481fb8"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="9f59409b-7253-4447-8546-06ff320d4d8b"
+            name="LastFrameUpdate"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="71ffcdc6-91d4-40b9-a4cc-f52813b2edd0"
+                handle="viewcode://./CodeSchema_Property?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3D(Name%3DCursorData ParentType%3DCursorManagerService) Member%3DLastFrameUpdate"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="39c778cc-392d-48a9-87cf-577d061b9bed"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="69f0692d-a4db-451d-8cdc-d9551a93b989">
+                    <propertyInstance
+                      Id="82c49fad-9ce4-45fc-a943-554999236ce5"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d95f6c64-9fbb-4aeb-beb4-5f750874bcc5">
+                    <propertyInstance
+                      Id="1320a91a-17ae-41eb-8fd0-de5ade4f13da"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0b750541-3ea4-4973-b401-1538ca07ffe3">
+                    <propertyInstance
+                      Id="ecbf29b2-c318-4fef-a114-0a585f1838a1"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7dfc500a-6729-4af4-bc09-dd0cf5f407b2">
+                    <propertyInstance
+                      Id="d44fc802-4e70-4a64-b56b-fe0d016a0b1e"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ac9ccfaa-2ec9-48fb-91ec-0e2f62a347ae">
+                    <propertyInstance
+                      Id="8776f407-bc70-4165-9809-3150754ad13e"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5b8763fe-e08b-4c0a-9174-4eb7f1c813ed">
+                    <propertyInstance
+                      Id="0d209dda-a38c-446e-b8bf-00e164f3e068"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b3b1caca-c277-48d4-8038-7fb7070227d5">
+                    <propertyInstance
+                      Id="1fab407f-f666-4720-913b-0a4e836afa5e"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="MediaMotionUML.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="4d7e9d18-a90f-4f3b-a3f1-c93275becea3"
+            name="GameObject"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="d5d8164d-e71e-4534-92db-6916c7e57ac6"
+                handle="viewcode://./CodeSchema_Property?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3D(Name%3DCursorData ParentType%3DCursorManagerService) Member%3DGameObject"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="3f7c532b-a770-4a61-8860-0461965c3466"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="84f987be-31de-4928-a7b4-e259728b7949">
+                    <propertyInstance
+                      Id="039c88ca-e03e-4aed-a559-ddba729cedf4"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="126e1b18-37ba-4fbb-9739-ed9f5bb3fc4c">
+                    <propertyInstance
+                      Id="21d5f712-385a-4d54-a2dd-3c3f29ee92b4"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ce2a258a-d32f-464a-91c3-f9bf929e61a1">
+                    <propertyInstance
+                      Id="29266214-01bc-4e85-aea7-7802fbbffcca"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="00e343e3-b015-4128-8758-a0292d9e836f">
+                    <propertyInstance
+                      Id="2ef0f5f8-35d0-4b9f-942f-0c855f36de34"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="599bdb91-37e4-40b3-af58-710a00928473">
+                    <propertyInstance
+                      Id="e7f78383-815e-4ade-9483-93edc0b982b9"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9fc8ea45-c51c-4d57-aeac-f5f907da0bf7">
+                    <propertyInstance
+                      Id="a179feb8-2c30-468a-b192-2b34a95f8e5a"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="38f95b66-9338-4321-ada7-a8995e1ff14c">
+                    <propertyInstance
+                      Id="85fa3f28-b5bd-419e-943f-2416c4a69720"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="9f1f7a53-e364-41b7-85cb-8888a232c3e1"
+                LastKnownName="GameObject"
+                LastKnownLocation="Package_1621.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="54dd896b-ce5a-494a-9513-279120c28f2c"
+            name="CursorData"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="bd73b0a5-25df-4b99-b01a-0ba1ef08f97b"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3D(Name%3DCursorData ParentType%3DCursorManagerService) Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="f7aff711-d152-4ed0-ab1d-1eaa444d0754"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a4e75531-c444-4a2c-8685-28b0803086e5">
+                    <propertyInstance
+                      Id="bc613a4c-1d51-42ac-9336-d19a6081ed74"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="86321264-4e9f-4e7e-a04f-a2ea31708f08">
+                    <propertyInstance
+                      Id="9e2d2577-d2aa-466e-91c6-93d94cd6007b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e1283552-3929-42bc-a273-0ad701996792">
+                    <propertyInstance
+                      Id="ad2ab0c9-8079-49a2-9a49-cc60ac46e5bc"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="26387b81-5bb1-4d1a-8e8d-86896a6bcd41">
+                    <propertyInstance
+                      Id="b4c919af-3ad7-42ec-b0d5-53f981598811"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b23b9822-98f0-47fd-bc01-259a4f258e49">
+                    <propertyInstance
+                      Id="e200c6a2-78f0-40fc-a0da-4a1c9f0a4927"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c7000e20-3624-436e-915d-54e24e7dade5">
+                    <propertyInstance
+                      Id="0cea56dc-6885-448e-99a1-53f96969e72d"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="21a7ba21-c682-4159-b282-9d54660c8a9e"
+                  name="gameObject"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="a0644b8c-2c19-4351-afb2-acfba73abe76"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3D(Name%3DCursorData ParentType%3DCursorManagerService) Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)]) ParameterIdentifier%3DgameObject"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="9f1f7a53-e364-41b7-85cb-8888a232c3e1"
+                      LastKnownName="GameObject"
+                      LastKnownLocation="Package_1621.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="1ee7b620-48e8-4094-adc8-5455aa1874dd"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="4d844a94-825c-4b02-a374-1ae01ce59d4d"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3D(Name%3DCursorData ParentType%3DCursorManagerService) Member%3DUpdate"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="95036202-ee9d-4108-a5e1-4b0448e05436"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6c4bca80-e9d6-4f0a-a18a-88927802bd67">
+                    <propertyInstance
+                      Id="fa936741-0b6b-45a8-ba34-07e38a2ce7d5"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3d92da3c-b40d-4b90-873b-b9d7c7218190">
+                    <propertyInstance
+                      Id="4e9908b3-119d-4112-8d79-30647023ec7d"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1b2dea6a-ae3c-46b6-bb12-fe8b795cd72b">
+                    <propertyInstance
+                      Id="b71a925c-5172-41aa-a5c2-5c2ef575d7e3"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c8fcde72-c0cf-40f1-aaf1-b3dd91e542d7">
+                    <propertyInstance
+                      Id="87dee941-ea8d-4782-87e9-5a618ad2d16c"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="157a1394-109d-4f0f-8e98-c72597592cec">
+                    <propertyInstance
+                      Id="dc955f39-7751-46d2-b70a-e64a52571563"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ddede693-c938-4ae3-bf53-12f083129da0">
+                    <propertyInstance
+                      Id="9ef0e6a1-95b1-48e1-b44e-cef4a405edb0"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="72892f41-5ad6-46f7-958b-4caba399dce2"
+        name="CursorManagerService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="4a39a5d7-c7bc-4c59-b843-111a08154e60"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="bbc58b5d-c017-45b1-a051-358f411590f5"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bb4f510a-0b67-4f3f-a03d-c5e77482a4bf">
+                <propertyInstance
+                  Id="34fc0354-99c2-4b4a-84e0-373388a2ad83"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1f749550-fb1b-461b-a666-cde2b400c02d">
+                <propertyInstance
+                  Id="18afbc40-1ea1-4717-b84c-83d4f34c74a0"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="17d92431-ad11-4a40-a120-3f835de7f1df">
+                <propertyInstance
+                  Id="e3900909-2048-43c0-ae55-24a43e96be2d"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4a69b083-565e-4b4d-80bc-28f386ac6129">
+                <propertyInstance
+                  Id="51cc873e-560c-422f-9349-790378af9a7f"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="50440286-14c2-4a20-b098-645916af77e1">
+                <propertyInstance
+                  Id="54a0afd3-50b3-4ae2-b514-fb2da9ce5cfe"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="0279edc4-7e2d-4a78-bc57-7631db8c2b52">
+            <interfaceMoniker
+              Id="4c26c215-de4a-444f-b7df-47e26924691b"
+              LastKnownName="ICursorManagerService"
+              LastKnownLocation="Package9_1624.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="23f6532e-65c5-44c8-92a3-895f2eaa89f0"
+            name="IsEnabled"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="5657b879-e626-4c2c-a045-b9e8800c357a"
+                handle="viewcode://./CodeSchema_Property?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3DIsEnabled"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="6f81f6a0-1e3f-480c-ab73-3644b801d5d3"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0e96450a-ff01-4dda-ade7-264bd9df2182">
+                    <propertyInstance
+                      Id="b4630ea9-520e-4fc5-94e0-83ff95917b0f"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f7aefdf6-71ab-4536-8fb6-938aa3ed7b2e">
+                    <propertyInstance
+                      Id="ebe510db-b73b-4ddb-a9ef-980ade113003"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="73b8ca32-39f5-4f2d-bcf3-25c32ca87678">
+                    <propertyInstance
+                      Id="20d692c2-726e-489b-86db-c9113f57b2ac"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="779f664c-2b6d-4483-ac68-ce08dfd63345">
+                    <propertyInstance
+                      Id="6b4a6fe3-dd36-4d03-bac0-3fd57018a024"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b02aaf2d-8c26-42e5-ade9-62efe96b2b17">
+                    <propertyInstance
+                      Id="cef2940c-fcbe-4a60-aae1-45a9680557b4"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b5db2aea-3c3c-45a8-93be-668ccd118bfa">
+                    <propertyInstance
+                      Id="8a2490e1-8ba1-42d5-be15-6e7b253b86bd"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6b313637-d2bd-4cb0-93f8-c4e70786711b">
+                    <propertyInstance
+                      Id="63838aeb-982a-4f0a-851a-36c91eed4f2a"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                LastKnownName="Boolean"
+                LastKnownLocation="MediaMotionUML.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="c2ce0443-82da-48c4-8386-c43c3631a72a"
+            name="cursors"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="373a9a79-5fc4-4b07-bb52-952cf73dafe1"
+                handle="viewcode://./CodeSchema_Field?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3Dcursors"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="dccfb8d3-71dc-49ef-b845-af030dcc94d8"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8cc1f185-432e-4b43-933d-e15c47528cc0">
+                    <propertyInstance
+                      Id="06f57831-8a86-4fd3-87f1-a11a6cd5ad70"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9beb2f0c-daba-4a06-86d3-8de945c0cc21">
+                    <propertyInstance
+                      Id="30eca12e-9085-4d9a-b70e-ba4ae5782311"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1c3060e7-fe16-49b8-b92b-2d677be2a471">
+                    <propertyInstance
+                      Id="9fa8930c-73ba-4c7b-a371-f090e4248b97"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6953a870-09ac-4531-a176-02c5b5e71633">
+                    <propertyInstance
+                      Id="4a926279-a1fd-46ba-8595-32ab75997f2c"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c86bf71c-f2f7-4269-a2e8-a1096e35e55e">
+                    <propertyInstance
+                      Id="1109c754-1625-4298-a028-ef615e182af4"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="e52923f1-dce4-4cbe-baef-4dbd86ee15b1"
+                LastKnownName="Dictionary&lt;Int32‎, CursorManagerService‎‎.CursorData‎&gt;"
+                LastKnownLocation="Package3_1621.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b9e988de-aa76-446a-9e50-ae5021f78423"
+            name="SetTag"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="f82cfc2f-a8d4-4abe-9df1-ba99bc4648f7"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DSetTag OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3D(Name%3DCursorData ParentType%3DCursorManagerService))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DBoolean)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="3e0ecfbe-33b3-4c0b-96ba-108bde27aba6"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3df50602-e2f1-47f8-a397-47468da010e4">
+                    <propertyInstance
+                      Id="f6970cb1-5b53-4995-a722-b12fabe5058a"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0d442ac4-1ef9-4607-93cd-4c4a09cdfb62">
+                    <propertyInstance
+                      Id="9de4836c-cab5-46b1-8510-a2a3824f50a6"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9b4aad9a-6a94-4e87-97d8-337b8ac14d8c">
+                    <propertyInstance
+                      Id="fba0618f-f7cb-43ac-8d5d-ba239ce07598"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9bf7c6a8-caff-42dd-95d8-f57fc7cba6ad">
+                    <propertyInstance
+                      Id="534c8845-d382-4c35-ba76-feb87530a11f"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4ed2216d-a020-449c-9069-d8d7f4ec4f5d">
+                    <propertyInstance
+                      Id="23a2da40-50fe-40bd-8709-3921f79ae76a"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0eca6c00-5d41-4d0e-bc31-ebd3779df051">
+                    <propertyInstance
+                      Id="14c31b9e-da5c-4a84-aa87-b961626e585d"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ba47b67e-8778-4500-a1de-006a57898c02"
+                  name="cursor"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="7e2c27ab-3b5a-4d30-a116-2e33d4e2e709"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DSetTag OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3D(Name%3DCursorData ParentType%3DCursorManagerService))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DBoolean)]) ParameterIdentifier%3Dcursor"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="7b2b1a4d-f0f9-4e3b-bd04-10ff9f0bce51"
+                      LastKnownName="CursorData"
+                      LastKnownLocation="Package8_1624.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9e173840-878b-436b-94a9-0e5a4c7d5d84"
+                  name="main"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="e7bce667-b0eb-4351-8c59-4f0921754831"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DSetTag OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3D(Name%3DCursorData ParentType%3DCursorManagerService))%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DBoolean)]) ParameterIdentifier%3Dmain"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="294e59d0-476b-4266-adf5-4efb4419f1ed"
+            name="UpdateCursor"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="f475b04b-b6e9-40d7-a929-fe46b6ab26ff"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DUpdateCursor OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="9836545b-bf41-44a6-aada-c51ffb617ec1"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1a994408-f56b-4fca-be0e-6700398fbdbe">
+                    <propertyInstance
+                      Id="5f505e2e-32ce-4b96-876b-73f7cd2bd9cb"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="917bdcaf-2a79-40c6-b0f0-f6451a3bb1e6">
+                    <propertyInstance
+                      Id="0f234dfe-3c35-43af-b6f6-24bfb48cbef0"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="49efab19-3017-4f37-ad1b-819d1fa8e507">
+                    <propertyInstance
+                      Id="c253119d-9e04-43ba-b1cc-2602e739a738"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d1f2a60c-1e1a-4ed8-89cb-14abe63ffe7b">
+                    <propertyInstance
+                      Id="5030182c-57ba-442d-933b-1dc0dbf203a5"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0a7911c1-b044-42e8-8498-e8334a6b0821">
+                    <propertyInstance
+                      Id="11f950bd-0e42-4acf-a355-535a13270c36"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e3205557-0ca2-425f-bce1-0be276c5efee">
+                    <propertyInstance
+                      Id="b41590eb-bc58-4f9a-b939-2cb18ddc52f8"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="934755ce-111f-4905-b942-4f11b265ff3c"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9335c887-43d8-4c4f-b121-c4009b219287"
+                  name="id"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="66db9dc1-be30-48ca-ab40-33a167b5a46b"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DUpdateCursor OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Did"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="17c13c59-683c-434e-ba85-db08663dfd20"
+            name="AddCursor"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="4522331b-3db0-4270-9867-747d7b0949b3"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DAddCursor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="1d44ec7a-0676-4639-901f-223db4fde2fc"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="634b6440-6447-4726-806d-ca3bdce81f06">
+                    <propertyInstance
+                      Id="331ae3b4-7dee-4599-86a5-5b9b1b019f22"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cf70b08f-9276-4a05-a6dc-68c60884c0c8">
+                    <propertyInstance
+                      Id="9108c649-7231-4638-9ed8-bc098fe91a83"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c81a9083-4c4e-4758-b5ca-a380a9d4a419">
+                    <propertyInstance
+                      Id="8077d252-460d-4e8a-bcc4-13ab81d47697"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8a55aad6-59a9-41b2-b8fe-aa12052a15fe">
+                    <propertyInstance
+                      Id="3f48802f-c12a-404b-b250-fb016eeca05f"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c4e5e7c4-1325-413f-a109-729c07444916">
+                    <propertyInstance
+                      Id="9f834e8f-eb8d-4aae-818b-e1257d13a3c2"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a24b6aa4-1db2-47b8-9967-b2ffca764aa7">
+                    <propertyInstance
+                      Id="a3e8cf43-3136-4302-9f71-9e4a02a694d4"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9c9802dc-4b69-49ab-860d-2025450e344c"
+                  name="cursorObject"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="9761099e-3e13-4924-8e76-b204b9896ea0"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DAddCursor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)]) ParameterIdentifier%3DcursorObject"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="9f1f7a53-e364-41b7-85cb-8888a232c3e1"
+                      LastKnownName="GameObject"
+                      LastKnownLocation="Package_1621.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="130b15cb-1e75-424f-a4a7-fc33118bb0a2"
+                  name="id"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="2afcd693-4319-4feb-afec-f1cd6f444083"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DAddCursor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)]) ParameterIdentifier%3Did"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a25a6247-800c-4311-999c-e3f404f59db9"
+                  name="selectCallback"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="06766e40-0e4b-46c2-9e41-b0de35ff6448"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DAddCursor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)]) ParameterIdentifier%3DselectCallback"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="89565485-97f4-4b41-9b2f-f7d6f1a9604e"
+                      LastKnownName="CursorEvent"
+                      LastKnownLocation="Package9_1624.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1d405f5d-04a4-42b5-9707-4beaaba78c34"
+                  name="unselectCallback"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="85e9de8b-9fea-491e-b892-f0f18c1fe5d6"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DAddCursor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)%2C(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)%2C(Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager.Interfaces Type%3DCursorEvent)]) ParameterIdentifier%3DunselectCallback"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="89565485-97f4-4b41-9b2f-f7d6f1a9604e"
+                      LastKnownName="CursorEvent"
+                      LastKnownLocation="Package9_1624.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="754eda00-a36e-4205-9e27-ed5f8d283e17"
+            name="CleanCursors"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="b914791a-4d05-4623-8e50-4795a466a7aa"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DCleanCursors OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="1703ed2b-1e36-43d7-ad49-ed942a8b4086"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2587607f-69ee-455c-ab1d-7b3fc125f18f">
+                    <propertyInstance
+                      Id="0fa86c00-303c-43b0-a3fb-7d11d18e5a80"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="571d0c6e-585f-4e99-84d9-138d0da1c561">
+                    <propertyInstance
+                      Id="0691b284-fb5d-424b-8b49-6072f45220b7"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="75a5841e-9b5a-447e-b878-fbcfc3cd2208">
+                    <propertyInstance
+                      Id="cdf78151-a80c-4fa2-b828-64a6c7e602e8"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="96d702d2-7eda-491f-a837-f8bce0b264a2">
+                    <propertyInstance
+                      Id="1ab68306-9ad8-49fb-8b83-04d5f179c242"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d7fdc82b-1fae-454a-99dc-d27af047dbde">
+                    <propertyInstance
+                      Id="db1c9d32-b1c1-483f-a127-7d78adee1919"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="534fea80-3d14-4b16-9678-a799b226bf8b">
+                    <propertyInstance
+                      Id="82990bf9-76a9-4dea-8e22-4bb9b4edb44b"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="02eea041-dd1a-4d12-80df-0b40c005d514"
+                  name="delay"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="72d20e86-2f61-46f0-8860-676d91a9d6e5"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DCleanCursors OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Ddelay"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="1ff9e851-9ac6-45e9-a692-0742bfb440d2"
+            name="GetMainCursor"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="b4e82fd1-a9ec-4757-9a99-13059adf6ad8"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3DGetMainCursor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="d13daa9b-c6f0-40d1-a18b-b870d6f08982"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7c1a36b7-4b00-4277-b1ce-1d5184e52cb6">
+                    <propertyInstance
+                      Id="b74591d8-240a-406d-a24e-fc030ca93bde"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1a95103e-64e9-46f6-ad01-9e249355bdb0">
+                    <propertyInstance
+                      Id="11463b95-b77c-47a6-a6ea-1cf3fda73734"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="31731bb2-908d-4986-aba8-c7182a5dc498">
+                    <propertyInstance
+                      Id="391199fd-da9b-4f7e-a006-11d939682802"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="216dd486-dede-467b-886d-7362112777df">
+                    <propertyInstance
+                      Id="bc6c1cd0-55ac-446f-bcd5-83593831a2b6"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="59babbc4-aefe-4f97-b9f8-c5583fb30917">
+                    <propertyInstance
+                      Id="d0a25881-ac25-4300-a079-7c2f978e7210"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="417d8132-0648-4d93-9591-b0569327585d">
+                    <propertyInstance
+                      Id="c19e1cc3-11fa-4251-9911-4b49a4b2e98a"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="80931950-65c1-46c5-a4f9-9c6ed517c9fd"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="9f1f7a53-e364-41b7-85cb-8888a232c3e1"
+                      LastKnownName="GameObject"
+                      LastKnownLocation="Package_1621.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="52ae18c4-947b-4536-aa46-7307c1f2c8c4"
+            name="IsMainCursor"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="4e8f6ee4-6349-4dde-b9da-115a6d2702eb"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DIsMainCursor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="65bd0fb0-02f8-4630-8248-1ef08dc3293e"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="81978716-4f0c-4076-be45-26eb70b81273">
+                    <propertyInstance
+                      Id="73c317f0-219a-4eed-9f70-ffd79406f538"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="624d57bb-25c2-430e-8a13-f19dd6f70603">
+                    <propertyInstance
+                      Id="04978d67-a823-4d3e-9c00-7f4baf710aa6"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e2a589d1-b6e1-4d19-afbd-2d7e2498cebc">
+                    <propertyInstance
+                      Id="7f49ae02-1d62-4eaf-ba39-1b26e7bcaac2"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8139fa32-6b63-4d81-8490-866eaf04a20a">
+                    <propertyInstance
+                      Id="6a54a93f-a25e-491e-85bf-960ee4854a40"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="529c0b59-7308-4a0d-b025-65284936e8c5">
+                    <propertyInstance
+                      Id="c14e7fb8-e510-45e9-9186-7d85576728cf"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2e7e1746-eb8c-4732-9a6b-08f5c1e60437">
+                    <propertyInstance
+                      Id="52e35c70-0b13-4c6d-b10f-706c9a3be676"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="24f6e940-b9b7-4eeb-a416-bed779bb9e63"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="99a75fab-f664-4c33-b9cc-09d5185a9a9a"
+                  name="cursor"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="1e67285b-6322-4aa0-8aea-b9972d9d3c24"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DIsMainCursor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)]) ParameterIdentifier%3Dcursor"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="9f1f7a53-e364-41b7-85cb-8888a232c3e1"
+                      LastKnownName="GameObject"
+                      LastKnownLocation="Package_1621.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="12d159d9-73a0-4c2c-92ec-6fb270560e6f"
+            name="IsCursorEnabled"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="7a30399a-e648-42e0-a5b2-e41056d06608"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DIsCursorEnabled OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="034290c0-562f-4099-bced-4c77faf754ac"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="45939baa-7c9a-4f26-9d29-1dbe3e5adc33">
+                    <propertyInstance
+                      Id="48df994f-94ab-4343-ae15-41a8bcb0c9d3"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cca61d1c-f2c7-44da-a1a6-d999866dabf5">
+                    <propertyInstance
+                      Id="f5824bad-e429-4ec9-8919-4faa4ec13ee2"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9c375783-78d2-4b1d-8429-5824698c40bb">
+                    <propertyInstance
+                      Id="41896c0a-4453-47b0-b0a7-86c5127b0504"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8c490c62-15f1-48c1-b406-3d85b3d9b2dc">
+                    <propertyInstance
+                      Id="464b9b37-7fa7-4fbb-b5bc-ed536e73a2eb"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="debe7077-884b-47a2-9f43-acd94d89f0ae">
+                    <propertyInstance
+                      Id="39a838d8-a934-4319-afc1-5ad827aa8ef5"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="45f595fb-6672-4570-8aa8-2c748406acf6">
+                    <propertyInstance
+                      Id="9357a5da-bcd2-4713-a5b1-fff95d209c93"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7b0067df-15de-4831-a3fa-f19fd4d5dae4"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fd59373a-29e1-4809-a46d-25ed7a436180"
+                  name="cursor"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="6606fe82-8ed9-4dce-b6e0-2e6abd88ed72"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DIsCursorEnabled OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files%2FUnity%2FEditor%2FData%2FManaged%2FUnityEngine.dll&quot; Namespace%3DUnityEngine Type%3DGameObject)]) ParameterIdentifier%3Dcursor"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="9f1f7a53-e364-41b7-85cb-8888a232c3e1"
+                      LastKnownName="GameObject"
+                      LastKnownLocation="Package_1621.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="af5e99f0-58ab-4d9b-a176-81d97f4a5c9e"
+            name="EnabledCursors"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="70457fd5-a871-4048-ac4e-19656ef59d75"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3DEnabledCursors"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="01eb2909-5256-4729-9b30-a9b299b022e7"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5bb3b7d3-d0e7-4b31-87cc-cb0104ef5e4a">
+                    <propertyInstance
+                      Id="2e6daa98-f716-429e-ab02-63dd91a5cd7f"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="43754f3f-41c1-4a5a-8052-fb0e41a04f30">
+                    <propertyInstance
+                      Id="8d6d2ea3-0996-4e11-8c22-5b14191a71ec"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="30aa42e3-8ee2-4afd-bc5f-4e1b352b11a8">
+                    <propertyInstance
+                      Id="dec8766c-68a9-4549-8f67-9dcf4d5f0140"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7b9f775e-34ac-4919-a370-11459db04f08">
+                    <propertyInstance
+                      Id="01188ef4-3310-4e56-8de8-fa85924a22fa"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="30ba0a18-f467-487b-97ba-98fab9680a41">
+                    <propertyInstance
+                      Id="9d111e00-0c5c-4905-bc96-d9feb5d4a75d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3e93d031-a1fd-442e-a3e4-8f870196f044">
+                    <propertyInstance
+                      Id="38c86302-7b6e-4cca-af11-1ec084f8d108"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="fb51023e-eb58-4625-b545-8bf961295e2f"
+            name="DisabledCursors"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="9ec7277b-15bb-4200-b508-3e3cfafa51c2"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3DDisabledCursors"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="575b4ded-636b-4ada-869e-90b2ee9bceac"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f7a33b6a-837a-4248-9e36-298a28e17a83">
+                    <propertyInstance
+                      Id="1ead90f3-f06e-41ee-a886-db8d87ffd53f"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5263f530-6dba-4c56-bf82-164c9d23ca63">
+                    <propertyInstance
+                      Id="0449ff6b-44a6-4352-b39b-897214a300bb"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5b69487d-fb8d-4ec6-8f47-4e4f6fe8ab7b">
+                    <propertyInstance
+                      Id="aa54c5ca-f395-4f4e-bce5-ec08d5647979"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fe83d9fb-3913-43f0-87c6-6d84ea498be0">
+                    <propertyInstance
+                      Id="6e3c9c30-6fe2-4b7a-befd-956e26db8329"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="86f3465c-323e-4b59-86ea-cc8ecfd10eac">
+                    <propertyInstance
+                      Id="c97e7b15-819d-47ee-bf7b-b74e420ad71a"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6e748a8b-0f6b-4296-93f8-1b0fd0cfef47">
+                    <propertyInstance
+                      Id="1b5791d0-7779-4e25-8c2a-417e905fa4d4"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="168bca7b-c0f0-4511-bdb8-632a8b431dc5"
+            name="ChangeCursorsState"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="cf71a547-6ae6-48c1-9755-bcb03300e210"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DChangeCursorsState OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DBoolean)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="0cd51127-3a01-45d2-badb-f2481d84768d"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ce769fe3-3dc8-43ac-88a9-2e5a47a4165e">
+                    <propertyInstance
+                      Id="465b7702-318c-42af-a8b3-e0c8e1a87cb1"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a01e2385-ae08-4fa6-854b-8199e348743e">
+                    <propertyInstance
+                      Id="fb069d5e-e341-4f23-826e-649fdd5baf8f"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5a97aff1-465e-4e25-a9eb-339c0b358770">
+                    <propertyInstance
+                      Id="3aa83fe2-cfef-439c-ba98-3bfb0b08fb2e"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9f48ed0a-d9b2-415b-84d7-8588f7b6b5ee">
+                    <propertyInstance
+                      Id="2b8cf197-5f57-4934-a059-a6010123e9d2"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4bc50d81-14ad-49a6-a47e-68361b5e2a52">
+                    <propertyInstance
+                      Id="5eb1ef56-a6ab-4c79-a07c-3e5555f77178"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="22ececce-5913-4c83-9839-3109d3c6ba6a">
+                    <propertyInstance
+                      Id="a04f989e-0eba-4bcc-93e5-1db5dabc1278"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1b71a31c-e642-4bf1-8573-13a1127e192a"
+                  name="state"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="7974004d-61bf-436b-8c4b-ff04fde80d88"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D(Name%3DChangeCursorsState OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FWindows%2FMicrosoft.NET%2FFramework%2Fv2.0.50727%2Fmscorlib.dll Namespace%3DSystem Type%3DBoolean)]) ParameterIdentifier%3Dstate"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="MediaMotionUML.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="09a34129-1f41-47d2-813f-49be342227fe"
+            name="CursorManagerService"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="80d5706c-54ac-41e4-a47b-b9e6419ce7cf"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FO:%2FProjects%2FMediaMotion%2FUnity%2FMediaMotion%2FTemp%2Fbin%2FDebug%2FAssembly-CSharp.dll Namespace%3DMediaMotion.Modules.Explorer.Services.CursorManager Type%3DCursorManagerService Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="7ff9aca0-34ee-41cf-a2b8-6b0a6b3162c7"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="12c66da6-8ec9-4e6b-ae30-79fbb7d7c045">
+                    <propertyInstance
+                      Id="7ff07888-39f2-414b-bc01-50ce3320b669"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="19ae606f-00c0-480c-b342-a2c8ad50b5ef">
+                    <propertyInstance
+                      Id="c2ee1f64-9cf1-4057-b119-55d7685e568e"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="022a336a-5b62-448c-9bca-4ed8d57825d2">
+                    <propertyInstance
+                      Id="fce95812-5c52-4fec-a3f6-46f469f6c001"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="75eac5ba-8e2d-485c-b721-6311d6af7509">
+                    <propertyInstance
+                      Id="cccf1306-da0b-41d3-8013-6ef858c9d777"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d186946e-aa52-4c63-aa46-7972d59ee253">
+                    <propertyInstance
+                      Id="d465c735-9df5-44b1-b96c-8476a1a0e53e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7f03875d-105a-4be7-bc74-f79591d0e3aa">
+                    <propertyInstance
+                      Id="65288384-e4fe-4b21-a021-302036e06993"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

@@ -21,9 +21,10 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MediaMotion
-   &#160;<span id="projectnumber">2.0</span>
+   &#160;<span id="projectnumber">2.2</span>
    </div>
   </td>
  </tr>
@@ -88,6 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="functions_func_g.html#index_g"><span>g</span></a></li>
       <li><a href="functions_func_h.html#index_h"><span>h</span></a></li>
       <li><a href="functions_func_i.html#index_i"><span>i</span></a></li>
+      <li><a href="functions_func_j.html#index_j"><span>j</span></a></li>
       <li><a href="functions_func_l.html#index_l"><span>l</span></a></li>
       <li><a href="functions_func_m.html#index_m"><span>m</span></a></li>
       <li><a href="functions_func_n.html#index_n"><span>n</span></a></li>
@@ -99,6 +101,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_func_u.html#index_u"><span>u</span></a></li>
       <li><a href="functions_func_v.html#index_v"><span>v</span></a></li>
       <li><a href="functions_func_w.html#index_w"><span>w</span></a></li>
+      <li><a href="functions_func_z.html#index_z"><span>z</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -125,15 +128,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="interface_media_motion_1_1_core_1_1_resolver_1_1_containers_1_1_interfaces_1_1_i_container.html#a83a28e1f711c62405687859cd4ce6467">MediaMotion.Core.Resolver.Containers.Interfaces.IContainer</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_resolver_1_1_registrations_1_1_interfaces_1_1_i_registration.html#a227c6fb57404bcae89740b2a921ab362">MediaMotion.Core.Resolver.Registrations.Interfaces.IRegistration</a>
 , <a class="el" href="class_media_motion_1_1_core_1_1_resolver_1_1_resolver.html#aaa8283f56fec2e3b114ba4cc4fbcf5f2">MediaMotion.Core.Resolver.Resolver</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_resources_manager_1_1_container_1_1_interfaces_e91f4534837b127bf70380a51206b704.html#a28bbf83ff966adbaebdd44917d701915">MediaMotion.Core.Services.ResourcesManager.Container.Interfaces.IResourceContainer&lt; T &gt;</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_resources_manager_1_1_container_1_1_resource_container_3_01_t_01_4.html#ad62e61a368f7f2f4a82bdf2d792636f5">MediaMotion.Core.Services.ResourcesManager.Container.ResourceContainer&lt; T &gt;</a>
 </li>
 <li>Get&lt; Service &gt;()
 : <a class="el" href="class_media_motion_1_1_core_1_1_resolver_1_1_containers_1_1_container.html#a6c22d63bc87cfcb9b8e8e99a32ddaf60">MediaMotion.Core.Resolver.Containers.Container</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_resolver_1_1_containers_1_1_interfaces_1_1_i_container.html#a2670fef49895bf543cecf6b3c233c48b">MediaMotion.Core.Resolver.Containers.Interfaces.IContainer</a>
 , <a class="el" href="class_media_motion_1_1_core_1_1_resolver_1_1_resolver.html#a8ae7b35af7ac34d67397992f22b7159f">MediaMotion.Core.Resolver.Resolver</a>
 </li>
-<li>GetAllPluginForExtension()
-: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database_service.html#af659c1710d1c65ab9335ebffe787ae70">MediaMotion.Core.Services.PluginDatabase.Interfaces.IPluginDatabaseService</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_plugin_database_service.html#a0a211b698d5243a7e639043b438d631f">MediaMotion.Core.Services.PluginDatabase.PluginDatabaseService</a>
+<li>GetContainer&lt; T &gt;()
+: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_resources_manager_1_1_interfaces_1_1_i_resource_manager_service.html#a83a123bd9b0d209405ef7c4110de83f3">MediaMotion.Core.Services.ResourcesManager.Interfaces.IResourceManagerService</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_resources_manager_1_1_resource_manager_service.html#a88ac4154822327a3b9d6b3905789d27e">MediaMotion.Core.Services.ResourcesManager.ResourceManagerService</a>
 </li>
 <li>GetContent()
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#a7e131af3edb2a0e4f39273f83b489aba">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
@@ -142,22 +147,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>GetCursorMovement()
 : <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_input_1_1_interfaces_1_1_i_input_service.html#a7155d9c952eb30c8a28e1736c3ef4d66">MediaMotion.Core.Services.Input.Interfaces.IInputService</a>
 </li>
-<li>GetDefaultPluginForExtension()
-: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database_service.html#a3f9372c8819fac1da13ce66ec7db7a2b">MediaMotion.Core.Services.PluginDatabase.Interfaces.IPluginDatabaseService</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_plugin_database_service.html#ab215a83c2ced2eb8399bebde66f66f2b">MediaMotion.Core.Services.PluginDatabase.PluginDatabaseService</a>
-</li>
 <li>GetElementType()
-: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_element.html#aeb832748e2cbe270d2fc28d22b3f9e14">MediaMotion.Core.Models.FileManager.Abstracts.AElement</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html#a9710f6a6faee9e9ae08580c9762bcc04">MediaMotion.Core.Models.FileManager.Interfaces.IElement</a>
+: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_element.html#a14ba51282576a59ee21d55a6a4337245">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AElement</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_interfaces_1_1_i_element.html#a90b3d36e8dc3ee03f818c566e454f646">MediaMotion.Core.Services.FileSystem.Models.Interfaces.IElement</a>
 </li>
 <li>GetExtension()
-: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_file.html#a81f48355fa766c3f3f132adf7a224bff">MediaMotion.Core.Models.FileManager.Abstracts.AFile</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_file.html#abf2c4dbd195645ba919817d68cb22d1d">MediaMotion.Core.Models.FileManager.Interfaces.IFile</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_abstracts_1_1_a_factory.html#a5b3ea712547b3cfbb7feef0a20e63602">MediaMotion.Core.Services.FileSystem.Abstracts.AFactory</a>
-</li>
-<li>GetFileType()
-: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_file.html#a1a230e209b58dc5906cab410acdaa1e4">MediaMotion.Core.Models.FileManager.Abstracts.AFile</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_file.html#a9c48600862b85bd3f3f2e4862cb2ad05">MediaMotion.Core.Models.FileManager.Interfaces.IFile</a>
+: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_file.html#a221415c22c75729b2db255bae2e5cf54">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AFile</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_interfaces_1_1_i_file.html#af8621820f3bdcab9cd6360f0c2fd9fb7">MediaMotion.Core.Services.FileSystem.Models.Interfaces.IFile</a>
 </li>
 <li>GetHistory()
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_history_1_1_history_service.html#a6ba18300b2d4c42ccdb06e8863d4eca6">MediaMotion.Core.Services.History.HistoryService</a>
@@ -167,37 +163,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#ab10610f4057e010ba848324cfc7aeb22">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system_service.html#ae757977a33858339dc15961d4940297a">MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystemService</a>
 </li>
+<li>GetHomeFolder()
+: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_file_system_service.html#a5c1d9123a9c2870847f69ecdf1c9b139">MediaMotion.Core.Services.FileSystem.FileSystemService</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_interfaces_1_1_i_file_system_service.html#a40b70afb3bc3399d3b7041ba4c9a7ecb">MediaMotion.Core.Services.FileSystem.Interfaces.IFileSystemService</a>
+</li>
+<li>GetHumanTypeString()
+: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_element.html#af51f20d7ae41d4496a216d6d7e041871">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AElement</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_folder.html#a7e7c39b5753a6935dbfd63e44642f763">MediaMotion.Core.Services.FileSystem.Models.Folder</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_interfaces_1_1_i_element.html#a888b65e0e9a8895bc50ea05064a37e01">MediaMotion.Core.Services.FileSystem.Models.Interfaces.IElement</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_regular.html#a36510bf49655a7d2af1ae75cddd7e8a8">MediaMotion.Core.Services.FileSystem.Models.Regular</a>
+, <a class="el" href="class_media_motion_1_1_modules_1_1_image_viewer_1_1_models_1_1_abstract_1_1_a_image.html#a488b9f5b299ccc16af67b135997b0c4f">MediaMotion.Modules.ImageViewer.Models.Abstract.AImage</a>
+, <a class="el" href="class_media_motion_1_1_modules_1_1_image_viewer_1_1_models_1_1_b_m_p_image.html#a07428c3a71c237d64613fe438fffd372">MediaMotion.Modules.ImageViewer.Models.BMPImage</a>
+, <a class="el" href="class_media_motion_1_1_modules_1_1_image_viewer_1_1_models_1_1_j_p_e_g_image.html#aacc271ed9b0adeac7ec3286f95e710e4">MediaMotion.Modules.ImageViewer.Models.JPEGImage</a>
+, <a class="el" href="class_media_motion_1_1_modules_1_1_image_viewer_1_1_models_1_1_p_n_g_image.html#aae5791a76aab69d4ac5009be71388b31">MediaMotion.Modules.ImageViewer.Models.PNGImage</a>
+, <a class="el" href="class_media_motion_1_1_modules_1_1_video_viewer_1_1_models_1_1_abstract_1_1_a_video.html#a6b97c74ea27cae064f6d29fd11099328">MediaMotion.Modules.VideoViewer.Models.Abstract.AVideo</a>
+</li>
 <li>GetIdentifier()
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_history_1_1_identifier_history.html#a184ff41e2b5d0c0fb14b5dee6f285a1f">MediaMotion.Core.Services.History.IdentifierHistory</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_history_1_1_interfaces_1_1_i_identifier_history.html#af1425f642532928b344c689628290947">MediaMotion.Core.Services.History.Interfaces.IIdentifierHistory</a>
+</li>
+<li>GetMainCursor()
+: <a class="el" href="class_media_motion_1_1_modules_1_1_explorer_1_1_services_1_1_cursor_manager_1_1_cursor_manager_service.html#a1b34f24f13a32c121051d42968036a63">MediaMotion.Modules.Explorer.Services.CursorManager.CursorManagerService</a>
+, <a class="el" href="interface_media_motion_1_1_modules_1_1_explorer_1_1_services_1_1_cursor_manager_1_1_interfaces_1_1_i_cursor_manager_service.html#a46c5856ad2607cdc6312f6c9203e1af9">MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces.ICursorManagerService</a>
 </li>
 <li>GetMovements()
 : <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_input_1_1_input_service.html#a82c37a0e8e55eab56713ff809b94bd86">MediaMotion.Core.Services.Input.InputService</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_input_1_1_interfaces_1_1_i_input_service.html#a5c451ad0bee53963409d494d1ea662d9">MediaMotion.Core.Services.Input.Interfaces.IInputService</a>
 </li>
 <li>GetName()
-: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_element.html#af5b9220b7d26ba22d391554bc9e464ae">MediaMotion.Core.Models.FileManager.Abstracts.AElement</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_file.html#ab0f14e078017e45a9d0940e08885fdb7">MediaMotion.Core.Models.FileManager.Abstracts.AFile</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_folder.html#adc0c39789c9ab22270f4a0d57e3f7b32">MediaMotion.Core.Models.FileManager.Abstracts.AFolder</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html#abbef66e7b8e1c5c745bd48ede787add8">MediaMotion.Core.Models.FileManager.Interfaces.IElement</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_abstracts_1_1_a_factory.html#a949f54ccf9d0f3487ff40657144605d0">MediaMotion.Core.Services.FileSystem.Abstracts.AFactory</a>
+: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_element.html#a581c9e7f819a6c73343264a28f740039">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AElement</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_file.html#a1abd4f4e4beda9253b2abaa4e648d963">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AFile</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_folder.html#af880cde1be8ee870c8bcf7383cd183b5">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AFolder</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_interfaces_1_1_i_element.html#a28e6f66767f51bec0e8ef395ae8da981">MediaMotion.Core.Services.FileSystem.Models.Interfaces.IElement</a>
 </li>
 <li>GetParent()
-: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_element.html#ac47dc6748babf8ba68acc371510a202b">MediaMotion.Core.Models.FileManager.Abstracts.AElement</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_file.html#a9daca81eabe8bf275095c95e695b6428">MediaMotion.Core.Models.FileManager.Abstracts.AFile</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_folder.html#adfe1590b6c7fe03a74c231c6dadd4191">MediaMotion.Core.Models.FileManager.Abstracts.AFolder</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html#a62d066ba6b816d6640aa3b52bb72735a">MediaMotion.Core.Models.FileManager.Interfaces.IElement</a>
+: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_element.html#a5c287e344c4db0c0c4a70e40988ea81c">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AElement</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_file.html#adeeba9c1619d796a29a9250c49b371d0">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AFile</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_folder.html#af0407f66658432839b513d3dff3f118d">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AFolder</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_interfaces_1_1_i_element.html#ab6aecc9067b4ad9ded0f7a908b2c0adb">MediaMotion.Core.Services.FileSystem.Models.Interfaces.IElement</a>
 </li>
 <li>GetPath()
-: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_element.html#ac52fdd1276dab4f8daa9f9d3d20064a3">MediaMotion.Core.Models.FileManager.Abstracts.AElement</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_file.html#a4acb89e755005df1efb7b56ed9d6d804">MediaMotion.Core.Models.FileManager.Abstracts.AFile</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_folder.html#a3e8af090b3496e8369220e1d66b8fa70">MediaMotion.Core.Models.FileManager.Abstracts.AFolder</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html#aaab70f05c8bcce962ac72d0e0f60e933">MediaMotion.Core.Models.FileManager.Interfaces.IElement</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_bridges_1_1_history_1_1_identifiers_1_1_path_identifier.html#a8544e4675c9335b1af6b81ba1d54976e">MediaMotion.Core.Services.FileSystem.Bridges.History.Identifiers.PathIdentifier</a>
-</li>
-<li>GetPluginAvailable()
-: <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_interfaces_1_1_i_plugin_database_service.html#a8047e6c460a424d18223f72bd146bc70">MediaMotion.Core.Services.PluginDatabase.Interfaces.IPluginDatabaseService</a>
-, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_plugin_database_1_1_plugin_database_service.html#aad9bb9bd3118558fe403471ddd72bd0e">MediaMotion.Core.Services.PluginDatabase.PluginDatabaseService</a>
+: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_bridges_1_1_history_1_1_identifiers_1_1_path_identifier.html#a8544e4675c9335b1af6b81ba1d54976e">MediaMotion.Core.Services.FileSystem.Bridges.History.Identifiers.PathIdentifier</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_element.html#a6a39bfe0dc8ac0ec11693f806e2e318b">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AElement</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_file.html#a84bcd67258fadccde24ce111d845906e">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AFile</a>
+, <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_folder.html#a85df9956ff298949c4f54c0ee8af0c54">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AFolder</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_interfaces_1_1_i_element.html#ad0eb2c3a81e7f52ddecfc3ac5d8b082b">MediaMotion.Core.Services.FileSystem.Models.Interfaces.IElement</a>
 </li>
 <li>GetRegistrations()
 : <a class="el" href="class_media_motion_1_1_core_1_1_resolver_1_1_containers_1_1_container_builder.html#ab959939e41377e0788a7e58aa7114a95">MediaMotion.Core.Resolver.Containers.ContainerBuilder</a>
@@ -208,19 +218,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_media_motion_1_1_core_1_1_resolver_1_1_containers_1_1_container.html#afdbeb1e4201ce56169893aaf98fb2a95">MediaMotion.Core.Resolver.Containers.Container</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_resolver_1_1_containers_1_1_interfaces_1_1_i_container.html#a8ed9026aa821aceaa946ef7adc0c26c7">MediaMotion.Core.Resolver.Containers.Interfaces.IContainer</a>
 </li>
+<li>GetResourceId()
+: <a class="el" href="class_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_abstracts_1_1_a_element.html#a21e03b7ba9af9d5ef6efe1138775b44c">MediaMotion.Core.Services.FileSystem.Models.Abstracts.AElement</a>
+, <a class="el" href="interface_media_motion_1_1_core_1_1_services_1_1_file_system_1_1_models_1_1_interfaces_1_1_i_element.html#ad9ddb772479a829bd2ef54451fdb342b">MediaMotion.Core.Services.FileSystem.Models.Interfaces.IElement</a>
+</li>
 <li>GetServicesContainer()
 : <a class="el" href="class_media_motion_1_1_core_1_1_media_motion_core.html#a6971cbc37f2f3adbcab38decbb8c5527">MediaMotion.Core.MediaMotionCore</a>
 , <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_core_1_1_i_core.html#a6c5a8e9e53c5e417d976677af458dbc2">MediaMotion.Core.Models.Core.ICore</a>
-</li>
-<li>GetTexture2D()
-: <a class="el" href="class_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_abstracts_1_1_a_element.html#a6f7585a0576a78e6616fd1c37e89a213">MediaMotion.Core.Models.FileManager.Abstracts.AElement</a>
-, <a class="el" href="interface_media_motion_1_1_core_1_1_models_1_1_file_manager_1_1_interfaces_1_1_i_element.html#a80f692678f9a4d9609869e9dbafbfa00">MediaMotion.Core.Models.FileManager.Interfaces.IElement</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 12 2015 20:43:26 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 5 2015 20:30:26 for MediaMotion by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

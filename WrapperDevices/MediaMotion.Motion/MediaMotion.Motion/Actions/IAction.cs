@@ -17,7 +17,10 @@
 		BrowsingScroll,
 		BrowsingCursor,
 		GrabStart,
-		GrabStop
+		GrabStop,
+		ZoomIn,
+		ZoomOut,
+		Rotate
 	}
 
 	/// <summary>

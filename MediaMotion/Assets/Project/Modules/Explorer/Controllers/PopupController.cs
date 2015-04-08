@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Timers;
-using MediaMotion.Core.Models.FileManager.Enums;
-using MediaMotion.Core.Models.FileManager.Interfaces;
+﻿using System.Timers;
 using MediaMotion.Core.Models.Scripts;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using UnityEngine;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
@@ -29,7 +26,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Sidebar container
 		/// </summary>
-		public Rect sidebarRect;
+		private Rect sidebarRect;
 
 		/// <summary>
 		/// The element
@@ -44,7 +41,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Style for the sidebar container.
 		/// </summary>
-		public GUIStyle sidebarWindowStyle;
+		private GUIStyle sidebarWindowStyle;
 
 		/// <summary>
 		/// Visibility of the popup.
@@ -67,7 +64,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private int sidebarX;
 
 		/// <summary>
-		/// Indicates wether the sidebar is moving or not.
+		/// Indicates whether the sidebar is moving or not.
 		/// </summary>
 		private bool sidebarStatus;
 
@@ -91,7 +88,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Initializes this instance.
 		/// </summary>
 		public void Init() {
-			//sidebar
+			// sidebar
 			this.sidebarVisibility = false;
 			this.sidebarVisibleX = 1000;
 			this.sidebarHiddenX = 1125;
@@ -123,14 +120,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Information");
 			}
 			this.MoveSidebar();
-			GUI.Window(1, this.sidebarRect, this.PrintSidebar, "", this.sidebarWindowStyle);
+			GUI.Window(1, this.sidebarRect, this.PrintSidebar, string.Empty, this.sidebarWindowStyle);
 			this.PrintBuffer(0);
 		}
 
 		/// <summary>
 		/// Prints the copy-paste buffer.
 		/// </summary>
-		/// <param name="WindowID"></param>
+		/// <param name="WindowID">The window identifier.</param>
 		public void PrintBuffer(int WindowID) {
 			GUI.color = new Color(1, 1, 1, 0.65f);
 			GUI.DrawTexture(new Rect(1010, 10, 125, 125), this.fileTexture, ScaleMode.StretchToFill, true);
@@ -140,9 +137,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Prints the sidebar
 		/// </summary>
-		/// <param name="WindowID"></param>
+		/// <param name="WindowID">The window identifier.</param>
 		public void PrintSidebar(int WindowID) {
-			//GUI.Label(new Rect(10, 20, 150, 20), "Prout");
+			// GUI.Label(new Rect(10, 20, 150, 20), "Prout");
 		}
 
 		/// <summary>
@@ -190,13 +187,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			if (this.sidebarStatus == true) {
 				if (this.sidebarVisibility == true) {
 					this.sidebarX -= 2;
-					if (this.sidebarX <= this.sidebarVisibleX)
+					if (this.sidebarX <= this.sidebarVisibleX) {
 						this.sidebarStatus = false;
-				}
-				else {
+					}
+				} else {
 					this.sidebarX += 2;
-					if (this.sidebarX >= this.sidebarHiddenX)
+					if (this.sidebarX >= this.sidebarHiddenX) {
 						this.sidebarStatus = false;
+					}
 				}
 				this.sidebarRect = new Rect(this.sidebarX, 200, 160, 300);
 			}
@@ -227,43 +225,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="WindowID">The window identifier.</param>
 		private void HydratePopupContent(int WindowID) {
-			string elementType = "undefined";
-
-			GUI.Label(new Rect(10, 20, 100, 20), "Name", this.propertyLabelStyle);
-			GUI.Label(new Rect(10, 40, 100, 20), "Type", this.propertyLabelStyle);
-			switch (this.element.GetElementType()) {
-				case ElementType.Folder:
-					elementType = "Folder";
-					break;
-				case ElementType.File: {
-						IFile file = this.element as IFile;
-
-						switch (file.GetFileType()) {
-							case FileType.Image:
-								elementType = "Image";
-								break;
-							case FileType.Sound:
-								elementType = "Sound";
-								break;
-							case FileType.Video:
-								elementType = "Video";
-								break;
-							case FileType.PDF:
-								elementType = "PDF";
-								break;
-							case FileType.Text:
-								elementType = "Texte";
-								break;
-							case FileType.Regular:
-							default:
-								elementType = "Regular";
-								break;
-						}
-					}
-					break;
+			if (this.element != null) {
+				GUI.Label(new Rect(10, 20, 100, 20), "Name", this.propertyLabelStyle);
+				GUI.Label(new Rect(10, 40, 100, 20), "Type", this.propertyLabelStyle);
+				GUI.Label(new Rect(110, 20, 200, 20), this.element.GetName());
+				GUI.Label(new Rect(110, 40, 200, 20), this.element.GetHumanTypeString());
 			}
-			GUI.Label(new Rect(110, 20, 200, 20), this.element.GetName());
-			GUI.Label(new Rect(110, 40, 200, 20), elementType);
 
 			// if (this.InfoMap != null) {
 			// int Offset = 60;
