@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Models.FileManager.Interfaces;
-using MediaMotion.Core.Models.Module;
 using MediaMotion.Core.Models.Module.Interfaces;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
-using MediaMotion.Core.Resolver.Exceptions;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
+using MediaMotion.Core.Services.ModuleManager.Models;
 using UnityEngine;
 
 namespace MediaMotion.Core.Services.ModuleManager {
@@ -25,43 +25,84 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		private readonly ICore core;
 
 		/// <summary>
-		/// The modules
+		/// The element factory
 		/// </summary>
-		private Stack<IModule> modules;
+		private readonly IElementFactory elementFactory;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ModuleManagerService"/> class.
+		/// The modules
+		/// </summary>
+		private readonly List<IModule> availableModules;
+
+		/// <summary>
+		/// The background modules
+		/// </summary>
+		private readonly Stack<ModuleInstance> backgroundModules;
+
+		/// <summary>
+		/// The loaded modules
+		/// </summary>
+		private readonly Stack<ModuleInstance> stackedModules;
+
+		/// <summary>
+		/// The current
+		/// </summary>
+		private IModule currentModule;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ModuleManagerService" /> class.
 		/// </summary>
 		/// <param name="core">The core.</param>
-		public ModuleManagerService(ICore core) {
+		/// <param name="elementFactory">The element factory.</param>
+		public ModuleManagerService(ICore core, IElementFactory elementFactory) {
 			this.core = core;
-			this.modules = new Stack<IModule>();
+			this.elementFactory = elementFactory;
+			this.availableModules = new List<IModule>();
+			this.backgroundModules = new Stack<ModuleInstance>();
+			this.stackedModules = new Stack<ModuleInstance>();
+			this.currentModule = null;
 		}
 
 		/// <summary>
-		/// Loads the module.
+		/// Registers the module.
 		/// </summary>
 		/// <typeparam name="Module">The type of the module.</typeparam>
-		/// <param name="parameters">The parameters.</param>
-		/// <returns>
-		///   <c>true</c> if the module is correctly loaded, <c>false</c> otherwise
-		/// </returns>
-		public bool LoadModule<Module>(IElement[] parameters) where Module : class, IModule {
-			lock (this.locker) {
-				IModule module = null;
+		public void RegisterModule<Module>() where Module : class, IModule {
+			IContainerBuilder modulebuilder = this.core.GetServicesContainer().Get<IContainerBuilder>();
+			IModule module = null;
 
-				try {
-					module = this.core.GetServicesContainer().Get<Module>();
-				} catch (TypeNotFoundException) {
-					module = this.RegisterAndLoad<Module>();
+			modulebuilder.Register<Module>().SingleInstance();
+			this.core.AddServices(modulebuilder);
+			module = this.core.GetServicesContainer().Get<Module>();
+			module.Configure();
+			if (module.Configuration.ElementFactoryObserver != null) {
+				this.elementFactory.AddObserver(module.Configuration.ElementFactoryObserver, module.Configuration.Priority);
+			}
+			if (module.Configuration.ServicesContainer != null) {
+				this.core.AddServices(module.Configuration.ServicesContainer);
+			}
+			this.availableModules.Add(module);
+		}
+
+		/// <summary>
+		/// Loads the module with element.
+		/// </summary>
+		/// <param name="parameters">The parameters.</param>
+		/// <returns><c>true</c> if the module is load properly, <c>false</c> otherwise</returns>
+		public bool LoadModule(IElement[] parameters) {
+			lock (this.locker) {
+				IModule moduleToLoad = this.availableModules.OrderByDescending(module => module.Configuration.Priority).FirstOrDefault(module => parameters.All(parameter => module.Supports(parameter)));
+
+				if (moduleToLoad != null) {
+					if (this.currentModule != null && this.currentModule != moduleToLoad) {
+						Debug.Log("Stacked module");
+						this.stackedModules.Push(new ModuleInstance(this.currentModule, this.currentModule.Sleep()));
+					}
+					moduleToLoad.Load(parameters);
+					this.LoadModuleScene(moduleToLoad);
+					return (true);
 				}
-				if (this.modules.Count > 0) {
-					this.modules.Peek().Sleep();
-				}
-				module.Load(parameters);
-				Application.LoadLevel(module.Configuration.Scene);
-				this.modules.Push(module);
-				return (true);
+				return (false);
 			}
 		}
 
@@ -73,39 +114,26 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// </returns>
 		public bool UnloadModule() {
 			lock (this.locker) {
-				if (this.modules.Count > 0) {
-					this.modules.Pop().Unload();
-					if (this.modules.Count > 0) {
-						IModule loadModule = this.modules.Peek();
+				if (this.stackedModules.Count > 0) {
+					ModuleInstance moduleInstance = this.stackedModules.Pop();
 
-						loadModule.WakeUp();
-						Application.LoadLevel(loadModule.Configuration.Scene);
-					} else {
-						Application.LoadLevel("Loader");
-					}
-					return (true);
+					this.currentModule.Unload();
+					moduleInstance.Module.WakeUp(moduleInstance.Parameters);
+					this.LoadModuleScene(moduleInstance.Module);
+				} else {
+					Application.LoadLevel("Loader");
 				}
-				return (false);
+				return (true);
 			}
 		}
 
 		/// <summary>
-		/// Registers the and load.
+		/// Loads the module scene.
 		/// </summary>
-		/// <typeparam name="Module">The type of the module.</typeparam>
-		/// <returns>The module instance</returns>
-		private IModule RegisterAndLoad<Module>() where Module : class, IModule {
-			IContainerBuilder modulebuilder = this.core.GetServicesContainer().Get<IContainerBuilder>();
-			IModule module = null;
-
-			modulebuilder.Register<Module>().SingleInstance();
-			this.core.AddServices(modulebuilder);
-			module = this.core.GetServicesContainer().Get<Module>();
-			module.Configure();
-			if (module.Configuration.ServicesContainer != null) {
-				this.core.AddServices(module.Configuration.ServicesContainer);
-			}
-			return (module);
+		/// <param name="module">The module.</param>
+		private void LoadModuleScene(IModule module) {
+			Application.LoadLevel(module.Configuration.Scene);
+			this.currentModule = module;
 		}
 	}
 }

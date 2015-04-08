@@ -30,6 +30,7 @@ namespace MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces {
 		/// <summary>
 		/// Adds the cursor.
 		/// </summary>
+		/// <param name="cursorObject">The cursor object.</param>
 		/// <param name="id">The identifier.</param>
 		/// <param name="select">The select.</param>
 		/// <param name="unselect">The unselect.</param>
@@ -38,6 +39,7 @@ namespace MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces {
 		/// <summary>
 		/// Cleans the cursors.
 		/// </summary>
+		/// <param name="delay">The delay.</param>
 		void CleanCursors(int delay);
 
 		/// <summary>
@@ -61,12 +63,12 @@ namespace MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces {
 		bool IsCursorEnabled(GameObject cursor);
 
 		/// <summary>
-		/// Enableds the cursors.
+		/// Enabled the cursors.
 		/// </summary>
 		void EnabledCursors();
 
 		/// <summary>
-		/// Disableds the cursors.
+		/// Disabled the cursors.
 		/// </summary>
 		void DisabledCursors();
 	}

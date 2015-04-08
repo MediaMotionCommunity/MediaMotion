@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['loadingtext',['LoadingText',['../class_media_motion_1_1_core_1_1_controllers_1_1_loader_1_1_loading_text.html',1,'MediaMotion::Core::Controllers::Loader']]],
-  ['logobound',['LogoBound',['../class_media_motion_1_1_core_1_1_controllers_1_1_loader_1_1_logo_bound.html',1,'MediaMotion::Core::Controllers::Loader']]]
+  ['jpegimage',['JPEGImage',['../class_media_motion_1_1_modules_1_1_image_viewer_1_1_models_1_1_j_p_e_g_image.html',1,'MediaMotion::Modules::ImageViewer::Models']]]
 ];

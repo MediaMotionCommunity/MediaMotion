@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['onactiondetected',['OnActionDetected',['../interface_media_motion_1_1_core_1_1_models_1_1_wrapper_1_1_interfaces_1_1_i_wrapper.html#a94f3763175f8e9dd3cbc687b47555ef9',1,'MediaMotion::Core::Models::Wrapper::Interfaces::IWrapper']]],
-  ['ongui',['OnGUI',['../class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_popup_controller.html#ad40f4c3e8b54cb68170bf38110ebf569',1,'MediaMotion::Modules::Explorer::Controllers::PopupController']]],
-  ['ontriggerenter',['OnTriggerEnter',['../class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursor_controller.html#a01b9b3c3d0637a771757ad0f5894b2a3',1,'MediaMotion::Modules::Explorer::Controllers::CursorController']]],
-  ['ontriggerexit',['OnTriggerExit',['../class_media_motion_1_1_modules_1_1_explorer_1_1_controllers_1_1_cursor_controller.html#a1fe163d523616e8fd3475cf5f52a6f7f',1,'MediaMotion::Modules::Explorer::Controllers::CursorController']]]
+  ['name',['Name',['../class_media_motion_1_1_core_1_1_models_1_1_module_1_1_configuration.html#a1555add3bcbb4eeff7263e80f5908e99',1,'MediaMotion::Core::Models::Module::Configuration']]],
+  ['namedvaluecolor',['NamedValueColor',['../classi_tween.html#aa24c510cfa8c86f34e890d4f19d45a8d',1,'iTween']]],
+  ['next',['Next',['../interface_media_motion_1_1_core_1_1_services_1_1_playlist_1_1_interfaces_1_1_i_playlist_service.html#a9b0c46982f86b1e15cdb015415b5e703',1,'MediaMotion.Core.Services.Playlist.Interfaces.IPlaylistService.Next()'],['../class_media_motion_1_1_core_1_1_services_1_1_playlist_1_1_playlist_service.html#af2473c95431f3edfa8492bc0c24b49c2',1,'MediaMotion.Core.Services.Playlist.PlaylistService.Next()']]],
+  ['none',['none',['../classi_tween.html#a908edecd0a94e0fac374d9adb82b2968a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'iTween']]],
+  ['notfoundexception',['NotFoundException',['../class_media_motion_1_1_core_1_1_exceptions_1_1_not_found_exception.html#a031ba08effb2dee874aaccbd123a99db',1,'MediaMotion.Core.Exceptions.NotFoundException.NotFoundException()'],['../class_media_motion_1_1_core_1_1_exceptions_1_1_not_found_exception.html#aecc830ba7e03314b6394c20469e3f94c',1,'MediaMotion.Core.Exceptions.NotFoundException.NotFoundException(string Message)'],['../class_media_motion_1_1_core_1_1_exceptions_1_1_not_found_exception.html#aed036b8903f73dbc10b1a27d199a76b6',1,'MediaMotion.Core.Exceptions.NotFoundException.NotFoundException(string Message, Exception Parent)']]],
+  ['notfoundexception',['NotFoundException',['../class_media_motion_1_1_core_1_1_exceptions_1_1_not_found_exception.html',1,'MediaMotion::Core::Exceptions']]]
 ];

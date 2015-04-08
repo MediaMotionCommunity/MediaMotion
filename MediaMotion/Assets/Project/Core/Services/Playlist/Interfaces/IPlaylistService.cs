@@ -1,4 +1,4 @@
-﻿using MediaMotion.Core.Models.FileManager.Interfaces;
+﻿using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Services.Playlist.Interfaces {
 	/// <summary>
