@@ -18,7 +18,7 @@ namespace MediaMotion.Modules.VideoViewer.Observers {
 		/// Initializes a new instance of the <see cref="ElementFactoryObserver"/> class.
 		/// </summary>
 		public ElementFactoryObserver() {
-			this.supportedExtensions = new string[] { ".avi", ".mkv", ".mp4" };
+			this.supportedExtensions = new string[] { ".avi", ".mkv", ".mp4", ".wav" };
 		}
 
 		/// <summary>
@@ -31,7 +31,6 @@ namespace MediaMotion.Modules.VideoViewer.Observers {
 		public bool Supports(string path) {
 			if (File.Exists(path)) {
 				FileInfo fileInfo = new FileInfo(path);
-
 				return (this.supportedExtensions.Contains(fileInfo.Extension.ToLower()));
 			}
 			return (false);
@@ -45,7 +44,6 @@ namespace MediaMotion.Modules.VideoViewer.Observers {
 		public IElement Create(string path) {
 			if (this.Supports(path)) {
 				FileInfo fileInfo = new FileInfo(path);
-
 				switch (fileInfo.Extension.ToLower()) {
 					default:
 						return (new Video(fileInfo));

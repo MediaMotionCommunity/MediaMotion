@@ -6,8 +6,7 @@ namespace VLC
     static class LibVLC
     {
         #region Structs track infos
-        public enum libvlc_track_type_t
-            : int
+        public enum libvlc_track_type_t : int
         {
             libvlc_track_unknown = -1,
             libvlc_track_audio = 0,

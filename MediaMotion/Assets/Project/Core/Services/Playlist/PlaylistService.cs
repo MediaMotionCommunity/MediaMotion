@@ -68,8 +68,7 @@ namespace MediaMotion.Core.Services.Playlist {
 		public void Configure(IElement element, string[] filterExtension) {
 			if (element.GetElementType() == ElementType.File) {
 				this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetParent()).ToArray();
-				this.index = Array.IndexOf(this.filesList, this.filesList.First(file => file.GetPath().CompareTo(element.GetPath()) == 0));
-			} else {
+				this.index = Array.IndexOf(this.filesList, this.filesList.FirstOrDefault(file => file != null && file.GetPath().CompareTo(element.GetPath()) == 0));			} else {
 				this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetPath()).ToArray();
 				this.index = 0;
 			}
