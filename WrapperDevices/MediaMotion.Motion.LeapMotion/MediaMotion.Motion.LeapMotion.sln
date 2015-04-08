@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion", "..\Me
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMotion.Testing", "MediaMotion.Motion.LeapMotion.Testing\MediaMotion.Motion.LeapMotion.Testing.csproj", "{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMotionTests", "MediaMotion.Motion.LeapMotionTests\MediaMotion.Motion.LeapMotionTests.csproj", "{D0C356C6-C80A-44CD-9290-5D59DEB30D93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMotion.Tests", "MediaMotion.Motion.LeapMotionTests\MediaMotion.Motion.LeapMotion.Tests.csproj", "{D0C356C6-C80A-44CD-9290-5D59DEB30D93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
