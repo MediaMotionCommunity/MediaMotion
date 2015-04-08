@@ -22,7 +22,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <summary>
 		/// Scale of the virtual browser plan (in cm/unit)
 		/// </summary>
-		private const float BrowserPlanScale = 0.6;
+		private const float BrowserPlanScale = 0.6f;
 
 		/// <summary>
 		/// Previous frame saved
