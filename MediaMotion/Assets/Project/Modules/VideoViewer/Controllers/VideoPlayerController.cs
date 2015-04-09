@@ -43,6 +43,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// VLC to Unity wrapping internal components
 		/// </summary>
+		private string vlc_video_path = "--";
 		private Mutex vlc_video_lock = new Mutex();
 		private Color32[] vlc_video_pixels;
 		private GCHandle vlc_video_pixels_handle;
@@ -133,11 +134,13 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 			this.moduleInstance = module;
 			this.inputService = input;
 			this.playlistService = playlist;
-			this.playlistService.Configure(((this.moduleInstance.Parameters.Length > 0) ? (this.moduleInstance.Parameters[0]) : (null)), ElementFactoryObserver.supportedExtensions);
+			this.playlistService.Configure(
+				((this.moduleInstance.Parameters.Length > 0) ? (this.moduleInstance.Parameters[0]) : (null)),
+				ElementFactoryObserver.supportedExtensions
+			);
 			// Start VLC playing
 			this.StartSession();
 			this.LoadFile();
-			this.Play();
 		}
 
 		/// <summary>
@@ -217,7 +220,6 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 							vlc_video_ysize = track_info.video.i_height;
 						}
 					}
-					Debug.Log("Media file Loaded: " + path + ", xsize:" + vlc_video_xsize.ToString() + ", ysize:" + vlc_video_ysize.ToString());
 					// Load the player for the media
 					vlc_player = LibVLC.libvlc_media_player_new_from_media(vlc_media);
 					// If player creation was successfull and media has a video
@@ -250,6 +252,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 							(IntPtr)GCHandle.Alloc(this)
 						);
 					}
+					// Auto play
+					this.Play();
 				}
 			}
 		}
@@ -385,7 +389,21 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		private void Error(string msg)
 		{
-			Debug.LogError(msg);
+			Debug.LogError(
+				"[" + System.DateTime.Now + "] "
+				+ msg
+				+ " (" + Marshal.PtrToStringAuto(LibVLC.libvlc_errmsg()) + ")"
+			);
+		}
+
+		/// <summary>
+		/// Print infos about the current media playing
+		/// </summary>
+		private void Infos()
+		{
+			Debug.Log("Media file Loaded: " + vlc_video_path);
+			Debug.log("Image xsize:" + vlc_video_xsize.ToString());
+			Debug.log("Image ysize:" + vlc_video_ysize.ToString());
 		}
 	}
 }

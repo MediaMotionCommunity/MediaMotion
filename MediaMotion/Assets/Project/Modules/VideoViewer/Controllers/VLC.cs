@@ -112,7 +112,13 @@ namespace VLC
 		[DllImport("libvlc")]
 		public static extern void libvlc_video_set_format(IntPtr player, [MarshalAs(UnmanagedType.LPStr)] string chroma, uint width, uint height, uint pitch);
 
-		// Importing system memcpy from C
+		// VLC lib infos
+		[DllImport("libvlc")]
+		public static extern IntPtr libvlc_get_version();
+		[DllImport("libvlc")]
+		public static extern IntPtr libvlc_errmsg();
+
+		// System memcpy from C
 		[DllImport("msvcrt")]
 		public static extern IntPtr memcpy(IntPtr dest, IntPtr src, uint count);
 	}
