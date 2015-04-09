@@ -31,13 +31,18 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		private IPlaylistService playlistService;
 
-		// VLC Player internal components
+		/// <summary>
+		/// VLC internal components (session, media, player, video buffer)
+		/// </summary>
 		private IntPtr vlc_session = IntPtr.Zero;
 		private IntPtr vlc_media = IntPtr.Zero;
 		private IntPtr vlc_player = IntPtr.Zero;
 		private IntPtr vlc_video_buffer = IntPtr.Zero;
 		private IntPtr vlc_video_result_buffer = IntPtr.Zero;
-		// VLC Video components
+
+		/// <summary>
+		/// VLC to Unity wrapping internal components
+		/// </summary>
 		private Mutex vlc_video_lock = new Mutex();
 		private Color32[] vlc_video_pixels;
 		private GCHandle vlc_video_pixels_handle;
@@ -115,8 +120,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		static public void VideoUnformat(IntPtr opaque)
 		{
-			VideoPlayerController instance = (((GCHandle)opaque).Target as VideoPlayerController);
-			return;
+			// VideoPlayerController instance = (((GCHandle)opaque).Target as VideoPlayerController);
+			// return;
 		}
 
 		/// <summary>
@@ -130,7 +135,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 			this.playlistService = playlist;
 			this.playlistService.Configure(((this.moduleInstance.Parameters.Length > 0) ? (this.moduleInstance.Parameters[0]) : (null)), ElementFactoryObserver.supportedExtensions);
 			// Start VLC playing
-			this.Start();
+			this.StartSession();
 			this.LoadFile();
 			this.Play();
 		}
@@ -175,11 +180,10 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		}
 
 		/// <summary>
-		/// Start the VLC instance
+		/// Start the VLC runtime
 		/// </summary>
-		private void Start()
+		private void StartSession()
 		{
-			// Start the VLC runtime
 			vlc_session = LibVLC.libvlc_new(0, new string[] {});
 		}
 
