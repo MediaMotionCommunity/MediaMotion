@@ -356,7 +356,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 			if (vlc_session != IntPtr.Zero) {
 				return true;
 			}
-			Error("VLC runtime could not be loaded");
+			Error("VLC Runtime could not be loaded");
 			return false;
 		}
 
@@ -368,7 +368,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 			if (vlc_media != IntPtr.Zero) {
 				return true;
 			}
-			Error("Could not load VLC media file");
+			Error("VLC Media could not be loaded");
 			return false;
 		}
 
@@ -380,7 +380,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 			if (vlc_player != IntPtr.Zero) {
 				return true;
 			}
-			Error("VLC Media player is not correctly initialized.");
+			Error("VLC Media player could not be loaded");
 			return false;
 		}
 
@@ -390,8 +390,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		private void Error(string msg)
 		{
 			Debug.LogError(
-				"[" + System.DateTime.Now + "] "
-				+ msg
+				"[" + System.DateTime.Now + "] " + msg
 				+ " (" + Marshal.PtrToStringAuto(LibVLC.libvlc_errmsg()) + ")"
 			);
 		}
