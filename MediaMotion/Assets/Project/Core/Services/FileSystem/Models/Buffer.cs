@@ -14,6 +14,9 @@ namespace MediaMotion.Core.Services.FileSystem.Models {
 		/// <param name="deleteElementsAfterPaste">if set to <c>true</c> [delete elements after paste].</param>
 		/// <param name="deleteBufferAfterPaste">if set to <c>true</c> [delete buffer after paste].</param>
 		public Buffer(IElement[] elements, bool deleteElementsAfterPaste, bool deleteBufferAfterPaste) {
+			if (elements == null) {
+				throw new ArgumentNullException("elements must not be null");
+			}
 			if (!elements.All(element => element != null)) {
 				throw new ArgumentNullException("elements must not contain any null element");
 			}

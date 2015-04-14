@@ -8,6 +8,7 @@ using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models;
 using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
+using System.Diagnostics;
 
 namespace MediaMotion.Core.Services.FileSystem {
 	/// <summary>
@@ -258,8 +259,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 						this.BufferizedElements = null;
 					}
 					return (true);
-				} catch (ArgumentNullException) {
+				} catch (ArgumentNullException e) {
 					// TODO Log
+					Debug.Print(e.Message);
 				}
 				return (false);
 			}

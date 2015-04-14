@@ -62,7 +62,7 @@ namespace MediaMotion.Core.Services.Playlist.Tests {
 			Assert.IsFalse(this.PlaylistService.Configure(file, filters));
 
 			// Should handle Configure not called
-			Assert.Throws<Exception>(delegate { this.PlaylistService.Current(); });
+			Assert.Throws<InvalidOperationException>(delegate { this.PlaylistService.Current(); });
 
 			filters[0] = ".test";
 			this.PlaylistService.Configure(file, filters);

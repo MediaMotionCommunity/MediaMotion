@@ -74,13 +74,19 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// </summary>
 		/// <param name="element">The file or the directory.</param>
 		/// <param name="filterExtension">The filter extension.</param>
-		/// <returns><c>true</c> if the playlist is correctly configured otherwise, <c>false</c></returns>
+		/// <returns>
+		///   <c>true</c> if the playlist is correctly configured otherwise, <c>false</c>
+		/// </returns>
 		public bool Configure(IElement element, string[] filterExtension) {
 			this.IsConfigured = false;
 			try {
 				if (element == null) {
 					throw new ArgumentNullException("element must not be null");
 				}
+				if (filterExtension == null) {
+					throw new ArgumentNullException("filterExtension must not be null");
+				}
+
 				switch (element.GetElementType()) {
 					case ElementType.File:
 						this.filesList = this.fileSystemService.GetFolderElements(element.GetParent(), filterExtension);
