@@ -21,7 +21,7 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <summary>
 		/// The file list
 		/// </summary>
-		private IFile[] filesList;
+		private IElement[] filesList;
 
 		/// <summary>
 		/// The index
@@ -83,14 +83,14 @@ namespace MediaMotion.Core.Services.Playlist {
 				}
 				switch (element.GetElementType()) {
 					case ElementType.File:
-						this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetParent()).ToArray();
+						this.filesList = this.fileSystemService.GetFolderElements(element.GetParent(), filterExtension);
 						this.index = Array.IndexOf(this.filesList, this.filesList.First(file => file.GetPath().CompareTo(element.GetPath()) == 0));
 						if (this.index < 0) {
 							this.index = 0;
 						}
 						break;
 					case ElementType.Folder:
-						this.filesList = this.fileSystemService.GetContent(filterExtension, element.GetPath()).ToArray();
+						this.filesList = this.fileSystemService.GetFolderElements(element.GetPath(), filterExtension);
 						this.index = 0;
 						break;
 					default:
@@ -119,7 +119,10 @@ namespace MediaMotion.Core.Services.Playlist {
 			if (!this.IsConfigured) {
 				throw new InvalidOperationException("The playlist must be initialized");
 			}
-			return (this.filesList[this.index]);
+			if (this.filesList[this.index] is IFile) {
+				return (this.filesList[this.index] as IFile);
+			}
+			return (null);
 		}
 
 		/// <summary>

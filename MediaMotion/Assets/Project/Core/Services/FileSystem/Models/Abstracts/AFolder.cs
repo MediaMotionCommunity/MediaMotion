@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
@@ -20,9 +19,6 @@ namespace MediaMotion.Core.Services.FileSystem.Models.Abstracts {
 		/// <param name="resourceId">The resource Id.</param>
 		protected AFolder(DirectoryInfo directoryInfo, string resourceId = null)
 			: base(ElementType.Folder, resourceId) {
-			if (directoryInfo == null) {
-				throw new ArgumentException("directoryInfo must not be null");
-			}
 			this.directoryInfo = directoryInfo;
 		}
 

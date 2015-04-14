@@ -10,7 +10,7 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// Gets the initial folder.
 		/// </summary>
 		/// <value>
-		/// The initial folder.
+		///   The initial folder.
 		/// </value>
 		IFolder InitialFolder { get; }
 
@@ -18,9 +18,17 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// Gets the current folder.
 		/// </summary>
 		/// <value>
-		/// The current folder.
+		///   The current folder.
 		/// </value>
 		IFolder CurrentFolder { get; }
+
+		/// <summary>
+		/// Gets the bufferized elements.
+		/// </summary>
+		/// <value>
+		///   The bufferized elements.
+		/// </value>
+		IBuffer BufferizedElements { get; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether [display hidden].
@@ -28,7 +36,15 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// <value>
 		///   <c>true</c> if [display hidden]; otherwise, <c>false</c>.
 		/// </value>
-		bool DisplayHidden { get; set; }
+		bool DisplayHiddenElements { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether [display system files].
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if [display system files]; otherwise, <c>false</c>.
+		/// </value>
+		bool DisplaySystemElements { get; set; }
 
 		/// <summary>
 		/// Get the home path
@@ -52,39 +68,47 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		bool ChangeDirectory(string path = null);
 
 		/// <summary>
-		/// Get the content of the current directory or the <see cref="IFolder" /> provide in parameter
+		/// Gets folder's elements
 		/// </summary>
-		/// <param name="folder">The folder.</param>
-		/// <returns>
-		/// List of elements
-		/// </returns>
-		List<IElement> GetContent(string folder = null);
-
-		/// <summary>
-		/// Gets the content.
-		/// </summary>
+		/// <param name="path">The path.</param>
 		/// <param name="filterExtension">The filter extension.</param>
-		/// <param name="folder">The folder.</param>
 		/// <returns>
-		/// List of files
+		///   An array with elements of the folder, <c>null</c> if an error occurred
 		/// </returns>
-		List<IFile> GetContent(string[] filterExtension, string folder);
+		IElement[] GetFolderElements(string path = null, string[] filterExtension = null);
 
 		/// <summary>
-		/// Copy an <see cref="IElement" /> to the specific <see cref="IFolder" />
+		/// Bufferizes the elements for copy
 		/// </summary>
-		/// <param name="Element">The element to be copied</param>
-		/// <param name="Destination">The folder destination</param>
-		/// <returns>True if the action succeed, False otherwise</returns>
-		bool Copy(IElement Element, IFolder Destination);
+		/// <param name="elements">The elements.</param>
+		void Copy(IElement[] elements);
 
 		/// <summary>
-		/// Move an <see cref="IElement" /> in a different <see cref="IFolder" />
+		/// Bufferizes the element for copy
 		/// </summary>
-		/// <param name="Element">The element to be move</param>
-		/// <param name="Destination">The folder destination</param>
-		/// <returns>True if the action succeed, False otherwise</returns>
-		bool Move(IElement Element, IFolder Destination);
+		/// <param name="elements">The elements.</param>
+		void Copy(IElement element);
+
+		/// <summary>
+		/// Bufferizes the elements for deplacement
+		/// </summary>
+		/// <param name="elements">The elements.</param>
+		void Cut(IElement[] elements);
+
+		/// <summary>
+		/// Bufferizes the element for deplacement
+		/// </summary>
+		/// <param name="element">The element.</param>
+		void Cut(IElement element);
+
+		/// <summary>
+		/// Pastes the specified destination.
+		/// </summary>
+		/// <param name="destination">The destination.</param>
+		/// <returns>
+		///   <c>true</c> if the action succeed, <c>false</c> if not or if the buffer is empty
+		/// </returns>
+		bool Paste(IFolder destination);
 
 		/// <summary>
 		/// Remove an element
