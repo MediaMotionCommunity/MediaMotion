@@ -227,31 +227,30 @@ namespace MediaMotion.Core.Services.FileSystem {
 		///   <c>true</c> if the action succeed, <c>false</c> if not or if the buffer is empty
 		/// </returns>
 		public bool Paste(IFolder destination) {
-			if (this.BufferizedElements == null) {
-				return (false);
-			}
+			try {
+				if (destination == null) {
+					throw new ArgumentNullException("The destination must not be null");
+				}
+				if (this.BufferizedElements == null || this.BufferizedElements.Elements == null || this.BufferizedElements.Elements.Length == 0) {
+					throw new ArgumentNullException("The buffer must not be null or empty");
+				}
+				elementAction elementActionFunc = this.GetRelevantElementAction(this.BufferizedElements);
 
-			int i = 0;
-			IElement[] elements = new IElement[this.BufferizedElements.Elements.Length];
-			elementAction elementActionFunc = this.CopyElement;
+				for (int i = 0; i < this.BufferizedElements.Elements.Length; ++i) {
+					IElement newElement = this._elementFactory.Create(elementActionFunc(this.BufferizedElements.Elements[i].GetPath(), destination.GetPath()));
 
-			if (this.BufferizedElements.DeleteElementsAfterPaste) {
-				elementActionFunc = this.MoveElement;
-			}
-			foreach (IElement element in this.BufferizedElements.Elements) {
-				elements[i++] = this._elementFactory.Create(elementActionFunc(element.GetPath(), destination.GetPath()));
-			}
-			switch (this.BufferizedElements.DeleteBufferAfterPaste) {
-				case true:
-					this.BufferizedElements = null;
-					break;
-				case !true:
 					if (this.BufferizedElements.DeleteElementsAfterPaste) {
-						this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, this.BufferizedElements.DeleteElementsAfterPaste, this.BufferizedElements.DeleteBufferAfterPaste);
+						this.BufferizedElements.Elements[i] = newElement;
 					}
-					break;
+				}
+				if (this.BufferizedElements.DeleteBufferAfterPaste) {
+					this.BufferizedElements = null;
+				}
+				return (true);
+			} catch (ArgumentNullException) {
+				// TODO Log
 			}
-			return (true);
+			return (false);
 		}
 
 		/// <summary>
@@ -316,6 +315,21 @@ namespace MediaMotion.Core.Services.FileSystem {
 					(filterExtension == null || filterExtension.Contains(Path.GetExtension(elementInfo.FullName))) &&
 					(this.DisplayHiddenElements || !elementInfo.HasAttribute(FileAttributes.Hidden)) &&
 					(this.DisplaySystemElements || !elementInfo.HasAttribute(FileAttributes.System)));
+		}
+
+		/// <summary>
+		/// Gets the relevant element action.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <returns>
+		///   The relevant elementAction for buffer treatment
+		/// </returns>
+		private elementAction GetRelevantElementAction(IBuffer buffer) {
+			if (buffer.DeleteElementsAfterPaste) {
+				return (this.MoveElement);
+			} else {
+				return (this.CopyElement);
+			}
 		}
 
 		/// <summary>
