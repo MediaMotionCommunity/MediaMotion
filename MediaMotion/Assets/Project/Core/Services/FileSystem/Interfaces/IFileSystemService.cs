@@ -146,5 +146,13 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// <param name="Element">The element.</param>
 		/// <returns>True if the action succeed, False otherwise</returns>
 		bool Restore(IElement Element);
+
+		/// <summary>
+		/// Determines whether [is buffer empty].
+		/// </summary>
+		/// <returns>
+		///   <c>true</c> if the buffer is empty, <c>false</c> otherwise
+		/// </returns>
+		bool IsBufferEmpty();
 	}
 }

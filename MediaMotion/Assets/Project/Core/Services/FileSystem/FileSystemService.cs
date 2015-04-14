@@ -20,11 +20,17 @@ namespace MediaMotion.Core.Services.FileSystem {
 		private IElementFactory _elementFactory;
 
 		/// <summary>
+		/// The buffer access
+		/// </summary>
+		private object _bufferAccess;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="FileSystemService" /> class.
 		/// </summary>
 		/// <param name="elementFactory">The element factory.</param>
 		public FileSystemService(IElementFactory elementFactory) {
 			this._elementFactory = elementFactory;
+			this._bufferAccess = new object();
 			this.InitialFolder = this._elementFactory.CreateFolder(Directory.GetCurrentDirectory());
 			this.CurrentFolder = this.InitialFolder;
 			this.BufferizedElements = null;
@@ -171,13 +177,15 @@ namespace MediaMotion.Core.Services.FileSystem {
 		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
 		/// </returns>
 		public bool Copy(IElement[] elements) {
-			try {
-				this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, false, false);
-				return (true);
-			} catch (ArgumentNullException) {
-				// TODO Log
+			lock (this._bufferAccess) {
+				try {
+					this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, false, false);
+					return (true);
+				} catch (ArgumentNullException) {
+					// TODO Log
+				}
+				return (false);
 			}
-			return (false);
 		}
 
 		/// <summary>
@@ -199,13 +207,15 @@ namespace MediaMotion.Core.Services.FileSystem {
 		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
 		/// </returns>
 		public bool Cut(IElement[] elements) {
-			try {
-				this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, true, true);
-				return (true);
-			} catch (ArgumentNullException) {
-				// TODO Log
+			lock (this._bufferAccess) {
+				try {
+					this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, true, true);
+					return (true);
+				} catch (ArgumentNullException) {
+					// TODO Log
+				}
+				return (false);
 			}
-			return (false);
 		}
 
 		/// <summary>
@@ -224,33 +234,35 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </summary>
 		/// <param name="destination">The destination.</param>
 		/// <returns>
-		///   <c>true</c> if the action succeed, <c>false</c> if not or if the buffer is empty
+		///   <c>true</c> if the action succeed, <c>false</c> if the destination is null, the buffer is null or empty, or if an error occured
 		/// </returns>
 		public bool Paste(IFolder destination) {
-			try {
-				if (destination == null) {
-					throw new ArgumentNullException("The destination must not be null");
-				}
-				if (this.BufferizedElements == null || this.BufferizedElements.Elements == null || this.BufferizedElements.Elements.Length == 0) {
-					throw new ArgumentNullException("The buffer must not be null or empty");
-				}
-				elementAction elementActionFunc = this.GetRelevantElementAction(this.BufferizedElements);
-
-				for (int i = 0; i < this.BufferizedElements.Elements.Length; ++i) {
-					IElement newElement = this._elementFactory.Create(elementActionFunc(this.BufferizedElements.Elements[i].GetPath(), destination.GetPath()));
-
-					if (this.BufferizedElements.DeleteElementsAfterPaste) {
-						this.BufferizedElements.Elements[i] = newElement;
+			lock (this._bufferAccess) {
+				try {
+					if (destination == null) {
+						throw new ArgumentNullException("The destination must not be null");
 					}
+					if (this.IsBufferEmpty()) {
+						throw new ArgumentNullException("The buffer must not be empty");
+					}
+					elementAction elementActionFunc = this.GetRelevantElementAction(this.BufferizedElements);
+
+					for (int i = 0; i < this.BufferizedElements.Elements.Length; ++i) {
+						IElement newElement = this._elementFactory.Create(elementActionFunc(this.BufferizedElements.Elements[i].GetPath(), destination.GetPath()));
+
+						if (this.BufferizedElements.DeleteElementsAfterPaste) {
+							this.BufferizedElements.Elements[i] = newElement;
+						}
+					}
+					if (this.BufferizedElements.DeleteBufferAfterPaste) {
+						this.BufferizedElements = null;
+					}
+					return (true);
+				} catch (ArgumentNullException) {
+					// TODO Log
 				}
-				if (this.BufferizedElements.DeleteBufferAfterPaste) {
-					this.BufferizedElements = null;
-				}
-				return (true);
-			} catch (ArgumentNullException) {
-				// TODO Log
+				return (false);
 			}
-			return (false);
 		}
 
 		/// <summary>
@@ -302,6 +314,16 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </returns>
 		public bool Restore(IElement Element) {
 			return (false);
+		}
+
+		/// <summary>
+		/// Determines whether [is buffer empty].
+		/// </summary>
+		/// <returns>
+		///   <c>true</c> if the buffer is empty, <c>false</c> otherwise
+		/// </returns>
+		public bool IsBufferEmpty() {
+			return (this.BufferizedElements == null || this.BufferizedElements.Elements == null || this.BufferizedElements.Elements.Length == 0);
 		}
 
 		/// <summary>
