@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Extensions;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
-using MediaMotion.Core.Services.FileSystem.Models;
 using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
+
+using Buffer = MediaMotion.Core.Services.FileSystem.Models.Buffer;
 
 namespace MediaMotion.Core.Services.FileSystem {
 	/// <summary>
@@ -17,21 +18,21 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// The file factory
 		/// </summary>
-		private IElementFactory _elementFactory;
+		private IElementFactory elementFactory;
 
 		/// <summary>
 		/// The buffer access
 		/// </summary>
-		private object _bufferAccess;
+		private object bufferAccess;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileSystemService" /> class.
 		/// </summary>
 		/// <param name="elementFactory">The element factory.</param>
 		public FileSystemService(IElementFactory elementFactory) {
-			this._elementFactory = elementFactory;
-			this._bufferAccess = new object();
-			this.InitialFolder = this._elementFactory.CreateFolder(Directory.GetCurrentDirectory());
+			this.elementFactory = elementFactory;
+			this.bufferAccess = new object();
+			this.InitialFolder = this.elementFactory.CreateFolder(Directory.GetCurrentDirectory());
 			this.CurrentFolder = this.InitialFolder;
 			this.BufferizedElements = null;
 			this.DisplayHiddenElements = false;
@@ -43,7 +44,10 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </summary>
 		/// <param name="source">The source.</param>
 		/// <param name="destination">The destination.</param>
-		private delegate string elementAction(string source, string destination);
+		/// <returns>
+		///   The path of the new element
+		/// </returns>
+		private delegate string ElementAction(string source, string destination);
 
 		/// <summary>
 		/// Gets the initial folder.
@@ -102,7 +106,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// the home folder
 		/// </returns>
 		public IFolder GetHomeFolder() {
-			return (this._elementFactory.CreateFolder(this.GetHome()));
+			return (this.elementFactory.CreateFolder(this.GetHome()));
 		}
 
 		/// <summary>
@@ -116,7 +120,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 			if (!Directory.Exists(folder)) {
 				return (false);
 			}
-			this.CurrentFolder = this._elementFactory.CreateFolder(folder);
+			this.CurrentFolder = this.elementFactory.CreateFolder(folder);
 			return (true);
 		}
 
@@ -134,11 +138,11 @@ namespace MediaMotion.Core.Services.FileSystem {
 				int i = 0;
 				DirectoryInfo directoryInfo = new DirectoryInfo(path ?? this.CurrentFolder.GetPath());
 				FileSystemInfo[] directoryElementsInfo = directoryInfo.GetFileSystemInfos();
-				IEnumerable<FileSystemInfo> relevantDirectoryElementsInfo = directoryElementsInfo.Where(element => this.IsElementListable(element, filterExtension, onlyFiles));
+				IEnumerable<FileSystemInfo> relevantDirectoryElementsInfo = directoryElementsInfo.Where(element => this.IsElementBrowsable(element, filterExtension, onlyFiles));
 				IElement[] directoryElements = new IElement[relevantDirectoryElementsInfo.Count()];
 
 				foreach (FileSystemInfo elementInfo in relevantDirectoryElementsInfo) {
-					directoryElements[i] = this._elementFactory.Create(elementInfo.FullName);
+					directoryElements[i] = this.elementFactory.Create(elementInfo.FullName);
 					++i;
 				}
 				return (directoryElements.ToArray());
@@ -177,9 +181,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
 		/// </returns>
 		public bool Copy(IElement[] elements) {
-			lock (this._bufferAccess) {
+			lock (this.bufferAccess) {
 				try {
-					this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, false, false);
+					this.BufferizedElements = new Buffer(elements, false, false);
 					return (true);
 				} catch (ArgumentNullException) {
 					// TODO Log
@@ -191,7 +195,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// Bufferizes the element for copy
 		/// </summary>
-		/// <param name="element"></param>
+		/// <param name="element">The element.</param>
 		/// <returns>
 		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
 		/// </returns>
@@ -200,16 +204,16 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
-		/// Bufferizes the elements for deplacement
+		/// Bufferizes the elements for movement
 		/// </summary>
 		/// <param name="elements">The elements.</param>
 		/// <returns>
 		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
 		/// </returns>
 		public bool Cut(IElement[] elements) {
-			lock (this._bufferAccess) {
+			lock (this.bufferAccess) {
 				try {
-					this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, true, true);
+					this.BufferizedElements = new Buffer(elements, true, true);
 					return (true);
 				} catch (ArgumentNullException) {
 					// TODO Log
@@ -219,7 +223,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
-		/// Bufferizes the element for deplacement
+		/// Bufferizes the element for movement
 		/// </summary>
 		/// <param name="element">The element.</param>
 		/// <returns>
@@ -234,10 +238,10 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </summary>
 		/// <param name="destination">The destination.</param>
 		/// <returns>
-		///   <c>true</c> if the action succeed, <c>false</c> if the destination is null, the buffer is null or empty, or if an error occured
+		///   <c>true</c> if the action succeed, <c>false</c> if the destination is null, the buffer is null or empty, or if an error occurred
 		/// </returns>
 		public bool Paste(IFolder destination) {
-			lock (this._bufferAccess) {
+			lock (this.bufferAccess) {
 				try {
 					if (destination == null) {
 						throw new ArgumentNullException("The destination must not be null");
@@ -245,10 +249,10 @@ namespace MediaMotion.Core.Services.FileSystem {
 					if (this.IsBufferEmpty()) {
 						throw new ArgumentNullException("The buffer must not be empty");
 					}
-					elementAction elementActionFunc = this.GetRelevantElementAction(this.BufferizedElements);
+					ElementAction elementActionFunc = this.GetRelevantElementAction(this.BufferizedElements);
 
 					for (int i = 0; i < this.BufferizedElements.Elements.Length; ++i) {
-						IElement newElement = this._elementFactory.Create(elementActionFunc(this.BufferizedElements.Elements[i].GetPath(), destination.GetPath()));
+						IElement newElement = this.elementFactory.Create(elementActionFunc(this.BufferizedElements.Elements[i].GetPath(), destination.GetPath()));
 
 						if (this.BufferizedElements.DeleteElementsAfterPaste) {
 							this.BufferizedElements.Elements[i] = newElement;
@@ -295,7 +299,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <summary>
 		/// Removes the specified element.
 		/// </summary>
-		/// <param name="elements">The elements.</param>
+		/// <param name="element">The element.</param>
 		/// <returns>
 		///   <c>true</c> if the deletion succeed, <c>false</c> otherwise
 		/// </returns>
@@ -327,12 +331,15 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
-		/// Determines whether [is element listable] [the specified element infos].
+		/// Determines whether [is element browsable] [the specified element information].
 		/// </summary>
-		/// <param name="elementInfo">The element infos.</param>
+		/// <param name="elementInfo">The element information.</param>
 		/// <param name="filterExtension">The filter extension.</param>
-		/// <returns><c>true</c> if the element is listable, <c>false</c> otherwise</returns>
-		private bool IsElementListable(FileSystemInfo elementInfo, string[] filterExtension, bool onlyFiles) {
+		/// <param name="onlyFiles">if set to <c>true</c> [only files].</param>
+		/// <returns>
+		///   <c>true</c> if the element is browsable, <c>false</c> otherwise
+		/// </returns>
+		private bool IsElementBrowsable(FileSystemInfo elementInfo, string[] filterExtension, bool onlyFiles) {
 			return ((!onlyFiles || !elementInfo.HasAttribute(FileAttributes.Directory)) &&
 					(filterExtension == null || filterExtension.Contains(Path.GetExtension(elementInfo.FullName))) &&
 					(this.DisplayHiddenElements || !elementInfo.HasAttribute(FileAttributes.Hidden)) &&
@@ -346,7 +353,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <returns>
 		///   The relevant elementAction for buffer treatment
 		/// </returns>
-		private elementAction GetRelevantElementAction(IBuffer buffer) {
+		private ElementAction GetRelevantElementAction(IBuffer buffer) {
 			if (buffer.DeleteElementsAfterPaste) {
 				return (this.MoveElement);
 			} else {
@@ -359,6 +366,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </summary>
 		/// <param name="source">The source.</param>
 		/// <param name="destination">The destination.</param>
+		/// <returns>
+		///   The path of the new element
+		/// </returns>
 		private string CopyElement(string source, string destination) {
 			if (Directory.Exists(source)) {
 				DirectoryInfo directoryInfo = new DirectoryInfo(source);
@@ -382,6 +392,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </summary>
 		/// <param name="source">The source.</param>
 		/// <param name="destination">The destination.</param>
+		/// <returns>
+		///   The path of the new element
+		/// </returns>
 		private string MoveElement(string source, string destination) {
 			if (Directory.Exists(source)) {
 				DirectoryInfo directoryInfo = new DirectoryInfo(source);
@@ -390,6 +403,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 				if (!Directory.Exists(destination)) {
 					directoryInfo.MoveTo(destination);
 				} else {
+					// TODO Change exception
 					throw new Exception("Already exist");
 				}
 			} else if (File.Exists(source)) {
@@ -399,6 +413,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 				if (!Directory.Exists(destination)) {
 					fileInfo.MoveTo(destination);
 				} else {
+					// TODO Change exception
 					throw new Exception("Already exist");
 				}
 			}

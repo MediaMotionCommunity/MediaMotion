@@ -7,6 +7,16 @@ namespace MediaMotion.Core.Services.ModuleManager.Models {
 	/// </summary>
 	public class ModuleInstance {
 		/// <summary>
+		/// Initializes a new instance of the <see cref="ModuleInstance"/> class.
+		/// </summary>
+		/// <param name="module">The module.</param>
+		/// <param name="parameters">The parameters.</param>
+		public ModuleInstance(IModule module, IElement[] parameters) {
+			this.Module = module;
+			this.Parameters = parameters;
+		}
+
+		/// <summary>
 		/// Gets the module.
 		/// </summary>
 		/// <value>
@@ -21,15 +31,5 @@ namespace MediaMotion.Core.Services.ModuleManager.Models {
 		/// The parameters.
 		/// </value>
 		public IElement[] Parameters { get; private set; }
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ModuleInstance"/> class.
-		/// </summary>
-		/// <param name="module">The module.</param>
-		/// <param name="parameters">The parameters.</param>
-		public ModuleInstance(IModule module, IElement[] parameters) {
-			this.Module = module;
-			this.Parameters = parameters;
-		}
 	}
 }

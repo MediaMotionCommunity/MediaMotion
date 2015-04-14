@@ -15,6 +15,5 @@ namespace MediaMotion.Modules.VideoViewer {
 			this.Configuration.Description = "Watch your movies and videos";
 			this.Configuration.ElementFactoryObserver = new ElementFactoryObserver();
 		}
-
 	}
 }

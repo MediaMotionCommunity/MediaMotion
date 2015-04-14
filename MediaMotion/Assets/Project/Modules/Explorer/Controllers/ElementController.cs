@@ -60,7 +60,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			tileTextMesh.text = this.Element.GetName();
 			tileTextMesh.color = new Color(0.8f, 0.9f, 1.0f);
 
-			if (this.tile.GetComponent<Renderer>().bounds.size.x < text.GetComponent<Renderer>().bounds.size.x) {
+			if (this.tile.GetComponent<Renderer>().bounds.size.x < this.text.GetComponent<Renderer>().bounds.size.x) {
 				tileTextMesh.text = this.Element.GetName().Substring(0, 10) + "...";
 			}
 		}

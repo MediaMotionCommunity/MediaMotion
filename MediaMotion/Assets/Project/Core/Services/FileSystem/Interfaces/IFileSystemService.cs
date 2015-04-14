@@ -100,14 +100,14 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// <summary>
 		/// Bufferizes the element for copy
 		/// </summary>
-		/// <param name="elements">The elements.</param>
+		/// <param name="element">The element.</param>
 		/// <returns>
 		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
 		/// </returns>
 		bool Copy(IElement element);
 
 		/// <summary>
-		/// Bufferizes the elements for deplacement
+		/// Bufferizes the elements for movement
 		/// </summary>
 		/// <param name="elements">The elements.</param>
 		/// <returns>
@@ -116,7 +116,7 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		bool Cut(IElement[] elements);
 
 		/// <summary>
-		/// Bufferizes the element for deplacement
+		/// Bufferizes the element for movement
 		/// </summary>
 		/// <param name="element">The element.</param>
 		/// <returns>
