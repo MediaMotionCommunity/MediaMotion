@@ -192,7 +192,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 			this.Clear();
 			this.fileSystemService.ChangeDirectory(folder.GetPath());
-			foreach (IElement element in this.fileSystemService.GetContent(null)) {
+			foreach (IElement element in this.fileSystemService.GetFolderElements()) {
 				GameObject uiElement;
 
 				uiElement = Instantiate(this.BaseElement) as GameObject;
