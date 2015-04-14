@@ -68,6 +68,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private GameObject selectedElement;
 
+		/// <summary>
+		/// The wheel tool
+		/// </summary>
 		private MenuBehavior wheelTool;
 
 		/// <summary>
@@ -116,11 +119,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 						break;
 					case ActionType.GrabStart:
 						if (this.selectedElement != null) {
-						this.wheelTool.ActiveWheelTool (this.selectedElement.gameObject.GetComponent<ElementController>().Element);
+							this.wheelTool.ActiveWheelTool(this.selectedElement.gameObject.GetComponent<ElementController>().Element);
 						}
 						break;
 					case ActionType.GrabStop:
-						this.wheelTool.DeactiveWheelTool ();
+						this.wheelTool.DeactiveWheelTool();
 						break;
 				}
 			}

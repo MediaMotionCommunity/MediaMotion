@@ -1,6 +1,6 @@
-﻿using MediaMotion.Modules.VideoViewer.Models.Interfaces;
+﻿using System.IO;
 using MediaMotion.Core.Services.FileSystem.Models.Abstracts;
-using System.IO;
+using MediaMotion.Modules.VideoViewer.Models.Interfaces;
 
 namespace MediaMotion.Modules.VideoViewer.Models.Abstract {
 	/// <summary>
