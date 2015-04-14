@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Factories;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
@@ -11,7 +12,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 	[TestFixture]
 	public class FileSystemServiceTests {
 		public IFileSystemService FileSystemService;
-		public FolderFactory FolderFactory;
+		public IElementFactory ElementFactory;
 		public int FilesCreated;
 		public string PathToTmp;
 
@@ -23,7 +24,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 			Random rnd = new Random();
 			this.FilesCreated = rnd.Next(1, 20);
 			System.IO.Directory.CreateDirectory(this.PathToTmp);
-			this.FolderFactory = new FolderFactory();
+			this.ElementFactory = new ElementFactory();
 		}
 
 		[Test]
@@ -52,7 +53,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 			initialDirectory = this.FileSystemService.CurrentFolder;
 			Assert.AreEqual(ElementType.Folder, initialDirectory.GetElementType());
 
-			List<IElement> directoryContent = this.FileSystemService.GetContent(this.FileSystemService.CurrentFolder.GetPath());
+			IElement[] directoryContent = this.FileSystemService.GetFolderElements(this.FileSystemService.CurrentFolder.GetPath());
 			foreach (IElement element in directoryContent) {
 				if (element.GetElementType().Equals(ElementType.Folder)) {
 					newDirectory = element as IFolder;
@@ -78,93 +79,93 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 
 		[Test]
 		public void GetContentTest() {
-			List<IElement> results = this.FileSystemService.GetContent();
-			Assert.AreNotEqual(0, results.Count, "should find some file (current folder)");
+			IElement[] results = this.FileSystemService.GetFolderElements();
+			Assert.AreNotEqual(0, results.Length, "should find some file (current folder)");
 
-			results = this.FileSystemService.GetContent(this.FileSystemService.GetHome());
-			Assert.AreNotEqual(0, results.Count, "should find somes files (home folder)");
+			results = this.FileSystemService.GetFolderElements(this.FileSystemService.GetHome());
+			Assert.AreNotEqual(0, results.Length, "should find somes files (home folder)");
 
 			for (int i = 0; i < this.FilesCreated; ++i) {
 				System.IO.File.Create(this.PathToTmp + "/file" + i + ".test");
 			}
 
-			results = this.FileSystemService.GetContent(this.PathToTmp);
-			
-			Assert.AreEqual(this.FilesCreated, results.Count);
+			results = this.FileSystemService.GetFolderElements(this.PathToTmp);
+
+			Assert.AreEqual(this.FilesCreated, results.Length);
 			Assert.AreEqual("file0.test", results[0].GetName());
 
 			string[] filters = new string[2];
 
-			List<IFile> fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp);
-			Assert.AreEqual(0, fileResults.Count, "filter failed 0");
+			IElement[] fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
+			Assert.AreEqual(0, fileResults.Length, "filter failed 0");
 
 			filters[0] = "shouldfindnothing";
-			fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp);
-			Assert.AreEqual(0, fileResults.Count, "filter failed 1");
+			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
+			Assert.AreEqual(0, fileResults.Length, "filter failed 1");
 
 			filters[0] = ".test";
-			fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp);
-			Assert.AreEqual(this.FilesCreated, fileResults.Count, "filter failed 2");
+			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
+			Assert.AreEqual(this.FilesCreated, fileResults.Length, "filter failed 2");
 
 			System.IO.File.Create(this.PathToTmp + "/file.testule");
 
-			fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp);
-			Assert.AreEqual(fileResults.Count, this.FilesCreated, "filter failed 3");
+			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
+			Assert.AreEqual(fileResults.Length, this.FilesCreated, "filter failed 3");
 
 			filters[0] = ".testule";
-			fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp);
-			Assert.AreEqual(fileResults.Count, 1, "filters missed a file 1");
+			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
+			Assert.AreEqual(fileResults.Length, 1, "filters missed a file 1");
 
 			filters[1] = ".test";
-			fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp);
-			Assert.AreEqual(fileResults.Count, this.FilesCreated + 1, "filters missed a file 2");
+			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
+			Assert.AreEqual(fileResults.Length, this.FilesCreated + 1, "filters missed a file 2");
 
-			results = this.FileSystemService.GetContent(this.PathToTmp);
-			Assert.AreEqual(results.Count, this.FilesCreated + 1, "a file is missing");
+			results = this.FileSystemService.GetFolderElements(this.PathToTmp);
+			Assert.AreEqual(results.Length, this.FilesCreated + 1, "a file is missing");
 
 			File.SetAttributes(this.PathToTmp + "/file.testule", File.GetAttributes(this.PathToTmp + "/file.testule") | FileAttributes.Hidden);
 
-			this.FileSystemService.DisplayHidden = false;
+			this.FileSystemService.DisplayHiddenElements = false;
 
-			results = this.FileSystemService.GetContent(this.PathToTmp);
-			Assert.AreEqual(results.Count, this.FilesCreated, "Hidden file should not be there");
+			results = this.FileSystemService.GetFolderElements(this.PathToTmp);
+			Assert.AreEqual(results.Length, this.FilesCreated, "Hidden file should not be there");
 
-			fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp);
-			Assert.AreEqual(this.FilesCreated, fileResults.Count);
+			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
+			Assert.AreEqual(this.FilesCreated, fileResults.Length);
 
-			this.FileSystemService.DisplayHidden = true;
+			this.FileSystemService.DisplayHiddenElements = true;
 
-			results = this.FileSystemService.GetContent(this.PathToTmp);
-			Assert.AreEqual(results.Count, this.FilesCreated + 1, "Hidden file is missing");
+			results = this.FileSystemService.GetFolderElements(this.PathToTmp);
+			Assert.AreEqual(results.Length, this.FilesCreated + 1, "Hidden file is missing");
 
-			fileResults = this.FileSystemService.GetContent(filters, this.PathToTmp);
-			Assert.AreEqual(fileResults.Count, this.FilesCreated + 1, "Hidden file is missing (with filters)");
+			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
+			Assert.AreEqual(fileResults.Length, this.FilesCreated + 1, "Hidden file is missing (with filters)");
 
-			results = this.FileSystemService.GetContent("/invalid/Path"); // FAIL should return null?
+			results = this.FileSystemService.GetFolderElements("/invalid/Path"); // FAIL should return null?
 			Assert.AreEqual(null, results);
 
 			System.IO.Directory.CreateDirectory(this.PathToTmp + "/testFolder");
 
-			results = this.FileSystemService.GetContent(this.PathToTmp);
-			Assert.AreEqual(results.Count, this.FilesCreated + 2, "Folder is missing");
+			results = this.FileSystemService.GetFolderElements(this.PathToTmp);
+			Assert.AreEqual(results.Length, this.FilesCreated + 2, "Folder is missing");
 		}
 
 		[Test()]
 		public void CopyTest() {
 			System.IO.File.Create(this.PathToTmp + "/fileToCopy.test");
-			List<IElement> files = this.FileSystemService.GetContent(this.PathToTmp);
-			IFolder folder = (IFolder)this.FolderFactory.Create(this.PathToTmp);
+			IElement[] files = this.FileSystemService.GetFolderElements(this.PathToTmp);
+			IFolder folder = this.ElementFactory.CreateFolder(this.PathToTmp);
 
 			System.GC.Collect();                                // Needed use file with success
 			System.GC.WaitForPendingFinalizers();               // If not, file is still in used by the process and copy fails.
 
-			this.FileSystemService.Copy(files[0], folder);
-			files = this.FileSystemService.GetContent(this.PathToTmp);
-			Assert.AreEqual(files.Count, 2, "copy in same dir failed"); // FAIL should create a copy in same directory with a differente name or replace (passign a boolean to the method ?)
+			this.FileSystemService.Copy(files[0]); // , folder
+			files = this.FileSystemService.GetFolderElements(this.PathToTmp);
+			Assert.AreEqual(files.Length, 2, "copy in same dir failed"); // FAIL should create a copy in same directory with a differente name or replace (passign a boolean to the method ?)
 
 			System.IO.Directory.CreateDirectory(this.PathToTmp + "/testDir");
 
-			folder = (IFolder)this.FolderFactory.Create(this.PathToTmp + "/testDir");
+			folder = (IFolder)this.ElementFactory.Create(this.PathToTmp + "/testDir");
 			bool res = this.FileSystemService.Copy(files[0], folder);
 			files = this.FileSystemService.GetContent(this.PathToTmp + "/testDir");
 			Assert.AreEqual(true, res, "result should be true");
@@ -185,7 +186,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 			this.FileSystemService.Copy(null, null);
 			this.FileSystemService.Copy(files[0], null);
 
-			folder = (IFolder)this.FolderFactory.Create("/Invalid/folder");
+			folder = (IFolder)this.ElementFactory.Create("/Invalid/folder");
 			res = this.FileSystemService.Copy(files[0], folder); // FAIL Should hande exception and return false
 			Assert.AreEqual(false, res);
 		}
@@ -193,18 +194,18 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 		[Test()]
 		public void MoveTest() {
 			System.IO.File.Create(this.PathToTmp + "/fileToMove.test");
-			List<IElement> files = this.FileSystemService.GetContent(this.PathToTmp);
+			IElement[] files = this.FileSystemService.GetFolderElements(this.PathToTmp);
 			Assert.AreEqual(1, files.Count, "should contain only one file");
-			IFolder folder = (IFolder)this.FolderFactory.Create(this.PathToTmp);
+			IFolder folder = this.ElementFactory.CreateFolder(this.PathToTmp);
 
 			System.GC.Collect();                                // Needed use file with success
 			System.GC.WaitForPendingFinalizers();               // If not, file is still in used by the process and copy fails.
 
 			System.IO.Directory.CreateDirectory(this.PathToTmp + "/testDir");
 
-			folder = (IFolder)this.FolderFactory.Create(this.PathToTmp + "/testDir");
-			bool res = this.FileSystemService.Move(files[0], folder);
-			files = this.FileSystemService.GetContent(this.PathToTmp + "/testDir");
+			folder = (IFolder)this.ElementFactory.Create(this.PathToTmp + "/testDir");
+			this.FileSystemService.Cut(files[0]); // , folder
+			files = this.FileSystemService.GetFolderElements(this.PathToTmp + "/testDir");
 			Assert.AreEqual(true, res, "result should be true");
 			Assert.AreEqual(1, files.Count, "move in other dir failed");
 			Assert.AreEqual("fileToMove.test", files[0].GetName(), "copy has a wrong name, is it the correct file ?");
@@ -220,7 +221,7 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 			res = this.FileSystemService.Move(folder, folder); // FAIL used by another process. Should catch the exception and return false move a folder inside himself should not be possible.
 			Assert.AreEqual(false, res);
 
-			IFolder folderToMove = (IFolder)this.FolderFactory.Create(this.PathToTmp + "/dirIsBack");
+			IFolder folderToMove = this.ElementFactory.CreateFolder(this.PathToTmp + "/dirIsBack");
 			res = this.FileSystemService.Move(folderToMove, folder);
 			files = this.FileSystemService.GetContent(this.PathToTmp);
 			Assert.AreEqual(true, res);

@@ -72,34 +72,57 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		/// </summary>
 		/// <param name="path">The path.</param>
 		/// <param name="filterExtension">The filter extension.</param>
+		/// <param name="onlyFiles">if set to <c>true</c> [only files].</param>
 		/// <returns>
 		///   An array with elements of the folder, <c>null</c> if an error occurred
 		/// </returns>
-		IElement[] GetFolderElements(string path = null, string[] filterExtension = null);
+		IElement[] GetFolderElements(string path = null, string[] filterExtension = null, bool onlyFiles = false);
+
+		/// <summary>
+		/// Gets the folder files.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <param name="filterExtension">The filter extension.</param>
+		/// <returns>
+		///   An array with files of the folder, <c>null</c> if an error occurred
+		/// </returns>
+		IFile[] GetFolderFiles(string path = null, string[] filterExtension = null);
 
 		/// <summary>
 		/// Bufferizes the elements for copy
 		/// </summary>
 		/// <param name="elements">The elements.</param>
-		void Copy(IElement[] elements);
+		/// <returns>
+		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		bool Copy(IElement[] elements);
 
 		/// <summary>
 		/// Bufferizes the element for copy
 		/// </summary>
 		/// <param name="elements">The elements.</param>
-		void Copy(IElement element);
+		/// <returns>
+		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		bool Copy(IElement element);
 
 		/// <summary>
 		/// Bufferizes the elements for deplacement
 		/// </summary>
 		/// <param name="elements">The elements.</param>
-		void Cut(IElement[] elements);
+		/// <returns>
+		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		bool Cut(IElement[] elements);
 
 		/// <summary>
 		/// Bufferizes the element for deplacement
 		/// </summary>
 		/// <param name="element">The element.</param>
-		void Cut(IElement element);
+		/// <returns>
+		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		bool Cut(IElement element);
 
 		/// <summary>
 		/// Pastes the specified destination.

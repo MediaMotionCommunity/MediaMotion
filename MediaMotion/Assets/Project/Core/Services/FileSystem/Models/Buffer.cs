@@ -1,4 +1,6 @@
-﻿using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
+﻿using System;
+using System.Linq;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem.Models {
 	/// <summary>
@@ -12,6 +14,9 @@ namespace MediaMotion.Core.Services.FileSystem.Models {
 		/// <param name="deleteElementsAfterPaste">if set to <c>true</c> [delete elements after paste].</param>
 		/// <param name="deleteBufferAfterPaste">if set to <c>true</c> [delete buffer after paste].</param>
 		public Buffer(IElement[] elements, bool deleteElementsAfterPaste, bool deleteBufferAfterPaste) {
+			if (!elements.All(element => element != null)) {
+				throw new ArgumentNullException("elements must not contain any null element");
+			}
 			this.Elements = elements;
 			this.DeleteElementsAfterPaste = deleteElementsAfterPaste;
 			this.DeleteBufferAfterPaste = deleteBufferAfterPaste;

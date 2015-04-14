@@ -119,23 +119,21 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </summary>
 		/// <param name="path">The path.</param>
 		/// <param name="filterExtension">The filter extension.</param>
+		/// <param name="onlyFiles">if set to <c>true</c> [only files].</param>
 		/// <returns>
 		///   An array with elements of the folder, <c>null</c> if an error occurred
 		/// </returns>
-		public IElement[] GetFolderElements(string path = null, string[] filterExtension = null) {
+		public IElement[] GetFolderElements(string path = null, string[] filterExtension = null, bool onlyFiles = false) {
 			try {
+				int i = 0;
 				DirectoryInfo directoryInfo = new DirectoryInfo(path ?? this.CurrentFolder.GetPath());
 				FileSystemInfo[] directoryElementsInfo = directoryInfo.GetFileSystemInfos();
-				List<IElement> directoryElements = new List<IElement>();
+				IEnumerable<FileSystemInfo> relevantDirectoryElementsInfo = directoryElementsInfo.Where(element => this.IsElementListable(element, filterExtension, onlyFiles));
+				IElement[] directoryElements = new IElement[relevantDirectoryElementsInfo.Count()];
 
-				foreach (FileSystemInfo elementInfo in directoryElementsInfo.Where(element => this.IsElementListable(element, filterExtension))) {
-					if (elementInfo.HasAttribute(FileAttributes.Device)) {
-						// NOTICE Device not supported
-					} else if (elementInfo.HasAttribute(FileAttributes.Directory)) {
-						directoryElements.Add(this._elementFactory.CreateFolder(elementInfo.FullName));
-					} else {
-						directoryElements.Add(this._elementFactory.CreateFile(elementInfo.FullName));
-					}
+				foreach (FileSystemInfo elementInfo in relevantDirectoryElementsInfo) {
+					directoryElements[i] = this._elementFactory.Create(elementInfo.FullName);
+					++i;
 				}
 				return (directoryElements.ToArray());
 			} catch (DirectoryNotFoundException) {
@@ -145,35 +143,80 @@ namespace MediaMotion.Core.Services.FileSystem {
 		}
 
 		/// <summary>
+		/// Gets the folder files.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <param name="filterExtension">The filter extension.</param>
+		/// <returns>
+		///   An array with files of the folder, <c>null</c> if an error occurred
+		/// </returns>
+		public IFile[] GetFolderFiles(string path = null, string[] filterExtension = null) {
+			IElement[] elements = this.GetFolderElements(path, filterExtension);
+			IFile[] files = null;
+
+			if (elements != null) {
+				files = new IFile[elements.Length];
+				for (int i = 0; i < elements.Length; ++i) {
+					files[i] = elements[i] as IFile;
+				}
+			}
+			return (files);
+		}
+
+		/// <summary>
 		/// Bufferizes the elements for copy
 		/// </summary>
 		/// <param name="elements">The elements.</param>
-		public void Copy(IElement[] elements) {
-			this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, false, false);
+		/// <returns>
+		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		public bool Copy(IElement[] elements) {
+			try {
+				this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, false, false);
+				return (true);
+			} catch (ArgumentNullException) {
+				// TODO Log
+			}
+			return (false);
 		}
 
 		/// <summary>
 		/// Bufferizes the element for copy
 		/// </summary>
-		/// <param name="elements">The elements.</param>
-		public void Copy(IElement element) {
-			this.Copy(new IElement[] { element });
+		/// <param name="element"></param>
+		/// <returns>
+		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		public bool Copy(IElement element) {
+			return (this.Copy(new IElement[] { element }));
 		}
 
 		/// <summary>
 		/// Bufferizes the elements for deplacement
 		/// </summary>
 		/// <param name="elements">The elements.</param>
-		public void Cut(IElement[] elements) {
-			this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, true, true);
+		/// <returns>
+		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		public bool Cut(IElement[] elements) {
+			try {
+				this.BufferizedElements = new MediaMotion.Core.Services.FileSystem.Models.Buffer(elements, true, true);
+				return (true);
+			} catch (ArgumentNullException) {
+				// TODO Log
+			}
+			return (false);
 		}
 
 		/// <summary>
 		/// Bufferizes the element for deplacement
 		/// </summary>
 		/// <param name="element">The element.</param>
-		public void Cut(IElement element) {
-			this.Cut(new IElement[] { element });
+		/// <returns>
+		///   <c>true</c> if the buffer is correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		public bool Cut(IElement element) {
+			return (this.Cut(new IElement[] { element }));
 		}
 
 		/// <summary>
@@ -268,8 +311,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// <param name="elementInfo">The element infos.</param>
 		/// <param name="filterExtension">The filter extension.</param>
 		/// <returns><c>true</c> if the element is listable, <c>false</c> otherwise</returns>
-		private bool IsElementListable(FileSystemInfo elementInfo, string[] filterExtension) {
-			return ((filterExtension == null || filterExtension.Contains(Path.GetExtension(elementInfo.FullName))) &&
+		private bool IsElementListable(FileSystemInfo elementInfo, string[] filterExtension, bool onlyFiles) {
+			return ((!onlyFiles || !elementInfo.HasAttribute(FileAttributes.Directory)) &&
+					(filterExtension == null || filterExtension.Contains(Path.GetExtension(elementInfo.FullName))) &&
 					(this.DisplayHiddenElements || !elementInfo.HasAttribute(FileAttributes.Hidden)) &&
 					(this.DisplaySystemElements || !elementInfo.HasAttribute(FileAttributes.System)));
 		}

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MediaMotion.Core.Services.FileSystem.Extensions;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
@@ -82,7 +83,7 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 						}
 					}
 				}
-				if ((File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory) {
+				if (File.GetAttributes(path).HasAttribute(FileAttributes.Directory)) {
 					return (new Folder(new DirectoryInfo(path)));
 				} else {
 					return (new Regular(new FileInfo(path)));
