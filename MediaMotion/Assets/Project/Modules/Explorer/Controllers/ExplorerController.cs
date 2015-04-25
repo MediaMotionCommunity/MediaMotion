@@ -8,6 +8,9 @@ using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
+using MediaMotion.Core;
+using MediaMotion.Core.Services.FileSystem.Models.Enums;
+
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Explorer controller
@@ -74,6 +77,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private MenuBehavior wheelTool;
 
 		/// <summary>
+		/// The wheel tool
+		/// </summary>
+		private MenuBehavior wheelLaunch;
+
+		/// <summary>
 		/// Initializes the specified explorer module.
 		/// </summary>
 		/// <param name="explorerModule">The explorer module.</param>
@@ -92,6 +100,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.referenceFrameController = GameObject.Find("ReferenceFrame").GetComponent<ReferenceFrameController>();
 			this.popupController = GameObject.Find("ReferenceFrame/Cameras/Main").GetComponent<PopupController>();
 			this.wheelTool = GameObject.Find("ReferenceFrame/Cameras/Main/Menu").GetComponent<MenuBehavior>();
+			this.wheelLaunch = GameObject.Find("ReferenceFrame/Cameras/Main/MenuLaunch").GetComponent<MenuBehavior>();
+
 
 			// Open directory
 			this.OpenDirectory(explorerModule.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
@@ -183,7 +193,13 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="element">The element.</param>
 		private void Open(IElement element) {
-			this.moduleManagerService.LoadModule(new IElement[] { element });
+			if (element.GetElementType ().Equals (ElementType.File)) {
+				this.wheelLaunch.ActiveWheelTool (this.selectedElement.gameObject.GetComponent<ElementController> ().Element);
+				//AppLauncher launcher = new AppLauncher ();
+				//launcher.LaunchApp ((IFile)this.selectedElement.gameObject.GetComponent<ElementController> ().Element);
+			} else {
+				this.moduleManagerService.LoadModule(new IElement[] { element });	
+			}
 		}
 
 		/// <summary>

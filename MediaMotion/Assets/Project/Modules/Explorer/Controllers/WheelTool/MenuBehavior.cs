@@ -322,7 +322,8 @@ public class MenuBehavior : BaseUnityScript<MenuBehavior> {
 		COPY,
 		PASTE,
 		DELETE,
-		CANCEL
+		CANCEL,
+		OPEN
 	}
 
 	/// <summary>
