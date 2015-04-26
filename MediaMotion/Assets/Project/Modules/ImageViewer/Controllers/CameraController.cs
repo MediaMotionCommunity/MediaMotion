@@ -1,4 +1,4 @@
-﻿using MediaMotion.Core.Models.Scripts;
+﻿using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;

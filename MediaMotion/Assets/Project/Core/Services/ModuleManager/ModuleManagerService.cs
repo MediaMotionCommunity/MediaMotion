@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Models.Module.Interfaces;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;

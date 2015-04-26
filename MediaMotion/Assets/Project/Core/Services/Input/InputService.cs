@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using MediaMotion.Core.Exceptions;
-using MediaMotion.Core.Models.Core;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
@@ -164,7 +164,7 @@ namespace MediaMotion.Core.Services.Input {
 		/// </summary>
 		/// <param name="id">The identifier.</param>
 		/// <returns>The action</returns>
-		IAction IInputService.GetCursorMovement(int id) {
+		public IAction GetCursorMovement(int id) {
 			return (this.GetMovements(ActionType.BrowsingCursor).Find(action => (action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Id == id));
 		}
 

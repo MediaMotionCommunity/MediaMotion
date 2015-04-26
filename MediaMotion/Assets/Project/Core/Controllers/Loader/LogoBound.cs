@@ -1,4 +1,4 @@
-﻿using MediaMotion.Core.Models.Scripts;
+﻿using MediaMotion.Core.Models.Abstracts;
 using UnityEngine;
 
 namespace MediaMotion.Core.Controllers.Loader {

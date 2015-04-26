@@ -1,4 +1,4 @@
-﻿using MediaMotion.Core.Models.Core;
+﻿using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Resolver.Containers;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
 using MediaMotion.Core.Services.FileSystem;

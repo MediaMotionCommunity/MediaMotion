@@ -1,4 +1,4 @@
-using MediaMotion.Core.Models.Module.Abstracts;
+using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Modules.VideoViewer.Observers;
 
 namespace MediaMotion.Modules.VideoViewer {

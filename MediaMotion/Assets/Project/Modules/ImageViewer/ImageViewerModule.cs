@@ -1,6 +1,6 @@
-﻿using MediaMotion.Core.Models.Module;
-using MediaMotion.Core.Models.Module.Abstracts;
-using MediaMotion.Core.Models.Module.Interfaces;
+﻿using MediaMotion.Core.Models;
+using MediaMotion.Core.Models.Abstracts;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Resolver.Containers.Interfaces;
 using MediaMotion.Modules.ImageViewer.Observers;
 using UnityEngine;
