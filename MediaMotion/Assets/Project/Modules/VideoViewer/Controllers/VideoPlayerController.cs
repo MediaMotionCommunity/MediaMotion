@@ -401,8 +401,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		private void Infos()
 		{
 			Debug.Log("Media file Loaded: " + vlc_video_path);
-			Debug.log("Image xsize:" + vlc_video_xsize.ToString());
-			Debug.log("Image ysize:" + vlc_video_ysize.ToString());
+			Debug.Log("Image xsize:" + vlc_video_xsize.ToString());
+			Debug.Log("Image ysize:" + vlc_video_ysize.ToString());
 		}
 	}
 }

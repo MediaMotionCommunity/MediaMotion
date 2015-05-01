@@ -23,7 +23,7 @@ namespace MediaMotion.Modules.VideoViewer.Models.Abstract {
 		/// The duration.
 		/// </value>
 		public int Duration { get; protected set; }
-		
+
 		/// <summary>
 		/// Gets the human type string.
 		/// </summary>
