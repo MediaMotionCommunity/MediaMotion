@@ -5,7 +5,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Pet Manager Controller
 	/// </summary>
-	public class PetManagerController : BaseUnityScript<PetManagerController> {
+	public class PetManagerController : MonoBehaviour {
 		/// <summary>
 		/// The maximum pets
 		/// </summary>
@@ -24,7 +24,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Draw all the pets
 		/// </summary>
-		public void Init() {
+		public void Start() {
 			int max = Random.Range(this.MinPets / this.PetsModels.Length, this.MaxPets / this.PetsModels.Length);
 			int count = 0;
 

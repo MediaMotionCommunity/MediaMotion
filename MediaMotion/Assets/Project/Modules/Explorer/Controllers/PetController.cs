@@ -17,61 +17,85 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private const float Speed = 2.0f;
 
 		/// <summary>
+		/// The animation
+		/// </summary>
+		private Animation animationComponent;
+
+		/// <summary>
+		/// The animation name
+		/// </summary>
+		private string animationName = "";
+
+		/// <summary>
+		/// The rotation
+		/// </summary>
+		private Vector3 rotation;
+
+		/// <summary>
+		/// The distance
+		/// </summary>
+		private float distance;
+
+		/// <summary>
+		/// The total time
+		/// </summary>
+		private float totalTime = 0.0f;
+
+		/// <summary>
+		/// The time
+		/// </summary>
+		private float elapsedTime = 10.0f;
+
+		/// <summary>
 		/// Starts this instance.
 		/// </summary>
 		public void Start() {
-			this.RandomDeplacement();
+			this.animationComponent = this.gameObject.GetComponent<Animation>();
 		}
 
 		/// <summary>
-		/// Randoms the deplacement.
+		/// Updates this instance.
 		/// </summary>
-		public void RandomDeplacement() {
-			switch (Random.Range(1, 3)) {
-				case 1:
-					this.Deplacement(Random.Range(2.0f, 7.0f));
-					break;
-				case 2:
-					this.Rotation(Random.Range(-40.0f, 40.0f), 5.0f);
-					break;
+		public void Update() {
+			this.elapsedTime += Time.deltaTime;
+			if (this.elapsedTime > this.totalTime) {
+				if (this.animationName.CompareTo("dive") == 0) {
+					this.gameObject.transform.Translate(new Vector3(0.0f, -2.6f, -5.8f), Space.Self);
+				}
+				this.gameObject.transform.localEulerAngles = new Vector3(0.0f, this.gameObject.transform.localEulerAngles.y, 0.0f);
+				if (this.gameObject.transform.localPosition.y > 1.2f && Random.Range(0, 2) == 0) {
+					this.animationName = "dive";
+					this.rotation = new Vector3(0.0f, 0.0f, 0.0f);
+					this.distance = 0.0f;
+					this.totalTime = 9.0f;
+				} else {
+					this.animationName = "swim";
+					this.rotation = new Vector3(Random.Range(this.gameObject.transform.localPosition.y < -1.5f ? 2.0f : -10.0f, this.gameObject.transform.localPosition.y > 1.5f ? -2.0f : 10.0f), Random.Range(-20.0f, 20.0f), 0.0f);
+					this.distance = Random.Range(2.5f, 5.0f);
+					this.totalTime = this.distance * 2.0f;
+				}
+				this.elapsedTime = 0.0f;
 			}
+			this.play();
 		}
 
 		/// <summary>
-		/// Rotations the specified angle.
+		/// Plays this instance.
 		/// </summary>
-		/// <param name="angle">The angle.</param>
-		/// <param name="time">The time.</param>
-		private void Rotation(float angle, float time) {
-			Vector3 eulerAngles = this.gameObject.transform.eulerAngles + new Vector3(0.0f, angle, 0.0f);
-			Hashtable moveParams = new Hashtable();
-			Hashtable rotationParams = new Hashtable();
+		private void play() {
+			float animationPourcentage = this.elapsedTime / this.totalTime;
+			float coefficient = Time.deltaTime / this.totalTime;
+			Vector3 angle = new Vector3(this.rotation.x * 2.0f * coefficient, this.rotation.y * coefficient, this.rotation.y * 0.5f * coefficient);
 
-			moveParams.Add("easetype", iTween.EaseType.linear);
-			moveParams.Add("position", this.gameObject.transform.position + (Quaternion.Euler(eulerAngles) * new Vector3(0.0f, 0.0f, -DistanceToRotate)));
-			moveParams.Add("time", DistanceToRotate * Speed);
-			iTween.MoveTo(this.gameObject, moveParams);
-
-			rotationParams.Add("oncomplete", "RandomDeplacement");
-			rotationParams.Add("rotation", eulerAngles);
-			rotationParams.Add("easetype", iTween.EaseType.linear);
-			rotationParams.Add("time", DistanceToRotate * Speed);
-			iTween.RotateTo(this.gameObject, rotationParams);
-		}
-
-		/// <summary>
-		/// Deplacements the specified direction.
-		/// </summary>
-		/// <param name="direction">The direction.</param>
-		/// <param name="time">The time.</param>
-		private void Deplacement(float distance) {
-			Hashtable animationParam = new Hashtable();
-
-			animationParam.Add("oncomplete", "RandomDeplacement");
-			animationParam.Add("easetype", iTween.EaseType.linear);
-			animationParam.Add("position", this.gameObject.transform.position + (Quaternion.Euler(this.gameObject.transform.eulerAngles) * new Vector3(0.0f, 0.0f, -distance)));
-			animationParam.Add("time", distance * Speed);
-			iTween.MoveTo(this.gameObject, animationParam);
+			if (!this.animationComponent.IsPlaying(this.animationName)) {
+				this.animationComponent.Play(this.animationName);
+			}
+			if (animationPourcentage > 0.5f) {
+				angle.x *= -1.0f;
+				angle.z *= -1.0f;
+			}
+			this.gameObject.transform.Rotate(angle, Space.Self);
+			this.gameObject.transform.Translate(new Vector3(0.0f, 0.0f, this.distance * coefficient * -1.0f), Space.Self);
 		}
 	}
 }
