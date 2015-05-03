@@ -112,17 +112,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.element = null;
 		}
 
-		/// <summary>
-		/// Called when [GUI].
-		/// </summary>
-		public void OnGUI() {
-			if (this.PopupVisibility && this.element != null) {
-				this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Information");
-			}
-			this.MoveSidebar();
-			GUI.Window(1, this.sidebarRect, this.PrintSidebar, string.Empty, this.sidebarWindowStyle);
-			this.PrintBuffer(0);
-		}
+		// /// <summary>
+		// /// Called when [GUI].
+		// /// </summary>
+		// public void OnGUI() {
+		// 	if (this.PopupVisibility && this.element != null) {
+		// 		this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Information");
+		// 	}
+		// 	this.MoveSidebar();
+		// 	GUI.Window(1, this.sidebarRect, this.PrintSidebar, string.Empty, this.sidebarWindowStyle);
+		// 	this.PrintBuffer(0);
+		// }
 
 		/// <summary>
 		/// Prints the copy-paste buffer.
