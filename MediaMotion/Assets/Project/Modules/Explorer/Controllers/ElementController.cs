@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using MediaMotion.Core.Models.FileManager.Interfaces;
 using MediaMotion.Core.Models.Scripts;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager.Container.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager.Interfaces;
 using UnityEngine;
@@ -11,6 +11,26 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// </summary>
 	public class ElementController : BaseUnityScript<ElementController> {
 		/// <summary>
+		/// The texture
+		/// </summary>
+		private IResourceContainer<Material> texture;
+
+		/// <summary>
+		/// The content
+		/// </summary>
+		private GameObject content;
+
+		/// <summary>
+		/// The tile
+		/// </summary>
+		private GameObject tile;
+
+		/// <summary>
+		/// The text
+		/// </summary>
+		private GameObject text;
+
+		/// <summary>
 		/// Gets the element.
 		/// </summary>
 		/// <value>
@@ -19,25 +39,16 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public IElement Element { get; private set; }
 
 		/// <summary>
-		/// The texture
-		/// </summary>
-		private IResourceContainer<Material> texture;
-
-		/// <summary>
-		/// The tile
-		/// </summary>
-		private GameObject tile;
-
-		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
+		/// <param name="resourceManagerService">The resource manager service.</param>
 		public void Init(IResourceManagerService resourceManagerService) {
-			GameObject text;
 			TextMesh tileTextMesh;
 
+			this.content = GameObject.Find(this.gameObject.name + "/Content");
 			this.tile = GameObject.Find(this.gameObject.name + "/Content/Tile");
-			text = GameObject.Find(this.gameObject.name + "/Content/Name");
-			tileTextMesh = text.GetComponent<TextMesh>();
+			this.text = GameObject.Find(this.gameObject.name + "/Content/Name");
+			tileTextMesh = this.text.GetComponent<TextMesh>();
 
 			// texture container
 			this.texture = resourceManagerService.GetContainer<Material>(this.Element.GetResourceId());
@@ -49,7 +60,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			tileTextMesh.text = this.Element.GetName();
 			tileTextMesh.color = new Color(0.8f, 0.9f, 1.0f);
 
-			if (this.tile.GetComponent<Renderer>().bounds.size.x < text.GetComponent<Renderer>().bounds.size.x) {
+			if (this.tile.GetComponent<Renderer>().bounds.size.x < this.text.GetComponent<Renderer>().bounds.size.x) {
 				tileTextMesh.text = this.Element.GetName().Substring(0, 10) + "...";
 			}
 		}
@@ -58,21 +69,21 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Updates this instance.
 		/// </summary>
 		public void Update() {
-			//this.tile.renderer.material.mainTexture = this.texture.Get();
+			// this.tile.renderer.material.mainTexture = this.texture.Get();
 		}
 
 		/// <summary>
 		/// Selects this instance.
 		/// </summary>
 		public void Select() {
-			iTween.MoveTo(this.gameObject, new Vector3(this.gameObject.transform.position.x, 3.0f, this.gameObject.transform.position.z), 0.5f);
+			iTween.MoveTo(this.content, new Vector3(this.gameObject.transform.position.x, 2.0f, this.gameObject.transform.position.z), 0.5f);
 		}
 
 		/// <summary>
 		/// Deselects this instance.
 		/// </summary>
 		public void Deselect() {
-			iTween.MoveTo(this.gameObject, new Vector3(this.gameObject.transform.position.x, 2.0f, this.gameObject.transform.position.z), 0.5f);
+			iTween.MoveTo(this.content, new Vector3(this.gameObject.transform.position.x, 1.0f, this.gameObject.transform.position.z), 0.5f);
 		}
 
 		/// <summary>

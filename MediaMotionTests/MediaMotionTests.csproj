@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Assets\Project\Core\Resolver\ContainerBuilderTests.cs" />
     <Compile Include="Assets\Project\Core\Services\FileSystem\FileSystemServiceTests.cs" />
+    <Compile Include="Assets\Project\Core\Services\Playlist\PlaylistServiceTests.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

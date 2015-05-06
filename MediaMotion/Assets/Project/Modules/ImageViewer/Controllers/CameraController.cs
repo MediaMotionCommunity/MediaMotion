@@ -16,6 +16,7 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
+		/// <param name="inputService">The input service.</param>
 		public void Init(IInputService inputService) {
 			this.inputService = inputService;
 		}
@@ -56,7 +57,7 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		}
 
 		/// <summary>
-		/// Zooms the specified coeff.
+		/// Zooms the specified coefficient.
 		/// </summary>
 		/// <param name="distance">The distance.</param>
 		public void Zoom(float distance) {
