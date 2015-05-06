@@ -1,11 +1,44 @@
+using System;
+using System.IO;
+using System.Collections;
+using System.Runtime.InteropServices;
 using MediaMotion.Core.Models.Scripts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
-using PDF;
+using MuPDF;
+
 
 namespace MediaMotion.Modules.PDFViewer.Controllers {
+
+	/**
+	 * C# Unmanaged pointer wrapper
+	 */
+	class AutoPinner : IDisposable
+	{
+		object _obj;
+		GCHandle _pinnedArray;
+
+		public AutoPinner(object obj)
+		{
+			_obj = obj;
+			_pinnedArray = GCHandle.Alloc(_obj, GCHandleType.Pinned);
+		}
+		public static implicit operator IntPtr(AutoPinner ap)
+		{
+			return ap._pinnedArray.AddrOfPinnedObject();
+		}
+		public object get()
+		{
+			return _obj;
+		}
+		public void Dispose()
+		{
+			_pinnedArray.Free();
+		}
+	}
+
 	/// <summary>
 	/// PDFViewer Controller
 	/// </summary>
@@ -26,8 +59,9 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		private IntPtr pdf_session = IntPtr.Zero;
 		private IntPtr pdf_document = IntPtr.Zero;
 		private IntPtr pdf_page = IntPtr.Zero;
-		private IntPtr pdf_pixels = IntPtr.Zero;
 
+		private int pdf_texture_size = 0;
+		private AutoPinner pdf_pixels = null;
 		private Texture2D pdf_texture = null;
 
 		/// <summary>
@@ -55,26 +89,37 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		{
 			string path = this.playlistService.Current().GetPath();
 			Debug.Log(path);
+			ClearBuffer();
 			ClearTexture();
 			ClearPage();
 			ClearDocument();
 			pdf_document = LibPDF.libpdf_load_document(pdf_session, path);
-			pdf_page = LibPDF.libpdf_load_page(pdf_session, pdf_document, 1);
+			pdf_page = LibPDF.libpdf_load_page(pdf_session, pdf_document, 0);
 			int tex_xsize = LibPDF.libpdf_xsize_page(pdf_session, pdf_page);
 			int tex_ysize = LibPDF.libpdf_ysize_page(pdf_session, pdf_page);
-			pdf_texture = Texture2D(tex_xsize, tex_ysize, TextureFormat.RGBA32, false);
+			pdf_texture_size = tex_xsize * tex_ysize;
+			pdf_texture = new Texture2D(tex_xsize, tex_ysize, TextureFormat.RGBA32, false);
 			if (GetComponent<Renderer>()) {
 				GetComponent<Renderer>().material.mainTexture = pdf_texture;
 			}
-			pdf_pixels = LibPDF.libpdf_pixels_page(pdf_session, pdf_page); // Ready to render
+			float ratio = 5.0f / tex_ysize;
+			transform.localScale = new Vector3(-ratio * tex_xsize, ratio * tex_ysize, 1);
+			pdf_pixels = new AutoPinner(new Color32[pdf_texture_size]);
 		}
 
 		public void Update()
 		{
 			// If page buffer ready apply copied texture on mesh
-			if (pdf_pixels != IntPtr.Zero) {
+			if (pdf_pixels != null) {
+				// Copy rendering into custom buffer
 				LibPDF.libpdf_render_page(pdf_session, pdf_page);
-				pdf_texture.SetPixels32(pdf_pixels, 0);
+				LibPDF.memcpy(
+					(IntPtr)pdf_pixels,
+					LibPDF.libpdf_pixels_page(pdf_session, pdf_page),
+					pdf_texture_size * 4
+				);
+				// Set custom buffer as texture
+				pdf_texture.SetPixels32((Color32[])pdf_pixels.get(), 0);
 				pdf_texture.Apply();
 			}
 			/*
@@ -96,7 +141,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		{
 			if (pdf_texture != null) {
 				UnityEngine.Object.Destroy(pdf_texture);
-				pdf_texture = Texture2D();
+				pdf_texture = new Texture2D(1, 1);
 				if (GetComponent<Renderer>()) {
 					GetComponent<Renderer>().material.mainTexture = pdf_texture;
 				}
@@ -114,7 +159,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		private void ClearDocument()
 		{
 			if (pdf_document != IntPtr.Zero) {
-				LibPDF.libpdf_free_document(pdf_document);
+				LibPDF.libpdf_free_document(pdf_session, pdf_document);
 				pdf_document = IntPtr.Zero;
 			}
 		}
@@ -122,13 +167,20 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		private void ClearPage()
 		{
 			if (pdf_page != IntPtr.Zero) {
-				pdf_pixels = IntPtr.Zero;
-				LibPDF.libpdf_free_page(pdf_page);
+				LibPDF.libpdf_free_page(pdf_session, pdf_page);
 				pdf_page = IntPtr.Zero;
 			}
 		}
 
+		private void ClearBuffer()
+		{
+			if (pdf_pixels != null) {
+				pdf_pixels = null;
+			}
+		}
+
 		public void OnDestroy() {
+			ClearBuffer();
 			ClearTexture();
 			ClearPage();
 			ClearDocument();

@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using MediaMotion.Core.Services.FileSystem.Models.Abstracts;
-using MediaMotion.Modules.VideoViewer.Models.Interfaces;
+using MediaMotion.Modules.PDFViewer.Models.Interfaces;
 
-namespace MediaMotion.Modules.VideoViewer.Models.Abstract {
+namespace MediaMotion.Modules.PDFViewer.Models.Abstract {
 	/// <summary>
 	/// Abstract Video model
 	/// </summary>

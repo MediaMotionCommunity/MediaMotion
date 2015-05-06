@@ -2,6 +2,20 @@
 #include <mupdf/fitz.h>
 
 /**
+    How to compile:
+
+    Mac OS:
+        compiled MuPDF in $CCDIR
+        dll path in $OUT
+        gcc -dynamiclib -o $(OUT)/libpdf.bundle ./LibPDF.c $CCDIR/build/debug/*.a -I$CCDIR/include -lm
+
+        Example:
+            gcc -dynamiclib -o ../../../../lib/libpdf.bundle ./LibPDF.c \
+            /Users/vincentbrunet/Downloads/mupdf-1.7-source/build/debug/*.a \
+            -I/Users/vincentbrunet/Downloads/mupdf-1.7-source/include/ -lm
+ */
+
+/**
  * Session allocation
  */
 fz_context *libpdf_load_session()
