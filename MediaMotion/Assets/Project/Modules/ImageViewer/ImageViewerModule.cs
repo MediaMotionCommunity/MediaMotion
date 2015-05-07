@@ -1,7 +1,6 @@
 ﻿using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Models.Interfaces;
-using MediaMotion.Core.Resolver.Containers.Interfaces;
 using MediaMotion.Modules.ImageViewer.Observers;
 using UnityEngine;
 
@@ -21,10 +20,10 @@ namespace MediaMotion.Modules.ImageViewer {
 		/// Configures this instance.
 		/// </summary>
 		public override void Configure() {
-			this.Configuration.Name = "Image Viewer";
-			this.Configuration.Scene = "ImageViewer";
-			this.Configuration.Description = "Display your picture in a wonderfull slideshow";
-			this.Configuration.ElementFactoryObserver = new ElementFactoryObserver();
+			this.Name = "Image Viewer";
+			this.Scene = "ImageViewer";
+			this.Description = "Display your picture in a wonderfull slideshow";
+			// this.ElementFactoryObserver = new ElementFactoryObserver();
 		}
 	}
 }

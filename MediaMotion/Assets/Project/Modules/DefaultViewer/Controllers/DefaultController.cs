@@ -5,7 +5,7 @@ namespace MediaMotion.Modules.DefaultViewer.Controllers {
 	/// <summary>
 	/// Default controller
 	/// </summary>
-	public class DefaultController : BaseUnityScript<DefaultController> {
+	public class DefaultController : AScript<DefaultController> {
 		/// <summary>
 		/// The input service
 		/// </summary>

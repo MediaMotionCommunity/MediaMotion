@@ -8,7 +8,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Cursor controller
 	/// </summary>
-	public class CursorController : BaseUnityScript<CursorController> {
+	public class CursorController : AScript<CursorController> {
 		/// <summary>
 		/// The input service
 		/// </summary>

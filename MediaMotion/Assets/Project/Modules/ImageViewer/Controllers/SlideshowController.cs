@@ -8,7 +8,7 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 	/// <summary>
 	/// Slideshow Controller
 	/// </summary>
-	public class SlideshowController : BaseUnityScript<SlideshowController> {
+	public class SlideshowController : AScript<SlideshowController> {
 		/// <summary>
 		/// The module instance
 		/// </summary>

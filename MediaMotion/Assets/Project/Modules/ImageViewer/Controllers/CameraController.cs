@@ -7,7 +7,7 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 	/// <summary>
 	/// Camera controller
 	/// </summary>
-	public class CameraController : BaseUnityScript<CameraController> {
+	public class CameraController : AScript<CameraController> {
 		/// <summary>
 		/// The input service
 		/// </summary>

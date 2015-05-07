@@ -1,7 +1,6 @@
 ﻿using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Models.Interfaces;
-using MediaMotion.Core.Resolver.Containers.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using UnityEngine;
 
@@ -21,10 +20,10 @@ namespace MediaMotion.Modules.DefaultViewer {
 		/// Configures this instance.
 		/// </summary>
 		public override void Configure() {
-			this.Configuration.Priority = int.MinValue;
-			this.Configuration.Name = "Default viewer";
-			this.Configuration.Scene = "Default";
-			this.Configuration.Description = "Default viewer, use for testing only";
+			this.Priority = int.MinValue;
+			this.Name = "Default viewer";
+			this.Scene = "Default";
+			this.Description = "Default viewer, use for testing only";
 		}
 
 		/// <summary>

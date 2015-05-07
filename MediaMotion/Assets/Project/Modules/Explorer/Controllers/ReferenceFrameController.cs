@@ -8,7 +8,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Reference Frame Controller
 	/// </summary>
-	public class ReferenceFrameController : BaseUnityScript<ReferenceFrameController> {
+	public class ReferenceFrameController : AScript<ReferenceFrameController> {
 		/// <summary>
 		/// The input service
 		/// </summary>

@@ -12,7 +12,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Explorer controller
 	/// </summary>
-	public class ExplorerController : BaseUnityScript<ExplorerController> {
+	public class ExplorerController : AScript<ExplorerController> {
 		/// <summary>
 		/// The line length
 		/// </summary>
@@ -183,7 +183,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="element">The element.</param>
 		private void Open(IElement element) {
-			this.moduleManagerService.LoadModule(new IElement[] { element });
+			this.moduleManagerService.Load(new IElement[] { element });
 		}
 
 		/// <summary>

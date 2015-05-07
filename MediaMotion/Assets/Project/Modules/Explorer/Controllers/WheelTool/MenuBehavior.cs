@@ -8,7 +8,7 @@ using UnityEngine;
 /// Menu script
 /// base is from: <see href="https://github.com/leapmotion-examples/unity/tree/master/v1/freeform-menus">LeapMotion examples</see>
 /// </summary>
-public class MenuBehavior : BaseUnityScript<MenuBehavior> {
+public class MenuBehavior : AScript<MenuBehavior> {
 	/*
  * Public Configuration Options
  */

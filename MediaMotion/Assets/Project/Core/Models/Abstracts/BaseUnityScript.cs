@@ -2,35 +2,53 @@
 using System.Collections.Generic;
 using System.Reflection;
 using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Resolver.Interfaces;
+using MediaMotion.Core.Services.ModuleManager.Interfaces;
+using MediaMotion.Modules.Default;
 using UnityEngine;
 
 namespace MediaMotion.Core.Models.Abstracts {
 	/// <summary>
-	/// Base Unity Script
+	/// Base unity script
 	/// </summary>
-	/// <typeparam name="Script">Daughter Class Type (Curiously Recurring Template Pattern)</typeparam>
-	public abstract class BaseUnityScript<Script> : MonoBehaviour
-		where Script : BaseUnityScript<Script> {
+	/// <typeparam name="Module">The type of the odule.</typeparam>
+	/// <typeparam name="Child">Child Class Type (Curiously Recurring Template Pattern)</typeparam>
+	public abstract class AScript<Module, Child> : MonoBehaviour
+		where Module : class, IModule
+		where Child : AScript<Module, Child> {
 		/// <summary>
 		/// The method name
 		/// </summary>
 		public const string MethodName = "Init";
 
 		/// <summary>
+		/// The module
+		/// </summary>
+		protected Module module;
+
+		/// <summary>
 		/// Initialize the child instance
 		/// </summary>
 		public void Start() {
-			MethodInfo method = typeof(Script).GetMethod(MethodName);
+			IModuleManagerService moduleManager = MediaMotionCore.Container.Get<IModuleManagerService>();
 
-			if (method != null && method.IsPublic) {
-				ParameterInfo[] parametersInfo = method.GetParameters();
-				object[] parameters = new object[parametersInfo.Length];
+			this.module = moduleManager.Get<Module>();
+			if (this.module != null) {
+				IResolverService resolver = this.module.ServicesContainer.Get<IResolverService>();
+				MethodInfo method = typeof(Child).GetMethod(MethodName);
 
-				for (int i = 0; i < parametersInfo.Length; ++i) {
-					parameters[i] = MediaMotionCore.Core.GetServicesContainer().Get(parametersInfo[i].ParameterType);
+				if (method != null && method.IsPublic) {
+					method.Invoke((Child)this, resolver.ResolveParameters(method.GetParameters()));
 				}
-				method.Invoke(this as Script, parameters);
 			}
 		}
-	}
+	};
+
+	/// <summary>
+	/// Base unity script
+	/// </summary>
+	/// <typeparam name="Child">Child Class Type (Curiously Recurring Template Pattern)</typeparam>
+	public abstract class AScript<Child> : AScript<DefaultModule, Child>
+		where Child : AScript<Child> {
+	};
 }

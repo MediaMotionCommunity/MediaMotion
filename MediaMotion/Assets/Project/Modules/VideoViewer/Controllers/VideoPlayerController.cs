@@ -8,7 +8,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 	/// <summary>
 	/// VideoPlayer Controller
 	/// </summary>
-	public class VideoPlayerController : BaseUnityScript<VideoPlayerController> {
+	public class VideoPlayerController : AScript<VideoPlayerController> {
 		/// <summary>
 		/// The module instance
 		/// </summary>

@@ -7,7 +7,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Popup Controller
 	/// </summary>
-	public class PopupController : BaseUnityScript<PopupController> {
+	public class PopupController : AScript<PopupController> {
 		/// <summary>
 		/// The popup timer
 		/// </summary>

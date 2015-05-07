@@ -1,6 +1,8 @@
 ﻿using MediaMotion.Core.Models.Interfaces;
-using MediaMotion.Core.Resolver.Containers;
-using MediaMotion.Core.Resolver.Containers.Interfaces;
+using MediaMotion.Core.Services;
+using MediaMotion.Core.Services.ContainerBuilder;
+using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
@@ -15,6 +17,7 @@ using MediaMotion.Core.Services.Playlist;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager;
 using MediaMotion.Core.Services.ResourcesManager.Interfaces;
+using MediaMotion.Modules.Default;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
@@ -24,99 +27,55 @@ namespace MediaMotion.Core {
 	/// <summary>
 	/// The media motion controller.
 	/// </summary>
-	public class MediaMotionCore : ICore {
-		/// <summary>
-		/// The core
-		/// </summary>
-		private static readonly ICore Instance = new MediaMotionCore();
-
-		/// <summary>
-		/// The builder
-		/// </summary>
-		private readonly IContainerBuilder servicesContainerBuilder;
-
+	public static class MediaMotionCore {
 		/// <summary>
 		/// The services
 		/// </summary>
-		private IContainer servicesContainer;
+		public static readonly IContainer Container;
 
 		/// <summary>
-		/// Prevents a default instance of the <see cref="MediaMotionCore"/> class from being created.
+		/// Initializes the <see cref="MediaMotionCore"/> class.
 		/// </summary>
-		private MediaMotionCore() {
-			this.servicesContainerBuilder = new ContainerBuilder();
-
-			// Core
-			this.servicesContainerBuilder.Register<MediaMotionCore>(this).As<ICore>().SingleInstance();
+		static MediaMotionCore() {
+			IContainerBuilderService builder = new ContainerBuilderService();
 
 			// Container
-			this.servicesContainerBuilder.Register<ContainerBuilder>().As<IContainerBuilder>();
-			
+			builder.Register<ContainerBuilderService>().As<IContainerBuilderService>();
+
 			// FileSystem
-			this.servicesContainerBuilder.Register<FileSystemService>().As<IFileSystemService>();
-			this.servicesContainerBuilder.Register<ElementFactory>().As<IElementFactory>().SingleInstance();
-			this.servicesContainerBuilder.Register<ElementFactory>().SingleInstance();
+			builder.Register<FileSystemService>().As<IFileSystemService>();
+			builder.Register<ElementFactory>().As<IElementFactory>().SingleInstance = true;
 
 			// Playlist
-			this.servicesContainerBuilder.Register<PlaylistService>().As<IPlaylistService>();
+			builder.Register<PlaylistService>().As<IPlaylistService>();
 
 			// History
-			this.servicesContainerBuilder.Register<HistoryService>().As<IHistoryService>().SingleInstance();
+			builder.Register<HistoryService>().As<IHistoryService>().SingleInstance = true;
 
 			// Input
-			this.servicesContainerBuilder.Register<InputService>().As<IInputService>().SingleInstance();
+			builder.Register<InputService>().As<IInputService>().SingleInstance = true;
 
 			// Resources
-			this.servicesContainerBuilder.Register<ResourceManagerService>().As<IResourceManagerService>().SingleInstance();
+			builder.Register<ResourceManagerService>().As<IResourceManagerService>().SingleInstance = true;
 
 			// Modules
-			this.servicesContainerBuilder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance();
+			builder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance = true;
 
-			this.servicesContainer = this.servicesContainerBuilder.Build();
-			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<DefaultViewerModule>();
-			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<ExplorerModule>();
-			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<ImageViewerModule>();
-			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<VideoViewerModule>();
+			Container = builder.Build();
+
+			Register<DefaultModule>();
+			Register<DefaultViewerModule>();
+			Register<ExplorerModule>();
+			Register<ImageViewerModule>();
+			Register<VideoViewerModule>();
 		}
 
 		/// <summary>
-		/// Gets the core.
+		/// Registers Modules
 		/// </summary>
-		/// <value>
-		/// The core.
-		/// </value>
-		public static ICore Core {
-			get {
-				return (Instance);
-			}
-		}
-
-		/// <summary>
-		/// Adds the services container builder.
-		/// </summary>
-		/// <param name="builder">The builder.</param>
-		/// <returns>The container</returns>
-		public IContainer AddServices(IContainerBuilder builder) {
-			this.servicesContainer = this.servicesContainerBuilder.Add(builder).Build();
-			return (this.servicesContainer);
-		}
-
-		/// <summary>
-		/// Adds the services.
-		/// </summary>
-		/// <param name="container">The container.</param>
-		/// <returns>The container</returns>
-		public IContainer AddServices(IContainer container) {
-			this.servicesContainer = this.servicesContainerBuilder.Add(container).Build();
-			return (this.servicesContainer);
-		}
-
-		/// <summary>
-		/// Gets the service container.
-		/// </summary>
-		/// <returns>The service container</returns>
-		public IContainer GetServicesContainer() {
-			return (this.servicesContainer);
+		/// <typeparam name="Module">The type of the module.</typeparam>
+		private static void Register<Module>() where Module : IModule, new() {
+			Container.Get<ModuleManagerService>().Register<Module>();
 		}
 	}
 }

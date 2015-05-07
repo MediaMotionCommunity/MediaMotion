@@ -1,5 +1,6 @@
 ﻿using MediaMotion.Core.Events;
-using MediaMotion.Core.Resolver.Containers.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Models.Interfaces {
@@ -8,12 +9,60 @@ namespace MediaMotion.Core.Models.Interfaces {
 	/// </summary>
 	public interface IModule {
 		/// <summary>
-		/// Gets the configuration.
+		/// Gets or sets the priority.
 		/// </summary>
 		/// <value>
-		/// The configuration.
+		/// The priority.
 		/// </value>
-		IModuleConfiguration Configuration { get; }
+		int Priority { get; }
+
+		/// <summary>
+		/// Gets the name of the module.
+		/// </summary>
+		/// <value>
+		/// The name of the module.
+		/// </value>
+		string Name { get; }
+
+		/// <summary>
+		/// Gets the module scene.
+		/// </summary>
+		/// <value>
+		/// The module scene.
+		/// </value>
+		string Scene { get; }
+
+		/// <summary>
+		/// Gets the module description.
+		/// </summary>
+		/// <value>
+		/// The module description.
+		/// </value>
+		string Description { get; }
+
+		/// <summary>
+		/// Gets or sets the services.
+		/// </summary>
+		/// <value>
+		/// The services.
+		/// </value>
+		IContainer ServicesContainer { get; }
+
+		/// <summary>
+		/// Gets a value indicating whether [support reload].
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if [support reload]; otherwise, <c>false</c>.
+		/// </value>
+		bool SupportReload { get; }
+
+		/// <summary>
+		/// Gets a value indicating whether [support background].
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if [support background]; otherwise, <c>false</c>.
+		/// </value>
+		bool SupportBackground { get; }
 
 		/// <summary>
 		/// Gets the parameters.
@@ -33,6 +82,12 @@ namespace MediaMotion.Core.Models.Interfaces {
 		/// </summary>
 		/// <param name="parameters">The parameters.</param>
 		void Load(IElement[] parameters);
+
+		/// <summary>
+		/// Reloads the specified parameters.
+		/// </summary>
+		/// <param name="parameters">The parameters.</param>
+		void Reload(IElement[] parameters);
 
 		/// <summary>
 		/// Load another module.

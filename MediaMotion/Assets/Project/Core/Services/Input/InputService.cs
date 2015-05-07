@@ -174,7 +174,7 @@ namespace MediaMotion.Core.Services.Input {
 		/// <param name="action">The action.</param>
 		private void AddMovement(IAction action) {
 			if (action.Type == ActionType.Leave) {
-				this.moduleManagerService.UnloadModule();
+				this.moduleManagerService.Unload();
 			} else {
 				this.movements.Add(action);
 			}

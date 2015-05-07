@@ -2,7 +2,6 @@
 using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Events;
-using MediaMotion.Core.Resolver.Containers.Interfaces;
 using MediaMotion.Modules.Explorer.Observers;
 using MediaMotion.Modules.Explorer.Services.CursorManager;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
@@ -14,31 +13,17 @@ namespace MediaMotion.Modules.Explorer {
 	/// </summary>
 	public sealed class ExplorerModule : AModule {
 		/// <summary>
-		/// The builder
-		/// </summary>
-		private IContainerBuilder builder;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ExplorerModule" /> class.
-		/// </summary>
-		/// <param name="builder">The builder.</param>
-		public ExplorerModule(IContainerBuilder builder)
-			: base() {
-			this.builder = builder;
-		}
-
-		/// <summary>
 		/// Configures this instance.
 		/// </summary>
 		public override void Configure() {
-			this.Configuration.Priority = 0;
-			this.Configuration.Name = "File browser";
-			this.Configuration.Scene = "Explorer";
-			this.Configuration.Description = "File browser using the MediaMotion Core API";
-			this.Configuration.ElementFactoryObserver = new ElementFactoryObserver();
-			this.Configuration.ServicesContainer = this.builder;
+			this.Priority = 0;
+			this.Name = "File browser";
+			this.Scene = "Explorer";
+			this.Description = "File browser using the MediaMotion Core API";
+			//this.ServicesContainer = this.builder;
 
-			this.builder.Register<CursorManagerService>().As<ICursorManagerService>().SingleInstance();
+			//this.ElementFactoryObserver = new ElementFactoryObserver();
+			//this.builder.Register<CursorManagerService>().As<ICursorManagerService>().SingleInstance();
 		}
 	}
 }
