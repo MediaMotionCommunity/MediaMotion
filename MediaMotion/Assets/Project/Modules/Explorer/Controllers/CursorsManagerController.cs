@@ -10,7 +10,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Cursors Manager Controller
 	/// </summary>
-	public class CursorsManagerController : AScript<CursorsManagerController> {
+	public class CursorsManagerController : AScript<ExplorerModule, CursorsManagerController> {
 		/// <summary>
 		/// The delete delay
 		/// </summary>

@@ -12,7 +12,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Explorer controller
 	/// </summary>
-	public class ExplorerController : AScript<ExplorerController> {
+	public class ExplorerController : AScript<ExplorerModule, ExplorerController> {
 		/// <summary>
 		/// The line length
 		/// </summary>
@@ -76,12 +76,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Initializes the specified explorer module.
 		/// </summary>
-		/// <param name="explorerModule">The explorer module.</param>
 		/// <param name="elementFactory">The element factory.</param>
 		/// <param name="fileSystemService">The file system service.</param>
 		/// <param name="inputService">The input service.</param>
 		/// <param name="moduleManagerService">The module manager service.</param>
-		public void Init(ExplorerModule explorerModule, IElementFactory elementFactory, IFileSystemService fileSystemService, IInputService inputService, IModuleManagerService moduleManagerService) {
+		public void Init(IElementFactory elementFactory, IFileSystemService fileSystemService, IInputService inputService, IModuleManagerService moduleManagerService) {
 			// services
 			this.elementFactory = elementFactory;
 			this.fileSystemService = fileSystemService;
@@ -94,7 +93,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.wheelTool = GameObject.Find("ReferenceFrame/Cameras/Main/Menu").GetComponent<MenuBehavior>();
 
 			// Open directory
-			this.OpenDirectory(explorerModule.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
+			this.OpenDirectory(this.module.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
 		}
 
 		/// <summary>

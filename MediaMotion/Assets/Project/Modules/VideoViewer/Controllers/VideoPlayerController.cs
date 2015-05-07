@@ -8,12 +8,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 	/// <summary>
 	/// VideoPlayer Controller
 	/// </summary>
-	public class VideoPlayerController : AScript<VideoPlayerController> {
-		/// <summary>
-		/// The module instance
-		/// </summary>
-		private VideoViewerModule moduleInstance;
-
+	public class VideoPlayerController : AScript<VideoViewerModule, VideoPlayerController> {
 		/// <summary>
 		/// The input service
 		/// </summary>
@@ -37,15 +32,13 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// Initializes the specified module.
 		/// </summary>
-		/// <param name="module">The module.</param>
 		/// <param name="input">The input.</param>
 		/// <param name="playlist">The playlist.</param>
-		public void Init(VideoViewerModule module, IInputService input, IPlaylistService playlist) {
-			this.moduleInstance = module;
+		public void Init(IInputService input, IPlaylistService playlist) {
 			this.inputService = input;
 			this.playlistService = playlist;
 
-			this.playlistService.Configure(((this.moduleInstance.Parameters.Length > 0) ? (this.moduleInstance.Parameters[0]) : (null)), new string[] { ".mkv", ".avi", ".wav" });
+			this.playlistService.Configure(((this.module.Parameters.Length > 0) ? (this.module.Parameters[0]) : (null)), new string[] { ".mkv", ".avi", ".wav" });
 			this.LoadVideo();
 		}
 

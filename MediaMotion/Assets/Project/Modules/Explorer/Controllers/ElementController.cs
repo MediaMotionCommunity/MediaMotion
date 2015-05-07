@@ -9,7 +9,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Element controller
 	/// </summary>
-	public class ElementController : AScript<ElementController> {
+	public class ElementController : AScript<ExplorerModule, ElementController> {
 		/// <summary>
 		/// The texture
 		/// </summary>

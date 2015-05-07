@@ -33,8 +33,6 @@ namespace MediaMotion.Core.Modules.Default.Controllers {
 		/// Updates this instance.
 		/// </summary>
 		public void Update() {
-			Debug.Log(this.fileSystemService);
-			Debug.Log(this.moduleManagerService);
 			this.moduleManagerService.Load(new IElement[] { this.fileSystemService.GetHomeFolder() });
 		}
 	}

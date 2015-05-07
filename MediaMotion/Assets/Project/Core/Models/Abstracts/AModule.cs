@@ -1,5 +1,6 @@
 ﻿using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Models.Abstracts {
@@ -81,6 +82,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// </summary>
 		/// <param name="parameters">The parameters.</param>
 		public virtual void Load(IElement[] parameters) {
+			UnityEngine.Debug.Log(parameters);
 			this.Parameters = parameters;
 		}
 
@@ -125,9 +127,9 @@ namespace MediaMotion.Core.Models.Abstracts {
 		///   <c>true</c> if the element is supported, <c>false</c> otherwise
 		/// </returns>
 		public virtual bool Supports(IElement element) {
-			// if (this.Configuration != null && this.Configuration.ElementFactoryObserver != null) {
-			// 	return (this.Configuration.ElementFactoryObserver.Supports(element.GetPath()));
-			// }
+			if (this.Container != null && this.Container.Has<IElementFactoryObserver>()) {
+				return (this.Container.Get<IElementFactoryObserver>().Supports(element.GetPath()));
+			}
 			return (false);
 		}
 	}
