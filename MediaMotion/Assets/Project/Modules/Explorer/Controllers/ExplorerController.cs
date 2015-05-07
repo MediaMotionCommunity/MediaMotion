@@ -93,7 +93,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.wheelTool = GameObject.Find("ReferenceFrame/Cameras/Main/Menu").GetComponent<MenuBehavior>();
 
 			// Open directory
-			this.OpenDirectory(this.module.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
+			if (this.module.Parameters == null || this.module.Parameters.Count(parameter => parameter is IFolder) == 0) {
+				this.OpenDirectory(this.fileSystemService.GetHomeFolder());
+			} else {
+				this.OpenDirectory(this.module.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
+			}
 		}
 
 		/// <summary>

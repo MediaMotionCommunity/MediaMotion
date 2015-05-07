@@ -82,7 +82,6 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// </summary>
 		/// <param name="parameters">The parameters.</param>
 		public virtual void Load(IElement[] parameters) {
-			UnityEngine.Debug.Log(parameters);
 			this.Parameters = parameters;
 		}
 
