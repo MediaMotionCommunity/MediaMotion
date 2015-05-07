@@ -45,7 +45,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// <value>
 		/// The services.
 		/// </value>
-		public IContainer ServicesContainer { get; protected set; }
+		public IContainer Container { get; protected set; }
 
 		/// <summary>
 		/// Gets a value indicating whether [support reload].
@@ -74,7 +74,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// <summary>
 		/// Configures the module.
 		/// </summary>
-		public abstract void Configure();
+		public abstract void Configure(IContainer container);
 
 		/// <summary>
 		/// Loads the specified files.

@@ -1,4 +1,5 @@
 ﻿using MediaMotion.Core.Models.Abstracts;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 
 namespace MediaMotion.Modules.Default {
 	/// <summary>
@@ -8,10 +9,11 @@ namespace MediaMotion.Modules.Default {
 		/// <summary>
 		/// Configures this instance.
 		/// </summary>
-		public override void Configure() {
+		public override void Configure(IContainer container) {
 			this.Name = "Default";
 			this.Scene = "Loader";
 			this.Description = "Default Core Module";
+			this.Container = container;
 		}
 	}
 }

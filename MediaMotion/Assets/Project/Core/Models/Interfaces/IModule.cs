@@ -46,7 +46,7 @@ namespace MediaMotion.Core.Models.Interfaces {
 		/// <value>
 		/// The services.
 		/// </value>
-		IContainer ServicesContainer { get; }
+		IContainer Container { get; }
 
 		/// <summary>
 		/// Gets a value indicating whether [support reload].
@@ -75,7 +75,7 @@ namespace MediaMotion.Core.Models.Interfaces {
 		/// <summary>
 		/// Configures the module.
 		/// </summary>
-		void Configure();
+		void Configure(IContainer container);
 
 		/// <summary>
 		/// Load the module with specified parameters.

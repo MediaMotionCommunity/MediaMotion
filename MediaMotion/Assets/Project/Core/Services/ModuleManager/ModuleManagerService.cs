@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
@@ -25,7 +26,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// <summary>
 		/// The modules
 		/// </summary>
-		private readonly List<IModule> availableModules;
+		private readonly Dictionary<Type, IModule> availableModules;
 
 		/// <summary>
 		/// The background modules
@@ -48,7 +49,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// <param name="elementFactory">The element factory.</param>
 		public ModuleManagerService(IElementFactory elementFactory) {
 			this.elementFactory = elementFactory;
-			this.availableModules = new List<IModule>();
+			this.availableModules = new Dictionary<Type, IModule>();
 			this.backgroundModules = new Stack<ModuleInstance>();
 			this.stackedModules = new Stack<ModuleInstance>();
 			this.currentModule = null;
@@ -61,11 +62,11 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		public void Register<Module>() where Module : IModule, new() {
 			IModule module = new Module();
 
-			module.Configure();
-			if (module.ServicesContainer.Has<IElementFactoryObserver>()) {
-				this.elementFactory.AddObserver(module.ServicesContainer.Get<IElementFactoryObserver>(), module.Priority);
+			module.Configure(MediaMotionCore.Container);
+			if (module.Container.Has<IElementFactoryObserver>()) {
+				this.elementFactory.AddObserver(module.Container.Get<IElementFactoryObserver>(), module.Priority);
 			}
-			this.availableModules.Add(module);
+			this.availableModules.Add(typeof(Module), module);
 		}
 
 		/// <summary>
@@ -76,7 +77,12 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// The more recent instance of the module if exist, <c>null</c> otherwise
 		/// </returns>
 		public Module Get<Module>() where Module : class, IModule {
-			return (default(Module));
+			IModule module;
+
+			if (!this.availableModules.TryGetValue(typeof(Module), out module)) {
+				throw new Exception("");
+			}
+			return ((Module)module);
 		}
 
 		/// <summary>
@@ -87,7 +93,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		///   <c>true</c> if the Module is registered, <c>false</c> otherwise
 		/// </returns>
 		public bool Has<Module>() where Module : class, IModule {
-			return (false);
+			return (this.availableModules.ContainsKey(typeof(Module)));
 		}
 
 		/// <summary>
@@ -97,7 +103,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// <returns><c>true</c> if the module is load properly, <c>false</c> otherwise</returns>
 		public bool Load(IElement[] parameters) {
 			lock (this.locker) {
-				IModule moduleToLoad = this.availableModules.OrderByDescending(module => module.Priority).FirstOrDefault(module => parameters.All(parameter => module.Supports(parameter)));
+				IModule moduleToLoad = this.availableModules.OrderByDescending(module => module.Value.Priority).FirstOrDefault(module => parameters.All(parameter => module.Value.Supports(parameter))).Value;
 
 				if (moduleToLoad != null) {
 					if (this.currentModule == moduleToLoad && this.currentModule.SupportReload) {

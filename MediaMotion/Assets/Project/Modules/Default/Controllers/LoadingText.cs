@@ -2,6 +2,7 @@
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Core.Modules.Default.Controllers {
 	/// <summary>
@@ -32,6 +33,8 @@ namespace MediaMotion.Core.Modules.Default.Controllers {
 		/// Updates this instance.
 		/// </summary>
 		public void Update() {
+			Debug.Log(this.fileSystemService);
+			Debug.Log(this.moduleManagerService);
 			this.moduleManagerService.Load(new IElement[] { this.fileSystemService.GetHomeFolder() });
 		}
 	}
