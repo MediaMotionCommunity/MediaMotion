@@ -13,6 +13,7 @@ namespace MediaMotion.Modules.DefaultViewer {
 		/// <summary>
 		/// Configures this instance.
 		/// </summary>
+		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
 			this.Priority = int.MinValue;
 			this.Name = "Default viewer";

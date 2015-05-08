@@ -75,6 +75,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// <summary>
 		/// Configures the module.
 		/// </summary>
+		/// <param name="container">The container</param>
 		public abstract void Configure(IContainer container);
 
 		/// <summary>
@@ -89,7 +90,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// Reloads the specified parameters.
 		/// </summary>
 		/// <param name="parameters">The parameters.</param>
-		/// <exception cref="System.NotSupportedException"></exception>
+		/// <exception cref="System.NotSupportedException">This module does not support the reload method</exception>
 		public void Reload(IElement[] parameters) {
 			throw new System.NotSupportedException("This module does not support the reload method");
 		}

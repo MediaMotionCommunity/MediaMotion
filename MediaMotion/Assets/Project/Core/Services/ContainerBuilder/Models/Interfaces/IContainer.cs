@@ -59,7 +59,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces {
 		/// <summary>
 		/// Determines whether [has].
 		/// </summary>
-		/// <typeparam name="Service">The type of the ervice.</typeparam>
+		/// <typeparam name="Service">The type of the service.</typeparam>
 		/// <returns>
 		///   <c>true</c> if the container has registered the service, <c>false</c> otherwise
 		/// </returns>

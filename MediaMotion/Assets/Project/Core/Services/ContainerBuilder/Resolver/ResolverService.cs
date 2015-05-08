@@ -39,7 +39,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Resolver {
 
 			if (attributes.Length > 0) {
 				foreach (object attribute in attributes) {
-					if (this.Container.HasParameter(((Parameter)attribute).key)) {
+					if (this.Container.HasParameter(((Parameter)attribute).Key)) {
 						return (true);
 					}
 				}
@@ -83,7 +83,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Resolver {
 
 			if (attributes.Length > 0) {
 				foreach (object attribute in attributes) {
-					string key = ((Parameter)attribute).key;
+					string key = ((Parameter)attribute).Key;
 
 					if (this.Container.HasParameter(key)) {
 						return (this.Container.GetParameter(key));

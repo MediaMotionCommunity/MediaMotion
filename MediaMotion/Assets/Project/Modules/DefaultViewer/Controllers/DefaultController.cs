@@ -15,7 +15,6 @@ namespace MediaMotion.Modules.DefaultViewer.Controllers {
 		/// <summary>
 		/// Initializes the specified module.
 		/// </summary>
-		/// <param name="module">The module.</param>
 		/// <param name="input">The input.</param>
 		public void Init(IInputService input) {
 			this.inputService = input;

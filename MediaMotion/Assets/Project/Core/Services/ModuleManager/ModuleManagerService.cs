@@ -80,7 +80,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 			IModule module;
 
 			if (!this.availableModules.TryGetValue(typeof(Module), out module)) {
-				throw new Exception("");
+				throw new Exception("Error");
 			}
 			return ((Module)module);
 		}

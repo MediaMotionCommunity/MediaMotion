@@ -9,6 +9,7 @@ namespace MediaMotion.Modules.Default {
 		/// <summary>
 		/// Configures this instance.
 		/// </summary>
+		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
 			this.Name = "Default";
 			this.Scene = "Loader";

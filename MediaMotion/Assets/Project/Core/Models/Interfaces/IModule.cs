@@ -9,7 +9,7 @@ namespace MediaMotion.Core.Models.Interfaces {
 	/// </summary>
 	public interface IModule {
 		/// <summary>
-		/// Gets or sets the priority.
+		/// Gets the priority.
 		/// </summary>
 		/// <value>
 		/// The priority.
@@ -17,10 +17,10 @@ namespace MediaMotion.Core.Models.Interfaces {
 		int Priority { get; }
 
 		/// <summary>
-		/// Gets the name of the module.
+		/// Gets the name.
 		/// </summary>
 		/// <value>
-		/// The name of the module.
+		/// The name.
 		/// </value>
 		string Name { get; }
 
@@ -41,10 +41,10 @@ namespace MediaMotion.Core.Models.Interfaces {
 		string Description { get; }
 
 		/// <summary>
-		/// Gets or sets the services.
+		/// Gets the container.
 		/// </summary>
 		/// <value>
-		/// The services.
+		/// The container.
 		/// </value>
 		IContainer Container { get; }
 
@@ -75,6 +75,7 @@ namespace MediaMotion.Core.Models.Interfaces {
 		/// <summary>
 		/// Configures the module.
 		/// </summary>
+		/// <param name="container">The container.</param>
 		void Configure(IContainer container);
 
 		/// <summary>

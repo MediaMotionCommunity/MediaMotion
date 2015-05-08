@@ -38,7 +38,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces {
 		bool SingleInstance { get; set; }
 
 		/// <summary>
-		/// Ases this instance.
+		/// Define an alias for the service type
 		/// </summary>
 		/// <typeparam name="Service">The type of the service.</typeparam>
 		/// <returns>
@@ -47,7 +47,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces {
 		IDefinition As<Service>() where Service : class;
 
 		/// <summary>
-		/// Ases the specified service.
+		/// Define an alias for the service type
 		/// </summary>
 		/// <param name="service">The type of the service.</param>
 		/// <returns>

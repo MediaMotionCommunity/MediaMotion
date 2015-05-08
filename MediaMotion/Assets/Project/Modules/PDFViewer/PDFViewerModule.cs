@@ -12,6 +12,7 @@ namespace MediaMotion.Modules.PDFViewer {
 		/// <summary>
 		/// Configures this instance.
 		/// </summary>
+		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
 			this.Name = "PDF Viewer";
 			this.Scene = "PDFViewer";

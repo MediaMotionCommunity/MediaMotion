@@ -75,7 +75,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		}
 
 		/// <summary>
-		/// Ases this instance.
+		/// Define an alias for the service type
 		/// </summary>
 		/// <typeparam name="Service">The type of the service.</typeparam>
 		/// <returns>
@@ -86,7 +86,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		}
 
 		/// <summary>
-		/// Ases the specified service.
+		/// Define an alias for the service type
 		/// </summary>
 		/// <param name="service">The type of the service.</param>
 		/// <returns>

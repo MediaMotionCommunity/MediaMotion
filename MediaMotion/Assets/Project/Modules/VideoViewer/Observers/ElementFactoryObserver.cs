@@ -12,7 +12,7 @@ namespace MediaMotion.Modules.VideoViewer.Observers {
 		/// <summary>
 		/// The supported extensions
 		/// </summary>
-		public static readonly string[] supportedExtensions = new string[] { ".avi", ".mkv", ".mp4", ".wav" };
+		public static readonly string[] SupportedExtensions = new string[] { ".avi", ".mkv", ".mp4", ".wav" };
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ElementFactoryObserver"/> class.
@@ -30,7 +30,7 @@ namespace MediaMotion.Modules.VideoViewer.Observers {
 		public bool Supports(string path) {
 			if (File.Exists(path)) {
 				FileInfo fileInfo = new FileInfo(path);
-				return (ElementFactoryObserver.supportedExtensions.Contains(fileInfo.Extension.ToLower()));
+				return (ElementFactoryObserver.SupportedExtensions.Contains(fileInfo.Extension.ToLower()));
 			}
 			return (false);
 		}

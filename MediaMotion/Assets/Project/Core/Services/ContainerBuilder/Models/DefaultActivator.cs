@@ -8,7 +8,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 	/// </summary>
 	public class DefaultActivator : AActivator {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SingleActivator"/> class.
+		/// Initializes a new instance of the <see cref="DefaultActivator" /> class.
 		/// </summary>
 		/// <param name="resolver">The resolver.</param>
 		/// <param name="serviceType">Type of the service.</param>

@@ -13,7 +13,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		private object service;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SingleActivator"/> class.
+		/// Initializes a new instance of the <see cref="SingleInstanceActivator"/> class.
 		/// </summary>
 		/// <param name="resolver">The resolver.</param>
 		/// <param name="serviceType">Type of the service.</param>

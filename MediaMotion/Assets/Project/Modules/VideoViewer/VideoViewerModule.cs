@@ -12,6 +12,7 @@ namespace MediaMotion.Modules.VideoViewer {
 		/// <summary>
 		/// Configures this instance.
 		/// </summary>
+		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
 			this.Name = "Video Viewer";
 			this.Scene = "VideoViewer";

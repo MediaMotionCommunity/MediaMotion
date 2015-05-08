@@ -15,6 +15,7 @@ namespace MediaMotion.Modules.ImageViewer {
 		/// <summary>
 		/// Configures this instance.
 		/// </summary>
+		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
 			this.Name = "Image Viewer";
 			this.Scene = "ImageViewer";

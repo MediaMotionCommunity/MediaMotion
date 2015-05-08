@@ -57,7 +57,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder {
 
 				foreach (Type alias in definition.Types) {
 					if (!alias.IsAssignableFrom(definition.ServiceType)) {
-						throw new Exception("");
+						throw new Exception("Error");
 					}
 					services[alias] = activator;
 				}

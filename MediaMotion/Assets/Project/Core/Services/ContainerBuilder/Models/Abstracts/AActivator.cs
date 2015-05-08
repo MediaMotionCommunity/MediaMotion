@@ -10,14 +10,6 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models.Abstracts {
 	/// </summary>
 	public abstract class AActivator : IActivator {
 		/// <summary>
-		/// Gets the type of the service.
-		/// </summary>
-		/// <value>
-		/// The type of the service.
-		/// </value>
-		public Type ServiceType { get; private set; }
-
-		/// <summary>
 		/// The resolver
 		/// </summary>
 		protected IResolverService resolver;
@@ -28,15 +20,23 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models.Abstracts {
 		protected ConstructorInfo constructorInfo;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SingleActivator"/> class.
+		/// Initializes a new instance of the <see cref="AActivator" /> class.
 		/// </summary>
+		/// <param name="resolver">The resolver.</param>
 		/// <param name="serviceType">Type of the service.</param>
-		/// <param name="service">The service.</param>
 		/// <exception cref="System.Exception">the provided instance does not match the provided type</exception>
 		public AActivator(IResolverService resolver, Type serviceType) {
 			this.resolver = resolver;
 			this.ServiceType = serviceType;
 		}
+
+		/// <summary>
+		/// Gets the type of the service.
+		/// </summary>
+		/// <value>
+		/// The type of the service.
+		/// </value>
+		public Type ServiceType { get; private set; }
 
 		/// <summary>
 		/// Builds this instance.

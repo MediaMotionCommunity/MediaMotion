@@ -39,7 +39,7 @@ namespace MediaMotion.Core {
 		public static readonly IContainer Container;
 
 		/// <summary>
-		/// Initializes the <see cref="MediaMotionCore"/> class.
+		/// Initializes static members of the <see cref="MediaMotionCore"/> class.
 		/// </summary>
 		static MediaMotionCore() {
 			Assembly assembly = typeof(MediaMotionCore).Assembly;
@@ -70,6 +70,13 @@ namespace MediaMotion.Core {
 			Register<VideoViewerModule>();
 		}
 
+		/// <summary>
+		/// Gets the version.
+		/// </summary>
+		/// <param name="assembly">The assembly.</param>
+		/// <returns>
+		///   The version
+		/// </returns>
 		private static Version GetVersion(Assembly assembly) {
 			return (assembly.GetName().Version);
 		}

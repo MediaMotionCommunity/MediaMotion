@@ -11,7 +11,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 	/// <summary>
 	/// Base unity script
 	/// </summary>
-	/// <typeparam name="Module">The type of the odule.</typeparam>
+	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="Child">Child Class Type (Curiously Recurring Template Pattern)</typeparam>
 	public abstract class AScript<Module, Child> : MonoBehaviour
 		where Module : class, IModule
@@ -42,7 +42,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 				}
 			}
 		}
-	};
+	}
 
 	/// <summary>
 	/// Base unity script
@@ -50,5 +50,5 @@ namespace MediaMotion.Core.Models.Abstracts {
 	/// <typeparam name="Child">Child Class Type (Curiously Recurring Template Pattern)</typeparam>
 	public abstract class AScript<Child> : AScript<DefaultModule, Child>
 		where Child : AScript<Child> {
-	};
+	}
 }

@@ -1,14 +1,14 @@
-﻿using MediaMotion.Core.Models;
+﻿using MediaMotion.Core.Events;
+using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Models.Interfaces;
-using MediaMotion.Core.Events;
+using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Modules.Explorer.Observers;
 using MediaMotion.Modules.Explorer.Services.CursorManager;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
 using MediaMotion.Motion.Actions;
-using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
-using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
-using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 
 namespace MediaMotion.Modules.Explorer {
 	/// <summary>
@@ -18,6 +18,7 @@ namespace MediaMotion.Modules.Explorer {
 		/// <summary>
 		/// Configures this instance.
 		/// </summary>
+		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
 			this.Priority = 0;
 			this.Name = "File browser";

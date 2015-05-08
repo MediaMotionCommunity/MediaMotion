@@ -12,6 +12,7 @@ namespace MediaMotion.Modules.Default.Controllers {
 		/// Initializes the specified version.
 		/// </summary>
 		/// <param name="version">The version.</param>
+		/// <param name="BuildMode">The build mode.</param>
 		public void Init([Parameter("Version")] Version version, [Parameter("BuildMode")] string BuildMode) {
 			string versionString = "Version " + version.ToString(3);
 

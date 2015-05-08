@@ -1,20 +1,19 @@
 using System;
-using System.IO;
 using System.Collections;
+using System.IO;
 using System.Runtime.InteropServices;
+using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Motion.Actions;
-using UnityEngine;
 using MuPDF;
-using MediaMotion.Core.Models.Abstracts;
+using UnityEngine;
 
 
 namespace MediaMotion.Modules.PDFViewer.Controllers {
-
-	/**
-	 * C# Unmanaged pointer wrapper
-	 */
+	/// <summary>
+	/// C# Unmanaged pointer wrapper
+	/// </summary>
 	class AutoPinner : IDisposable {
 		object _obj;
 		GCHandle _pinnedArray;
@@ -71,25 +70,25 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		}
 
 		private void InitPDF() {
-			ClearSession();
+			this.ClearSession();
 			pdf_session = LibPDF.libpdf_load_session();
 		}
 
 		private void LoadPDF() {
 			string path = this.playlistService.Current().GetPath();
 			Debug.Log(path);
-			ClearBuffer();
-			ClearTexture();
-			ClearPage();
-			ClearDocument();
+			this.ClearBuffer();
+			this.ClearTexture();
+			this.ClearPage();
+			this.ClearDocument();
 			pdf_document = LibPDF.libpdf_load_document(pdf_session, path);
 			pdf_page = LibPDF.libpdf_load_page(pdf_session, pdf_document, 0);
 			int tex_xsize = LibPDF.libpdf_xsize_page(pdf_session, pdf_page);
 			int tex_ysize = LibPDF.libpdf_ysize_page(pdf_session, pdf_page);
 			pdf_texture_size = tex_xsize * tex_ysize;
 			pdf_texture = new Texture2D(tex_xsize, tex_ysize, TextureFormat.RGBA32, false);
-			if (GetComponent<Renderer>()) {
-				GetComponent<Renderer>().material.mainTexture = pdf_texture;
+			if (this.GetComponent<Renderer>()) {
+				this.GetComponent<Renderer>().material.mainTexture = pdf_texture;
 			}
 			float ratio = 5.0f / tex_ysize;
 			transform.localScale = new Vector3(-ratio * tex_xsize, ratio * tex_ysize, 1);
@@ -129,8 +128,8 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 			if (pdf_texture != null) {
 				UnityEngine.Object.Destroy(pdf_texture);
 				pdf_texture = new Texture2D(1, 1);
-				if (GetComponent<Renderer>()) {
-					GetComponent<Renderer>().material.mainTexture = pdf_texture;
+				if (this.GetComponent<Renderer>()) {
+					this.GetComponent<Renderer>().material.mainTexture = pdf_texture;
 				}
 			}
 		}
@@ -163,11 +162,11 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		}
 
 		public void OnDestroy() {
-			ClearBuffer();
-			ClearTexture();
-			ClearPage();
-			ClearDocument();
-			ClearSession();
+			this.ClearBuffer();
+			this.ClearTexture();
+			this.ClearPage();
+			this.ClearDocument();
+			this.ClearSession();
 		}
 
 	}

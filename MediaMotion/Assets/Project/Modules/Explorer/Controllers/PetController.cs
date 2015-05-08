@@ -24,7 +24,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// The animation name
 		/// </summary>
-		private string animationName = "";
+		private string animationName = string.Empty;
 
 		/// <summary>
 		/// The rotation
@@ -76,13 +76,13 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				}
 				this.elapsedTime = 0.0f;
 			}
-			this.play();
+			this.Play();
 		}
 
 		/// <summary>
 		/// Plays this instance.
 		/// </summary>
-		private void play() {
+		private void Play() {
 			float animationPourcentage = this.elapsedTime / this.totalTime;
 			float coefficient = Time.deltaTime / this.totalTime;
 			Vector3 angle = new Vector3(this.rotation.x * 2.0f * coefficient, this.rotation.y * coefficient, this.rotation.y * 0.5f * coefficient);
