@@ -12,6 +12,11 @@ namespace MediaMotion.Core.Services.ContainerBuilder {
 	/// </summary>
 	public class ContainerBuilderService : IContainerBuilderService {
 		/// <summary>
+		/// The parameters list
+		/// </summary>
+		private readonly Dictionary<string, object> parametersList;
+
+		/// <summary>
 		/// The registration list
 		/// </summary>
 		private readonly List<IDefinition> definitionList;
@@ -20,6 +25,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder {
 		/// Initializes a new instance of the <see cref="ContainerBuilderService"/> class.
 		/// </summary>
 		public ContainerBuilderService() {
+			this.parametersList = new Dictionary<string, object>();
 			this.definitionList = new List<IDefinition>();
 		}
 
@@ -43,6 +49,9 @@ namespace MediaMotion.Core.Services.ContainerBuilder {
 			IResolverService resolver = new ResolverService(container);
 			IActivator resolverActivator = new SingleInstanceActivator(resolver, typeof(ResolverService), resolver);
 
+			foreach (KeyValuePair<string, object> parameter in this.parametersList) {
+				parameters[parameter.Key] = parameter.Value;
+			}
 			foreach (IDefinition definition in this.definitionList) {
 				IActivator activator = this.GetActivator(resolver, definition);
 
@@ -67,6 +76,15 @@ namespace MediaMotion.Core.Services.ContainerBuilder {
 		/// </summary>
 		public void Clear() {
 			this.definitionList.Clear();
+		}
+
+		/// <summary>
+		/// Defines the specified parameter.
+		/// </summary>
+		/// <param name="parameter">The parameter.</param>
+		/// <param name="value">The value.</param>
+		public void Define(string parameter, object value) {
+			this.parametersList[parameter] = value;
 		}
 
 		/// <summary>

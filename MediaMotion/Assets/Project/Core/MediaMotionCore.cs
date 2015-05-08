@@ -1,4 +1,8 @@
-﻿using MediaMotion.Core.Models.Interfaces;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services;
 using MediaMotion.Core.Services.ContainerBuilder;
 using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
@@ -22,6 +26,7 @@ using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Modules.VideoViewer;
+using UnityEngine;
 
 namespace MediaMotion.Core {
 	/// <summary>
@@ -37,29 +42,24 @@ namespace MediaMotion.Core {
 		/// Initializes the <see cref="MediaMotionCore"/> class.
 		/// </summary>
 		static MediaMotionCore() {
+			Assembly assembly = typeof(MediaMotionCore).Assembly;
 			IContainerBuilderService builder = new ContainerBuilderService();
 
-			// Container
+			// Parameters
+			builder.Define("Version", MediaMotionCore.GetVersion(assembly));
+			builder.Define("BuildMode", MediaMotionCore.GetBuildMode(assembly));
+			builder.Define("BuildDate", MediaMotionCore.GetBuildDate(assembly));
+			builder.Define("DebuggerAttached", Debugger.IsAttached);
+
+			// Services
 			builder.Register<ContainerBuilderService>().As<IContainerBuilderService>();
-
-			// FileSystem
-			builder.Register<FileSystemService>().As<IFileSystemService>();
 			builder.Register<ElementFactory>().As<IElementFactory>().SingleInstance = true;
-
-			// Playlist
-			builder.Register<PlaylistService>().As<IPlaylistService>();
-
-			// History
+			builder.Register<FileSystemService>().As<IFileSystemService>();
 			builder.Register<HistoryService>().As<IHistoryService>().SingleInstance = true;
-
-			// Input
 			builder.Register<InputService>().As<IInputService>().SingleInstance = true;
-
-			// Resources
-			builder.Register<ResourceManagerService>().As<IResourceManagerService>().SingleInstance = true;
-
-			// Modules
 			builder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance = true;
+			builder.Register<PlaylistService>().As<IPlaylistService>();
+			builder.Register<ResourceManagerService>().As<IResourceManagerService>().SingleInstance = true;
 
 			Container = builder.Build();
 
@@ -68,6 +68,37 @@ namespace MediaMotion.Core {
 			Register<ExplorerModule>();
 			Register<ImageViewerModule>();
 			Register<VideoViewerModule>();
+		}
+
+		private static Version GetVersion(Assembly assembly) {
+			return (assembly.GetName().Version);
+		}
+
+		/// <summary>
+		/// Gets the build mode.
+		/// </summary>
+		/// <param name="assembly">The assembly.</param>
+		/// <returns>
+		///   The build mode
+		/// </returns>
+		private static string GetBuildMode(Assembly assembly) {
+			AssemblyNameFlags assemblyNameFlags = assembly.GetName().Flags;
+
+			if ((assemblyNameFlags & AssemblyNameFlags.EnableJITcompileOptimizer) == 0 && (assemblyNameFlags & AssemblyNameFlags.EnableJITcompileTracking) == AssemblyNameFlags.EnableJITcompileTracking) {
+				return ("Debug");
+			}
+			return ("Release");
+		}
+
+		/// <summary>
+		/// Gets the build date.
+		/// </summary>
+		/// <param name="assembly">The assembly.</param>
+		/// <returns>
+		///   The build date
+		/// </returns>
+		private static DateTime GetBuildDate(Assembly assembly) {
+			return (File.GetLastWriteTime(assembly.Location));
 		}
 
 		/// <summary>

@@ -21,6 +21,13 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Interfaces {
 		void Clear();
 
 		/// <summary>
+		/// Defines the specified parameter.
+		/// </summary>
+		/// <param name="parameter">The parameter.</param>
+		/// <param name="value">The value.</param>
+		void Define(string parameter, object value);
+
+		/// <summary>
 		/// Registers the specified instance.
 		/// </summary>
 		/// <typeparam name="Service">The type of the service.</typeparam>

@@ -1,5 +1,4 @@
 ﻿using System;
-using MediaMotion.Core.Models.Wrapper.Enums;
 using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Core.Events {
