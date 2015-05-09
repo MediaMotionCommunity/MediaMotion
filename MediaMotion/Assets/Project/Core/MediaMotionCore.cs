@@ -25,6 +25,7 @@ using MediaMotion.Modules.Default;
 using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
+using MediaMotion.Modules.PDFViewer;
 using MediaMotion.Modules.VideoViewer;
 using UnityEngine;
 
@@ -63,11 +64,7 @@ namespace MediaMotion.Core {
 
 			Container = builder.Build();
 
-			Register<DefaultModule>();
-			Register<DefaultViewerModule>();
-			Register<ExplorerModule>();
-			Register<ImageViewerModule>();
-			Register<VideoViewerModule>();
+			MediaMotionCore.RegisterModules();
 		}
 
 		/// <summary>
@@ -112,8 +109,15 @@ namespace MediaMotion.Core {
 		/// Registers Modules
 		/// </summary>
 		/// <typeparam name="Module">The type of the module.</typeparam>
-		private static void Register<Module>() where Module : IModule, new() {
-			Container.Get<ModuleManagerService>().Register<Module>();
+		private static void RegisterModules() {
+			IModuleManagerService moduleManager = Container.Get<IModuleManagerService>();
+
+			moduleManager.Register<DefaultModule>();
+			moduleManager.Register<DefaultViewerModule>();
+			moduleManager.Register<ExplorerModule>();
+			moduleManager.Register<ImageViewerModule>();
+			moduleManager.Register<VideoViewerModule>();
+			moduleManager.Register<PDFViewerModule>();
 		}
 	}
 }
