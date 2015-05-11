@@ -79,15 +79,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 		/// </summary>
 		/// <param name="pos">Position to correct</param>
 		/// <returns>Corrected position</returns>
-		private Vector3 BrowserPlanPosition(Vector3 pos) {
-			Vector3 rotated = new Vector3(pos);
-			const float Height = BrowserPlanHeight;
-			const float Angle = -BrowserPlanAngle * 0.0174532925f; // to radians
+		private Vector3 BrowserPlanPosition(IVector3 pos) {
+			var rotated = new Vector3(pos);
+			const float height = BrowserPlanHeight;
+			const float angle = -BrowserPlanAngle * 0.0174532925f; // to radians
 			// Simply rotate the position using the plan origin as the rotation point
-			float y = rotated.Y - Height;
-			float z = rotated.Z;
-			float ry = (float)((y * Math.Cos(Angle)) - (z * Math.Sin(Angle)));
-			float rz = (float)((y * Math.Sin(Angle)) + (z * Math.Cos(Angle)));
+			var y = rotated.Y - height;
+			var z = rotated.Z;
+			var ry = (float)((y * Math.Cos(angle)) - (z * Math.Sin(angle)));
+			var rz = (float)((y * Math.Sin(angle)) + (z * Math.Cos(angle)));
 
 			rotated.Y = ry;
 			rotated.Z = rz;

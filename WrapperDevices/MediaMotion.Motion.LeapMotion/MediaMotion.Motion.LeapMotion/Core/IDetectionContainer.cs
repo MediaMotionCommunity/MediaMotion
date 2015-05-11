@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Leap;
+﻿using Leap;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.MovementsDetection;
 
@@ -9,7 +8,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 
 		void Register(ILeapDetection leapDetection);
 
-		void Register<T>(params ActionType[] actions) where T : IMouvementDetection, new();
+		void Register<T>(params ActionType[] actions) where T : class, IMouvementDetection;
 
 		void DetectMouvement(Frame frame, IActionCollection actionCollection);
 
@@ -18,5 +17,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		void Enable(ActionType action);
 
 		bool IsEmpty();
+
+		void Build();
 	}
 }

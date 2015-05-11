@@ -1,4 +1,6 @@
-﻿using Leap;
+﻿using System;
+using System.Linq;
+using Leap;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
 using MediaMotion.Motion.LeapMotion.MovementsDetection;
@@ -8,93 +10,139 @@ using NUnit.Framework;
 namespace MediaMotion.Motion.LeapMotion.Tests.Core {
 	[TestFixture]
 	public class DetectionContainerTests {
-		private DetectionContainer _detectionContainer;
-		private Mock<ICustomDetection> _customDetectionMock;
-		private Mock<ILeapDetection> _iLeapDetectionMock;
-		private ActionCollection _actionCollection;
-		private Mock<Frame> _frameMock;
-		private const ActionType AnUsedAction = ActionType.Down;
+		private DetectionContainer detectionContainer;
+		private Mock<ICustomDetection> customDetectionMock;
+		private Mock<ILeapDetection> iLeapDetectionMock;
+		private ActionCollection actionCollection;
+		private Mock<Frame> frameMock;
+		private const ActionType AUsedAction = ActionType.Down;
+		private const ActionType AnOtherUsedAction = ActionType.Right;
 		private const ActionType AnUnsedAction = ActionType.Up;
 
 		private class CustomDetectionImplementation : ICustomDetection {
 			public void Detection(Frame frame, IActionCollection actionCollection) {
-				actionCollection.Add(AnUsedAction);
+				actionCollection.Add(AUsedAction);
+			}
+		}
+
+		private class DetectionWithParameterConstructor : ICustomDetection {
+			private readonly CustomDetectionImplementation implementation;
+
+			public DetectionWithParameterConstructor(CustomDetectionImplementation implementation) {
+				this.implementation = implementation;
+			}
+
+			public void Detection(Frame frame, IActionCollection actionCollection) {
+				if (this.implementation != null)
+					actionCollection.Add(AnOtherUsedAction);
 			}
 		}
 
 		[SetUp]
 		public void Setup() {
-			this._customDetectionMock = new Mock<ICustomDetection>();
-			this._detectionContainer = new DetectionContainer();
-			this._iLeapDetectionMock = new Mock<ILeapDetection>();
-			this._actionCollection = new ActionCollection();
-			this._frameMock = new Mock<Frame>();
+			this.customDetectionMock = new Mock<ICustomDetection>();
+			this.detectionContainer = new DetectionContainer();
+			this.iLeapDetectionMock = new Mock<ILeapDetection>();
+			this.actionCollection = new ActionCollection();
+			this.frameMock = new Mock<Frame>();
 		}
 
 		[Test]
 		public void GivenNewClass_WhenCreated_ThenShouldBeEmpty() {
-			Assert.IsTrue(this._detectionContainer.IsEmpty());
+			Assert.IsTrue(this.detectionContainer.IsEmpty());
 		}
 
 		[Test]
 		public void GivenNewClass_WhenRegisterAnInstance_ThenShouldBeNotEmpty() {
-			this._detectionContainer.Register(this._customDetectionMock.Object);
+			this.detectionContainer.Register(this.customDetectionMock.Object);
 
-			Assert.IsFalse(this._detectionContainer.IsEmpty());
+			Assert.IsFalse(this.detectionContainer.IsEmpty());
 		}
 
 		[Test]
 		public void GivenNewClass_WhenRegisterAType_ThenShouldBeEmpty() {
-			this._detectionContainer.Register<CustomDetectionImplementation>(AnUsedAction);
+			this.detectionContainer.Register<CustomDetectionImplementation>(AUsedAction);
 
-			Assert.IsTrue(this._detectionContainer.IsEmpty());
+			Assert.IsTrue(this.detectionContainer.IsEmpty());
 		}
 
 		[Test]
 		public void GivenInstanceWithRegisterType_WhenEnableWithUsedAction_ThenShouldBeNotEmpty() {
-			this._detectionContainer.Register<CustomDetectionImplementation>(AnUsedAction);
+			this.detectionContainer.Register<CustomDetectionImplementation>(AUsedAction);
 			
-			this._detectionContainer.Enable(AnUsedAction);
+			this.detectionContainer.Enable(AUsedAction);
 
-			Assert.IsFalse(this._detectionContainer.IsEmpty());
+			Assert.IsFalse(this.detectionContainer.IsEmpty());
 		}
 
 		[Test]
 		public void GivenInstanceWithRegisterType_WhenEnableWithActionNeverUse_ThenShouldBeEmpty() {
-			this._detectionContainer.Register<CustomDetectionImplementation>(AnUsedAction);
+			this.detectionContainer.Register<CustomDetectionImplementation>(AUsedAction);
 
-			this._detectionContainer.Enable(AnUnsedAction);
+			this.detectionContainer.Enable(AnUnsedAction);
 
-			Assert.IsTrue(this._detectionContainer.IsEmpty());
+			Assert.IsTrue(this.detectionContainer.IsEmpty());
 		}
 
 		[Test]
 		public void GivenInstanceWithMultipleRegisterInstance_WhenClear_ThenShouldBeEmpty() {
-			this._detectionContainer.Register(this._customDetectionMock.Object);
-			this._detectionContainer.Register(this._iLeapDetectionMock.Object);
+			this.detectionContainer.Register(this.customDetectionMock.Object);
+			this.detectionContainer.Register(this.iLeapDetectionMock.Object);
 
-			this._detectionContainer.Clear();
+			this.detectionContainer.Clear();
 
-			Assert.IsTrue(this._detectionContainer.IsEmpty());
+			Assert.IsTrue(this.detectionContainer.IsEmpty());
 		}
 
 		[Test]
 		public void GivenInstanceWithRegisterInstance_WhenDetectMouvement_ThenShouldCallMethodDetectionOfInstance() {
-			this._detectionContainer.Register(this._customDetectionMock.Object);
+			this.detectionContainer.Register(this.customDetectionMock.Object);
 			
-			this._detectionContainer.DetectMouvement(this._frameMock.Object, this._actionCollection);
+			this.detectionContainer.DetectMouvement(this.frameMock.Object, this.actionCollection);
 
-			this._customDetectionMock.Verify(cd => cd.Detection(this._frameMock.Object, this._actionCollection));
+			this.customDetectionMock.Verify(cd => cd.Detection(this.frameMock.Object, this.actionCollection));
 		}
 
 		[Test]
-		public void GivenRegisterTypeAndEnabledThis_WhenDetectMouvement_ThenShouldCallDetectionOfThisType() {
-			this._detectionContainer.Register<CustomDetectionImplementation>(AnUsedAction);
-			this._detectionContainer.Enable(AnUnsedAction);
+		public void GivenRegisterTypeAndEnabledThis_WhenDetectMouvement_ThenShouldUsedDetectionMethod() {
+			this.detectionContainer.Register<CustomDetectionImplementation>(AUsedAction);
+			this.detectionContainer.Enable(AUsedAction);
 
-			this._detectionContainer.DetectMouvement(this._frameMock.Object, this._actionCollection);
+			this.detectionContainer.DetectMouvement(this.frameMock.Object, this.actionCollection);
 
+			Assert.IsNotNull(this.actionCollection.FirstOrDefault(ac => ac.Type.Equals(AUsedAction)));
+		}
 
+		[Test]
+		public void GivenRegisterAndEnabledATypeWithNoParameterLessConstructorButParameterTypeNotEnabled_WhenDetectMouvement_ThenShouldReceiveANullArgument() {
+			this.detectionContainer.Register<DetectionWithParameterConstructor>(AnOtherUsedAction);
+			this.detectionContainer.Register<CustomDetectionImplementation>(AUsedAction);
+			this.detectionContainer.Build();
+			this.detectionContainer.Enable(AnOtherUsedAction);
+
+			this.detectionContainer.DetectMouvement(this.frameMock.Object, this.actionCollection);
+
+			Assert.IsNull(this.actionCollection.FirstOrDefault(ac => ac.Type.Equals(AnOtherUsedAction)));
+		}
+
+		[Test]
+		public void GivenRegisterAndEnabledATypeWithNoParameterLessConstructorAndParameterTypeEnabled_WhenDetectMouvement_ThenShouldReceiveOtherDetectionInstance() {
+			this.detectionContainer.Register<DetectionWithParameterConstructor>(AnOtherUsedAction);
+			this.detectionContainer.Register<CustomDetectionImplementation>(AUsedAction);
+			this.detectionContainer.Build();
+			this.detectionContainer.Enable(AUsedAction);
+			this.detectionContainer.Enable(AnOtherUsedAction);
+
+			this.detectionContainer.DetectMouvement(this.frameMock.Object, this.actionCollection);
+
+			Assert.IsNotNull(this.actionCollection.FirstOrDefault(ac => ac.Type.Equals(AnOtherUsedAction)));
+		}
+
+		[Test]
+		[ExpectedException(typeof(DetectionResolveException))]
+		public void GivenRegisterAndEnabledATypeWithNoParameterLessConstructorButParameterTypeNotRegister_WhenBuild_ThenShouldThrowAnException() {
+			this.detectionContainer.Register<DetectionWithParameterConstructor>(AnOtherUsedAction);
+			this.detectionContainer.Build();
 		}
 	}
 }

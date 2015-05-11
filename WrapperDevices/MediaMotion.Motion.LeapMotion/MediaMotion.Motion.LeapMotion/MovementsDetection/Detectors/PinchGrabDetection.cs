@@ -5,7 +5,7 @@ using MediaMotion.Motion.LeapMotion.Core;
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 	public class PinchGrabDetection : APinchDetection {
 		#region Constants
-		private readonly TimeSpan ReleadTimeMin = new TimeSpan(0, 0, 0, 1, 500);
+		private readonly TimeSpan releadTimeMin = new TimeSpan(0, 0, 0, 1, 500);
 		#endregion
 		
 		#region Fields
@@ -59,13 +59,13 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 				this.lastDetections[hand] = DateTime.Now;
 			}
 
-			if (this.states[hand] && !this.perfomGrab[hand] && (DateTime.Now - this.lastDetections[hand]) >= this.ReleadTimeMin) {
+			if (this.states[hand] && !this.perfomGrab[hand] && (DateTime.Now - this.lastDetections[hand]) >= this.releadTimeMin) {
 				actionCollection.Add(ActionType.GrabStart);
 				this.perfomGrab[hand] = true;
 			}
 			else if (!this.states[hand] && this.perfomGrab[hand]) {
 				actionCollection.Add(ActionType.GrabStop);
-				this.detectionState = false;
+				this.DetectionState = false;
 				this.perfomGrab[hand] = false;
 			}
 		}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Leap;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.MovementsDetection;
@@ -28,8 +29,11 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		private interface IDetectorDocker {
 			bool IsUsing(ActionType action);
 
-			IMouvementDetection Create();
+			IMouvementDetection Create(ICollection<KeyValuePair<Gesture.GestureType, ILeapDetection>> leapDetections, IEnumerable<ICustomDetection> customDetections);
 			bool IsCustomDetector();
+
+			void Build(List<IDetectorDocker> types);
+			bool IsTypeOf(Type parameterType);
 		}
 
 		public void Register(ICustomDetection customDetection) {
@@ -40,7 +44,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 			this.leapDetections.Add(leapDetection.GetGestureType(), leapDetection);
 		}
 
-		public void Register<T>(params ActionType[] actions) where T : IMouvementDetection, new() {
+		public void Register<T>(params ActionType[] actions) where T : class, IMouvementDetection {
 			this.detectionTypes.Add(new DetectorDocker<T>(actions));
 		}
 
@@ -64,11 +68,12 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		public void Enable(ActionType action) {
 			foreach (var detectorDocker in this.detectionTypes) {
 				if (detectorDocker.IsUsing(action)) {
+					var detector = detectorDocker.Create(this.leapDetections, this.customDetections);
 					if (detectorDocker.IsCustomDetector()) {
-						this.Register(detectorDocker.Create() as ICustomDetection);						
+						this.Register(detector as ICustomDetection);						
 					}
 					else {
-						this.Register(detectorDocker.Create() as ILeapDetection);						
+						this.Register(detector as ILeapDetection);
 					}
 				}
 			}
@@ -78,24 +83,76 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 			return !(this.customDetections.Any() || this.leapDetections.Any());
 		}
 
-		private class DetectorDocker<T> : IDetectorDocker where T : IMouvementDetection, new() {
+		public void Build() {
+			foreach (var docker in this.detectionTypes) {
+				docker.Build(this.detectionTypes);
+			}
+		}
+
+		private class DetectorDocker<T> : IDetectorDocker where T : class, IMouvementDetection {
 			private readonly IEnumerable<ActionType> actions;
+			private Type globalType;
+			private ConstructorInfo constructorInfo;
+			private ParameterInfo[] parametersTypes;
 
 			public DetectorDocker(IEnumerable<ActionType> actions) {
 				this.actions = actions;
+				this.globalType = typeof(T);
 			}
 
 			public bool IsUsing(ActionType action) {
 				return this.actions.Contains(action);
 			}
 
-			public IMouvementDetection Create() {
-				return Activator.CreateInstance<T>();
+			public IMouvementDetection Create(ICollection<KeyValuePair<Gesture.GestureType, ILeapDetection>> leapDetections, IEnumerable<ICustomDetection> customDetections) {
+				if (this.parametersTypes == null || !this.parametersTypes.Any()) {
+					return Activator.CreateInstance<T>();
+				}
+				return (T)this.constructorInfo.Invoke(this.GetParameters(leapDetections, customDetections));
 			}
 
 			public bool IsCustomDetector() {
 				return typeof(ICustomDetection).IsAssignableFrom(typeof(T));
 			}
+
+			public void Build(List<IDetectorDocker> types) {
+				foreach (var info in this.globalType.GetConstructors()) {
+					var parameterInfos = info.GetParameters();
+
+					if (parameterInfos.Any(p => this.IsTypeOf(p.ParameterType))) {
+						throw new DetectionResolveException("Cannot inject him self");						
+					}
+					if (!parameterInfos.All(p => types.Any(t => t.IsTypeOf(p.ParameterType)))) {
+						continue;
+					}
+					this.constructorInfo = info;
+					this.parametersTypes = parameterInfos;
+					return;
+				}
+				throw new DetectionResolveException("cannot resolve");
+			}
+
+			public bool IsTypeOf(Type parameterType) {
+				return parameterType == this.globalType;
+			}
+			private object[] GetParameters(ICollection<KeyValuePair<Gesture.GestureType, ILeapDetection>> leapDetections, IEnumerable<ICustomDetection> customDetections) {
+				var parameters = new object[this.parametersTypes.Count()];
+
+				for (var i = 0; i < this.parametersTypes.Count(); ++i) {
+					var type = this.parametersTypes[i].ParameterType;
+					var leapKeyValuePair = leapDetections.FirstOrDefault(ld => ld.Value.GetType() == type);
+					var @object = leapKeyValuePair.Value ??
+												  (IMouvementDetection)customDetections.FirstOrDefault(cd => cd.GetType() == type);
+					parameters[i] = @object;
+				}
+				return parameters;
+			}
+		}
+	}
+
+	public class DetectionResolveException : Exception {
+		public DetectionResolveException(string message)
+			: base(message) {	
 		}
 	}
 }
