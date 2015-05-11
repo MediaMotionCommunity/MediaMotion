@@ -21,7 +21,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <summary>
 		/// State of detection global, use for avoid spamming select action
 		/// </summary>
-		protected bool detectionState;
+		protected bool DetectionState;
 
 		/// <summary>
 		/// Time of the last action generate
@@ -36,7 +36,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		public APinchDetection(TimeSpan releaseTimeMax) {
 			this.ReleaseTimeMax = releaseTimeMax;
 			this.lastAction = DateTime.Now;
-			this.detectionState = false;		
+			this.DetectionState = false;		
 		}
 		#endregion
 
@@ -49,12 +49,12 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <param name="actionCollection"></param>
 		/// <returns>List of IAction</returns>
 		public void Detection(Frame frame, IActionCollection actionCollection) {
-			if (this.detectionState) {
+			if (this.DetectionState) {
 				if (!frame.Hands.IsEmpty) {
 					foreach (var hand in frame.Hands) {
 						if (hand.IsValid) {
 							this.ValidDetection(hand.IsRight ? 0 : 1, hand.PinchStrength, actionCollection);
-							if (!this.detectionState) {
+							if (!this.DetectionState) {
 								this.lastAction = DateTime.Now;
 								continue;
 							}
@@ -63,7 +63,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 				}
 			}
 			else if (DateTime.Now - this.lastAction > this.ReleaseTimeMax) {
-				this.detectionState = true;
+				this.DetectionState = true;
 			}
 		}
 
