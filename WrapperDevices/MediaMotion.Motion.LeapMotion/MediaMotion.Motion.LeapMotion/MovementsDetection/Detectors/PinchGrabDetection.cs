@@ -5,7 +5,7 @@ using MediaMotion.Motion.LeapMotion.Core;
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 	public class PinchGrabDetection : APinchDetection {
 		#region Constants
-		private readonly TimeSpan ReleadTimeMin = new TimeSpan(0, 0, 0, 0, 750);
+		private readonly TimeSpan releadTimeMin = new TimeSpan(0, 0, 0, 0, 750);
 		#endregion
 		
 		#region Fields
@@ -21,14 +21,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 
 		private bool[] perfomGrab;
 
-		private CursorDetection cursorDetection;
+		private EasyFileBrowsingDetection cursorDetection;
 		#endregion
 
 		#region Consturtor
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PinchSelectionDetection" /> class.
 		/// </summary>
-		public PinchGrabDetection(CursorDetection cursorDetection) : base(new TimeSpan(0, 0, 0, 0, 500)) {
+		public PinchGrabDetection(EasyFileBrowsingDetection cursorDetection)
+			: base(new TimeSpan(0, 0, 0, 0, 500)) {
 			this.cursorDetection = cursorDetection;
 			this.lastDetections = new DateTime[2];
 			this.lastDetections[0] = DateTime.Now;

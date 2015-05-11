@@ -9,7 +9,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
 	/// Class for browsing prototype action detection
 	/// </summary>
-	public class CursorDetection : ICustomDetection {
+	public class EasyFileBrowsingDetection : ICustomDetection {
 		/// <summary>
 		/// Physical height of the virtual browser plan (in mm)
 		/// </summary>

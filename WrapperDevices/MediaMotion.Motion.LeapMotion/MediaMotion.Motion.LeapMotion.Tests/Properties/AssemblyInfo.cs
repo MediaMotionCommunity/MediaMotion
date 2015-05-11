@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MediaMotion.Motion.LeapMotionTests")]
+[assembly: AssemblyTitle("MediaMotion.Motion.LeapMotion.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MediaMotion.Motion.LeapMotionTests")]
+[assembly: AssemblyProduct("MediaMotion.Motion.LeapMotion.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("99bf4c9a-3ed9-4e5c-8cc0-6b39c92aba14")]
+[assembly: Guid("4a4a8fb0-55cb-434c-94b2-6619337d8369")]
 
 // Version information for an assembly consists of the following four values:
 //

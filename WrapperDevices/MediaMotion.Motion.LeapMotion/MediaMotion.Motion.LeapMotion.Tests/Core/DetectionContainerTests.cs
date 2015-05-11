@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Leap;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
