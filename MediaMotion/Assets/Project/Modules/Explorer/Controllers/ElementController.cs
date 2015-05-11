@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using MediaMotion.Core.Models.Scripts;
+using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager.Container.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager.Interfaces;
@@ -9,7 +9,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Element controller
 	/// </summary>
-	public class ElementController : BaseUnityScript<ElementController> {
+	public class ElementController : AScript<ExplorerModule, ElementController> {
 		/// <summary>
 		/// The texture
 		/// </summary>

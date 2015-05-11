@@ -1,11 +1,12 @@
-﻿using MediaMotion.Core.Models.Scripts;
+﻿using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Modules.DefaultViewer.Controllers {
 	/// <summary>
 	/// Default controller
 	/// </summary>
-	public class DefaultController : BaseUnityScript<DefaultController> {
+	public class DefaultController : AScript<DefaultViewerModule, DefaultController> {
 		/// <summary>
 		/// The input service
 		/// </summary>
@@ -14,11 +15,10 @@ namespace MediaMotion.Modules.DefaultViewer.Controllers {
 		/// <summary>
 		/// Initializes the specified module.
 		/// </summary>
-		/// <param name="module">The module.</param>
 		/// <param name="input">The input.</param>
-		public void Init(DefaultViewerModule module, IInputService input) {
+		public void Init(IInputService input) {
 			this.inputService = input;
-			this.gameObject.GetComponent<UnityEngine.GUIText>().text = ((module.Parameters.Length > 0) ? (module.Parameters[0].GetName()) : ("No parameter"));
+			this.gameObject.GetComponent<GUIText>().text = ((this.module.Parameters.Length > 0) ? (this.module.Parameters[0].GetName()) : ("No parameter"));
 		}
 
 		/// <summary>

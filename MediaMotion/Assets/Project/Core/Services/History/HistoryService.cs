@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using MediaMotion.Core.Models.Core;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.History.Interfaces;
 
 namespace MediaMotion.Core.Services.History {

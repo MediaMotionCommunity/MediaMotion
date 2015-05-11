@@ -1,40 +1,41 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace VLC
-{
-	static class LibVLC
-	{
+namespace VLC {
+	static class LibVLC {
 		// VLC internal components
-		public enum libvlc_track_type_t : int
-		{
+		public enum libvlc_track_type_t : int {
 			libvlc_track_unknown = -1,
 			libvlc_track_audio = 0,
 			libvlc_track_video = 1,
 			libvlc_track_text = 2
 		}
 		[StructLayout(LayoutKind.Sequential)]
-		public struct libvlc_media_track_info_t_audio
-		{
+		public struct libvlc_media_track_info_t_audio {
 			public uint i_channels;
 			public uint i_rate;
 		}
 		[StructLayout(LayoutKind.Sequential)]
-		public struct libvlc_media_track_info_t_video
-		{
+		public struct libvlc_media_track_info_t_video {
 			public uint i_height;
 			public uint i_width;
 		}
 		[StructLayout(LayoutKind.Explicit)]
-		public struct libvlc_media_track_info_t
-		{
-			[FieldOffset(0)] public uint i_codec;
-			[FieldOffset(4)] public int i_id;
-			[FieldOffset(8)] public libvlc_track_type_t i_type;
-			[FieldOffset(12)] public int i_profile;
-			[FieldOffset(16)] public int i_level;
-			[FieldOffset(20)] public libvlc_media_track_info_t_audio audio;
-			[FieldOffset(20)] public libvlc_media_track_info_t_video video;
+		public struct libvlc_media_track_info_t {
+			[FieldOffset(0)]
+			public uint i_codec;
+			[FieldOffset(4)]
+			public int i_id;
+			[FieldOffset(8)]
+			public libvlc_track_type_t i_type;
+			[FieldOffset(12)]
+			public int i_profile;
+			[FieldOffset(16)]
+			public int i_level;
+			[FieldOffset(20)]
+			public libvlc_media_track_info_t_audio audio;
+			[FieldOffset(20)]
+			public libvlc_media_track_info_t_video video;
 		}
 
 		// VLC session loading
@@ -56,19 +57,16 @@ namespace VLC
 		public static extern void libvlc_media_parse(IntPtr media);
 		[DllImport("libvlc")]
 		private static extern int libvlc_media_get_tracks_info(IntPtr media, out IntPtr res);
-		public static int libvlc_media_fetch_tracks_info(IntPtr media, out libvlc_media_track_info_t[] tracks)
-		{
+		public static int libvlc_media_fetch_tracks_info(IntPtr media, out libvlc_media_track_info_t[] tracks) {
 			IntPtr result_buffer;
 			int result = libvlc_media_get_tracks_info(media, out result_buffer);
-			if(result < 0)
-			{
+			if (result < 0) {
 				tracks = null;
 				return result;
 			}
 			IntPtr buffer = result_buffer;
 			tracks = new libvlc_media_track_info_t[result];
-			for(int i = 0; i < tracks.Length; i++)
-			{
+			for (int i = 0; i < tracks.Length; i++) {
 				tracks[i] = (libvlc_media_track_info_t)Marshal.PtrToStructure(buffer, typeof(libvlc_media_track_info_t));
 				buffer = (IntPtr)((int)buffer + Marshal.SizeOf(typeof(libvlc_media_track_info_t)));
 			}

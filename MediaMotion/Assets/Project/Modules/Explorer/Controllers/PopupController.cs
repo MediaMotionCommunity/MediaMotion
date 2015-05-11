@@ -1,5 +1,5 @@
 ﻿using System.Timers;
-using MediaMotion.Core.Models.Scripts;
+using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Popup Controller
 	/// </summary>
-	public class PopupController : BaseUnityScript<PopupController> {
+	public class PopupController : AScript<ExplorerModule, PopupController> {
 		/// <summary>
 		/// The popup timer
 		/// </summary>
@@ -112,17 +112,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.element = null;
 		}
 
-		/// <summary>
-		/// Called when [GUI].
-		/// </summary>
-		public void OnGUI() {
-			if (this.PopupVisibility && this.element != null) {
-				this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Information");
-			}
-			this.MoveSidebar();
-			GUI.Window(1, this.sidebarRect, this.PrintSidebar, string.Empty, this.sidebarWindowStyle);
-			this.PrintBuffer(0);
-		}
+		// /// <summary>
+		// /// Called when [GUI].
+		// /// </summary>
+		// public void OnGUI() {
+		// 	if (this.PopupVisibility && this.element != null) {
+		// 		this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Information");
+		// 	}
+		// 	this.MoveSidebar();
+		// 	GUI.Window(1, this.sidebarRect, this.PrintSidebar, string.Empty, this.sidebarWindowStyle);
+		// 	this.PrintBuffer(0);
+		// }
 
 		/// <summary>
 		/// Prints the copy-paste buffer.

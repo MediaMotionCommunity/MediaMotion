@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MediaMotion.Core.Models.Scripts;
+using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
 using MediaMotion.Motion.Actions;
@@ -10,7 +10,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Cursors Manager Controller
 	/// </summary>
-	public class CursorsManagerController : BaseUnityScript<CursorsManagerController> {
+	public class CursorsManagerController : AScript<ExplorerModule, CursorsManagerController> {
 		/// <summary>
 		/// The delete delay
 		/// </summary>

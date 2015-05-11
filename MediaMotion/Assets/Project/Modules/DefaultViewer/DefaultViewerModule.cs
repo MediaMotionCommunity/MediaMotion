@@ -1,7 +1,7 @@
-﻿using MediaMotion.Core.Models.Module;
-using MediaMotion.Core.Models.Module.Abstracts;
-using MediaMotion.Core.Models.Module.Interfaces;
-using MediaMotion.Core.Resolver.Containers.Interfaces;
+﻿using MediaMotion.Core.Models;
+using MediaMotion.Core.Models.Abstracts;
+using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using UnityEngine;
 
@@ -11,20 +11,15 @@ namespace MediaMotion.Modules.DefaultViewer {
 	/// </summary>
 	public class DefaultViewerModule : AModule {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultViewerModule" /> class.
-		/// </summary>
-		public DefaultViewerModule()
-			: base() {
-		}
-
-		/// <summary>
 		/// Configures this instance.
 		/// </summary>
-		public override void Configure() {
-			this.Configuration.Priority = int.MinValue;
-			this.Configuration.Name = "Default viewer";
-			this.Configuration.Scene = "Default";
-			this.Configuration.Description = "Default viewer, use for testing only";
+		/// <param name="container">The container</param>
+		public override void Configure(IContainer container) {
+			this.Priority = int.MinValue;
+			this.Name = "Default viewer";
+			this.Scene = "Default";
+			this.Description = "Default viewer, use for testing only";
+			this.Container = container;
 		}
 
 		/// <summary>

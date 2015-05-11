@@ -1,6 +1,7 @@
-﻿using MediaMotion.Core.Models.Scripts;
+﻿using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
+using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ using UnityEngine;
 /// Menu script
 /// base is from: <see href="https://github.com/leapmotion-examples/unity/tree/master/v1/freeform-menus">LeapMotion examples</see>
 /// </summary>
-public class MenuBehavior : BaseUnityScript<MenuBehavior> {
+public class MenuBehavior : AScript<ExplorerModule, MenuBehavior> {
 	/*
  * Public Configuration Options
  */

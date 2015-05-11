@@ -25,7 +25,7 @@ namespace MediaMotion.Core.Services.FileSystem.Bridges.History.Actions {
 		/// </summary>
 		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Do() {
-			return (MediaMotionCore.Core.GetServicesContainer().Get<IFileSystemService>().Remove(this.element));
+			return (MediaMotionCore.Container.Get<IFileSystemService>().Remove(this.element));
 		}
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace MediaMotion.Core.Services.FileSystem.Bridges.History.Actions {
 		/// </summary>
 		/// <returns>True if the action succeed, False otherwise</returns>
 		public bool Undo() {
-			return (MediaMotionCore.Core.GetServicesContainer().Get<IFileSystemService>().Restore(this.element));
+			return (MediaMotionCore.Container.Get<IFileSystemService>().Restore(this.element));
 		}
 	}
 }
