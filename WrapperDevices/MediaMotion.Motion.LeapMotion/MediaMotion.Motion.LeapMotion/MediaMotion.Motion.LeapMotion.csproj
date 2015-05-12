@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Core\ActionCollection.cs" />
     <Compile Include="Core\DetectionContainer.cs" />
+    <Compile Include="Core\Exceptions\DetectionResolveException.cs" />
     <Compile Include="Core\HandExtension.cs" />
     <Compile Include="Core\IActionCollection.cs" />
     <Compile Include="Core\IDetectionContainer.cs" />

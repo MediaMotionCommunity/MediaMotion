@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Leap;
 using MediaMotion.Motion.Actions;
+using MediaMotion.Motion.LeapMotion.Core.Exceptions;
 using MediaMotion.Motion.LeapMotion.MovementsDetection;
 
 namespace MediaMotion.Motion.LeapMotion.Core {
@@ -147,12 +148,6 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 				}
 				return parameters;
 			}
-		}
-	}
-
-	public class DetectionResolveException : Exception {
-		public DetectionResolveException(string message)
-			: base(message) {	
 		}
 	}
 }
