@@ -12,7 +12,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection
         /// <summary>
         /// Maximun time for do and release fist for valid detection
         /// </summary>
-        private readonly TimeSpan releaseTimeMax = new TimeSpan(0, 0, 0, 1, 500);
+        private readonly TimeSpan releaseTimeMax = new TimeSpan(0, 0, 0, 0, 750);
 
         /// <summary>
         /// Time detection will be locked when a valid detection found
@@ -87,7 +87,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection
                         actionCollection.Add(Actions.ActionType.Back);
                         return true;
                     }
-                    this.handsFistClosedState[hand.Id] = false;
+                this.handsFistClosedState[hand.Id] = false;
             }
             return false;
         }
