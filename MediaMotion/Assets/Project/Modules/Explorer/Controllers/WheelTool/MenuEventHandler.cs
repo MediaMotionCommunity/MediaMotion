@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using UnityEngine;
 
 /// <summary>
@@ -19,6 +20,9 @@ public class MenuEventHandler : MonoBehaviour {
 	public void ReceiveMenuEvent(MenuBehavior.ButtonAction action, IElement selectedElement) {
 		++this.i;
 		Debug.Log("Events:\n" + this.i + ": " + action.ToString() + " " + selectedElement.GetName());
+		if (action.Equals(MenuBehavior.ButtonAction.OPEN) && selectedElement.GetElementType().Equals(ElementType.File)) {
+			System.Diagnostics.Process.Start(selectedElement.GetPath());
+		}
 	}
 
 	/// <summary>

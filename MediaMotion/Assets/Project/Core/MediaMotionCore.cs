@@ -22,7 +22,6 @@ using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager;
 using MediaMotion.Core.Services.ResourcesManager.Interfaces;
 using MediaMotion.Modules.Default;
-using MediaMotion.Modules.DefaultViewer;
 using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Modules.PDFViewer;
@@ -113,7 +112,6 @@ namespace MediaMotion.Core {
 			IModuleManagerService moduleManager = Container.Get<IModuleManagerService>();
 
 			moduleManager.Register<DefaultModule>();
-			moduleManager.Register<DefaultViewerModule>();
 			moduleManager.Register<ExplorerModule>();
 			moduleManager.Register<ImageViewerModule>();
 			moduleManager.Register<VideoViewerModule>();

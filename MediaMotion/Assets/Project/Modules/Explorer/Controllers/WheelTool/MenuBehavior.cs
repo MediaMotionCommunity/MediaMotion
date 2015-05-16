@@ -323,7 +323,8 @@ public class MenuBehavior : AScript<ExplorerModule, MenuBehavior> {
 		COPY,
 		PASTE,
 		DELETE,
-		CANCEL
+		CANCEL,
+		OPEN
 	}
 
 	/// <summary>
