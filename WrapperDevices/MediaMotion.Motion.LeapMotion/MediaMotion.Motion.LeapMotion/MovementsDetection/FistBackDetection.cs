@@ -12,15 +12,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection
         /// <summary>
         /// Maximun time for do and release fist for valid detection
         /// </summary>
-        private readonly TimeSpan releaseTimeMax = new TimeSpan(0, 0, 0, 0, 750);
+        private readonly TimeSpan releaseTimeMax = new TimeSpan(0, 0, 0, 1, 500);
 
         /// <summary>
         /// Time detection will be locked when a valid detection found
         /// </summary>
         private readonly TimeSpan lockDetectionTime = new TimeSpan(0, 0, 0, 0, 500);
 
-        private readonly float threasholdFistClosedDetection = 0.9f;
-        private readonly float threadsholdFistOpenDetection = 0.5f;
+        private readonly float threasholdFistClosedDetection = 0.92f;
+        private readonly float threadsholdFistOpenDetection = 0.09f;
         #endregion
 
         #region Fields
@@ -87,6 +87,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection
                         actionCollection.Add(Actions.ActionType.Back);
                         return true;
                     }
+                    this.handsFistClosedState[hand.Id] = false;
             }
             return false;
         }
