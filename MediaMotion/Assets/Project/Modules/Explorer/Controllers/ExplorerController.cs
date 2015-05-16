@@ -196,10 +196,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="element">The element.</param>
 		private void Open(IElement element) {
 			if (!this.moduleManagerService.Load(new IElement[] { element })) {
-				// AppLauncher launcher = new AppLauncher();
-
 				this.wheelLaunch.ActiveWheelTool(element);
-				// launcher.LaunchApp((IFile)element);
 			}
 		}
 
