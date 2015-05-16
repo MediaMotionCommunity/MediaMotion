@@ -82,6 +82,16 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private MenuBehavior wheelLaunch;
 
 		/// <summary>
+		/// Visibility of popup
+		/// </summary>
+		public bool popupVisibility;
+
+		/// <summary>
+		/// Popup container
+		/// </summary>
+		private Rect popupRect;
+
+		/// <summary>
 		/// Initializes the specified explorer module.
 		/// </summary>
 		/// <param name="elementFactory">The element factory.</param>
@@ -94,6 +104,10 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.fileSystemService = fileSystemService;
 			this.inputService = inputService;
 			this.moduleManagerService = moduleManagerService;
+
+			// popup
+			this.popupVisibility = false;
+			this.popupRect = new Rect(20, 20, 320, 65);
 
 			// game object
 			this.referenceFrameController = GameObject.Find("ReferenceFrame").GetComponent<ReferenceFrameController>();
@@ -139,6 +153,19 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 						break;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Called when [GUI].
+		/// </summary>
+		public void OnGUI() {
+			if (this.popupVisibility == true) {
+				this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Warning");
+			}
+		}
+
+		private void HydratePopupContent(int WindowID) {
+			GUI.Label(new Rect(10, 20, 320, 20), "Do you want to open the file outside MediaMotion ?");
 		}
 
 		/// <summary>
@@ -196,10 +223,8 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="element">The element.</param>
 		private void Open(IElement element) {
 			if (!this.moduleManagerService.Load(new IElement[] { element })) {
-				// AppLauncher launcher = new AppLauncher();
-
 				this.wheelLaunch.ActiveWheelTool(element);
-				// launcher.LaunchApp((IFile)element);
+				this.popupVisibility = true;
 			}
 		}
 
