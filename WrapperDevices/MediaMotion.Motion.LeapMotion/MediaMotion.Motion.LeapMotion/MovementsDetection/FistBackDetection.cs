@@ -12,7 +12,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection
         /// <summary>
         /// Maximun time for do and release fist for valid detection
         /// </summary>
-        private readonly TimeSpan releaseTimeMax = new TimeSpan(0, 0, 0, 0, 750);
+        private readonly TimeSpan releaseTimeMax = new TimeSpan(0, 0, 0, 1, 500);
 
         /// <summary>
         /// Time detection will be locked when a valid detection found
