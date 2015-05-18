@@ -1,7 +1,9 @@
-﻿using MediaMotion.Core.Models.Module;
-using MediaMotion.Core.Models.Module.Abstracts;
-using MediaMotion.Core.Models.Module.Interfaces;
-using MediaMotion.Core.Resolver.Containers.Interfaces;
+﻿using MediaMotion.Core.Models;
+using MediaMotion.Core.Models.Abstracts;
+using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Modules.ImageViewer.Observers;
 using UnityEngine;
 
@@ -11,20 +13,29 @@ namespace MediaMotion.Modules.ImageViewer {
 	/// </summary>
 	public class ImageViewerModule : AModule {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ImageViewerModule"/> class.
+		/// Configures this instance.
 		/// </summary>
-		public ImageViewerModule()
-			: base() {
+		/// <param name="container">The container</param>
+		public override void Configure(IContainer container) {
+			this.Name = "Image Viewer";
+			this.Scene = "ImageViewer";
+			this.Description = "Display your picture in a wonderfull slideshow";
+			this.Container = this.BuildContainer(container);
 		}
 
 		/// <summary>
-		/// Configures this instance.
+		/// Builds the container.
 		/// </summary>
-		public override void Configure() {
-			this.Configuration.Name = "Image Viewer";
-			this.Configuration.Scene = "ImageViewer";
-			this.Configuration.Description = "Display your picture in a wonderfull slideshow";
-			this.Configuration.ElementFactoryObserver = new ElementFactoryObserver();
+		/// <param name="container">The container.</param>
+		/// <returns>
+		///   The container
+		/// </returns>
+		private IContainer BuildContainer(IContainer container) {
+			IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
+
+			containerBuilderService.Register<ElementFactoryObserver>().As<IElementFactoryObserver>().SingleInstance = true;
+
+			return (containerBuilderService.Build(container));
 		}
 	}
 }

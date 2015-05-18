@@ -1,4 +1,4 @@
-﻿using MediaMotion.Core.Models.Scripts;
+﻿using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Motion.Actions;
@@ -8,12 +8,7 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 	/// <summary>
 	/// Slideshow Controller
 	/// </summary>
-	public class SlideshowController : BaseUnityScript<SlideshowController> {
-		/// <summary>
-		/// The module instance
-		/// </summary>
-		private ImageViewerModule moduleInstance;
-
+	public class SlideshowController : AScript<ImageViewerModule, SlideshowController> {
 		/// <summary>
 		/// The input service
 		/// </summary>
@@ -37,15 +32,13 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// <summary>
 		/// Initializes the specified module.
 		/// </summary>
-		/// <param name="module">The module.</param>
 		/// <param name="input">The input.</param>
 		/// <param name="playlist">The playlist.</param>
-		public void Init(ImageViewerModule module, IInputService input, IPlaylistService playlist) {
-			this.moduleInstance = module;
+		public void Init(IInputService input, IPlaylistService playlist) {
 			this.inputService = input;
 			this.playlistService = playlist;
 
-			this.playlistService.Configure(((this.moduleInstance.Parameters.Length > 0) ? (this.moduleInstance.Parameters[0]) : (null)), new string[] { ".png", ".jpg", ".jpeg" });
+			this.playlistService.Configure(((this.module.Parameters.Length > 0) ? (this.module.Parameters[0]) : (null)), new string[] { ".png", ".jpg", ".jpeg" });
 			this.LoadImage();
 		}
 

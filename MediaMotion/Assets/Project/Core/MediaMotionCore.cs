@@ -1,6 +1,12 @@
-﻿using MediaMotion.Core.Models.Core;
-using MediaMotion.Core.Resolver.Containers;
-using MediaMotion.Core.Resolver.Containers.Interfaces;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Services;
+using MediaMotion.Core.Services.ContainerBuilder;
+using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem;
 using MediaMotion.Core.Services.FileSystem.Factories;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
@@ -15,108 +21,101 @@ using MediaMotion.Core.Services.Playlist;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Core.Services.ResourcesManager;
 using MediaMotion.Core.Services.ResourcesManager.Interfaces;
-using MediaMotion.Modules.DefaultViewer;
+using MediaMotion.Modules.Default;
 using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
+using MediaMotion.Modules.PDFViewer;
 using MediaMotion.Modules.VideoViewer;
+using UnityEngine;
 
 namespace MediaMotion.Core {
 	/// <summary>
 	/// The media motion controller.
 	/// </summary>
-	public class MediaMotionCore : ICore {
-		/// <summary>
-		/// The core
-		/// </summary>
-		private static readonly ICore Instance = new MediaMotionCore();
-
-		/// <summary>
-		/// The builder
-		/// </summary>
-		private readonly IContainerBuilder servicesContainerBuilder;
-
+	public static class MediaMotionCore {
 		/// <summary>
 		/// The services
 		/// </summary>
-		private IContainer servicesContainer;
+		public static readonly IContainer Container;
 
 		/// <summary>
-		/// Prevents a default instance of the <see cref="MediaMotionCore"/> class from being created.
+		/// Initializes static members of the <see cref="MediaMotionCore"/> class.
 		/// </summary>
-		private MediaMotionCore() {
-			this.servicesContainerBuilder = new ContainerBuilder();
+		static MediaMotionCore() {
+			Assembly assembly = typeof(MediaMotionCore).Assembly;
+			IContainerBuilderService builder = new ContainerBuilderService();
 
-			// Core
-			this.servicesContainerBuilder.Register<MediaMotionCore>(this).As<ICore>().SingleInstance();
+			// Parameters
+			builder.Define("Version", MediaMotionCore.GetVersion(assembly));
+			builder.Define("BuildMode", MediaMotionCore.GetBuildMode(assembly));
+			builder.Define("BuildDate", MediaMotionCore.GetBuildDate(assembly));
+			builder.Define("DebuggerAttached", Debugger.IsAttached);
 
-			// Container
-			this.servicesContainerBuilder.Register<ContainerBuilder>().As<IContainerBuilder>();
-			
-			// FileSystem
-			this.servicesContainerBuilder.Register<FileSystemService>().As<IFileSystemService>();
-			this.servicesContainerBuilder.Register<ElementFactory>().As<IElementFactory>().SingleInstance();
-			this.servicesContainerBuilder.Register<ElementFactory>().SingleInstance();
+			// Services
+			builder.Register<ContainerBuilderService>().As<IContainerBuilderService>();
+			builder.Register<ElementFactory>().As<IElementFactory>().SingleInstance = true;
+			builder.Register<FileSystemService>().As<IFileSystemService>();
+			builder.Register<HistoryService>().As<IHistoryService>().SingleInstance = true;
+			builder.Register<InputService>().As<IInputService>().SingleInstance = true;
+			builder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance = true;
+			builder.Register<PlaylistService>().As<IPlaylistService>();
+			builder.Register<ResourceManagerService>().As<IResourceManagerService>().SingleInstance = true;
 
-			// Playlist
-			this.servicesContainerBuilder.Register<PlaylistService>().As<IPlaylistService>();
+			Container = builder.Build();
 
-			// History
-			this.servicesContainerBuilder.Register<HistoryService>().As<IHistoryService>().SingleInstance();
-
-			// Input
-			this.servicesContainerBuilder.Register<InputService>().As<IInputService>().SingleInstance();
-
-			// Resources
-			this.servicesContainerBuilder.Register<ResourceManagerService>().As<IResourceManagerService>().SingleInstance();
-
-			// Modules
-			this.servicesContainerBuilder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance();
-
-			this.servicesContainer = this.servicesContainerBuilder.Build();
-			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<DefaultViewerModule>();
-			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<ExplorerModule>();
-			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<ImageViewerModule>();
-			this.servicesContainer.Get<ModuleManagerService>().RegisterModule<VideoViewerModule>();
+			MediaMotionCore.RegisterModules();
 		}
 
 		/// <summary>
-		/// Gets the core.
+		/// Gets the version.
 		/// </summary>
-		/// <value>
-		/// The core.
-		/// </value>
-		public static ICore Core {
-			get {
-				return (Instance);
+		/// <param name="assembly">The assembly.</param>
+		/// <returns>
+		///   The version
+		/// </returns>
+		private static Version GetVersion(Assembly assembly) {
+			return (assembly.GetName().Version);
+		}
+
+		/// <summary>
+		/// Gets the build mode.
+		/// </summary>
+		/// <param name="assembly">The assembly.</param>
+		/// <returns>
+		///   The build mode
+		/// </returns>
+		private static string GetBuildMode(Assembly assembly) {
+			AssemblyNameFlags assemblyNameFlags = assembly.GetName().Flags;
+
+			if ((assemblyNameFlags & AssemblyNameFlags.EnableJITcompileOptimizer) == 0 && (assemblyNameFlags & AssemblyNameFlags.EnableJITcompileTracking) == AssemblyNameFlags.EnableJITcompileTracking) {
+				return ("Debug");
 			}
+			return ("Release");
 		}
 
 		/// <summary>
-		/// Adds the services container builder.
+		/// Gets the build date.
 		/// </summary>
-		/// <param name="builder">The builder.</param>
-		/// <returns>The container</returns>
-		public IContainer AddServices(IContainerBuilder builder) {
-			this.servicesContainer = this.servicesContainerBuilder.Add(builder).Build();
-			return (this.servicesContainer);
+		/// <param name="assembly">The assembly.</param>
+		/// <returns>
+		///   The build date
+		/// </returns>
+		private static DateTime GetBuildDate(Assembly assembly) {
+			return (File.GetLastWriteTime(assembly.Location));
 		}
 
 		/// <summary>
-		/// Adds the services.
+		/// Registers Modules
 		/// </summary>
-		/// <param name="container">The container.</param>
-		/// <returns>The container</returns>
-		public IContainer AddServices(IContainer container) {
-			this.servicesContainer = this.servicesContainerBuilder.Add(container).Build();
-			return (this.servicesContainer);
-		}
+		/// <typeparam name="Module">The type of the module.</typeparam>
+		private static void RegisterModules() {
+			IModuleManagerService moduleManager = Container.Get<IModuleManagerService>();
 
-		/// <summary>
-		/// Gets the service container.
-		/// </summary>
-		/// <returns>The service container</returns>
-		public IContainer GetServicesContainer() {
-			return (this.servicesContainer);
+			moduleManager.Register<DefaultModule>();
+			moduleManager.Register<ExplorerModule>();
+			moduleManager.Register<ImageViewerModule>();
+			moduleManager.Register<VideoViewerModule>();
+			moduleManager.Register<PDFViewerModule>();
 		}
 	}
 }

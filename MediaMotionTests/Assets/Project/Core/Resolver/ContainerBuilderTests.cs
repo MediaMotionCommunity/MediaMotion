@@ -1,6 +1,5 @@
-﻿using MediaMotion.Core.Resolver;
-using MediaMotion.Core.Resolver.Containers;
-using MediaMotion.Core.Resolver.Registrations.Interfaces;
+﻿using MediaMotion.Core.Services.ContainerBuilder;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using NUnit.Framework;
 
 namespace MediaMotionTests.Core.Resolver {
@@ -9,18 +8,18 @@ namespace MediaMotionTests.Core.Resolver {
 	/// </summary>
 	[TestFixture]
 	public class ContainerBuilderTests {
-		private ContainerBuilder containerBuilder;
+		private ContainerBuilderService containerBuilder;
 
 		[SetUp]
 		public void Setup() {
-			this.containerBuilder = new ContainerBuilder();
+			this.containerBuilder = new ContainerBuilderService();
 		}
 
 		[Test]
 		public void WhenRegisteringInstanceShouldReturnTheRegistrationObject() {
 			var register = this.containerBuilder.Register(new ObjectWithoutDependency());
 
-			Assert.IsTrue(register is IRegistration);
+			Assert.IsTrue(register is IDefinition);
 		}
 
 		[Test]
@@ -96,7 +95,7 @@ namespace MediaMotionTests.Core.Resolver {
 
 		[Test]
 		public void RegisterTypeWithSingleInstanceScopeWhenResolveManyTimeShouldBeTheSameInstance() {
-			this.containerBuilder.Register<ObjectWithoutDependency>().As<IObjectWithoutDependency>().SingleInstance();
+			this.containerBuilder.Register<ObjectWithoutDependency>().As<IObjectWithoutDependency>().SingleInstance = true;
 			var container = this.containerBuilder.Build();
 
 			var @object = container.Get<IObjectWithoutDependency>();

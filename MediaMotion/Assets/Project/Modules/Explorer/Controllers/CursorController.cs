@@ -1,4 +1,4 @@
-﻿using MediaMotion.Core.Models.Scripts;
+﻿using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
 using MediaMotion.Motion.Actions;
@@ -8,7 +8,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Cursor controller
 	/// </summary>
-	public class CursorController : BaseUnityScript<CursorController> {
+	public class CursorController : AScript<ExplorerModule, CursorController> {
 		/// <summary>
 		/// The input service
 		/// </summary>

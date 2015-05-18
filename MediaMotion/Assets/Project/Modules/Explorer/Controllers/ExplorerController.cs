@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using MediaMotion.Core.Models.Scripts;
+using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
@@ -8,11 +8,14 @@ using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
+using MediaMotion.Core;
+using MediaMotion.Core.Services.FileSystem.Models.Enums;
+
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
 	/// Explorer controller
 	/// </summary>
-	public class ExplorerController : BaseUnityScript<ExplorerController> {
+	public class ExplorerController : AScript<ExplorerModule, ExplorerController> {
 		/// <summary>
 		/// The line length
 		/// </summary>
@@ -74,14 +77,18 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private MenuBehavior wheelTool;
 
 		/// <summary>
+		/// The wheel tool
+		/// </summary>
+		private MenuBehavior wheelLaunch;
+
+		/// <summary>
 		/// Initializes the specified explorer module.
 		/// </summary>
-		/// <param name="explorerModule">The explorer module.</param>
 		/// <param name="elementFactory">The element factory.</param>
 		/// <param name="fileSystemService">The file system service.</param>
 		/// <param name="inputService">The input service.</param>
 		/// <param name="moduleManagerService">The module manager service.</param>
-		public void Init(ExplorerModule explorerModule, IElementFactory elementFactory, IFileSystemService fileSystemService, IInputService inputService, IModuleManagerService moduleManagerService) {
+		public void Init(IElementFactory elementFactory, IFileSystemService fileSystemService, IInputService inputService, IModuleManagerService moduleManagerService) {
 			// services
 			this.elementFactory = elementFactory;
 			this.fileSystemService = fileSystemService;
@@ -92,9 +99,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.referenceFrameController = GameObject.Find("ReferenceFrame").GetComponent<ReferenceFrameController>();
 			this.popupController = GameObject.Find("ReferenceFrame/Cameras/Main").GetComponent<PopupController>();
 			this.wheelTool = GameObject.Find("ReferenceFrame/Cameras/Main/Menu").GetComponent<MenuBehavior>();
+			this.wheelLaunch = GameObject.Find("ReferenceFrame/Cameras/Main/MenuLaunch").GetComponent<MenuBehavior>();
 
 			// Open directory
-			this.OpenDirectory(explorerModule.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
+			if (this.module.Parameters == null || this.module.Parameters.Count(parameter => parameter is IFolder) == 0) {
+				this.OpenDirectory(this.fileSystemService.GetHomeFolder());
+			} else {
+				this.OpenDirectory(this.module.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
+			}
 		}
 
 		/// <summary>
@@ -183,7 +195,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		/// <param name="element">The element.</param>
 		private void Open(IElement element) {
-			this.moduleManagerService.LoadModule(new IElement[] { element });
+			if (!this.moduleManagerService.Load(new IElement[] { element })) {
+				this.wheelLaunch.ActiveWheelTool(element);
+			}
 		}
 
 		/// <summary>
@@ -195,7 +209,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 
 			this.Clear();
 			this.fileSystemService.ChangeDirectory(folder.GetPath());
-			foreach (IElement element in this.fileSystemService.GetContent(null)) {
+			foreach (IElement element in this.fileSystemService.GetFolderElements()) {
 				GameObject uiElement;
 
 				uiElement = Instantiate(this.BaseElement) as GameObject;

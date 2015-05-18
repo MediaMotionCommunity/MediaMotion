@@ -1,8 +1,10 @@
-﻿using MediaMotion.Core.Models.Module;
-using MediaMotion.Core.Models.Module.Abstracts;
-using MediaMotion.Core.Models.Module.Interfaces;
-using MediaMotion.Core.Models.Wrapper.Events;
-using MediaMotion.Core.Resolver.Containers.Interfaces;
+﻿using MediaMotion.Core.Events;
+using MediaMotion.Core.Models;
+using MediaMotion.Core.Models.Abstracts;
+using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Modules.Explorer.Observers;
 using MediaMotion.Modules.Explorer.Services.CursorManager;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
@@ -14,31 +16,31 @@ namespace MediaMotion.Modules.Explorer {
 	/// </summary>
 	public sealed class ExplorerModule : AModule {
 		/// <summary>
-		/// The builder
+		/// Configures this instance.
 		/// </summary>
-		private IContainerBuilder builder;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ExplorerModule" /> class.
-		/// </summary>
-		/// <param name="builder">The builder.</param>
-		public ExplorerModule(IContainerBuilder builder)
-			: base() {
-			this.builder = builder;
+		/// <param name="container">The container</param>
+		public override void Configure(IContainer container) {
+			this.Priority = 0;
+			this.Name = "File browser";
+			this.Scene = "Explorer";
+			this.Description = "File browser using the MediaMotion Core API";
+			this.Container = this.BuildContainer(container);
 		}
 
 		/// <summary>
-		/// Configures this instance.
+		/// Builds the container.
 		/// </summary>
-		public override void Configure() {
-			this.Configuration.Priority = 0;
-			this.Configuration.Name = "File browser";
-			this.Configuration.Scene = "Explorer";
-			this.Configuration.Description = "File browser using the MediaMotion Core API";
-			this.Configuration.ElementFactoryObserver = new ElementFactoryObserver();
-			this.Configuration.ServicesContainer = this.builder;
+		/// <param name="container">The container.</param>
+		/// <returns>
+		///   The container
+		/// </returns>
+		private IContainer BuildContainer(IContainer container) {
+			IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
 
-			this.builder.Register<CursorManagerService>().As<ICursorManagerService>().SingleInstance();
+			containerBuilderService.Register<ElementFactoryObserver>().As<IElementFactoryObserver>().SingleInstance = true;
+			containerBuilderService.Register<CursorManagerService>().As<ICursorManagerService>().SingleInstance = true;
+
+			return (containerBuilderService.Build(container));
 		}
 	}
 }

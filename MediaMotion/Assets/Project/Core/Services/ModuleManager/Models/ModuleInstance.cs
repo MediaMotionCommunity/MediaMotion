@@ -1,4 +1,4 @@
-﻿using MediaMotion.Core.Models.Module.Interfaces;
+﻿using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Services.ModuleManager.Models {
