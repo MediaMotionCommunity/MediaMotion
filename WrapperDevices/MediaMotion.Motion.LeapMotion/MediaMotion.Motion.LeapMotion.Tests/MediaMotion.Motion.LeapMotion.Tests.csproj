@@ -96,23 +96,25 @@
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-  	if "$(PlatformName)" == "x86" (
-		:copySTDWindows
-		xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.dll" "$(TargetDir)" /Y
-		xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.lib" "$(TargetDir)" /Y
-		xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.dll" "$(TargetDir)" /Y
-		xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.lib" "$(TargetDir)" /Y
-		xcopy "$(SolutionDir)..\..\Solution Items\x86\LeapCSharp.dll" "$(TargetDir)" /Y
-	) else if "$(PlatformName)" == "x64" (
-		xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.dll" "$(TargetDir)" /Y
-		xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.lib" "$(TargetDir)" /Y
-		xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.dll" "$(TargetDir)" /Y
-		xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.lib" "$(TargetDir)" /Y
-		xcopy "$(SolutionDir)..\..\Solution Items\x64\LeapCSharp.dll" "$(TargetDir)" /Y
-	) else if "$(PlatformName)" == "AnyCPU" (
-		goto :copySTDWindows
-	)</PostBuildEvent>
+    <PostBuildEvent>if "$(PlatformName)" == "x86" (
+	xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.dll" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x86\Leapd.lib" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.dll" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x86\Leap.lib" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x86\LeapCSharp.dll" "$(TargetDir)" /Y
+) else if "$(PlatformName)" == "x64" (
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.dll" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.lib" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.dll" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.lib" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\LeapCSharp.dll" "$(TargetDir)" /Y
+) else if "$(PlatformName)" == "AnyCPU" (
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.dll" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\Leapd.lib" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.dll" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\Leap.lib" "$(TargetDir)" /Y
+	xcopy "$(SolutionDir)..\..\Solution Items\x64\LeapCSharp.dll" "$(TargetDir)" /Y
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

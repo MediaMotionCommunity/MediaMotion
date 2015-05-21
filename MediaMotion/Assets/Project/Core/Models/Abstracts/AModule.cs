@@ -1,14 +1,23 @@
-﻿using MediaMotion.Core.Models.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
+using MediaMotion.Core.Services.Input.Interfaces;
+using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Core.Models.Abstracts {
 	/// <summary>
 	/// Abstract Module
 	/// </summary>
 	public abstract class AModule : IModule {
-		/// <summary>
+        /// <summary>
+        /// Hidden field of ActivatedActionTypes
+        /// </summary>
+	    private IEnumerable<ActionType> activatedActionTypes;
+
+	    /// <summary>
 		/// Gets or sets the priority.
 		/// </summary>
 		/// <value>
@@ -72,7 +81,31 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// </value>
 		public IElement[] Parameters { get; protected set; }
 
-		/// <summary>
+        /// <summary>
+        /// Get or set current activated actionTypes
+        /// </summary>
+	    public IEnumerable<ActionType> ActivatedActionTypes {
+	        get { return this.activatedActionTypes; }
+	        set {
+	            this.activatedActionTypes = value;
+	            this.EnabledActions(value);
+	        }
+	    }
+
+        /// <summary>
+		/// Enable list of action
+		/// Only enabled actions will be return by inputService
+		/// </summary>
+        /// <param name="actionTypes">list of actions</param>
+	    public virtual void EnabledActions(IEnumerable<ActionType> actionTypes) {
+            var inputService = this.Container.Get<IInputService>();
+            if (inputService == null) {
+                throw new ArgumentNullException("inputService");
+            }
+            inputService.EnableActions(actionTypes);
+        }
+
+	    /// <summary>
 		/// Configures the module.
 		/// </summary>
 		/// <param name="container">The container</param>

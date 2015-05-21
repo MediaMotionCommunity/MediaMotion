@@ -54,6 +54,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			this.detectionContainer.Register<EasyFileBrowsingDetection>(ActionType.BrowsingCursor, ActionType.BrowsingHighlight, ActionType.BrowsingScroll);
 			this.detectionContainer.Register<PinchSelectionDetection>(ActionType.Select);
 			this.detectionContainer.Register<PinchGrabDetection>(ActionType.GrabStart, ActionType.GrabStop);
+            this.detectionContainer.Build();
 		}
 		#endregion
 	}
