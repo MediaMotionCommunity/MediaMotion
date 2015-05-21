@@ -1,6 +1,7 @@
 ﻿using System;
 using Leap;
 using MediaMotion.Motion.LeapMotion.Core;
+using MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	public abstract class APinchDetection : ICustomDetection {
@@ -20,7 +21,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <summary>
 		/// State of detection global, use for avoid spamming select action
 		/// </summary>
-		protected bool detectionState;
+		protected bool DetectionState;
 
 		/// <summary>
 		/// Time of the last action generate
@@ -35,7 +36,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		public APinchDetection(TimeSpan releaseTimeMax) {
 			this.ReleaseTimeMax = releaseTimeMax;
 			this.lastAction = DateTime.Now;
-			this.detectionState = false;		
+			this.DetectionState = false;		
 		}
 		#endregion
 
@@ -48,12 +49,12 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <param name="actionCollection"></param>
 		/// <returns>List of IAction</returns>
 		public void Detection(Frame frame, IActionCollection actionCollection) {
-			if (this.detectionState) {
+			if (this.DetectionState) {
 				if (!frame.Hands.IsEmpty) {
 					foreach (var hand in frame.Hands) {
 						if (hand.IsValid) {
 							this.ValidDetection(hand.IsRight ? 0 : 1, hand.PinchStrength, actionCollection);
-							if (!this.detectionState) {
+							if (!this.DetectionState) {
 								this.lastAction = DateTime.Now;
 								continue;
 							}
@@ -62,7 +63,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 				}
 			}
 			else if (DateTime.Now - this.lastAction > this.ReleaseTimeMax) {
-				this.detectionState = true;
+				this.DetectionState = true;
 			}
 		}
 
@@ -70,9 +71,10 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// Validate detection of pinch movement. Set detectionState to flase for stop detection for ReleaseTimeMax time.
 		/// </summary>
 		/// <param name="hand">int represent the hand use</param>
-		/// <param name="streng">float represent the streng of pinch</param>
+		/// <param name="strength">float represent the strength of pinch</param>
+		/// <param name="actionCollection"></param>
 		/// <returns>true if the movment is valid</returns>
-		protected abstract void ValidDetection(int hand, float streng, IActionCollection actionCollection);
+		protected abstract void ValidDetection(int hand, float strength, IActionCollection actionCollection);
 		#endregion
 	}
 }

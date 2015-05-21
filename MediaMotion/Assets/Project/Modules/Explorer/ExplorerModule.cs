@@ -1,10 +1,12 @@
-﻿using MediaMotion.Core.Events;
+﻿using System;
+using MediaMotion.Core.Events;
 using MediaMotion.Core.Models;
 using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
 using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
+using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Modules.Explorer.Observers;
 using MediaMotion.Modules.Explorer.Services.CursorManager;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
@@ -25,9 +27,17 @@ namespace MediaMotion.Modules.Explorer {
 			this.Scene = "Explorer";
 			this.Description = "File browser using the MediaMotion Core API";
 			this.Container = this.BuildContainer(container);
+		    this.ActivatedActionTypes = new[] {
+		        ActionType.BrowsingCursor,
+		        ActionType.BrowsingHighlight,
+		        ActionType.BrowsingScroll,
+		        ActionType.Back,
+		        ActionType.GrabStart,
+		        ActionType.GrabStop,
+		    };
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Builds the container.
 		/// </summary>
 		/// <param name="container">The container.</param>
