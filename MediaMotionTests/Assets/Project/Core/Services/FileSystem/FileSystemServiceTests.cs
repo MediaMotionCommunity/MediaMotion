@@ -18,13 +18,13 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 
 		[SetUp]
 		public void Init() {
-			this.FileSystemService = new FileSystemService(new ElementFactory());
+			this.FileSystemService = new FileSystemService(new ElementFactory(null));
 			this.PathToTmp = Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty ? Environment.GetFolderPath(Environment.SpecialFolder.Personal) : Environment.GetFolderPath(Environment.SpecialFolder.System);
 			this.PathToTmp = this.PathToTmp + "/UnitTestMediaMotionTMP";
 			Random rnd = new Random();
 			this.FilesCreated = rnd.Next(1, 20);
 			System.IO.Directory.CreateDirectory(this.PathToTmp);
-			this.ElementFactory = new ElementFactory();
+			this.ElementFactory = new ElementFactory(null);
 		}
 
 		[Test]
@@ -94,23 +94,23 @@ namespace MediaMotion.Core.Services.FileSystem.Tests {
 			Assert.AreEqual(this.FilesCreated, results.Length);
 			Assert.AreEqual("file0.test", results[0].GetName());
 
-			string[] filters = new string[2];
+			string[] filters = new string[2] { null, ".extensionPlaceholder" };
 
 			IElement[] fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
-			Assert.AreEqual(0, fileResults.Length, "filter failed 0");
+			Assert.IsNull(fileResults, "invalid filter 0");
 
 			filters[0] = "shouldfindnothing";
 			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
-			Assert.AreEqual(0, fileResults.Length, "filter failed 1");
+			Assert.IsNull(fileResults, "invalid filter 1");
 
 			filters[0] = ".test";
 			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
-			Assert.AreEqual(this.FilesCreated, fileResults.Length, "filter failed 2");
+			Assert.AreEqual(this.FilesCreated, fileResults.Length, "filter failed 0");
 
 			System.IO.File.Create(this.PathToTmp + "/file.testule");
 
 			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);
-			Assert.AreEqual(fileResults.Length, this.FilesCreated, "filter failed 3");
+			Assert.AreEqual(fileResults.Length, this.FilesCreated, "filter failed 1");
 
 			filters[0] = ".testule";
 			fileResults = this.FileSystemService.GetFolderElements(this.PathToTmp, filters);

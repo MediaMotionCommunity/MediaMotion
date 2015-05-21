@@ -168,6 +168,10 @@ namespace MediaMotion.Core.Services.Input {
 			return (this.GetMovements(ActionType.BrowsingCursor).Find(action => (action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Id == id));
 		}
 
+		public void EnableActions(IEnumerable<ActionType> actionsTypes) {
+			this.wrapper.EnableActions(actionsTypes);
+		}
+
 		/// <summary>
 		/// Adds the movement.
 		/// </summary>

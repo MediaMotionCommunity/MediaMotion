@@ -33,9 +33,17 @@ namespace MediaMotion.Modules.Explorer {
 		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
 			this.Container = this.BuildContainer(container);
+		    this.ActivatedActionTypes = new[] {
+		        ActionType.BrowsingCursor,
+		        ActionType.BrowsingHighlight,
+		        ActionType.BrowsingScroll,
+		        ActionType.Back,
+		        ActionType.GrabStart,
+		        ActionType.GrabStop,
+		    };
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Supportses the specified path.
 		/// </summary>
 		/// <param name="path">The path.</param>

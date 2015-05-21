@@ -20,7 +20,7 @@ namespace MediaMotion.Core.Services.Playlist.Tests {
 
 		[SetUp]
 		public void Init() {
-			this.ElementFactory = new ElementFactory();
+			this.ElementFactory = new ElementFactory(null);
 			this.FileSystemService = new FileSystemService(this.ElementFactory);
 			this.PlaylistService = new PlaylistService(this.FileSystemService);
 			this.PathToTmp = Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty ? Environment.GetFolderPath(Environment.SpecialFolder.Personal) : Environment.GetFolderPath(Environment.SpecialFolder.System);

@@ -2,10 +2,10 @@
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
 
-namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
+namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 	public class PinchGrabDetection : APinchDetection {
 		#region Constants
-		private readonly TimeSpan ReleadTimeMin = new TimeSpan(0, 0, 0, 0, 750);
+		private readonly TimeSpan releadTimeMin = new TimeSpan(0, 0, 0, 0, 750);
 		#endregion
 		
 		#region Fields
@@ -21,14 +21,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 
 		private bool[] perfomGrab;
 
-		private CursorDetection cursorDetection;
+		private EasyFileBrowsingDetection cursorDetection;
 		#endregion
 
 		#region Consturtor
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PinchSelectionDetection" /> class.
 		/// </summary>
-		public PinchGrabDetection(CursorDetection cursorDetection) : base(new TimeSpan(0, 0, 0, 0, 500)) {
+		public PinchGrabDetection(EasyFileBrowsingDetection cursorDetection)
+			: base(new TimeSpan(0, 0, 0, 0, 500)) {
 			this.cursorDetection = cursorDetection;
 			this.lastDetections = new DateTime[2];
 			this.lastDetections[0] = DateTime.Now;
@@ -50,25 +51,25 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// Check for valid detection of PinchSelection
 		/// </summary>
 		/// <param name="hand">int represent the hand use</param>
-		/// <param name="streng">float represent the streng of pinch</param>
+		/// <param name="strength">float represent the strength of pinch</param>
 		/// <returns>true if the movment is valid</returns>
-		protected override void ValidDetection(int hand, float streng, IActionCollection actionCollection) {
-			if (streng < this.ThresholdDetection && this.states[hand]) {
+		protected override void ValidDetection(int hand, float strength, IActionCollection actionCollection) {
+			if (strength < this.ThresholdDetection && this.states[hand]) {
 				this.states[hand] = false;
 				this.lastDetections[hand] = DateTime.Now;
 			}
-			else if (streng >= this.ThresholdDetection && !this.states[hand]) {
+			else if (strength >= this.ThresholdDetection && !this.states[hand]) {
 				this.states[hand] = true;
 				this.lastDetections[hand] = DateTime.Now;
 			}
 
-			if (this.states[hand] && !this.perfomGrab[hand] && (DateTime.Now - this.lastDetections[hand]) >= this.ReleadTimeMin) {
+			if (this.states[hand] && !this.perfomGrab[hand] && (DateTime.Now - this.lastDetections[hand]) >= this.releadTimeMin) {
 				actionCollection.Add(ActionType.GrabStart);
 				this.perfomGrab[hand] = true;
 			}
 			else if (!this.states[hand] && this.perfomGrab[hand]) {
 				actionCollection.Add(ActionType.GrabStop);
-				this.detectionState = false;
+				this.DetectionState = false;
 				this.perfomGrab[hand] = false;
 			}
 
