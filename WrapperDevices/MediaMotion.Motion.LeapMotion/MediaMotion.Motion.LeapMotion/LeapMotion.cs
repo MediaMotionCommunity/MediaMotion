@@ -79,6 +79,15 @@ namespace MediaMotion.Motion.LeapMotion {
 		public IEnumerable<IAction> GetActions() {
 			return this.core.Frame();
 		}
+
+		public void EnableAction(ActionType action) {
+			this.core.EnableAction(action);
+		}
+
+		public void EnableActions(IEnumerable<ActionType> actions) {
+			this.core.EnableAction(actions);
+		}
+
 		#endregion
 
 		#region IDisposable

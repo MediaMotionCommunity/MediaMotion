@@ -6,7 +6,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// Abstract for custom gesture.
 	/// Implement public IEnumerable Detection(Frame frame)
 	/// </summary>
-	public interface ICustomDetection {
+	public interface ICustomDetection : IMouvementDetection {
 		/// <summary>
 		/// Method for detect action, return list of IAction
 		/// </summary>

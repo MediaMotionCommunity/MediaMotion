@@ -54,24 +54,9 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 		/// </summary>
 		/// <param name="ac"></param>
 		/// <returns></returns>
-		private static string GetActionName(IAction ac) {
-			var list = new Dictionary<ActionType, string> {
-				{ActionType.Down, "Down"},
-				{ActionType.Left, "Left"},
-				{ActionType.Right, "Right"},
-				{ActionType.Up, "Up"},
-				{ActionType.ScrollIn, "ScrollIn"},
-				{ActionType.ScrollOut, "ScrollOut"},
-				{ActionType.Select, "Select"},
-				{ActionType.Back, "Back"},
-				{ActionType.BrowsingCursor, "BrowsingCursor"},
-				{ActionType.BrowsingHighlight, "BrowsingHighlight"},
-				{ActionType.BrowsingScroll, "BrowsingScroll"},
-				{ActionType.GrabStart, "GrabStart"},
-				{ActionType.GrabStop, "GrabStop"}
-			};
-
-			return list[ac.Type];
+		private static string GetActionName(IAction ac)
+		{
+			return ac.Type.ToString();
 		}
 	}
 }

@@ -5,7 +5,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 	/// <summary>
 	/// Abstract for default LeapMotion gesture.
 	/// </summary>
-	public abstract class ALeapDetection {
+	public abstract class ALeapDetection : ILeapDetection {
 		#region Fields
 		/// <summary>
 		/// Leap Gesture type of checked gesture

@@ -20,6 +20,8 @@
 		GrabStop,
 		ZoomIn,
 		ZoomOut,
+		RotateRight,
+		RotationLeft,
 		Rotate
 	}
 

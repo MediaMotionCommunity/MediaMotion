@@ -2,7 +2,7 @@
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
 
-namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
+namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 	/// <summary>
 	/// Class for swipe detection
 	/// </summary>
