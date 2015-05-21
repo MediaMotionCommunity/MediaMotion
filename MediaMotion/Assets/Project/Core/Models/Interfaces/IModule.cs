@@ -93,7 +93,9 @@ namespace MediaMotion.Core.Models.Interfaces {
 		/// <summary>
 		/// Load another module.
 		/// </summary>
-		/// <returns>The parameters to restore</returns>
+		/// <returns>
+		/// The parameters to restore
+		/// </returns>
 		IElement[] Sleep();
 
 		/// <summary>
@@ -110,8 +112,10 @@ namespace MediaMotion.Core.Models.Interfaces {
 		/// <summary>
 		/// Supports the specified element.
 		/// </summary>
-		/// <param name="element">The element.</param>
-		/// <returns><c>true</c> if the element is supported, <c>false</c> otherwise</returns>
-		bool Supports(IElement element);
+		/// <param name="path">The path.</param>
+		/// <returns>
+		///   <c>true</c> if the element is supported, <c>false</c> otherwise
+		/// </returns>
+		bool Supports(string path);
 	}
 }

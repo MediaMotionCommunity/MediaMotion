@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using MediaMotion.Core.Models.Abstracts;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
-using MediaMotion.Core.Services.ResourcesManager.Container.Interfaces;
-using MediaMotion.Core.Services.ResourcesManager.Interfaces;
+using MediaMotion.Core.Services.ModuleManager.Interfaces;
+using MediaMotion.Core.Services.Observers.Interfaces;
 using UnityEngine;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
@@ -11,24 +12,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 	/// </summary>
 	public class ElementController : AScript<ExplorerModule, ElementController> {
 		/// <summary>
-		/// The texture
-		/// </summary>
-		private IResourceContainer<Material> texture;
-
-		/// <summary>
 		/// The content
 		/// </summary>
 		private GameObject content;
-
-		/// <summary>
-		/// The tile
-		/// </summary>
-		private GameObject tile;
-
-		/// <summary>
-		/// The text
-		/// </summary>
-		private GameObject text;
 
 		/// <summary>
 		/// Gets the element.
@@ -42,25 +28,37 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Initializes this instance.
 		/// </summary>
 		/// <param name="resourceManagerService">The resource manager service.</param>
-		public void Init(IResourceManagerService resourceManagerService) {
-			TextMesh tileTextMesh;
+		public void Init(IModuleManagerService moduleManagerService) {
+			IModule module = moduleManagerService.Supports(this.Element);
+			GameObject tile = GameObject.Find(this.gameObject.name + "/Content/TilePlaceholder/Tile");
+			GameObject text = GameObject.Find(this.gameObject.name + "/Content/Name");
+			TextMesh tileTextMesh = text.GetComponent<TextMesh>();
 
 			this.content = GameObject.Find(this.gameObject.name + "/Content");
-			this.tile = GameObject.Find(this.gameObject.name + "/Content/Tile");
-			this.text = GameObject.Find(this.gameObject.name + "/Content/Name");
-			tileTextMesh = this.text.GetComponent<TextMesh>();
+			if (module != null && module.Container.Has<IElementDrawObserver>()) {
+				GameObject tmpTile = module.Container.Get<IElementDrawObserver>().Draw(this.Element);
 
-			// texture container
-			this.texture = resourceManagerService.GetContainer<Material>(this.Element.GetResourceId());
+				if (tmpTile != null) {
+					Vector3 scale = tmpTile.transform.localScale;
+					Vector3 position = tmpTile.transform.position;
+					Quaternion rotation = tmpTile.transform.rotation;
 
-			// texture
-			this.tile.GetComponent<Renderer>().material = this.texture.Get();
+					tmpTile.name = tile.name;
+					tmpTile.transform.parent = tile.transform.parent;
+					tmpTile.transform.localScale = scale;
+					tmpTile.transform.localPosition = position;
+					tmpTile.transform.localRotation = rotation;
+					Debug.Log(rotation);
 
-			// text
+					GameObject.Destroy(tile);
+					tile = tmpTile;
+				}
+			}
+
+			// Text
 			tileTextMesh.text = this.Element.GetName();
 			tileTextMesh.color = new Color(0.8f, 0.9f, 1.0f);
-
-			if (this.tile.GetComponent<Renderer>().bounds.size.x < this.text.GetComponent<Renderer>().bounds.size.x) {
+			if (tile.GetComponent<Renderer>().bounds.size.x < text.GetComponent<Renderer>().bounds.size.x) {
 				tileTextMesh.text = this.Element.GetName().Substring(0, 10) + "...";
 			}
 		}

@@ -4,6 +4,7 @@ using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
 using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
+using MediaMotion.Core.Services.Observers.Interfaces;
 using MediaMotion.Modules.ImageViewer.Observers;
 using UnityEngine;
 
@@ -13,13 +14,20 @@ namespace MediaMotion.Modules.ImageViewer {
 	/// </summary>
 	public class ImageViewerModule : AModule {
 		/// <summary>
+		/// Initializes the <see cref="ImageViewerModule" /> class.
+		/// </summary>
+		public ImageViewerModule() {
+			this.Name = "Image Viewer";
+			this.Scene = "ImageViewer";
+			this.Description = "Display your picture in a wonderfull slideshow";
+			this.SupportedExtensions = new string[] { ".jpg", ".jpeg", ".gif", ".png", ".svg", ".bmp", ".tiff" };
+		}
+
+		/// <summary>
 		/// Configures this instance.
 		/// </summary>
 		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
-			this.Name = "Image Viewer";
-			this.Scene = "ImageViewer";
-			this.Description = "Display your picture in a wonderfull slideshow";
 			this.Container = this.BuildContainer(container);
 		}
 
@@ -33,8 +41,8 @@ namespace MediaMotion.Modules.ImageViewer {
 		private IContainer BuildContainer(IContainer container) {
 			IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
 
+			containerBuilderService.Register<ElementDrawObserver>().As<IElementDrawObserver>().SingleInstance = true;
 			containerBuilderService.Register<ElementFactoryObserver>().As<IElementFactoryObserver>().SingleInstance = true;
-
 			return (containerBuilderService.Build(container));
 		}
 	}

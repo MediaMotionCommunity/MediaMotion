@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using MediaMotion.Core.Loader;
 using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services;
 using MediaMotion.Core.Services.ContainerBuilder;
@@ -17,11 +18,10 @@ using MediaMotion.Core.Services.Input;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
+using MediaMotion.Core.Services.Observers;
+using MediaMotion.Core.Services.Observers.Interfaces;
 using MediaMotion.Core.Services.Playlist;
 using MediaMotion.Core.Services.Playlist.Interfaces;
-using MediaMotion.Core.Services.ResourcesManager;
-using MediaMotion.Core.Services.ResourcesManager.Interfaces;
-using MediaMotion.Modules.Default;
 using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Modules.PDFViewer;
@@ -59,7 +59,9 @@ namespace MediaMotion.Core {
 			builder.Register<InputService>().As<IInputService>().SingleInstance = true;
 			builder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance = true;
 			builder.Register<PlaylistService>().As<IPlaylistService>();
-			builder.Register<ResourceManagerService>().As<IResourceManagerService>().SingleInstance = true;
+
+			// Observers
+			builder.Register<ElementDrawObserver>().As<IElementDrawObserver>().SingleInstance = true;
 
 			Container = builder.Build();
 
@@ -111,7 +113,7 @@ namespace MediaMotion.Core {
 		private static void RegisterModules() {
 			IModuleManagerService moduleManager = Container.Get<IModuleManagerService>();
 
-			moduleManager.Register<DefaultModule>();
+			moduleManager.Register<ModuleLoader>();
 			moduleManager.Register<ExplorerModule>();
 			moduleManager.Register<ImageViewerModule>();
 			moduleManager.Register<VideoViewerModule>();

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Extensions;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
+using MediaMotion.Core.Services.ModuleManager.Interfaces;
 
 namespace MediaMotion.Core.Services.FileSystem.Factories {
 	/// <summary>
@@ -12,39 +14,15 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 	/// </summary>
 	public class ElementFactory : IElementFactory {
 		/// <summary>
-		/// The observers priority list
+		/// The module manager service
 		/// </summary>
-		private readonly SortedDictionary<int, List<IElementFactoryObserver>> observersPriorityList;
+		private readonly IModuleManagerService moduleManagerService;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ElementFactory"/> class.
 		/// </summary>
-		public ElementFactory() {
-			this.observersPriorityList = new SortedDictionary<int, List<IElementFactoryObserver>>();
-		}
-
-		/// <summary>
-		/// Adds the observer.
-		/// </summary>
-		/// <param name="observer">The observer.</param>
-		/// <param name="priority">The priority.</param>
-		public void AddObserver(IElementFactoryObserver observer, int priority = 0) {
-			if (!this.observersPriorityList.ContainsKey(priority)) {
-				this.observersPriorityList.Add(priority, new List<IElementFactoryObserver>());
-			}
-			this.observersPriorityList[priority].Add(observer);
-		}
-
-		/// <summary>
-		/// Removes the observer.
-		/// </summary>
-		/// <param name="observer">The observer.</param>
-		public void RemoveObserver(IElementFactoryObserver observer) {
-			foreach (KeyValuePair<int, List<IElementFactoryObserver>> observerList in this.observersPriorityList) {
-				if (observerList.Value.Contains(observer)) {
-					observerList.Value.Remove(observer);
-				}
-			}
+		public ElementFactory(IModuleManagerService moduleManagerService) {
+			this.moduleManagerService = moduleManagerService;
 		}
 
 		/// <summary>
@@ -74,20 +52,17 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 		/// <returns>The element or <c>null</c> if path does not point to any element</returns>
 		public IElement Create(string path) {
 			if (Directory.Exists(path) || File.Exists(path)) {
-				foreach (IElementFactoryObserver observer in this.observersPriorityList.OrderByDescending(observerList => observerList.Key).SelectMany(observerList => observerList.Value)) {
-					if (observer.Supports(path)) {
-						IElement model = observer.Create(path);
+				if (this.moduleManagerService != null) {
+					IModule module = this.moduleManagerService.Supports(path);
 
-						if (model != null) {
-							return (model);
-						}
+					if (module != null && module.Container.Has<IElementFactoryObserver>()) {
+						return (module.Container.Get<IElementFactoryObserver>().Create(path));
 					}
 				}
 				if (File.GetAttributes(path).HasAttribute(FileAttributes.Directory)) {
 					return (new Folder(new DirectoryInfo(path)));
-				} else {
-					return (new Regular(new FileInfo(path)));
 				}
+				return (new Regular(new FileInfo(path)));
 			}
 			return (null);
 		}

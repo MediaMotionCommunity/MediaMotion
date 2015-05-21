@@ -42,25 +42,42 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 		/// </summary>
 		/// <param name="element">The file or the directory.</param>
 		/// <param name="filterExtension">The filter extension.</param>
-		/// <returns><c>true</c> if the playlist is correctly configured otherwise, <c>false</c></returns>
+		/// <returns>
+		///   <c>true</c> if the playlist is correctly configured otherwise, <c>false</c>
+		/// </returns>
 		bool Configure(IElement element, string[] filterExtension);
 
 		/// <summary>
 		/// Current file in the list.
 		/// </summary>
-		/// <returns>The file</returns>
+		/// <returns>
+		/// The file
+		/// </returns>
 		IFile Current();
 
 		/// <summary>
 		/// Previous file in the list.
 		/// </summary>
-		/// <returns>The file</returns>
+		/// <returns>
+		/// The file
+		/// </returns>
 		IFile Previous();
 
 		/// <summary>
 		/// Next file in the list.
 		/// </summary>
-		/// <returns>The file</returns>
+		/// <returns>
+		/// The file
+		/// </returns>
 		IFile Next();
+
+		/// <summary>
+		/// Peeks the specified offset.
+		/// </summary>
+		/// <param name="offset">The offset.</param>
+		/// <returns>
+		/// The file
+		/// </returns>
+		IFile Peek(int offset = 0);
 	}
 }

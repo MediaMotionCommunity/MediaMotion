@@ -17,10 +17,9 @@ namespace MediaMotion.Core.Services.FileSystem.Models.Abstracts {
 		/// Initializes a new instance of the <see cref="AFile" /> class.
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
-		/// <param name="resourceId">The resource Id.</param>
 		/// <exception cref="System.NullReferenceException">fileInfo must not be null</exception>
-		protected AFile(FileInfo fileInfo, string resourceId = null)
-			: base(ElementType.File, resourceId) {
+		protected AFile(FileInfo fileInfo)
+			: base(ElementType.File) {
 			if (fileInfo == null) {
 				throw new NullReferenceException("fileInfo must not be null");
 			}

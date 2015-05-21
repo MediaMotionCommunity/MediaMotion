@@ -12,18 +12,11 @@ namespace MediaMotion.Core.Services.FileSystem.Models.Abstracts {
 		private readonly ElementType elementType;
 
 		/// <summary>
-		/// The texture2 d
-		/// </summary>
-		private readonly string resourceId;
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="AElement" /> class.
 		/// </summary>
 		/// <param name="ElementType">Type of the element.</param>
-		/// <param name="resourceId">The resource Id.</param>
-		protected AElement(ElementType ElementType, string resourceId = null) {
+		protected AElement(ElementType ElementType) {
 			this.elementType = ElementType;
-			this.resourceId = resourceId;
 		}
 
 		/// <summary>
@@ -39,16 +32,6 @@ namespace MediaMotion.Core.Services.FileSystem.Models.Abstracts {
 		/// </summary>
 		/// <returns>the type that a human can read and understand</returns>
 		public abstract string GetHumanTypeString();
-
-		/// <summary>
-		/// Gets the resource id.
-		/// </summary>
-		/// <returns>
-		/// The resource id
-		/// </returns>
-		public string GetResourceId() {
-			return (this.resourceId);
-		}
 
 		/// <summary>
 		/// Gets the parent.

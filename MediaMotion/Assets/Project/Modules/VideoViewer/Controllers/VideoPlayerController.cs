@@ -123,7 +123,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 			// Configure module components
 			this.inputService = input;
 			this.playlistService = playlist;
-			this.playlistService.Configure(((this.module.Parameters.Length > 0) ? (this.module.Parameters[0]) : (null)), ElementFactoryObserver.SupportedExtensions);
+			this.playlistService.Configure(((this.module.Parameters.Length > 0) ? (this.module.Parameters[0]) : (null)), this.module.SupportedExtensions);
 			// Start VLC playing
 			this.StartSession();
 			this.LoadFile();

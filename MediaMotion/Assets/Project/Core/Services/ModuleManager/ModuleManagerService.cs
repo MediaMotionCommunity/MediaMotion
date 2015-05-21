@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using MediaMotion.Core.Models.Interfaces;
-using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Models;
@@ -17,11 +16,6 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// The service lock
 		/// </summary>
 		private readonly object locker = new object();
-
-		/// <summary>
-		/// The element factory
-		/// </summary>
-		private readonly IElementFactory elementFactory;
 
 		/// <summary>
 		/// The modules
@@ -47,8 +41,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// Initializes a new instance of the <see cref="ModuleManagerService" /> class.
 		/// </summary>
 		/// <param name="elementFactory">The element factory.</param>
-		public ModuleManagerService(IElementFactory elementFactory) {
-			this.elementFactory = elementFactory;
+		public ModuleManagerService() {
 			this.availableModules = new Dictionary<Type, IModule>();
 			this.backgroundModules = new Stack<ModuleInstance>();
 			this.stackedModules = new Stack<ModuleInstance>();
@@ -63,9 +56,6 @@ namespace MediaMotion.Core.Services.ModuleManager {
 			IModule module = new Module();
 
 			module.Configure(MediaMotionCore.Container);
-			if (module.Container.Has<IElementFactoryObserver>()) {
-				this.elementFactory.AddObserver(module.Container.Get<IElementFactoryObserver>(), module.Priority);
-			}
 			this.availableModules.Add(typeof(Module), module);
 		}
 
@@ -103,7 +93,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// <returns><c>true</c> if the module is load properly, <c>false</c> otherwise</returns>
 		public bool Load(IElement[] parameters) {
 			lock (this.locker) {
-				IModule moduleToLoad = this.availableModules.OrderByDescending(module => module.Value.Priority).FirstOrDefault(module => parameters.All(parameter => module.Value.Supports(parameter))).Value;
+				IModule moduleToLoad = this.Supports(parameters);
 
 				if (moduleToLoad != null) {
 					if (this.currentModule == moduleToLoad && this.currentModule.SupportReload) {
@@ -140,6 +130,39 @@ namespace MediaMotion.Core.Services.ModuleManager {
 				}
 				return (true);
 			}
+		}
+
+		/// <summary>
+		/// Get the module which support the specified <see cref="path"/>
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns>
+		///   The module which support the <see cref="path"/> or <c>null</c> if any module support it
+		/// </returns>
+		public IModule Supports(string path) {
+			return (this.availableModules.OrderByDescending(module => module.Value.Priority).FirstOrDefault(module => module.Value.Supports(path)).Value);
+		}
+
+		/// <summary>
+		/// Get the module which support the specified <see cref="parameter" />
+		/// </summary>
+		/// <param name="parameter">The parameter.</param>
+		/// <returns>
+		/// The module which support the <see cref="parameter" /> or <c>null</c> if any module support it
+		/// </returns>
+		public IModule Supports(IElement parameter) {
+			return (this.availableModules.OrderByDescending(module => module.Value.Priority).FirstOrDefault(module => module.Value.Supports(parameter.GetPath())).Value);
+		}
+
+		/// <summary>
+		/// Get the module which support the specified <see cref="parameters" />
+		/// </summary>
+		/// <param name="parameters">The parameters.</param>
+		/// <returns>
+		/// The module which support the <see cref="parameters" /> or <c>null</c> if any module support it
+		/// </returns>
+		public IModule Supports(IElement[] parameters) {
+			return (this.availableModules.OrderByDescending(module => module.Value.Priority).FirstOrDefault(module => parameters.All(parameter => module.Value.Supports(parameter.GetPath()))).Value);
 		}
 
 		/// <summary>

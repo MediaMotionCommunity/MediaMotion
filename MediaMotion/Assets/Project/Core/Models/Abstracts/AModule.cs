@@ -1,6 +1,9 @@
-﻿using MediaMotion.Core.Models.Interfaces;
+﻿using System.IO;
+using System.Linq;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Models.Abstracts {
@@ -41,14 +44,6 @@ namespace MediaMotion.Core.Models.Abstracts {
 		public string Description { get; protected set; }
 
 		/// <summary>
-		/// Gets or sets the services.
-		/// </summary>
-		/// <value>
-		/// The services.
-		/// </value>
-		public IContainer Container { get; protected set; }
-
-		/// <summary>
 		/// Gets a value indicating whether [support reload].
 		/// </summary>
 		/// <value>
@@ -63,6 +58,22 @@ namespace MediaMotion.Core.Models.Abstracts {
 		///   <c>true</c> if [support background]; otherwise, <c>false</c>.
 		/// </value>
 		public bool SupportBackground { get; protected set; }
+
+		/// <summary>
+		/// Gets or sets the supported extensions.
+		/// </summary>
+		/// <value>
+		/// The supported extensions.
+		/// </value>
+		public string[] SupportedExtensions { get; protected set; }
+
+		/// <summary>
+		/// Gets or sets the services.
+		/// </summary>
+		/// <value>
+		/// The services.
+		/// </value>
+		public IContainer Container { get; protected set; }
 
 		/// <summary>
 		/// Gets the parameters.
@@ -91,7 +102,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// </summary>
 		/// <param name="parameters">The parameters.</param>
 		/// <exception cref="System.NotSupportedException">This module does not support the reload method</exception>
-		public void Reload(IElement[] parameters) {
+		public virtual void Reload(IElement[] parameters) {
 			throw new System.NotSupportedException("This module does not support the reload method");
 		}
 
@@ -122,13 +133,15 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// <summary>
 		/// Supports the specified element.
 		/// </summary>
-		/// <param name="element">The element.</param>
+		/// <param name="path">The path.</param>
 		/// <returns>
 		///   <c>true</c> if the element is supported, <c>false</c> otherwise
 		/// </returns>
-		public virtual bool Supports(IElement element) {
-			if (this.Container != null && this.Container.Has<IElementFactoryObserver>()) {
-				return (this.Container.Get<IElementFactoryObserver>().Supports(element.GetPath()));
+		public virtual bool Supports(string path) {
+			if (File.Exists(path) && this.SupportedExtensions != null) {
+				FileInfo fileInfo = new FileInfo(path);
+
+				return (this.SupportedExtensions.Contains(fileInfo.Extension));
 			}
 			return (false);
 		}

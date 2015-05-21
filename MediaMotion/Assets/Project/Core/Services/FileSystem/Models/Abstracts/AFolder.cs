@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
@@ -16,9 +17,12 @@ namespace MediaMotion.Core.Services.FileSystem.Models.Abstracts {
 		/// Initializes a new instance of the <see cref="AFolder" /> class.
 		/// </summary>
 		/// <param name="directoryInfo">The directory information.</param>
-		/// <param name="resourceId">The resource Id.</param>
-		protected AFolder(DirectoryInfo directoryInfo, string resourceId = null)
-			: base(ElementType.Folder, resourceId) {
+		/// <exception cref="System.NullReferenceException">fileInfo must not be null</exception>
+		protected AFolder(DirectoryInfo directoryInfo)
+			: base(ElementType.Folder) {
+				if (directoryInfo == null) {
+				throw new NullReferenceException("fileInfo must not be null");
+			}
 			this.directoryInfo = directoryInfo;
 		}
 

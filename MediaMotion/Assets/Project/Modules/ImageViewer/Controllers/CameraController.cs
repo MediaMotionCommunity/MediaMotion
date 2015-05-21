@@ -33,9 +33,6 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 					case ActionType.ZoomOut:
 						this.ZoomOut();
 						break;
-					case ActionType.Rotate:
-						this.Rotate(action.Parameter);
-						break;
 				}
 			}
 		}
@@ -62,14 +59,6 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// <param name="distance">The distance.</param>
 		public void Zoom(float distance) {
 			this.transform.Translate(new Vector3(0, 0, distance));
-		}
-
-		/// <summary>
-		/// Rotates the specified toto.
-		/// </summary>
-		/// <param name="toto">The toto.</param>
-		public void Rotate(object toto) {
-			this.transform.Rotate(new Vector3(0, 0, 1), 90);
 		}
 	}
 }

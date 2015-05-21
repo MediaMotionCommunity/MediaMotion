@@ -42,5 +42,32 @@ namespace MediaMotion.Core.Services.ModuleManager.Interfaces {
 		/// </summary>
 		/// <returns><c>true</c> if the module is correctly unloaded, <c>false</c> otherwise</returns>
 		bool Unload();
+
+		/// <summary>
+		/// Get the module which support the specified <see cref="path"/>
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns>
+		///   The module which support the <see cref="path"/> or <c>null</c> if any module support it
+		/// </returns>
+		IModule Supports(string path);
+
+		/// <summary>
+		/// Get the module which support the specified <see cref="parameter" />
+		/// </summary>
+		/// <param name="parameter">The parameter.</param>
+		/// <returns>
+		/// The module which support the <see cref="parameter" /> or <c>null</c> if any module support it
+		/// </returns>
+		IModule Supports(IElement parameter);
+
+		/// <summary>
+		/// Get the module which support the specified <see cref="parameters" />
+		/// </summary>
+		/// <param name="parameters">The parameters.</param>
+		/// <returns>
+		/// The module which support the <see cref="parameters" /> or <c>null</c> if any module support it
+		/// </returns>
+		IModule Supports(IElement[] parameters);
 	}
 }

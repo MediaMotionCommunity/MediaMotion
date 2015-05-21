@@ -48,14 +48,18 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		public void Update() {
 			this.CheckImageDownload();
 			foreach (IAction action in this.inputService.GetMovements()) {
-				if (action.Type == ActionType.Right) {
-					this.playlistService.Next();
-					this.gameObject.transform.Rotate(new Vector3(0, 90, 0));
-					this.LoadImage();
-				} else if (action.Type == ActionType.Left) {
-					this.playlistService.Previous();
-					this.gameObject.transform.Rotate(new Vector3(0, -90, 0));
-					this.LoadImage();
+				switch (action.Type) {
+					case ActionType.Right:
+						this.playlistService.Next();
+						this.LoadImage();
+						break;
+					case ActionType.Left:
+						this.playlistService.Previous();
+						this.LoadImage();
+						break;
+					case ActionType.Rotate:
+						this.transform.Rotate(new Vector3(0, 1, 0), 90);
+						break;
 				}
 			}
 		}

@@ -8,12 +8,11 @@ namespace MediaMotion.Modules.VideoViewer.Models.Abstract {
 	/// </summary>
 	public abstract class AVideo : AFile, IVideo {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="AVideo"/> class.
+		/// Initializes a new instance of the <see cref="AVideo" /> class.
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
-		/// <param name="resourceId">The resource Id.</param>
-		protected AVideo(FileInfo fileInfo, string resourceId = "Video")
-			: base(fileInfo, resourceId) {
+		protected AVideo(FileInfo fileInfo)
+			: base(fileInfo) {
 		}
 
 		/// <summary>

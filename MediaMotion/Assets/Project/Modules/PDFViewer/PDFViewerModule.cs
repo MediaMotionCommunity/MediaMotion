@@ -2,6 +2,7 @@ using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.ContainerBuilder.Interfaces;
 using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
+using MediaMotion.Core.Services.Observers.Interfaces;
 using MediaMotion.Modules.PDFViewer.Observers;
 
 namespace MediaMotion.Modules.PDFViewer {
@@ -10,13 +11,20 @@ namespace MediaMotion.Modules.PDFViewer {
 	/// </summary>
 	public class PDFViewerModule : AModule {
 		/// <summary>
+		/// Initializes the <see cref="PDFViewerModule" /> class.
+		/// </summary>
+		public PDFViewerModule() {
+			this.Name = "PDF Viewer";
+			this.Scene = "PDFViewer";
+			this.Description = "Read your PDFs documents";
+			this.SupportedExtensions = new string[] { ".pdf", ".xps" };
+		}
+
+		/// <summary>
 		/// Configures this instance.
 		/// </summary>
 		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
-			this.Name = "PDF Viewer";
-			this.Scene = "PDFViewer";
-			this.Description = "Read your PDFs documents";
 			this.Container = this.BuildContainer(container);
 		}
 
@@ -30,8 +38,8 @@ namespace MediaMotion.Modules.PDFViewer {
 		private IContainer BuildContainer(IContainer container) {
 			IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
 
+			containerBuilderService.Register<ElementDrawObserver>().As<IElementDrawObserver>().SingleInstance = true;
 			containerBuilderService.Register<ElementFactoryObserver>().As<IElementFactoryObserver>().SingleInstance = true;
-
 			return (containerBuilderService.Build(container));
 		}
 	}

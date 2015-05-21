@@ -11,7 +11,7 @@ namespace MediaMotion.Core.Services.FileSystem.Models {
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
 		public Regular(FileInfo fileInfo)
-			: base(fileInfo, "File") {
+			: base(fileInfo) {
 		}
 
 		/// <summary>

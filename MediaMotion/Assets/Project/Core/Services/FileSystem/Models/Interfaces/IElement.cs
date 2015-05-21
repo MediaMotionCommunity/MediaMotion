@@ -18,12 +18,6 @@ namespace MediaMotion.Core.Services.FileSystem.Models.Interfaces {
 		string GetHumanTypeString();
 
 		/// <summary>
-		/// Gets the resource id.
-		/// </summary>
-		/// <returns>The resource id</returns>
-		string GetResourceId();
-
-		/// <summary>
 		/// Gets the parent.
 		/// </summary>
 		/// <returns>The parent path</returns>

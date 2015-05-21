@@ -8,12 +8,11 @@ namespace MediaMotion.Modules.PDFViewer.Models.Abstract {
 	/// </summary>
 	public abstract class APDF : AFile, IPDF {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="APDF"/> class.
+		/// Initializes a new instance of the <see cref="APDF" /> class.
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
-		/// <param name="resourceId">The resource Id.</param>
-		protected APDF(FileInfo fileInfo, string resourceId = "PDF")
-			: base(fileInfo, resourceId) {
+		protected APDF(FileInfo fileInfo)
+			: base(fileInfo) {
 		}
 
 		/// <summary>

@@ -6,19 +6,6 @@ namespace MediaMotion.Core.Services.FileSystem.Factories.Interfaces {
 	/// </summary>
 	public interface IElementFactory {
 		/// <summary>
-		/// Adds the observer.
-		/// </summary>
-		/// <param name="observer">The observer.</param>
-		/// <param name="priority">The priority.</param>
-		void AddObserver(IElementFactoryObserver observer, int priority = 0);
-
-		/// <summary>
-		/// Removes the observer.
-		/// </summary>
-		/// <param name="observer">The observer.</param>
-		void RemoveObserver(IElementFactoryObserver observer);
-
-		/// <summary>
 		/// Creates the folder.
 		/// </summary>
 		/// <param name="path">The path.</param>

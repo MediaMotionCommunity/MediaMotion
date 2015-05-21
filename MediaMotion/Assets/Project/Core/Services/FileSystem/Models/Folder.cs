@@ -11,7 +11,7 @@ namespace MediaMotion.Core.Services.FileSystem.Models {
 		/// </summary>
 		/// <param name="directoryInfo">The directory information.</param>
 		public Folder(DirectoryInfo directoryInfo)
-			: base(directoryInfo, "Folder") {
+			: base(directoryInfo) {
 		}
 
 		/// <summary>

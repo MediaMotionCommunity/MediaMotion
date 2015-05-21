@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MediaMotion.Core.Loader;
 using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.ContainerBuilder.Resolver.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
-using MediaMotion.Modules.Default;
 using UnityEngine;
 
 namespace MediaMotion.Core.Models.Abstracts {
@@ -48,7 +48,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 	/// Base unity script
 	/// </summary>
 	/// <typeparam name="Child">Child Class Type (Curiously Recurring Template Pattern)</typeparam>
-	public abstract class AScript<Child> : AScript<DefaultModule, Child>
+	public abstract class AScript<Child> : AScript<ModuleLoader, Child>
 		where Child : AScript<Child> {
 	}
 }

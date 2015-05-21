@@ -11,9 +11,8 @@ namespace MediaMotion.Modules.ImageViewer.Models.Abstract {
 		/// Initializes a new instance of the <see cref="AImage" /> class.
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
-		/// <param name="resourceId">The resource identifier.</param>
-		protected AImage(FileInfo fileInfo, string resourceId = "Image")
-			: base(fileInfo, resourceId) {
+		protected AImage(FileInfo fileInfo)
+			: base(fileInfo) {
 		}
 
 		/// <summary>

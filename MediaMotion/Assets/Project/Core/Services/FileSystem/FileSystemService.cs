@@ -135,6 +135,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 		/// </returns>
 		public IElement[] GetFolderElements(string path = null, string[] filterExtension = null, bool onlyFiles = false) {
 			try {
+				if (filterExtension != null && !filterExtension.All(extension => extension != null && extension.StartsWith("."))) {
+					throw new ArgumentException("filterExtension must contain valid extensions only.");
+				}
 				int i = 0;
 				DirectoryInfo directoryInfo = new DirectoryInfo(path ?? this.CurrentFolder.GetPath());
 				FileSystemInfo[] directoryElementsInfo = directoryInfo.GetFileSystemInfos();
@@ -146,6 +149,8 @@ namespace MediaMotion.Core.Services.FileSystem {
 					++i;
 				}
 				return (directoryElements.ToArray());
+			} catch (ArgumentException) {
+				// TODO Log e.Message
 			} catch (DirectoryNotFoundException) {
 				// TODO Log e.Message
 			}
