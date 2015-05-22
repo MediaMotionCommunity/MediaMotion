@@ -58,7 +58,7 @@
     <Compile Include="MovementsDetection\Detectors\RightLeftDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\SwipeDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\ZoomDetection.cs" />
-    <Compile Include="MovementsDetection\FistBackDetection.cs" />
+    <Compile Include="MovementsDetection\Detectors\FistBackDetection.cs" />
     <Compile Include="MovementsDetection\ICustomDetection.cs" />
     <Compile Include="MovementsDetection\ALeapDetection.cs" />
     <Compile Include="MovementsDetection\Detections.cs" />
