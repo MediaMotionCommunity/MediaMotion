@@ -5,8 +5,7 @@ using System.Text;
 using Leap;
 using MediaMotion.Motion.LeapMotion.Core;
 
-namespace MediaMotion.Motion.LeapMotion.MovementsDetection
-{
+namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
     public class FistBackDetection : ICustomDetection {
         #region Constants
         /// <summary>
