@@ -40,8 +40,6 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <param name="fileSystem">The file system.</param>
 		public PlaylistService(IFileSystemService fileSystem) {
 			this.fileSystemService = fileSystem;
-			this.IsConfigured = false;
-			this.Loop = true;
 		}
 
 		/// <summary>

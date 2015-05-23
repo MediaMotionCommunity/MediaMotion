@@ -22,7 +22,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <value>
 		/// The element.
 		/// </value>
-		public IElement Element { get; private set; }
+		public IElement Element { get; set; }
 
 		/// <summary>
 		/// Initializes this instance.
@@ -48,7 +48,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					tmpTile.transform.localScale = scale;
 					tmpTile.transform.localPosition = position;
 					tmpTile.transform.localRotation = rotation;
-					Debug.Log(rotation);
 
 					GameObject.Destroy(tile);
 					tile = tmpTile;
@@ -64,13 +63,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		}
 
 		/// <summary>
-		/// Updates this instance.
-		/// </summary>
-		public void Update() {
-			// this.tile.renderer.material.mainTexture = this.texture.Get();
-		}
-
-		/// <summary>
 		/// Selects this instance.
 		/// </summary>
 		public void Select() {
@@ -82,16 +74,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		public void Deselect() {
 			iTween.MoveTo(this.content, new Vector3(this.gameObject.transform.position.x, 1.0f, this.gameObject.transform.position.z), 0.5f);
-		}
-
-		/// <summary>
-		/// Sets the element.
-		/// </summary>
-		/// <param name="element">The element.</param>
-		public void SetElement(IElement element) {
-			if (this.Element == null) {
-				this.Element = element;
-			}
 		}
 	}
 }

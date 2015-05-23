@@ -25,6 +25,15 @@ namespace MediaMotion.Modules.Explorer {
 			this.Name = "File browser";
 			this.Scene = "Explorer";
 			this.Description = "File browser using the MediaMotion Core API";
+			this.SupportedAction = new ActionType[] {
+				ActionType.BrowsingCursor,
+				ActionType.BrowsingHighlight,
+				ActionType.BrowsingScroll,
+				ActionType.Back,
+				ActionType.Select,
+				ActionType.GrabStart,
+				ActionType.GrabStop
+			};
 		}
 
 		/// <summary>
@@ -33,17 +42,9 @@ namespace MediaMotion.Modules.Explorer {
 		/// <param name="container">The container</param>
 		public override void Configure(IContainer container) {
 			this.Container = this.BuildContainer(container);
-		    this.ActivatedActionTypes = new[] {
-		        ActionType.BrowsingCursor,
-		        ActionType.BrowsingHighlight,
-		        ActionType.BrowsingScroll,
-		        ActionType.Back,
-		        ActionType.GrabStart,
-		        ActionType.GrabStop,
-		    };
 		}
 
-	    /// <summary>
+		/// <summary>
 		/// Supportses the specified path.
 		/// </summary>
 		/// <param name="path">The path.</param>

@@ -217,7 +217,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				uiElement.transform.parent = this.transform;
 
 				uiElement.transform.localPosition = new Vector3(((count % FilePerLine) - (FilePerLine / 2)) * FileSpacing, 0.0f, (count / FilePerLine) * LineSpacing);
-				uiElement.AddComponent<ElementController>().SetElement(element);
+				uiElement.AddComponent<ElementController>().Element = element;
 				++count;
 			}
 		}

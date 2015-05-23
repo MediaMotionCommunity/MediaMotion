@@ -6,6 +6,7 @@ using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.Observers.Interfaces;
 using MediaMotion.Modules.ImageViewer.Observers;
+using MediaMotion.Motion.Actions;
 using UnityEngine;
 
 namespace MediaMotion.Modules.ImageViewer {
@@ -21,6 +22,10 @@ namespace MediaMotion.Modules.ImageViewer {
 			this.Scene = "ImageViewer";
 			this.Description = "Display your picture in a wonderfull slideshow";
 			this.SupportedExtensions = new string[] { ".jpg", ".jpeg", ".gif", ".png", ".svg", ".bmp", ".tiff" };
+			this.SupportedAction = new ActionType[] {
+				ActionType.Right,
+				ActionType.Left
+			};
 		}
 
 		/// <summary>

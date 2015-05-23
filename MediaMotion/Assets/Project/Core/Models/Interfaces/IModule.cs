@@ -2,6 +2,7 @@
 using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
+using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Core.Models.Interfaces {
 	/// <summary>
@@ -63,6 +64,22 @@ namespace MediaMotion.Core.Models.Interfaces {
 		///   <c>true</c> if [support background]; otherwise, <c>false</c>.
 		/// </value>
 		bool SupportBackground { get; }
+
+		/// <summary>
+		/// Gets the supported extensions.
+		/// </summary>
+		/// <value>
+		/// The supported extensions.
+		/// </value>
+		string[] SupportedExtensions { get; }
+
+		/// <summary>
+		/// Gets the supported action.
+		/// </summary>
+		/// <value>
+		/// The supported action.
+		/// </value>
+		ActionType[] SupportedAction { get; }
 
 		/// <summary>
 		/// Gets the parameters.

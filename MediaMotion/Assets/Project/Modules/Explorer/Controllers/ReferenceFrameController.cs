@@ -42,7 +42,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public void Update() {
 			if (this.cursorManagerService.IsEnabled) {
 				foreach (IAction action in this.inputService.GetMovements(ActionType.BrowsingScroll)) {
-					this.gameObject.transform.Translate(0, 0, (action.Parameter as Object3).Pos.Z / 20, UnityEngine.Space.World);
+					this.gameObject.transform.Translate(0, 0, (action.Parameter as Object3).Pos.Z / 40, UnityEngine.Space.World);
 				}
 			}
 		}

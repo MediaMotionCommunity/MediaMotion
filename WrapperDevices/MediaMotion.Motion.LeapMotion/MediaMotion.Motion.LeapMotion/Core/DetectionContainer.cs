@@ -71,7 +71,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 				if (detectorDocker.IsUsing(action)) {
 					var detector = detectorDocker.Create(this.leapDetections, this.customDetections);
 					if (detectorDocker.IsCustomDetector()) {
-						this.Register(detector as ICustomDetection);						
+						this.Register(detector as ICustomDetection);
 					}
 					else {
 						this.Register(detector as ILeapDetection);

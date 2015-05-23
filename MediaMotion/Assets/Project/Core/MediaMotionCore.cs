@@ -26,7 +26,6 @@ using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Modules.PDFViewer;
 using MediaMotion.Modules.VideoViewer;
-using UnityEngine;
 
 namespace MediaMotion.Core {
 	/// <summary>

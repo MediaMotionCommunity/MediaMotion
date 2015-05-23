@@ -48,10 +48,10 @@ namespace MediaMotion.Core.Services.Input.Interfaces {
 		/// <returns>The action</returns>
 		IAction GetCursorMovement(int id);
 
-        /// <summary>
-        /// Enable actions
-        /// </summary>
-        /// <param name="actionsTypes">action's list</param>
-	    void EnableActions(IEnumerable<ActionType> actionsTypes);
+		/// <summary>
+		/// Enable actions
+		/// </summary>
+		/// <param name="actionsTypes">action's list</param>
+		void EnableActions(IEnumerable<ActionType> actionsTypes);
 	}
 }

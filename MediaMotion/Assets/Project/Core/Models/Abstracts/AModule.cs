@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MediaMotion.Core.Models.Interfaces;
@@ -14,11 +15,6 @@ namespace MediaMotion.Core.Models.Abstracts {
 	/// Abstract Module
 	/// </summary>
 	public abstract class AModule : IModule {
-		/// <summary>
-		/// Hidden field of ActivatedActionTypes
-		/// </summary>
-		private IEnumerable<ActionType> activatedActionTypes;
-
 		/// <summary>
 		/// Gets or sets the priority.
 		/// </summary>
@@ -68,12 +64,20 @@ namespace MediaMotion.Core.Models.Abstracts {
 		public bool SupportBackground { get; protected set; }
 
 		/// <summary>
-		/// Gets or sets the supported extensions.
+		/// Gets the supported extensions.
 		/// </summary>
 		/// <value>
 		/// The supported extensions.
 		/// </value>
 		public string[] SupportedExtensions { get; protected set; }
+
+		/// <summary>
+		/// Gets the supported action.
+		/// </summary>
+		/// <value>
+		/// The supported action.
+		/// </value>
+		public ActionType[] SupportedAction { get; protected set; }
 
 		/// <summary>
 		/// Gets or sets the services.
@@ -92,30 +96,6 @@ namespace MediaMotion.Core.Models.Abstracts {
 		public IElement[] Parameters { get; protected set; }
 
 		/// <summary>
-		/// Get or set current activated actionTypes
-		/// </summary>
-		public IEnumerable<ActionType> ActivatedActionTypes {
-			get { return this.activatedActionTypes; }
-			set {
-				this.activatedActionTypes = value;
-				this.EnabledActions(value);
-			}
-		}
-
-		/// <summary>
-		/// Enable list of action
-		/// Only enabled actions will be return by inputService
-		/// </summary>
-		/// <param name="actionTypes">list of actions</param>
-		public virtual void EnabledActions(IEnumerable<ActionType> actionTypes) {
-			var inputService = this.Container.Get<IInputService>();
-			if (inputService == null) {
-				throw new System.ArgumentNullException("inputService");
-			}
-			inputService.EnableActions(actionTypes);
-		}
-
-		/// <summary>
 		/// Configures the module.
 		/// </summary>
 		/// <param name="container">The container</param>
@@ -127,6 +107,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// <param name="parameters">The parameters.</param>
 		public virtual void Load(IElement[] parameters) {
 			this.Parameters = parameters;
+			this.EnabledActions();
 		}
 
 		/// <summary>
@@ -135,7 +116,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// <param name="parameters">The parameters.</param>
 		/// <exception cref="System.NotSupportedException">This module does not support the reload method</exception>
 		public virtual void Reload(IElement[] parameters) {
-			throw new System.NotSupportedException("This module does not support the reload method");
+			throw new NotSupportedException("This module does not support the reload method");
 		}
 
 		/// <summary>
@@ -154,6 +135,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// <param name="parameters">The parameters.</param>
 		public virtual void WakeUp(IElement[] parameters) {
 			this.Parameters = parameters;
+			this.EnabledActions();
 		}
 
 		/// <summary>
@@ -176,6 +158,20 @@ namespace MediaMotion.Core.Models.Abstracts {
 				return (this.SupportedExtensions.Contains(fileInfo.Extension));
 			}
 			return (false);
+		}
+
+		/// <summary>
+		/// Enable list of action
+		/// Only enabled actions will be return by inputService
+		/// </summary>
+		/// <exception cref="System.ArgumentNullException">inputService</exception>
+		protected void EnabledActions() {
+			IInputService inputService = this.Container.Get<IInputService>();
+
+			if (inputService == null) {
+				throw new System.ArgumentNullException("inputService");
+			}
+			inputService.EnableActions(this.SupportedAction);
 		}
 	}
 }

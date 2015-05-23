@@ -56,8 +56,10 @@ namespace MediaMotion.Core.Services.Input {
 			this.fileSystemService = fileSystem;
 			this.moduleManagerService = moduleManager;
 
-			this.IsLoaded = false;
-			this.lastFrame = null;
+			this.MandatoryActions = new ActionType[] {
+				ActionType.Leave
+			};
+
 			this.movements = new List<IAction>();
 			this.defaultInput = new Dictionary<KeyCode, IAction>();
 
@@ -74,6 +76,14 @@ namespace MediaMotion.Core.Services.Input {
 
 			this.LoadWrapper();
 		}
+
+		/// <summary>
+		/// Gets the mandatory actions.
+		/// </summary>
+		/// <value>
+		/// The mandatory actions.
+		/// </value>
+		public ActionType[] MandatoryActions { get; private set; }
 
 		/// <summary>
 		/// Gets a value indicating whether this instance is loaded.
@@ -168,8 +178,15 @@ namespace MediaMotion.Core.Services.Input {
 			return (this.GetMovements(ActionType.BrowsingCursor).Find(action => (action.Parameter as MediaMotion.Motion.Actions.Parameters.Object3).Id == id));
 		}
 
-		public void EnableActions(IEnumerable<ActionType> actionsTypes) {
-			this.wrapper.EnableActions(actionsTypes);
+		/// <summary>
+		/// Enable actions
+		/// </summary>
+		/// <param name="actions">action's list</param>
+		public void EnableActions(IEnumerable<ActionType> actions) {
+			if (this.MandatoryActions != null) {
+				actions = actions.Concat(this.MandatoryActions);
+			}
+			this.wrapper.EnableActions(actions);
 		}
 
 		/// <summary>
