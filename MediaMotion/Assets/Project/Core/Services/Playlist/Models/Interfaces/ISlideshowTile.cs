@@ -10,5 +10,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Interfaces {
 		/// </summary>
 		/// <param name="file">The file.</param>
 		void LoadFile(IFile file);
+
+		/// <summary>
+		/// Rotate the tile
+		/// </summary>
+		/// <param name="angle">The angle.</param>
+		void Rotate(float angle);
 	}
 }

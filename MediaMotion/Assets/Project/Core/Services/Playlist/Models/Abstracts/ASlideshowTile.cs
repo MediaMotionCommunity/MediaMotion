@@ -24,6 +24,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected IFile file;
 
 		/// <summary>
+		/// The cumulative rotation
+		/// </summary>
+		protected float cumulativeRotation = 0.0f;
+
+		/// <summary>
 		/// Gets a value indicating whether [texture2 d applied].
 		/// </summary>
 		/// <value>
@@ -39,6 +44,15 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		}
 
 		/// <summary>
+		/// Rotate the tile
+		/// </summary>
+		/// <param name="angle">The angle.</param>
+		public virtual void Rotate(float angle) {
+			this.cumulativeRotation += angle;
+			this.gameObject.transform.Rotate(new Vector3(0.0f, angle, 0.0f), Space.Self);
+		}
+
+		/// <summary>
 		/// Loads the file.
 		/// </summary>
 		/// <param name="file">The file.</param>
@@ -48,9 +62,17 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 					return;
 				}
 				this.file = file;
-				this.Texture2DApplied = false;
-				this.CleanTexture2D();
+				this.ClearAll();
 			}
+		}
+
+		/// <summary>
+		/// Clears all.
+		/// </summary>
+		protected virtual void ClearAll() {
+			this.Texture2DApplied = false;
+			this.Rotate(-this.cumulativeRotation);
+			this.CleanTexture2D();
 		}
 
 		/// <summary>
@@ -59,6 +81,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected virtual void Texture2DLoadingProcess() {
 			if (!this.Texture2DApplied) {
 				if (this.IsTexture2DReady()) {
+					this.ScaleTexture2D(this.texture2D);
 					this.ApplyTexture2D();
 					this.CleanTexture2D();
 				} else {
@@ -78,20 +101,31 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		}
 
 		/// <summary>
-		/// Apply the texture 2D.
+		/// Scales the texture2 d.
 		/// </summary>
+		/// <param name="texture2D">The texture2 d.</param>
 		/// <param name="maxWidth">The maximum width.</param>
 		/// <param name="maxHeight">The maximum height.</param>
-		protected virtual void ApplyTexture2D(float maxWidth = 1.3f, float maxHeight = 1.0f) {
-			if (this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
-				float coeff = (float)this.texture2D.height / (float)this.texture2D.width;
+		protected virtual void ScaleTexture2D(Texture2D texture2D, float maxWidth = 1.3f, float maxHeight = 1.0f) {
+			if (texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
+				float coeff = (float)texture2D.height / (float)texture2D.width;
 
 				if (maxWidth * coeff <= maxHeight) {
 					this.gameObject.transform.localScale = new Vector3(maxWidth, 1.0f, maxWidth * coeff);
 				} else {
-					coeff = (float)this.texture2D.width / (float)this.texture2D.height;
+					coeff = (float)texture2D.width / (float)texture2D.height;
 					this.gameObject.transform.localScale = new Vector3(maxHeight * coeff, 1.0f, maxHeight);
 				}
+			}
+		}
+
+		/// <summary>
+		/// Apply the texture 2D.
+		/// </summary>
+		/// <param name="maxWidth">The maximum width.</param>
+		/// <param name="maxHeight">The maximum height.</param>
+		protected virtual void ApplyTexture2D() {
+			if (this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
 				this.texture2D.wrapMode = TextureWrapMode.Clamp;
 				this.gameObject.GetComponent<Renderer>().material.mainTexture = this.texture2D;
 				this.Texture2DApplied = true;

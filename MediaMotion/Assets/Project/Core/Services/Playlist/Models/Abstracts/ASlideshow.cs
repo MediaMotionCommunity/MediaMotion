@@ -23,16 +23,26 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		where TileScript : MonoBehaviour, ISlideshowTile
 		where ElementScript : MonoBehaviour, ISlideshowElement {
 		/// <summary>
-		/// The number of elements
+		/// The editor number of side elements
 		/// </summary>
 		[Range(0, 10)]
-		public int NumberOfSideElements = 3;
+		public int EditorSideElements = 3;
 
 		/// <summary>
-		/// The buffer size
+		/// The editor buffer size
 		/// </summary>
 		[Range(4, 20)]
-		public int BufferSize = 8;
+		public int EditorBufferSize = 8;
+
+		/// <summary>
+		/// The editor next action
+		/// </summary>
+		public ActionType EditorNextAction = ActionType.Right;
+
+		/// <summary>
+		/// The editor next action
+		/// </summary>
+		public ActionType EditorPreviousAction = ActionType.Left;
 
 		/// <summary>
 		/// The element
@@ -60,9 +70,29 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected IPlaylistService playlistService;
 
 		/// <summary>
+		/// The next action
+		/// </summary>
+		protected ActionType nextAction;
+
+		/// <summary>
+		/// The previous action
+		/// </summary>
+		protected ActionType previousAction;
+
+		/// <summary>
+		/// The side elements
+		/// </summary>
+		protected int sideElements;
+
+		/// <summary>
 		/// The elements
 		/// </summary>
 		protected GameObject[] elements;
+
+		/// <summary>
+		/// The buffer size
+		/// </summary>
+		protected int bufferSize;
 
 		/// <summary>
 		/// The buffer
@@ -80,6 +110,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 			this.elementFactory = elementFactory;
 			this.playlistService = playlistService;
 
+			this.sideElements = this.EditorSideElements;
+			this.bufferSize = this.EditorBufferSize;
+			this.nextAction = this.EditorNextAction;
+			this.previousAction = this.EditorPreviousAction;
+
 			this.InitPlaylist();
 			this.InitBuffers();
 		}
@@ -87,14 +122,25 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <summary>
 		/// Update the instance
 		/// </summary>
-		public void Update() {
+		public virtual void Update() {
 			foreach (IAction action in this.inputService.GetMovements()) {
 				switch (action.Type) {
-					case ActionType.Right:
-						this.Next();
+					case ActionType.Rotate:
+						if (this.module.SupportedAction.Contains(ActionType.Rotate) && this.elements[this.sideElements] != null) {
+							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Rotate(90.0f);
+						}
 						break;
-					case ActionType.Left:
-						this.Previous();
+					case ActionType.ZoomIn:
+						if (this.module.SupportedAction.Contains(ActionType.ZoomIn)) {
+							
+						}
+						break;
+					default:
+						if (action.Type == this.nextAction) {
+							this.Next();
+						} else if (action.Type == this.previousAction) {
+							this.Previous();
+						}
 						break;
 				}
 			}
@@ -114,13 +160,13 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// Initializes the buffers.
 		/// </summary>
 		protected virtual void InitBuffers() {
-			this.elements = new GameObject[(this.NumberOfSideElements * 2) + 1];
+			this.elements = new GameObject[(this.sideElements * 2) + 1];
 			this.buffer = new Queue<GameObject>();
 
-			for (int offset = -this.NumberOfSideElements; offset <= this.NumberOfSideElements; ++offset) {
-				this.elements[offset + this.NumberOfSideElements] = this.GetSlideshowElement(offset);
+			for (int offset = -this.sideElements; offset <= this.sideElements; ++offset) {
+				this.elements[offset + this.sideElements] = this.GetSlideshowElement(offset);
 			}
-			for (int i = 0; i < this.BufferSize; ++i) {
+			for (int i = 0; i < this.bufferSize; ++i) {
 				this.buffer.Enqueue(this.CreateSlideshowElement());
 			}
 		}
@@ -156,7 +202,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 				bool keepInSlideshow = (rightToLeft && index > start) || (!rightToLeft && index < start);
 
 				if (this.elements[index] != null) {
-					int newPosition = index - this.NumberOfSideElements + step;
+					int newPosition = index - this.sideElements + step;
 
 					this.elements[index].GetComponent<ElementScript>().AnimateTo(this.ComputeLocalScale(newPosition), this.ComputeLocalPosition(newPosition), this.ComputeLocalRotation(newPosition), !keepInSlideshow);
 					if (!keepInSlideshow) {
@@ -169,7 +215,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 					this.elements[index + step] = this.elements[index];
 				}
 			}
-			this.elements[end] = this.GetSlideshowElement(-step * this.NumberOfSideElements);
+			this.elements[end] = this.GetSlideshowElement(-step * this.sideElements);
 		}
 
 		/// <summary>
@@ -254,7 +300,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		///   The local position
 		/// </returns>
 		protected virtual Vector3 ComputeLocalPosition(int offset) {
-			return (new Vector3((Math.Sign(offset) * (5 + Math.Abs(offset)) - 1), 0.0f, (Math.Abs(Math.Sign(offset)) * (3.0f - Math.Abs(offset)) * 0.5f)));
+			return (new Vector3(Math.Sign(offset) * ((5 + Math.Abs(offset)) - 1), 0.0f, Math.Abs(Math.Sign(offset)) * (3.0f - (Math.Abs(offset) * 0.5f))));
 		}
 
 		/// <summary>
