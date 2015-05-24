@@ -136,12 +136,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 					case ActionType.Back:
 						this.Back();
 						break;
-					case ActionType.Left:
-						this.popupController.ShowSidebar();
-						break;
-					case ActionType.Right:
-						this.popupController.HideSidebar();
-						break;
 					case ActionType.GrabStart:
 						if (this.selectedElement != null) {
 							this.wheelTool.ActiveWheelTool(this.selectedElement.gameObject.GetComponent<ElementController>().Element);
