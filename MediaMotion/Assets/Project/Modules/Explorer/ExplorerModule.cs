@@ -45,7 +45,7 @@ namespace MediaMotion.Modules.Explorer {
 		}
 
 		/// <summary>
-		/// Supportses the specified path.
+		/// Support the specified path.
 		/// </summary>
 		/// <param name="path">The path.</param>
 		/// <returns>

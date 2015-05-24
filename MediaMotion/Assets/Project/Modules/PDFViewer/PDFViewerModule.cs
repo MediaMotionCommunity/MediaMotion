@@ -11,7 +11,7 @@ namespace MediaMotion.Modules.PDFViewer {
 	/// </summary>
 	public class PDFViewerModule : AModule {
 		/// <summary>
-		/// Initializes the <see cref="PDFViewerModule" /> class.
+		/// Initializes a new instance of the <see cref="PDFViewerModule"/> class.
 		/// </summary>
 		public PDFViewerModule() {
 			this.Name = "PDF Viewer";

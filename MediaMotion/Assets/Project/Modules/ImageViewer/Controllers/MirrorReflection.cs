@@ -1,29 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// This is in fact just the Water script from Pro Standard Assets,
-// just with refraction stuff removed.
-
 namespace MediaMotion.Modules {
+	/// <summary>
+	/// Mirror reflection (http://wiki.unity3d.com/index.php/MirrorReflection4)
+	/// </summary>
 	[ExecuteInEditMode]
 	public class MirrorReflection : MonoBehaviour {
+		/// <summary>
+		/// The m_ disable pixel lights
+		/// </summary>
 		public bool m_DisablePixelLights = true;
+
+		/// <summary>
+		/// The m_ texture size
+		/// </summary>
 		public int m_TextureSize = 256;
+
+		/// <summary>
+		/// The m_ clip plane offset
+		/// </summary>
 		public float m_ClipPlaneOffset = 0.07f;
 
+		/// <summary>
+		/// The m_ reflect layers
+		/// </summary>
 		public LayerMask m_ReflectLayers = -1;
 
-		private Hashtable m_ReflectionCameras = new Hashtable(); // Camera -> Camera table
+		/// <summary>
+		/// The m_ reflection cameras
+		/// </summary>
+		private Hashtable m_ReflectionCameras = new Hashtable();
 
+		/// <summary>
+		/// The m_ reflection texture
+		/// </summary>
 		private RenderTexture m_ReflectionTexture = null;
+
+		/// <summary>
+		/// The m_ old reflection texture size
+		/// </summary>
 		private int m_OldReflectionTextureSize = 0;
 
+		/// <summary>
+		/// The s_ inside rendering
+		/// </summary>
 		private static bool s_InsideRendering = false;
 
-		// This is called when it's known that the object will be rendered by some
-		// camera. We render reflections and do other updates here.
-		// Because the script executes in edit mode, reflections for the scene view
-		// camera will just work!
+		/// <summary>
+		/// Called when [will render object].
+		/// </summary>
 		public void OnWillRenderObject() {
 			var rend = GetComponent<Renderer>();
 			if (!enabled || !rend || !rend.sharedMaterial || !rend.enabled)
@@ -94,8 +120,9 @@ namespace MediaMotion.Modules {
 			s_InsideRendering = false;
 		}
 
-
-		// Cleanup all the objects we possibly have created
+		/// <summary>
+		/// Called when [disable].
+		/// </summary>
 		void OnDisable() {
 			if (m_ReflectionTexture) {
 				DestroyImmediate(m_ReflectionTexture);
@@ -106,7 +133,11 @@ namespace MediaMotion.Modules {
 			m_ReflectionCameras.Clear();
 		}
 
-
+		/// <summary>
+		/// Updates the camera modes.
+		/// </summary>
+		/// <param name="src">The source.</param>
+		/// <param name="dest">The dest.</param>
 		private void UpdateCameraModes(Camera src, Camera dest) {
 			if (dest == null)
 				return;
@@ -134,7 +165,11 @@ namespace MediaMotion.Modules {
 			dest.orthographicSize = src.orthographicSize;
 		}
 
-		// On-demand create any objects we need
+		/// <summary>
+		/// Creates the mirror objects.
+		/// </summary>
+		/// <param name="currentCamera">The current camera.</param>
+		/// <param name="reflectionCamera">The reflection camera.</param>
 		private void CreateMirrorObjects(Camera currentCamera, out Camera reflectionCamera) {
 			reflectionCamera = null;
 
@@ -164,14 +199,25 @@ namespace MediaMotion.Modules {
 			}
 		}
 
-		// Extended sign: returns -1, 0 or 1 based on sign of a
+		/// <summary>
+		/// SGNs the specified a.
+		/// </summary>
+		/// <param name="a">a.</param>
+		/// <returns></returns>
 		private static float sgn(float a) {
 			if (a > 0.0f) return 1.0f;
 			if (a < 0.0f) return -1.0f;
 			return 0.0f;
 		}
 
-		// Given position/normal of the plane, calculates plane in camera space.
+		/// <summary>
+		/// Cameras the space plane.
+		/// </summary>
+		/// <param name="cam">The cam.</param>
+		/// <param name="pos">The position.</param>
+		/// <param name="normal">The normal.</param>
+		/// <param name="sideSign">The side sign.</param>
+		/// <returns></returns>
 		private Vector4 CameraSpacePlane(Camera cam, Vector3 pos, Vector3 normal, float sideSign) {
 			Vector3 offsetPos = pos + normal * m_ClipPlaneOffset;
 			Matrix4x4 m = cam.worldToCameraMatrix;
@@ -180,7 +226,11 @@ namespace MediaMotion.Modules {
 			return new Vector4(cnormal.x, cnormal.y, cnormal.z, -Vector3.Dot(cpos, cnormal));
 		}
 
-		// Calculates reflection matrix around the given plane
+		/// <summary>
+		/// Calculates the reflection matrix.
+		/// </summary>
+		/// <param name="reflectionMat">The reflection mat.</param>
+		/// <param name="plane">The plane.</param>
 		private static void CalculateReflectionMatrix(ref Matrix4x4 reflectionMat, Vector4 plane) {
 			reflectionMat.m00 = (1F - 2F * plane[0] * plane[0]);
 			reflectionMat.m01 = (-2F * plane[0] * plane[1]);

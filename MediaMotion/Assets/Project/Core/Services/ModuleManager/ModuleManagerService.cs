@@ -40,7 +40,6 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ModuleManagerService" /> class.
 		/// </summary>
-		/// <param name="elementFactory">The element factory.</param>
 		public ModuleManagerService() {
 			this.availableModules = new Dictionary<Type, IModule>();
 			this.backgroundModules = new Stack<ModuleInstance>();

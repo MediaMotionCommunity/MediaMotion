@@ -1,15 +1,14 @@
 ﻿using System.Linq;
+using MediaMotion.Core;
 using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
-
-using MediaMotion.Core;
-using MediaMotion.Core.Services.FileSystem.Models.Enums;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>

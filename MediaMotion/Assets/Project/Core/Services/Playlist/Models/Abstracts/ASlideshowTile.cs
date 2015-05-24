@@ -5,6 +5,11 @@ using MediaMotion.Core.Services.Playlist.Models.Interfaces;
 using UnityEngine;
 
 namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
+	/// <summary>
+	/// Slideshow tile abstract
+	/// </summary>
+	/// <typeparam name="Module">The type of the module.</typeparam>
+	/// <typeparam name="Child">The type of the child.</typeparam>
 	public abstract class ASlideshowTile<Module, Child> : AScript<Module, Child>, ISlideshowTile
 		where Module : class, IModule
 		where Child : ASlideshowTile<Module, Child> {
@@ -14,12 +19,9 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected Texture2D texture2D;
 
 		/// <summary>
-		/// Gets or sets the file.
+		/// The file
 		/// </summary>
-		/// <value>
-		/// The file.
-		/// </value>
-		public IFile File { get; set; }
+		protected IFile file;
 
 		/// <summary>
 		/// Gets a value indicating whether [texture2 d applied].
@@ -34,6 +36,21 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		public virtual void Update() {
 			this.Texture2DLoadingProcess();
+		}
+
+		/// <summary>
+		/// Loads the file.
+		/// </summary>
+		/// <param name="file">The file.</param>
+		public void LoadFile(IFile file) {
+			if (file != null) {
+				if (this.file != null && this.file.GetPath().CompareTo(file.GetPath()) == 0) {
+					return;
+				}
+				this.file = file;
+				this.Texture2DApplied = false;
+				this.CleanTexture2D();
+			}
 		}
 
 		/// <summary>

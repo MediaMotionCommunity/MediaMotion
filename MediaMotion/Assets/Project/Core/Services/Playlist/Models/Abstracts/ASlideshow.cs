@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
@@ -12,7 +13,7 @@ using UnityEngine;
 
 namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// <summary>
-	/// SlideshowController
+	/// Slideshow Abstract
 	/// </summary>
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
@@ -24,8 +25,14 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <summary>
 		/// The number of elements
 		/// </summary>
-		[Range(0, 7)]
-		public int NumberOfSideElements;
+		[Range(0, 10)]
+		public int NumberOfSideElements = 3;
+
+		/// <summary>
+		/// The buffer size
+		/// </summary>
+		[Range(4, 20)]
+		public int BufferSize = 8;
 
 		/// <summary>
 		/// The element
@@ -33,34 +40,48 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		public GameObject BaseElement;
 
 		/// <summary>
+		/// The buffer access
+		/// </summary>
+		protected readonly object BufferAccess = new object();
+
+		/// <summary>
 		/// The input service
 		/// </summary>
-		private IInputService inputService;
+		protected IInputService inputService;
+
+		/// <summary>
+		/// The element factory
+		/// </summary>
+		protected IElementFactory elementFactory;
 
 		/// <summary>
 		/// The playlist service
 		/// </summary>
-		private IPlaylistService playlistService;
+		protected IPlaylistService playlistService;
 
 		/// <summary>
 		/// The elements
 		/// </summary>
-		private GameObject[] elements;
+		protected GameObject[] elements;
+
+		/// <summary>
+		/// The buffer
+		/// </summary>
+		protected Queue<GameObject> buffer;
 
 		/// <summary>
 		/// Initializes the specified module.
 		/// </summary>
-		/// <param name="input">The input.</param>
-		/// <param name="playlist">The playlist.</param>
-		public void Init(IInputService input, IPlaylistService playlist) {
-			this.inputService = input;
-			this.playlistService = playlist;
-			this.elements = new GameObject[this.NumberOfSideElements * 2 + 1];
+		/// <param name="inputService">The input.</param>
+		/// <param name="elementFactory">The element factory.</param>
+		/// <param name="playlistService">The playlist.</param>
+		public void Init(IInputService inputService, IElementFactory elementFactory, IPlaylistService playlistService) {
+			this.inputService = inputService;
+			this.elementFactory = elementFactory;
+			this.playlistService = playlistService;
 
-			this.playlistService.Configure(this.module.Parameters.FirstOrDefault(), this.module.SupportedExtensions);
-			for (int offset = -this.NumberOfSideElements; offset <= this.NumberOfSideElements; ++offset) {
-				this.elements[offset + this.NumberOfSideElements] = this.CreateSlideshowElement(offset);
-			}
+			this.InitPlaylist();
+			this.InitBuffers();
 		}
 
 		/// <summary>
@@ -80,17 +101,36 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		}
 
 		/// <summary>
+		/// Initializes the playlist.
+		/// </summary>
+		/// <returns>
+		///   <c>true</c> if the playlist is correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		protected virtual bool InitPlaylist() {
+			return (this.module.Parameters != null && this.playlistService.Configure(this.module.Parameters.FirstOrDefault(), this.module.SupportedExtensions));
+		}
+
+		/// <summary>
+		/// Initializes the buffers.
+		/// </summary>
+		protected virtual void InitBuffers() {
+			this.elements = new GameObject[(this.NumberOfSideElements * 2) + 1];
+			this.buffer = new Queue<GameObject>();
+
+			for (int offset = -this.NumberOfSideElements; offset <= this.NumberOfSideElements; ++offset) {
+				this.elements[offset + this.NumberOfSideElements] = this.GetSlideshowElement(offset);
+			}
+			for (int i = 0; i < this.BufferSize; ++i) {
+				this.buffer.Enqueue(this.CreateSlideshowElement());
+			}
+		}
+
+		/// <summary>
 		/// Next element in the playlist
 		/// </summary>
 		protected virtual void Next() {
 			if (this.playlistService.Next() != null) {
-				for (int i = 0; i < this.elements.Length; ++i) {
-					this.AnimateElement(i, -1, i == 0);
-					if (i > 0) {
-						this.elements[i - 1] = this.elements[i];
-					}
-				}
-				this.elements[this.elements.Length - 1] = this.CreateSlideshowElement((this.elements.Length - 1) / 2);
+				this.AnimateElements(true);
 			}
 		}
 
@@ -99,49 +139,97 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		protected virtual void Previous() {
 			if (this.playlistService.Previous() != null) {
-				for (int i = this.elements.Length - 1; i >= 0; --i) {
-					this.AnimateElement(i, 1, i == this.elements.Length - 1);
-					if (i < this.elements.Length - 1) {
-						this.elements[i + 1] = this.elements[i];
+				this.AnimateElements(false);
+			}
+		}
+
+		/// <summary>
+		/// Animates the elements.
+		/// </summary>
+		/// <param name="rightToLeft">if set to <c>true</c> [right to left].</param>
+		protected virtual void AnimateElements(bool rightToLeft) {
+			int start = (rightToLeft) ? (0) : (this.elements.Length - 1);
+			int end = (rightToLeft) ? (this.elements.Length - 1) : (0);
+			int step = (rightToLeft) ? (-1) : (1);
+
+			for (int index = start; (rightToLeft) ? (index <= end) : (index >= end); index -= step) {
+				bool keepInSlideshow = (rightToLeft && index > start) || (!rightToLeft && index < start);
+
+				if (this.elements[index] != null) {
+					int newPosition = index - this.NumberOfSideElements + step;
+
+					this.elements[index].GetComponent<ElementScript>().AnimateTo(this.ComputeLocalScale(newPosition), this.ComputeLocalPosition(newPosition), this.ComputeLocalRotation(newPosition), !keepInSlideshow);
+					if (!keepInSlideshow) {
+						lock (this.BufferAccess) {
+							this.buffer.Enqueue(this.elements[index]);
+						}
 					}
 				}
-				this.elements[0] = this.CreateSlideshowElement(-((this.elements.Length - 1) / 2));
+				if (keepInSlideshow) {
+					this.elements[index + step] = this.elements[index];
+				}
 			}
+			this.elements[end] = this.GetSlideshowElement(-step * this.NumberOfSideElements);
 		}
 
 		/// <summary>
-		/// Animates the element.
+		/// Gets the slideshow element.
 		/// </summary>
-		/// <param name="index">The index.</param>
 		/// <param name="offset">The offset.</param>
-		/// <param name="destroy">if set to <c>true</c> [destroy].</param>
-		protected virtual void AnimateElement(int index, int offset, bool destroy) {
-			if (this.elements[index] != null) {
-				ElementScript elementScript = this.elements[index].GetComponent<ElementScript>();
+		/// <returns>
+		///   The game object initialized using the file <see cref="offset"/> or <c>null</c> if any file match
+		/// </returns>
+		protected virtual GameObject GetSlideshowElement(int offset) {
+			lock (this.BufferAccess) {
+				if (this.buffer.Count > 0) {
+					GameObject element = this.InitSlideshowElement(this.buffer.Peek(), offset);
 
-				elementScript.Offset += offset;
-				elementScript.TransformTo(this.ComputeLocalScale(elementScript.Offset), this.ComputeLocalPosition(elementScript.Offset), this.ComputeLocalRotation(elementScript.Offset), destroy);
+					if (element != null) {
+						return (this.buffer.Dequeue());
+					}
+				}
 			}
+			return (this.InitSlideshowElement(null, offset));
 		}
 
 		/// <summary>
-		/// Draws the slideshow element.
+		/// Creates the slideshow element.
 		/// </summary>
+		/// <returns>
+		///   The GameObject
+		/// </returns>
+		protected virtual GameObject CreateSlideshowElement() {
+			GameObject element = GameObject.Instantiate(this.BaseElement);
+
+			element.AddComponent<ElementScript>();
+			element.transform.FindChild("Tile").gameObject.AddComponent<TileScript>();
+			element.transform.parent = this.gameObject.transform;
+			element.SetActive(false);
+			return (element);
+		}
+
+		/// <summary>
+		/// Initializes the slideshow element.
+		/// </summary>
+		/// <param name="element">The element.</param>
 		/// <param name="offset">The offset.</param>
-		protected virtual GameObject CreateSlideshowElement(int offset) {
+		/// <returns>
+		/// The game object or <c>null</c> if no file found
+		/// </returns>
+		protected virtual GameObject InitSlideshowElement(GameObject element, int offset) {
 			IFile file = this.playlistService.Peek(offset);
 
 			if (file != null) {
-				GameObject element = GameObject.Instantiate(this.BaseElement);
-				GameObject tile = element.transform.FindChild("Tile").gameObject;
+				if (element == null) {
+					element = this.CreateSlideshowElement();
+				}
+				element.GetComponent<ElementScript>().Reload();
+				element.transform.FindChild("Tile").gameObject.GetComponent<TileScript>().LoadFile(file);
 
-				element.AddComponent<ElementScript>().Offset = offset;
-				tile.AddComponent<TileScript>().File = file;
-
-				element.transform.parent = this.gameObject.transform;
 				element.transform.localScale = this.ComputeLocalScale(offset);
 				element.transform.localPosition = this.ComputeLocalPosition(offset);
 				element.transform.localRotation = this.ComputeLocalRotation(offset);
+				element.SetActive(true);
 				return (element);
 			}
 			return (null);
@@ -166,7 +254,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		///   The local position
 		/// </returns>
 		protected virtual Vector3 ComputeLocalPosition(int offset) {
-			return (new Vector3(Math.Sign(offset) * (5 + Math.Abs(offset) - 1), 0.0f, Math.Abs(Math.Sign(offset)) * (3.0f - Math.Abs(offset) * 0.5f)));
+			return (new Vector3((Math.Sign(offset) * (5 + Math.Abs(offset)) - 1), 0.0f, (Math.Abs(Math.Sign(offset)) * (3.0f - Math.Abs(offset)) * 0.5f)));
 		}
 
 		/// <summary>
@@ -177,7 +265,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		///   The local rotation
 		/// </returns>
 		protected virtual Quaternion ComputeLocalRotation(int offset) {
-			return (Quaternion.Euler(0.0f, Math.Sign(offset) * (50f + Math.Abs(offset) * 10), 0.0f));
+			return (Quaternion.Euler(0.0f, Math.Sign(offset) * (50f + (Math.Abs(offset) * 10)), 0.0f));
 		}
 	}
 

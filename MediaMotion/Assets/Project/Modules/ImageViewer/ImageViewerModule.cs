@@ -15,7 +15,7 @@ namespace MediaMotion.Modules.ImageViewer {
 	/// </summary>
 	public class ImageViewerModule : AModule {
 		/// <summary>
-		/// Initializes the <see cref="ImageViewerModule" /> class.
+		/// Initializes a new instance of the <see cref="ImageViewerModule"/> class.
 		/// </summary>
 		public ImageViewerModule() {
 			this.Name = "Image Viewer";

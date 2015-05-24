@@ -27,7 +27,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
-		/// <param name="resourceManagerService">The resource manager service.</param>
+		/// <param name="moduleManagerService">The module manager service.</param>
 		public void Init(IModuleManagerService moduleManagerService) {
 			IModule module = moduleManagerService.Supports(this.Element);
 			GameObject tile = GameObject.Find(this.gameObject.name + "/Content/TilePlaceholder/Tile");

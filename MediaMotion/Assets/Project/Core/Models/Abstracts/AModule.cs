@@ -161,15 +161,14 @@ namespace MediaMotion.Core.Models.Abstracts {
 		}
 
 		/// <summary>
-		/// Enable list of action
-		/// Only enabled actions will be return by inputService
+		/// Enable list of action Only enabled actions will be return by inputService
 		/// </summary>
-		/// <exception cref="System.ArgumentNullException">inputService</exception>
+		/// <exception cref="System.ArgumentNullException">inputService cannot be found</exception>
 		protected void EnabledActions() {
 			IInputService inputService = this.Container.Get<IInputService>();
 
 			if (inputService == null) {
-				throw new System.ArgumentNullException("inputService");
+				throw new System.ArgumentNullException("inputService cannot be found");
 			}
 			inputService.EnableActions(this.SupportedAction);
 		}

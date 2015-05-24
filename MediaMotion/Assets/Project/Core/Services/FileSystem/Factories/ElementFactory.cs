@@ -19,8 +19,9 @@ namespace MediaMotion.Core.Services.FileSystem.Factories {
 		private readonly IModuleManagerService moduleManagerService;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ElementFactory"/> class.
+		/// Initializes a new instance of the <see cref="ElementFactory" /> class.
 		/// </summary>
+		/// <param name="moduleManagerService">The module manager service.</param>
 		public ElementFactory(IModuleManagerService moduleManagerService) {
 			this.moduleManagerService = moduleManagerService;
 		}

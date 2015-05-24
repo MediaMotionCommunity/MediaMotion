@@ -6,11 +6,9 @@ namespace MediaMotion.Core.Services.Playlist.Models.Interfaces {
 	/// </summary>
 	public interface ISlideshowTile {
 		/// <summary>
-		/// Gets or sets the file.
+		/// Loads the file.
 		/// </summary>
-		/// <value>
-		/// The file.
-		/// </value>
-		IFile File { get; set; }
+		/// <param name="file">The file.</param>
+		void LoadFile(IFile file);
 	}
 }

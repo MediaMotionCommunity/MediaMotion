@@ -1,14 +1,20 @@
-﻿using MediaMotion.Core.Models.Abstracts;
-using MediaMotion.Core.Services.Input.Interfaces;
-using MediaMotion.Core.Services.Playlist.Interfaces;
+﻿using System;
+using System.Linq;
 using MediaMotion.Core.Services.Playlist.Models.Abstracts;
-using MediaMotion.Motion.Actions;
-using UnityEngine;
 
 namespace MediaMotion.Modules.ImageViewer.Controllers {
 	/// <summary>
 	/// Slideshow Controller
 	/// </summary>
 	public class SlideshowController : ASlideshow<ImageViewerModule, SlideshowTileController> {
+		/// <summary>
+		/// Initializes the playlist.
+		/// </summary>
+		/// <returns>
+		///   <c>true</c> if correctly initialized, <c>false</c> otherwise
+		/// </returns>
+		protected override bool InitPlaylist() {
+			return (base.InitPlaylist() || this.playlistService.Configure(this.elementFactory.CreateFolder(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)), this.module.SupportedExtensions));
+		}
 	}
 }
