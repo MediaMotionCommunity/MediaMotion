@@ -184,7 +184,11 @@ namespace MediaMotion.Core.Services.Input {
 		/// <param name="actions">action's list</param>
 		public void EnableActions(IEnumerable<ActionType> actions) {
 			if (this.MandatoryActions != null) {
-				actions = actions.Concat(this.MandatoryActions);
+				if (actions != null) {
+					actions = actions.Concat(this.MandatoryActions);
+				} else {
+					actions = this.MandatoryActions;
+				}
 			}
 			this.wrapper.EnableActions(actions);
 		}
