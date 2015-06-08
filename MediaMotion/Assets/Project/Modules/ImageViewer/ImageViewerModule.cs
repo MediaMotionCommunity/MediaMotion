@@ -25,7 +25,9 @@ namespace MediaMotion.Modules.ImageViewer {
 			this.SupportedAction = new ActionType[] {
 				ActionType.Rotate,
 				ActionType.Right,
-				ActionType.Left
+				ActionType.Left,
+				ActionType.ZoomIn,
+				ActionType.ZoomOut, 
 			};
 		}
 

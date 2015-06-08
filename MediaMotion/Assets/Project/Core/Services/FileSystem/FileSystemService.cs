@@ -96,7 +96,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 		///   Home path
 		/// </returns>
 		public string GetHome() {
-			return ((Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty) ? (Environment.GetFolderPath(Environment.SpecialFolder.Personal)) : (Environment.GetFolderPath(Environment.SpecialFolder.System)));
+			return ((Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty) ? (Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Wallpapers")) : (Environment.GetFolderPath(Environment.SpecialFolder.System)));
 		}
 
 		/// <summary>

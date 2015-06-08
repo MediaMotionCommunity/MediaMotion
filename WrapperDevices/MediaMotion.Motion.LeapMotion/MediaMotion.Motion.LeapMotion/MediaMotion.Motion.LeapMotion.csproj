@@ -55,6 +55,7 @@
     <Compile Include="MovementsDetection\Detectors\KeyTapDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\PinchGrabDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\PinchSelectionDetection.cs" />
+    <Compile Include="MovementsDetection\Detectors\RightLeftDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\SwipeDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\ZoomDetection.cs" />
     <Compile Include="MovementsDetection\ICustomDetection.cs" />
