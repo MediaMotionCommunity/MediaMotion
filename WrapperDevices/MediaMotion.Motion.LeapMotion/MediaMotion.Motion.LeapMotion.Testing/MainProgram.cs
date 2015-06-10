@@ -18,9 +18,9 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 			Console.WriteLine("Testing wrapper device");
 			var wrapper = new LeapMotion();
 			wrapper.Load();
-			wrapper.EnableActions(new [] {
-				ActionType.Left, 
-				ActionType.Right,
+			wrapper.EnableActions(new[] {
+				ActionType.ZoomIn, 
+				ActionType.ZoomOut
 			});
 			var timer = new Timer(Display, wrapper, 0, 1000 / 30);
 			Console.ReadLine();
@@ -58,8 +58,7 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 		/// </summary>
 		/// <param name="ac"></param>
 		/// <returns></returns>
-		private static string GetActionName(IAction ac)
-		{
+		private static string GetActionName(IAction ac) {
 			return ac.Type.ToString();
 		}
 	}

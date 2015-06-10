@@ -11,13 +11,12 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 
 		protected override void SecureDetection(Gesture gesture, IActionCollection actionCollection) {
 			var swipe = new SwipeGesture(gesture);
-			Console.WriteLine("test");
 			if (!this.IsStateValid(swipe.State)) {
 				return;
 			}
 			var isHorizontal = Math.Abs(swipe.Direction.x) > Math.Abs(swipe.Direction.y);
 			if (isHorizontal) {
-				actionCollection.Add(swipe.Direction.x > 0 ? ActionType.Right : ActionType.Left);
+				actionCollection.Add(swipe.Direction.x > 0 ? ActionType.Left : ActionType.Right);
 			}
 		}
 	}

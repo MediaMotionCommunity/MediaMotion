@@ -12,7 +12,7 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// The input service
 		/// </summary>
 		private IInputService inputService;
-
+		
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
