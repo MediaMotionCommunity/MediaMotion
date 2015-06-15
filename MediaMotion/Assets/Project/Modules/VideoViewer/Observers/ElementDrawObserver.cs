@@ -15,10 +15,11 @@ namespace MediaMotion.Modules.VideoViewer.Observers {
 		/// The gameObject drew
 		/// </returns>
 		public GameObject Draw(IElement element) {
-			GameObject drewElement = GameObject.CreatePrimitive(PrimitiveType.Plane);
+			GameObject drewElement = GameObject.Instantiate(Resources.Load("File3D")) as GameObject;
 
+			drewElement.transform.localScale = new Vector3(2, 6, 5.5f);
 			drewElement.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-			drewElement.transform.rotation = Quaternion.Euler(90.0f, 180.0f, 0.0f);
+			drewElement.transform.localRotation = Quaternion.Euler(0.0f, 270.0f, 0.0f);
 			drewElement.GetComponent<Renderer>().material = Resources.Load<Material>("Video");
 			return (drewElement);
 		}
