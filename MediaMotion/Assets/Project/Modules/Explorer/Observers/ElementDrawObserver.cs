@@ -19,9 +19,9 @@ namespace MediaMotion.Modules.Explorer.Observers {
 
 //			Debug.Log(drewElement);
 
-			drewElement.transform.localScale = new Vector3(8.546f, 5.0f, 8.546f);
+			drewElement.transform.localScale = new Vector3(2.0f, 6.0f, 6.0f);
 			drewElement.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-			drewElement.transform.localRotation = Quaternion.Inverse(Quaternion.Euler(60.0f, 0.0f, 0.0f));
+			drewElement.transform.localRotation = Quaternion.Euler(0.0f, 270.0f, 0.0f);
 			drewElement.GetComponent<Renderer>().material = Resources.Load<Material>("Video");
 			return (drewElement);
 		}

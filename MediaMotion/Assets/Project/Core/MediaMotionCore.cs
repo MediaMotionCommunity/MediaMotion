@@ -68,6 +68,20 @@ namespace MediaMotion.Core {
 		}
 
 		/// <summary>
+		/// Registers Modules
+		/// </summary>
+		/// <typeparam name="Module">The type of the module.</typeparam>
+		private static void RegisterModules() {
+			IModuleManagerService moduleManager = Container.Get<IModuleManagerService>();
+
+			moduleManager.Register<ModuleLoader>();
+			moduleManager.Register<ExplorerModule>();
+			moduleManager.Register<ImageViewerModule>();
+			moduleManager.Register<VideoViewerModule>();
+			moduleManager.Register<PDFViewerModule>();
+		}
+
+		/// <summary>
 		/// Gets the version.
 		/// </summary>
 		/// <param name="assembly">The assembly.</param>
@@ -103,20 +117,6 @@ namespace MediaMotion.Core {
 		/// </returns>
 		private static DateTime GetBuildDate(Assembly assembly) {
 			return (File.GetLastWriteTime(assembly.Location));
-		}
-
-		/// <summary>
-		/// Registers Modules
-		/// </summary>
-		/// <typeparam name="Module">The type of the module.</typeparam>
-		private static void RegisterModules() {
-			IModuleManagerService moduleManager = Container.Get<IModuleManagerService>();
-
-			moduleManager.Register<ModuleLoader>();
-			moduleManager.Register<ExplorerModule>();
-			moduleManager.Register<ImageViewerModule>();
-			moduleManager.Register<VideoViewerModule>();
-			moduleManager.Register<PDFViewerModule>();
 		}
 	}
 }
