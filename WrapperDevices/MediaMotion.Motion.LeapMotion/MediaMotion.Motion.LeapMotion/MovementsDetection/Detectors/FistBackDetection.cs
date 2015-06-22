@@ -16,10 +16,10 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
         /// <summary>
         /// Time detection will be locked when a valid detection found
         /// </summary>
-        private readonly TimeSpan lockDetectionTime = new TimeSpan(0, 0, 0, 0, 500);
+        private readonly TimeSpan lockDetectionTime = new TimeSpan(0, 0, 0, 1, 0);
 
-        private readonly float threasholdFistClosedDetection = 0.92f;
-        private readonly float threadsholdFistOpenDetection = 0.09f;
+        private readonly float threasholdFistClosedDetection = 0.2f;
+        private readonly float threadsholdFistOpenDetection = 0.0f;
         #endregion
 
         #region Fields
@@ -33,14 +33,14 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
         /// </summary>
         private DateTime lastValidDetection = DateTime.Now;
         private Dictionary<int, bool> handsFistClosedState;
-        private Dictionary<int, DateTime> handsFistClosedLastDetection;
+        private Dictionary<int, DateTime> handsFistOpenedLastDetection;
         #endregion
 
         #region Constructor
         public FistBackDetection() {
             this.lastValidDetection = DateTime.Now;
             this.handsFistClosedState = new Dictionary<int, bool>();
-            this.handsFistClosedLastDetection = new Dictionary<int, DateTime>();
+            this.handsFistOpenedLastDetection = new Dictionary<int, DateTime>();
         }
         #endregion
 
@@ -56,7 +56,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
                                 this.lockDetection = true;
                                 this.lastValidDetection = DateTime.Now;
                                 this.handsFistClosedState.Clear();
-                                this.handsFistClosedLastDetection.Clear();
+                                this.handsFistOpenedLastDetection.Clear();
                             }
                         }
                     }
@@ -70,23 +70,24 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 
         private void SynchronizeHandsState(Hand hand) {
             if (!this.handsFistClosedState.ContainsKey(hand.Id)) {
-                this.handsFistClosedState[hand.Id] = false;
+                this.handsFistClosedState[hand.Id] = true;
             }
         }
 
         private bool ValidDetection(Hand hand, IActionCollection actionCollection) {
-            if (!this.handsFistClosedState[hand.Id] &&
-                hand.GrabStrength >= this.threasholdFistClosedDetection) {
-                    this.handsFistClosedState[hand.Id] = true;
-                    this.handsFistClosedLastDetection[hand.Id] = DateTime.Now;
-            }
-            else if (this.handsFistClosedState[hand.Id] &&
+            if (this.handsFistClosedState[hand.Id] &&
                 hand.GrabStrength <= this.threadsholdFistOpenDetection) {
-                    if (DateTime.Now - this.handsFistClosedLastDetection[hand.Id] <= this.releaseTimeMax) {
+                    Console.WriteLine("Detected: Open fist");
+                    this.handsFistClosedState[hand.Id] = false;
+                    this.handsFistOpenedLastDetection[hand.Id] = DateTime.Now;
+            }
+            else if (!this.handsFistClosedState[hand.Id] &&
+                hand.GrabStrength >= this.threasholdFistClosedDetection) {
+                    if (DateTime.Now - this.handsFistOpenedLastDetection[hand.Id] <= this.releaseTimeMax) {
                         actionCollection.Add(Actions.ActionType.Back);
                         return true;
                     }
-                this.handsFistClosedState[hand.Id] = false;
+                this.handsFistClosedState[hand.Id] = true;
             }
             return false;
         }
