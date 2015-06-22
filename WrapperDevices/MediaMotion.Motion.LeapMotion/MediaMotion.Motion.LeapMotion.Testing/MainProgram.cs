@@ -20,7 +20,7 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 			wrapper.Load();
 			wrapper.EnableActions(new[] {
 				ActionType.Select, 
-				ActionType.Back
+				ActionType.Back,
 				ActionType.ZoomIn, 
 				ActionType.ZoomOut,
 				ActionType.RotateRight, 

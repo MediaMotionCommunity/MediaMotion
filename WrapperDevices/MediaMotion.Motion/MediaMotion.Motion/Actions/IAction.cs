@@ -21,6 +21,8 @@
 		ZoomOut,
 		RotateRight,
 		RotationLeft,
+		SoundUp,
+		SoundDown
 	}
 
 	/// <summary>
