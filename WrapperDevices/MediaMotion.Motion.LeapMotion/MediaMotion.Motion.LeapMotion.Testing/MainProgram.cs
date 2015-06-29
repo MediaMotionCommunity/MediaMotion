@@ -26,7 +26,7 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 				ActionType.RotateRight, 
 				ActionType.RotationLeft, 
 			});
-			var timer = new Timer(Display, wrapper, 0, 1000 / 15);
+			var timer = new Timer(Display, wrapper, 0, 1000 / 30);
 			Console.ReadLine();
 			wrapper.Unload();
 		}

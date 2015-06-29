@@ -44,11 +44,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core\ActionCollection.cs" />
+    <Compile Include="Core\ActionsUpdater.cs" />
     <Compile Include="Core\DetectionContainer.cs" />
     <Compile Include="Core\Exceptions\DetectionResolveException.cs" />
     <Compile Include="Core\HandExtension.cs" />
     <Compile Include="Core\IActionCollection.cs" />
     <Compile Include="Core\IDetectionContainer.cs" />
+    <Compile Include="Core\LeapMotionListener.cs" />
     <Compile Include="MovementsDetection\APinchDetection.cs" />
     <Compile Include="MovementsDetection\ASecureLeapDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\EasyFileBrowsingDetection.cs" />
