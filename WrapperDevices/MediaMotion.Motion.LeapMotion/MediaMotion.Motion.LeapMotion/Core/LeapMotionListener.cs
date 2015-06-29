@@ -1,17 +1,14 @@
-﻿using Leap;
-using MediaMotion.Motion.Actions;
-using MediaMotion.Motion.LeapMotion.MovementsDetection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Leap;
+using MediaMotion.Motion.Actions;
+using MediaMotion.Motion.LeapMotion.MovementsDetection;
 
 namespace MediaMotion.Motion.LeapMotion.Core {
-
-    class LeapMotionListener : Listener {
-
+    public class LeapMotionListener : Listener {
         #region Fields
-
         /// <summary>
         /// The movement detection class
         /// </summary>
@@ -20,13 +17,13 @@ namespace MediaMotion.Motion.LeapMotion.Core {
         /// <summary>
         /// Object for lock use of detection class
         /// </summary>
-        private readonly Object thisLock = new Object();
+        private readonly object thisLock = new object();
 
         private ActionsUpdater actionsUpdater;
         #endregion
 
         #region Constructor
-        public LeapMotionListener(Detections movementsDetection, Object thisLock) {
+        public LeapMotionListener(Detections movementsDetection, object thisLock) {
             this.actionsUpdater = new ActionsUpdater();
             this.movementsDetection = movementsDetection;
             this.thisLock = thisLock;
@@ -35,17 +32,17 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 
         #region Methods
         public IEnumerable<IAction> RetrieveActions() {
-            lock (thisLock) {
-                return actionsUpdater.retrieveCurrentActions();
+            lock (this.thisLock) {
+                return this.actionsUpdater.RetrieveCurrentActions();
             }
         }
         #endregion
 
         #region Leap callback
         public override void OnFrame(Controller controller) {
-            lock (thisLock) {
+            lock (this.thisLock) {
                 var actions = this.movementsDetection.MovementsDetection(controller.Frame());
-                actionsUpdater.UpdateActions(actions);
+                this.actionsUpdater.UpdateActions(actions);
             }
         }
         #endregion

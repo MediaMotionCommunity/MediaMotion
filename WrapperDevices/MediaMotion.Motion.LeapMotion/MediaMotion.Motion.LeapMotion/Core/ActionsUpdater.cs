@@ -1,12 +1,11 @@
-﻿using MediaMotion.Motion.Actions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Motion.LeapMotion.Core {
-    class ActionsUpdater {
-
+    public class ActionsUpdater {
         #region Fields
         private Dictionary<ActionType, IAction> currentActions;
         #endregion
@@ -21,16 +20,16 @@ namespace MediaMotion.Motion.LeapMotion.Core {
         #region Methods
         public void UpdateActions(IEnumerable<IAction> actions) {
             foreach (var action in actions) {
-                currentActions[action.Type] = action;
+                this.currentActions[action.Type] = action;
             }
         }
 
-        public IEnumerable<IAction> retrieveCurrentActions() {
+        public IEnumerable<IAction> RetrieveCurrentActions() {
             List<IAction> actions = new List<IAction>();
-            foreach (var elements in currentActions) {
+            foreach (var elements in this.currentActions) {
                 actions.Add(elements.Value);
             }
-            currentActions = new Dictionary<ActionType, IAction>();
+            this.currentActions = new Dictionary<ActionType, IAction>();
             return actions;
         }
         #endregion

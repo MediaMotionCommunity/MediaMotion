@@ -36,7 +36,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
         /// <summary>
         /// Object for lock use of detection class
         /// </summary>
-        private readonly Object thisLock = new Object();
+        private readonly object thisLock = new object();
 
 		#endregion
 
@@ -49,7 +49,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 			this.movementsDetection = new Detections();
             this.listener = new LeapMotionListener(this.movementsDetection, this.thisLock);
 			this.Configuration();
-            this.controller.AddListener(listener);
+            this.controller.AddListener(this.listener);
 		}
 		#endregion
 
@@ -71,7 +71,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
         }
 
 		public void EnableAction(ActionType action) {
-            lock (thisLock) {
+            lock (this.thisLock) {
                 this.movementsDetection.DisableAllDetection();
                 if (action != null) {
                     this.movementsDetection.EnableDetectionByAction(action);
@@ -80,7 +80,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		}
 
 		public void EnableAction(IEnumerable<ActionType> actions) {
-            lock (thisLock) {
+            lock (this.thisLock) {
                 this.movementsDetection.DisableAllDetection();
                 if (actions != null) {
                     foreach (var action in actions) {
