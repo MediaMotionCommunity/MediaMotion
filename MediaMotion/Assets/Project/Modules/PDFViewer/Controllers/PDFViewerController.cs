@@ -109,19 +109,13 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 				pdf_texture.SetPixels32((Color32[])pdf_pixels.get(), 0);
 				pdf_texture.Apply();
 			}
-			/*
 			foreach (IAction action in this.inputService.GetMovements()) {
-				if (action.Type == ActionType.Right) {
-					this.playlistService.Next();
-					this.gameObject.transform.Rotate(new Vector3(0, 90, 0));
-					this.LoadVideo();
-				} else if (action.Type == ActionType.Left) {
-					this.playlistService.Previous();
-					this.gameObject.transform.Rotate(new Vector3(0, -90, 0));
-					this.LoadVideo();
+				switch (action.Type) {
+					default:
+						// TODO add movement
+						break;
 				}
 			}
-			*/
 		}
 
 		private void ClearTexture() {

@@ -138,20 +138,13 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 				vlc_video.SetPixels32(vlc_video_pixels, 0);
 				vlc_video.Apply();
 			}
-			// Read events
-			/*
 			foreach (IAction action in this.inputService.GetMovements()) {
-				if (action.Type == ActionType.Right) {
-					this.playlistService.Next();
-					this.gameObject.transform.Rotate(new Vector3(0, 90, 0));
-					this.LoadFile();
-				} else if (action.Type == ActionType.Left) {
-					this.playlistService.Previous();
-					this.gameObject.transform.Rotate(new Vector3(0, -90, 0));
-					this.LoadFile();
+				switch (action.Type) {
+					default:
+						// TODO add movement
+						break;
 				}
 			}
-			*/
 		}
 
 		/// <summary>
