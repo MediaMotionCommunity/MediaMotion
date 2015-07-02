@@ -13,9 +13,9 @@ In order to maintain a homogeneous architecture, all modules MUST respect the fi
 	    Scenes/
 	    Services/ (only if you have Services)
 
-Create the [Unity](https://unity3d.com/) scene
-----------------------------------------------
-Every module must provide a [Unity](https://unity3d.com/) scene.
+Create the Unity scene
+----------------------
+Every module must provide a Unity scene.
 See the [documentation of Unity](http://docs.unity3d.com/Manual/CreatingScenes.html) for more detail.
 
 Create mandatory class
@@ -41,6 +41,6 @@ A simple example of the ModuleNameModule.cs file:
 	}
 
 ----------
-*__Notice:__ The documentation above is available offline in [PDF format](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Resources/doc/doc.pdf).*
+*__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*
 
 
