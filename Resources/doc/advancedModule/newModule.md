@@ -3,7 +3,7 @@ Create a new Module
 
 Create the file architecture
 ------------------------------
-In order to maintain a homogeneous architecture, all modules MUST respect the file architecture describes below.
+In order to maintain a homogeneous architecture, all modules MUST respect the file architecture described below.
 
 	ModuleName/
 	    Controllers/
