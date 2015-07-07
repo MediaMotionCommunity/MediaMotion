@@ -1,13 +1,13 @@
 Use a global (Core) Service
 ===========================
 
-The best option to use a global service in a script is to use the Dependency Injection. An abstract script AScript, which used the [CRTP (Curiously Recurring Template Pattern)](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern), make this step easier.
+The best option to use a global service in a script is to use the Dependency Injection. An abstract script AScript, which used the [CRTP (Curiously Recurring Template Pattern)](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern), makes this step easier.
 
-If an `void Init()` method exist the script retrieve all the parameter of it and try to resolve them. If the resolve step succeed the Init method is called with all the service injected in its parameters.
+If a `void Init()` method exists the script retrieves all the parameters of it and tries to resolve them. If the resolve step succeeds the Init method is called with all the services injected in its parameters.
 
-The AScript class need two information to correctly do is job. The first one is the class description of the module that the script belongs to. The second one is the class witch contains the Init method (the class itself).
+The AScript class needs two pieces of information to correctly do its job. The first one is the class description of the module that the script belongs to. The second one is the class witch contains the Init method (the class itself).
 
-*__Notice:__ The AScript class inherit the MonoBehaviour class, all the action that can be done in a MonoBehaviour based class can also be done is a AScript based class.*
+*__Notice:__ The AScript class inherits the MonoBehaviour class, any action that can be done in a MonoBehaviour based class can also be done is a AScript based class.*
 
 Example
 -------
