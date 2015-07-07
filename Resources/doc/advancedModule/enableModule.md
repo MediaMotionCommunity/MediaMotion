@@ -1,8 +1,8 @@
 Enable a Module in the Core
 ===========================
 
-When the new module is created (see [Create a new Module](newModule.md)) it needs to be enable in the Core.
-A module is enabled if you register it in the IModuleManagerService, the better way to do it is in the method RegisterModules of the class [MediaMotion.Core.MediaMotionCore](http://www.google.com/).
+When the new module is created (see [Create a new Module](newModule.md)) it needs to be enabled in the Core.
+A module is enabled if you register it in the IModuleManagerService, the best way to do it is in the method RegisterModules of the class [MediaMotion.Core.MediaMotionCore](http://www.google.com/).
 
 	namespace MediaMotion.Core {
 		public static class MediaMotionCore {
