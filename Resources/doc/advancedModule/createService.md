@@ -39,5 +39,9 @@ public override void Configure(IContainer container) {
 ```
 
 ----------
+
+[:arrow_backward: Define/Override parameters](defineParameters.md) --- [:arrow_up_small: Advanced Module](index.md) --- [:arrow_forward: Auto-Loading](autoloading.md)
+
+----------
 *__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*
 

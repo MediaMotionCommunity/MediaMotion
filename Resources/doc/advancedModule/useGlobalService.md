@@ -33,4 +33,8 @@ namespace MediaMotion.Modules.ModuleName {
 ```
 
 ----------
+
+[:arrow_backward: Configuration](configure.md) --- [:arrow_up_small: Advanced Module](index.md) --- [:arrow_forward: Define/Override parameters](defineParameters.md)
+
+----------
 *__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*
