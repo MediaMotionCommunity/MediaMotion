@@ -1,3 +1,7 @@
+\> [Documentation](../index.md) \> [Advanced Module](index.md) \> Creation and Configuration
+
+----------
+
 Create a new Module
 ===================
 
@@ -27,20 +31,24 @@ Create a class with the name of the module and ending in Module (i.e.: Module na
 		Controllers/
 		...
 
-This class must implement the [MediaMotion.Core.Models.Interfaces.IModule](http://www.google.com/) interface (the abstract class [MediaMotion.Core.Models.Abstract.AModule](http://www.google.com/) can be used instead).
+This class must implement the [IModule](http://www.google.com/) interface (the abstract class [AModule](http://www.google.com/) can be used instead).
 Only the [IModule#Scene](http://www.google.com/) must be set. All other value can be set to their default value if the Module does not need them.
 
 A simple example of the ModuleNameModule.cs file:
 
-	namespace MediaMotion.Modules.ModuleName {
-		public class ModuleNameModule : MediaMotion.Core.Models.Abstract.AModule {
-			public ModuleNameModule() {
-				this.Scene = "NameOfTheModuleScene";
-			}
+```csharp
+using MediaMotion.Core.Models.Abstract.AModule;
+
+namespace MediaMotion.Modules.ModuleName {
+	public class ModuleNameModule : AModule {
+		public ModuleNameModule() {
+			this.Scene = "NameOfTheModuleScene";
 		}
 	}
+}
+```
+
+[:arrow_up_small: Advanced Module](index.md) --- [:arrow_forward: Enable a Module in the Core](enableModule.md)
 
 ----------
 *__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*
-
-
