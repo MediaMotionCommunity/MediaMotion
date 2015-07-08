@@ -1,3 +1,7 @@
+\> [Documentation](../index.md)
+
+----------
+
 Glossary
 ========
 
