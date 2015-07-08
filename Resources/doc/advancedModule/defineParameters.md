@@ -2,8 +2,8 @@
 
 ----------
 
-Define its own parameters
-=========================
+Define/Override parameters
+==========================
 
 A parameter is a value that can be injected via the Dependency Injection. Contrary to a service a parameter can be anything that stores a value (such as int, string, object...) and has a name.
 
@@ -35,6 +35,10 @@ public override void Configure(IContainer container) {
 	this.Container = containerBuilderService.Build(container);
 }
 ```
+
+----------
+
+[:arrow_backward: Use a global (Core) Service](useGlobalService.md) --- [:arrow_up_small: Advanced Module](index.md) --- [:arrow_forward: Create/Overload services](createService.md)
 
 ----------
 *__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*

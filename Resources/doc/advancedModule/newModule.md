@@ -48,6 +48,8 @@ namespace MediaMotion.Modules.ModuleName {
 }
 ```
 
+----------
+
 [:arrow_up_small: Advanced Module](index.md) --- [:arrow_forward: Enable a Module in the Core](enableModule.md)
 
 ----------

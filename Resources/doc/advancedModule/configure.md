@@ -53,4 +53,8 @@ The Parameters property
 The Parameters property contains the elements currently opened in the module. This property must be updated by the Load and, if supported, Reload method. This property is used by scripts to retrieve all the information they need.
 
 ----------
+
+[:arrow_backward: Enable a Module in the Core](enableModule.md) --- [:arrow_up_small: Advanced Module](index.md) --- [:arrow_forward: Use a global (Core) Service](useGlobalService.md)
+
+----------
 *__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*

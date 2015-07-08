@@ -26,6 +26,8 @@ namespace MediaMotion.Core {
 }
 ```
 
+----------
+
 [:arrow_backward: Create a new Module](newModule.md) --- [:arrow_up_small: Advanced Module](index.md) --- [:arrow_forward: Configuration](configure.md)
 
 ----------
