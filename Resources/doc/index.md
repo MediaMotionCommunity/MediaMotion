@@ -31,19 +31,19 @@ This part details the Input Wrapper API and gave some important informations abo
 ------------------------------------------
 This part details a list of tasks and functionalities commonly used in the development process of a Module.
 
-[__Creation and Configuration__](advancedModule/CreationAndConfiguration.md)
+__Creation and Configuration__
 
  1. [Create a new Module](advancedModule/newModule.md)
  2. [Enable a Module in the Core](advancedModule/enableModule.md)
  3. [Configuration](advancedModule/configure.md)
 
-[__Service Creation and Overload__](advancedModule/ServiceCreationAndOverload.md)
+__Service Creation and Overload__
 
  1. [Use a global (Core) Service](advancedModule/useGlobalService.md)
  2. [Define/Override parameters](advancedModule/defineParameters.md)
  3. [Create/Overload services](advancedModule/createService.md)
 
-[__Core Interaction__](advancedModule/CoreInteraction.md)
+__Core Interaction__
 
  1. [Auto-Loading](advancedModule/autoloading.md)
  2. [Overload a Module](advancedModule/overloadModule.md)

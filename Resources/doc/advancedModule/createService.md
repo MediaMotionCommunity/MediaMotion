@@ -1,3 +1,7 @@
+\> [Documentation](../index.md) \> [Advanced Module](index.md) \> Service Creation and Overload
+
+----------
+
 Create/Overload services
 ========================
 
@@ -10,7 +14,7 @@ To register/overload a service you should use the `void Configure(IContainer con
   1. Retrieve an instance of ContainerBuilder to create a new container
   2. Add as many parameters as needed using the method `IDefinition Register<Service>(Service instance = null) where Service : class`
     * The result is a `IDefinition`, this class has two main elements:
-      1. The `IDefinition As<Service>() where Service : class` method that define the alias of the service. *__Notice:__ the method also exist in non-generic using the `System.Type`.
+      1. The `IDefinition As<Service>() where Service : class` method that define the alias of the service. *__Notice:__ the method also exist in non-generic using the `System.Type`.*
       2. The `bool SingleInstance { get; set; }` property which defines if the service should be create only one time or should create a new instance for each injection.
     * The `instance` parameter is used to define the instance of the service that will be returned during the resolution process. If this parameter is not null the `SingleInstance` must be set to `true`.
   3. Build the container using the method `IContainer Build(IContainer parent = null)`. The parameter is used to keep the existing services and parameters if they are not overridden.
@@ -20,17 +24,19 @@ To register/overload a service you should use the `void Configure(IContainer con
 
 Example:
 --------
-	public override void Configure(IContainer container) {
-		// Retrieve the ContainerBuilder
-		IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
+```csharp
+public override void Configure(IContainer container) {
+	// Retrieve the ContainerBuilder
+	IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
 
-		// Define your parameters
-		containerBuilderService.Define("My Parameter", "My Value");
-		containerBuilderService.Define("My Version", new Version(1, 2, 3, 4));
-		
-		// Build and store the new Container
-		this.Container = containerBuilderService.Build(container);
-	}
+	// Define your parameters
+	containerBuilderService.Define("My Parameter", "My Value");
+	containerBuilderService.Define("My Version", new Version(1, 2, 3, 4));
+	
+	// Build and store the new Container
+	this.Container = containerBuilderService.Build(container);
+}
+```
 
 ----------
 *__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*

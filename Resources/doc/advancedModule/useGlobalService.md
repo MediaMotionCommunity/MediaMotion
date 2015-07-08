@@ -1,3 +1,7 @@
+\> [Documentation](../index.md) \> [Advanced Module](index.md) \> Service Creation and Overload
+
+----------
+
 Use a global (Core) Service
 ===========================
 
@@ -11,20 +15,22 @@ The AScript class needs two pieces of information to correctly do its job. The f
 
 Example
 -------
-    using MediaMotion.Core.Models.Abstracts;
-    using MediaMotion.Core.Services.ContainerBuilder.Resolver.Attributes;
-    
-    namespace MediaMotion.Modules.ModuleName {
-	    public class MyScript : AScript<ModuleNameModule, MyScript> {
-		    public void Init(IFileSystemService fileSystemService, [Parameter("Version")] Version version, ...) {
-			    // Do some stuff, store the services and/or parameters to use it later...
-		    }
-		    
-		    public void Update() {
-			    // Do some stuff
-		    }
-	    }
-    }
+```csharp
+using MediaMotion.Core.Models.Abstracts;
+using MediaMotion.Core.Services.ContainerBuilder.Resolver.Attributes;
+
+namespace MediaMotion.Modules.ModuleName {
+	public class MyScript : AScript<ModuleNameModule, MyScript> {
+		public void Init(IFileSystemService fileSystemService, [Parameter("Version")] Version version, ...) {
+			// Do some stuff, store the services and/or parameters to use it later...
+		}
+		
+		public void Update() {
+			// Do some stuff
+		}
+	}
+}
+```
 
 ----------
 *__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*

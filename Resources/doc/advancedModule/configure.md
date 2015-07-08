@@ -1,3 +1,7 @@
+\> [Documentation](../index.md) \> [Advanced Module](index.md) \> Creation and Configuration
+
+----------
+
 Configuration
 =============
 
@@ -28,25 +32,25 @@ The SupportReload attribute
     bool SupportReload { get; }
 The SupportReload attribute is a boolean value that indicates if the module supports the Reload method or not. This method is used by the ModuleManager to load a file if the module is already opened (does not reload the unity scene). If the module does not support this method the scene will be reloaded and all existing elements will be deleted.
 
-The SupportBackground attribute
+The SupportBackground property
 -------------------------------
     bool SupportBackground { get; }
-The SupportBackground attribute is a boolean value that indicates if the module should be run in the background if we leave it or should be closed (i.e.: the music viewer module continues to play the playlist even if the module is left).
+The SupportBackground property is a boolean value that indicates if the module should be run in the background if we leave it or should be closed (i.e.: the music viewer module continues to play the playlist even if the module is left).
 
-The SupportedExtensions attribute
+The SupportedExtensions property
 ---------------------------------
     string[] SupportedExtensions { get; }
-The SupportedExtensions attribute is an array of string values that contains all the extensions that the module supports. This attribute is used by the abstract AModule to perform a basic Support test. Also, other scripts use it (such as Slideshow) to automatically filter and/or configure the type of file that can be used. This value is not required but should be filled if the module supports specific file extensions (such as pdf, mp3, avi...).
+The SupportedExtensions property is an array of string values that contains all the extensions that the module supports. This property is used by the abstract AModule to perform a basic Support test. Also, other scripts use it (such as Slideshow) to automatically filter and/or configure the type of file that can be used. This value is not required but should be filled if the module supports specific file extensions (such as pdf, mp3, avi...).
 
-The SupportedAction attribute
+The SupportedAction property
 -----------------------------
     ActionType[] SupportedAction { get; }
-The SupportedAction attribute defines the user input action that the module supports. All actions not supported by the module will automatically be disabled in the input wrapper for optimisation. Due to this optimisation this attribute is mandatory if the module uses some user input action.
+The SupportedAction property defines the user input action that the module supports. All actions not supported by the module will automatically be disabled in the input wrapper for optimisation. Due to this optimisation this property is mandatory if the module uses some user input action.
 
-The Parameters attribute
+The Parameters property
 ------------------------
     IElement[] Parameters { get; }
-The Parameters attribute contains the elements currently opened in the module. This attribute must be updated by the Load and, if supported, Reload method. This attribute is used by scripts to retrieve all the information they need.
+The Parameters property contains the elements currently opened in the module. This property must be updated by the Load and, if supported, Reload method. This property is used by scripts to retrieve all the information they need.
 
 ----------
 *__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*

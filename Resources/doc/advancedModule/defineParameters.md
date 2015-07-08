@@ -1,3 +1,7 @@
+\> [Documentation](../index.md) \> [Advanced Module](index.md) \> Service Creation and Overload
+
+----------
+
 Define its own parameters
 =========================
 
@@ -18,17 +22,19 @@ To define/override a parameter you should use the `void Configure(IContainer con
 
 Example:
 --------
-	public override void Configure(IContainer container) {
-		// Retrieve the ContainerBuilder
-		IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
+```csharp
+public override void Configure(IContainer container) {
+	// Retrieve the ContainerBuilder
+	IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
 
-		// Define your parameters
-		containerBuilderService.Define("My Parameter", "My Value");
-		containerBuilderService.Define("My Version", new Version(1, 2, 3, 4));
-		
-		// Build and store the new Container
-		this.Container = containerBuilderService.Build(container);
-	}
+	// Define your parameters
+	containerBuilderService.Define("My Parameter", "My Value");
+	containerBuilderService.Define("My Version", new Version(1, 2, 3, 4));
+	
+	// Build and store the new Container
+	this.Container = containerBuilderService.Build(container);
+}
+```
 
 ----------
 *__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*
