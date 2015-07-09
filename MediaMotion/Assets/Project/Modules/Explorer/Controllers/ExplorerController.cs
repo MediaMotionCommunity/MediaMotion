@@ -90,6 +90,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private Rect popupRect;
 
+		private GameObject cam;
+		private GameObject sidebar;
+
 		/// <summary>
 		/// Initializes the specified explorer module.
 		/// </summary>
@@ -120,6 +123,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			} else {
 				this.OpenDirectory(this.module.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
 			}
+
+			this.sidebar = GameObject.Find("Sidebar");
+			this.cam = GameObject.Find("Cameras/Main");
+//			this.cam.transform.position = Camera.main.transform.position;
+//			Camera.main.transform.parent = this.cam.transform;
 		}
 
 		/// <summary>
@@ -141,9 +149,15 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 							this.wheelTool.ActiveWheelTool(this.selectedElement.gameObject.GetComponent<ElementController>().Element);
 						}
 						break;
-					case ActionType.GrabStop:
-						this.wheelTool.DeactiveWheelTool();
-						break;
+				case ActionType.GrabStop:
+					this.wheelTool.DeactiveWheelTool();
+					break;
+				case ActionType.Left:
+					this.ShowSidebar();
+					break;
+				case ActionType.Right:
+					this.HideSidebar();
+					break;
 				}
 			}
 		}
@@ -241,6 +255,15 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				uiElement.AddComponent<ElementController>().Element = element;
 				++count;
 			}
+		}
+			
+		private void ShowSidebar() {
+			iTween.MoveTo(this.sidebar, new Vector3(7.0f, 0.93f, 0.05f), 1.5f);
+			iTween.MoveTo(this.cam, new Vector3(0.0f, 5.0f, -2.5f), 1.5f);
+		}
+		private void HideSidebar() {
+			iTween.MoveTo(this.sidebar, new Vector3(5.5f, 0.93f, 0.05f), 1.5f);
+			iTween.MoveTo(this.cam, new Vector3(1.6f, 5.0f, -2.5f), 1.5f);
 		}
 	}
 }

@@ -35,6 +35,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			TextMesh tileTextMesh = text.GetComponent<TextMesh>();
 
 			this.content = GameObject.Find(this.gameObject.name + "/Content");
+
+//			this.content.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+//			text.transform.localPosition = new Vector3(-4.5f, -2.5f, -1.5f);
+//			text.transform.localRotation = Quaternion.Euler(20, 0, 0);
+
 			if (module != null && module.Container.Has<IElementDrawObserver>()) {
 				GameObject tmpTile = module.Container.Get<IElementDrawObserver>().Draw(this.Element);
 
