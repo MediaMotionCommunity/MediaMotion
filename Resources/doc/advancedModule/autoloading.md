@@ -5,13 +5,13 @@
 Auto-Loading
 ============
 
-What does it means ?
+What does it mean ?
 --------------------
-The auto-loading is the process of loading directly a module without loading the Core (via the Loader scene). The module will automatically load a instance of the Core.
+The auto-loading is the process of loading a module directly without loading the Core (via the Loader scene). The module will automatically load an instance of the Core.
 
 What do I need to use it ?
 --------------------------
-The auto-loading is supported by default by all module but all the controller of the module should be compatible. If a module is loaded directly, the `Parameters` property is null, scripts that used this property to do some stuff must check it and used a fallback value if it is not usable.
+The auto-loading is supported by default by all modules, but all the module's controllers should be compatible. If a module is loaded directly, the `Parameters` property is null, scripts that used this property to do something must check it and use a fallback value if it is not usable.
 
 Example
 -------
