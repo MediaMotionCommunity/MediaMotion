@@ -2,16 +2,16 @@
 
 ----------
 
-Overload a Module
+Overloading a Module
 =================
 
 Why should I overload a Module ?
 --------------------------------
-The system of module is designed to be flexible and highly personnalisable, each module provide an appropriate environment to open a specific element. For some reason an existing module can already open the file or folder you want to handle (for example the ExplorerModule handle all folder but a GitModule will handle all folder with a subfolder ".git" to overcome this problem you have to overload the ExplorerModule).
+The module system is designed to be flexible and highly customizable, each module providing an appropriate environment to open a specific element. For some reason an existing module can already open the file or folder you want to handle (for example the ExplorerModule handles all folders but a GitModule will handle all folders with a ".git" sub-folder. To overcome this problem you have to overload the ExplorerModule).
 
 How can I overload a Module ?
 -----------------------------
-In fact is really simple, you just need to have a greater value in the `Priority` property than the module you want to overload. The `Supports` method will be called before and if your Module handle the element the other module will not be tested. For example if you want to overload the ExplorerModule (which have a `Priority` value of 0) you need to define your `Priority` property to 1 or more.
+This is in fact really simple, you just need to have a greater value in the `Priority` property than the module you want to overload. The `Supports` method will be called before and if your Module handles the element the other module will not be tested. For example if you want to overload the ExplorerModule (which has a `Priority` value of 0) you need to define your `Priority` property to 1 or more.
 
 Example
 -------
@@ -22,7 +22,7 @@ using MediaMotion.Core.Models.Abstracts;
 namespace MediaMotion.Modules.Git {
 	public sealed class GitModule : AModule {
 		public GitModule() {
-			// Use a greater value for Priority than the module you want to overload (here the ExplorerModule which have a Priority of 0)
+			// Use a greater value for Priority than the module you want to overload (here the ExplorerModule which has a Priority of 0)
 			this.Priority = 100;
 			this.Name = "Git browser";
 			this.Scene = "Git";
