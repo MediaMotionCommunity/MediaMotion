@@ -1,167 +1,143 @@
-using System;
-using System.Collections;
-using System.IO;
-using System.Runtime.InteropServices;
+using System.Collections.Generic;
 using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Motion.Actions;
-using MuPDF;
+using MediaMotion.Modules.PDFViewer.Controllers.Binding;
 using UnityEngine;
 
-
-namespace MediaMotion.Modules.PDFViewer.Controllers {
+namespace MediaMotion.Modules.PDFViewer.Controllers
+{
 	/// <summary>
-	/// C# Unmanaged pointer wrapper
+	/// PDFViewer Controller (apply it on the scene camera)
 	/// </summary>
-	class AutoPinner : IDisposable {
-		object _obj;
-		GCHandle _pinnedArray;
-
-		public AutoPinner(object obj) {
-			_obj = obj;
-			_pinnedArray = GCHandle.Alloc(_obj, GCHandleType.Pinned);
-		}
-		public static implicit operator IntPtr(AutoPinner ap) {
-			return ap._pinnedArray.AddrOfPinnedObject();
-		}
-		public object get() {
-			return _obj;
-		}
-		public void Dispose() {
-			_pinnedArray.Free();
-		}
-	}
-
-	/// <summary>
-	/// PDFViewer Controller
-	/// </summary>
-	public class PDFViewerController : AScript<PDFViewerModule, PDFViewerController> {
+	public class PDFViewerController : AScript<PDFViewerModule, PDFViewerController>
+	{
 		/// <summary>
 		/// The input service
 		/// </summary>
 		private IInputService inputService;
 
-		/// <summary>
-		/// The playlist service
-		/// </summary>
-		private IPlaylistService playlistService;
-
-		private IntPtr pdf_session = IntPtr.Zero;
-		private IntPtr pdf_document = IntPtr.Zero;
-		private IntPtr pdf_page = IntPtr.Zero;
-
-		private int pdf_texture_size = 0;
-		private AutoPinner pdf_pixels = null;
-		private Texture2D pdf_texture = null;
+		// Pdf components
+		private GameObject       pdf_scene;
+		private PDFSession 	     pdf_session;
+		private List<GameObject> pdf_documents = new List<GameObject>();
 
 		/// <summary>
-		/// Initializes the specified module.
+		/// Initializes this instance.
 		/// </summary>
-		/// <param name="module">The module.</param>
-		/// <param name="input">The input.</param>
-		/// <param name="playlist">The playlist.</param>
-		public void Init(IInputService input, IPlaylistService playlist) {
-			this.inputService = input;
-			this.playlistService = playlist;
-			this.playlistService.Configure(((this.module.Parameters.Length > 0) ? (this.module.Parameters[0]) : (null)), new string[] { ".pdf", ".xps" });
-			this.InitPDF();
-			this.LoadPDF();
+		/// <param name="inputService">The input service.</param>
+		public void Init(IInputService inputService) {
+			this.inputService = inputService;
+			InitViewer();
+			AddDocument("/Users/vincentbrunet/TEST-PDF.pdf");
 		}
 
-		private void InitPDF() {
-			this.ClearSession();
-			pdf_session = LibPDF.libpdf_load_session();
+		/// <summary>
+		/// Destroy this instance.
+		/// </summary>
+		public void Delete() {
+			DeleteViewer();
 		}
 
-		private void LoadPDF() {
-			string path = this.playlistService.Current().GetPath();
-			Debug.Log(path);
-			this.ClearBuffer();
-			this.ClearTexture();
-			this.ClearPage();
-			this.ClearDocument();
-			pdf_document = LibPDF.libpdf_load_document(pdf_session, path);
-			pdf_page = LibPDF.libpdf_load_page(pdf_session, pdf_document, 0);
-			int tex_xsize = LibPDF.libpdf_xsize_page(pdf_session, pdf_page);
-			int tex_ysize = LibPDF.libpdf_ysize_page(pdf_session, pdf_page);
-			pdf_texture_size = tex_xsize * tex_ysize;
-			pdf_texture = new Texture2D(tex_xsize, tex_ysize, TextureFormat.RGBA32, false);
-			if (this.GetComponent<Renderer>()) {
-				this.GetComponent<Renderer>().material.mainTexture = pdf_texture;
+		/// <summary>
+		/// Init the Scene
+		/// </summary>
+		public void InitViewer()
+		{
+			// Load scene
+			pdf_scene = new GameObject();
+			pdf_scene.name = "PDF Viewer Scene";
+			// Load session
+			pdf_session = new PDFSession();
+		}
+
+		/// <summary>
+		/// Delete the Scene
+		/// </summary>
+		public void DeleteViewer()
+		{
+			// Unload documents
+            for (int i = 0; i < pdf_documents.Count; ++i) {
+                DeleteDocument(pdf_documents[i]);
+            }
+            pdf_documents.Clear();
+            // Destroy scene
+			Destroy(pdf_scene);
+		}
+
+		/// <summary>
+		/// Load a document in the Scene
+		/// </summary>
+		public void AddDocument(string path) {
+			// Create new unity node
+			GameObject pdf_document = new GameObject();
+			pdf_document.name = "Document " + path;
+			// Attach page script
+            pdf_document.AddComponent<PDFDocument>();
+            pdf_document.GetComponent<PDFDocument>().Init(pdf_session, path);
+            // Set rendering properties
+            pdf_document.transform.parent = pdf_scene.transform;
+            pdf_document.AddComponent<MeshRenderer>();
+            // Save
+            pdf_documents.Add(pdf_document);
+		}
+
+		/// <summary>
+		/// Delete a document
+		/// </summary>
+		public void DeleteDocument(GameObject pdf_document) {
+            pdf_document.GetComponent<PDFDocument>().Delete();
+            Destroy(pdf_document);
+		}
+
+		/// <summary>
+		/// Set the view to a document specific page
+		/// </summary>
+		public void ViewDocument(int idx, float page, float zoom, float yoff) {
+			// Do nothing if nothing loaded
+			if (pdf_documents.Count > 0) {
+				// Get focused doc
+				GameObject pdf_document = pdf_documents[idx % pdf_documents.Count];
+				PDFDocument behavior = pdf_document.GetComponent<PDFDocument>();
+				// Update document display
+				behavior.View(page);
+				pdf_document.transform.position = new Vector3(0, 0, 0);
+				pdf_document.transform.rotation = Quaternion.Euler(90, 0, 0);
+				// Set camera
+				transform.rotation = Quaternion.LookRotation(new Vector3(0, 0, -1));
+				transform.position = new Vector3(0, yoff / 2.0f * behavior.ratio(), zoom * behavior.ratio());
+				// TODO set position and states of non-focused documents
 			}
-			float ratio = 5.0f / tex_ysize;
-			transform.localScale = new Vector3(-ratio * tex_xsize, ratio * tex_ysize, 1);
-			pdf_pixels = new AutoPinner(new Color32[pdf_texture_size]);
 		}
 
-		public void Update() {
-			// If page buffer ready apply copied texture on mesh
-			if (pdf_pixels != null) {
-				// Copy rendering into custom buffer
-				LibPDF.libpdf_render_page(pdf_session, pdf_page);
-				LibPDF.memcpy(
-					(IntPtr)pdf_pixels,
-					LibPDF.libpdf_pixels_page(pdf_session, pdf_page),
-					pdf_texture_size * 4
-				);
-				// Set custom buffer as texture
-				pdf_texture.SetPixels32((Color32[])pdf_pixels.get(), 0);
-				pdf_texture.Apply();
+		/// <summary>
+		/// Sample View
+		/// </summary>
+		private int   pdf_document_idx = 0; // Current focused document index
+		private float pdf_page = 1;         // Current focused document page position (can be float for animations)
+		private float pdf_zoom = 0.9f;      // Current view zoom (bigger == farther)
+		private float pdf_yoff = 0.0f;      // Current yoffset (1 == top, -1 == bottom)
+		public void Update()
+		{
+			// Sample view example (display all moving pages of first doc loaded)
+			if (pdf_documents.Count > 0) {
+				float slow_motion = 10.0f;
+				GameObject document = pdf_documents[0];
+				PDFDocument behavior = document.GetComponent<PDFDocument>();
+				float hpagecount = (behavior.count() - 1) / 2.0f;
+				pdf_page = hpagecount + Mathf.Sin(Time.time / slow_motion) * hpagecount;
+				pdf_yoff = Mathf.Sin(Time.time / slow_motion * hpagecount * 2.0f);
+				ViewDocument(pdf_document_idx, pdf_page, pdf_zoom, pdf_yoff);
 			}
+			// Handle user actions
+			/*
 			foreach (IAction action in this.inputService.GetMovements()) {
+				Debug.Log(action.Type);
 				switch (action.Type) {
-					default:
-						// TODO add movement
-						break;
 				}
 			}
+			*/
 		}
-
-		private void ClearTexture() {
-			if (pdf_texture != null) {
-				UnityEngine.Object.Destroy(pdf_texture);
-				pdf_texture = new Texture2D(1, 1);
-				if (this.GetComponent<Renderer>()) {
-					this.GetComponent<Renderer>().material.mainTexture = pdf_texture;
-				}
-			}
-		}
-
-		private void ClearSession() {
-			if (pdf_session != IntPtr.Zero) {
-				LibPDF.libpdf_free_session(pdf_session);
-				pdf_session = IntPtr.Zero;
-			}
-		}
-
-		private void ClearDocument() {
-			if (pdf_document != IntPtr.Zero) {
-				LibPDF.libpdf_free_document(pdf_session, pdf_document);
-				pdf_document = IntPtr.Zero;
-			}
-		}
-
-		private void ClearPage() {
-			if (pdf_page != IntPtr.Zero) {
-				LibPDF.libpdf_free_page(pdf_session, pdf_page);
-				pdf_page = IntPtr.Zero;
-			}
-		}
-
-		private void ClearBuffer() {
-			if (pdf_pixels != null) {
-				pdf_pixels = null;
-			}
-		}
-
-		public void OnDestroy() {
-			this.ClearBuffer();
-			this.ClearTexture();
-			this.ClearPage();
-			this.ClearDocument();
-			this.ClearSession();
-		}
-
 	}
 }
