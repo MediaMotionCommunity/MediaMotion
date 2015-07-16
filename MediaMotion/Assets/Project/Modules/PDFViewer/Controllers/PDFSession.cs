@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MediaMotion.Modules.PDFViewer.Controllers
 {
     /// <summary>
-    /// PDFViewer Document
+    /// PDF Viewer session
     /// </summary>
     public class PDFSession {
 

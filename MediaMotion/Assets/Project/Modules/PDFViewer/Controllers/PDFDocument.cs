@@ -13,7 +13,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
         private PDFSession       pdf_session;
         private List<GameObject> pdf_pages = new List<GameObject>();
 
-        private string           pdf_path;
+        private string           pdf_path = "";
         private IntPtr           pdf_document = IntPtr.Zero;
 
         private float            pdf_current_ratio = 1;
@@ -38,7 +38,6 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
                         pdf_page.GetComponent<PDFPage>().Init(pdf_session, this, i);
                         // Set rendering properties
                         pdf_page.transform.parent = transform;
-                        pdf_page.GetComponent<Renderer>().material.shader = Shader.Find("Sprites/Default");
                         // Save
                         pdf_pages.Add(pdf_page);
                     }
@@ -47,7 +46,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
             View(0.0f);
         }
 
-        public void Delete() {
+        public void OnDestroy() {
             // Unload doducment
             if (ok()) {
                 LibPDF.libpdf_free_document(pdf_session.get(), pdf_document);
@@ -56,7 +55,6 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
             // Unload pages
             for (int i = 0; i < pdf_pages.Count; ++i) {
                 GameObject pdf_page = pdf_pages[i];
-                pdf_page.GetComponent<PDFPage>().Delete();
                 Destroy(pdf_page);
             }
             pdf_pages.Clear();

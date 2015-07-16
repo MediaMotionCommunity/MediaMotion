@@ -36,7 +36,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
 		/// <summary>
 		/// Destroy this instance.
 		/// </summary>
-		public void Delete() {
+		public void OnDestroy() {
 			DeleteViewer();
 		}
 
@@ -87,7 +87,6 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
 		/// Delete a document
 		/// </summary>
 		public void DeleteDocument(GameObject pdf_document) {
-            pdf_document.GetComponent<PDFDocument>().Delete();
             Destroy(pdf_document);
 		}
 
@@ -127,7 +126,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
 				PDFDocument behavior = document.GetComponent<PDFDocument>();
 				float hpagecount = (behavior.count() - 1) / 2.0f;
 				pdf_page = hpagecount + Mathf.Sin(Time.time / slow_motion) * hpagecount;
-				pdf_yoff = Mathf.Sin(Time.time / slow_motion * hpagecount * 2.0f);
+				pdf_yoff = Mathf.Sin(Time.time / slow_motion * hpagecount * 2.0f) / 2.0f;
 				ViewDocument(pdf_document_idx, pdf_page, pdf_zoom, pdf_yoff);
 			}
 			// Handle user actions

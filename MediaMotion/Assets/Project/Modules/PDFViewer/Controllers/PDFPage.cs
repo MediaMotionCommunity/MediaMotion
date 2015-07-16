@@ -25,7 +25,6 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
         private Texture2D  pdf_texture = null;
         private AutoPinner pdf_texture_pixels = null;
 
-        // Constructor
         public void Init(PDFSession session, PDFDocument document, int pagenum) {
             // Initial state
             pdf_texture_base = GetComponent<Renderer>().material.mainTexture;
@@ -63,12 +62,13 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
                     // Set mesh texture to pdf
                     if (GetComponent<Renderer>() && ok()) {
                         GetComponent<Renderer>().material.mainTexture = pdf_texture;
+                        GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Texture");
                     }
                 }
             }
         }
 
-        public void Delete() {
+        public void OnDestoy() {
             // Unload page
             if (pdf_page != IntPtr.Zero) {
                 LibPDF.libpdf_free_page(pdf_session.get(), pdf_page);
@@ -78,10 +78,6 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
             if (pdf_texture != null) {
                 Destroy(pdf_texture);
             }
-        }
-
-        public float ratio() {
-            return (float)pdf_texture_ysize / (float)pdf_texture_xsize;
         }
 
         public void render() {
@@ -110,8 +106,8 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
             }
         }
 
-        public Texture2D texture() {
-            return pdf_texture;
+        public float ratio() {
+            return (float)pdf_texture_ysize / (float)pdf_texture_xsize;
         }
 
         public int error() {
