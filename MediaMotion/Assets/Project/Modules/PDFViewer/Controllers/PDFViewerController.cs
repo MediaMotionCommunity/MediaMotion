@@ -104,8 +104,9 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
 				pdf_document.transform.position = new Vector3(0, 0, 0);
 				pdf_document.transform.rotation = Quaternion.Euler(90, 0, 0);
 				// Set camera
+				float iratio = behavior.ratio();
 				transform.rotation = Quaternion.LookRotation(new Vector3(0, 0, -1));
-				transform.position = new Vector3(0, yoff / 2.0f * behavior.ratio(), zoom * behavior.ratio());
+				transform.position = new Vector3(0, yoff / 2.0f * iratio, zoom * iratio);
 				// TODO set position and states of non-focused documents
 			}
 		}
@@ -115,7 +116,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
 		/// </summary>
 		private int   pdf_document_idx = 0; // Current focused document index
 		private float pdf_page = 1;         // Current focused document page position (can be float for animations)
-		private float pdf_zoom = 0.9f;      // Current view zoom (bigger == farther)
+		private float pdf_zoom = 0.865f;    // Current view zoom (bigger == farther)
 		private float pdf_yoff = 0.0f;      // Current yoffset (1 == top, -1 == bottom)
 		public void Update()
 		{

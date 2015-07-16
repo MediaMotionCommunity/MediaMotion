@@ -104,7 +104,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers
 				// Set camera
 				float iratio = behavior.ratio();
 				transform.rotation = Quaternion.LookRotation(new Vector3(0, 0, -1));
-				transform.position = new Vector3(0, yoff / 2.0f * iratio, zoom);
+				transform.position = new Vector3(0, yoff / 2.0f, zoom);
 				// TODO set position and states of non-focused medias
 			}
 		}
@@ -113,7 +113,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers
 		/// Sample View
 		/// </summary>
 		private int   vlc_media_idx = 0; // Current focused document index
-		private float vlc_zoom = 0.9f;   // Current view zoom (bigger == farther)
+		private float vlc_zoom = 0.865f; // Current view zoom (bigger == farther)
 		private float vlc_yoff = 0.0f;   // Current yoffset (1 == top, -1 == bottom)
 
 		public void Update()

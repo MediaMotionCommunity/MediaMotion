@@ -75,9 +75,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers
                                 TextureFormat.RGBA32,
                                 false
                             );
-                            vlc_texture.hideFlags = HideFlags.HideAndDontSave;
                             vlc_texture.wrapMode = TextureWrapMode.Clamp;
-                            vlc_texture.filterMode = FilterMode.Point;
+                            vlc_texture.filterMode = FilterMode.Trilinear;
                             // Fetch rendering texture raw datas pointer
                             vlc_texture_pixels = new AutoPinner(
                                 vlc_texture.GetPixels32(0)
@@ -97,9 +96,6 @@ namespace MediaMotion.Modules.VideoViewer.Controllers
                                 VLCCallbacks.VideoDisplay,
                                 (IntPtr)GCHandle.Alloc(this)
                             );
-                            // Scale the model to match the pdf ratio
-                            float size = 1.0f / 10.0f;
-                            transform.localScale = new Vector3(size / ratio(), size, -size);
                             // Set mesh texture to vlc
                             if (GetComponent<Renderer>() && ok()) {
                                 GetComponent<Renderer>().material.mainTexture = vlc_texture;
@@ -138,7 +134,10 @@ namespace MediaMotion.Modules.VideoViewer.Controllers
         public void Update() {
             // If video buffer ready apply on mesh texture (flush VLC frame to Unity Frame)
             if (ok()) {
-                // Set main texture scale
+                // Scale the model to match the video ratio
+                float size = 1.0f / 10.0f;
+                transform.localScale = new Vector3(size / ratio(), size, -size);
+                // Scale the main texture
                 GetComponent<Renderer>().material.mainTextureScale = new Vector2(
                     (float)vlc_video_xref / (float)vlc_video_xsize,
                     (float)vlc_video_yref / (float)vlc_video_ysize

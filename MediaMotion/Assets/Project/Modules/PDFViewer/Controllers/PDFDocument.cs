@@ -78,6 +78,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
             int ipage2 = (int)(page + 1);
             int ipage2_num = (int)((page + 1) / 2.0f);
             // Check if rotation is needed
+            float page_xoff = 0.505f;
             float rotation_mult = 0;
             float rotation_ratio = 0;
             if (ipage_num != ipage2_num) {
@@ -87,10 +88,10 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
             // Focus on the page viewed
             float view_xpos = 0.0f;
             if (ipage_off == 0) {
-                view_xpos = 0.5f - ((float)ipage2 - page);
+                view_xpos = page_xoff - ((float)ipage2 - page);
             }
             if (ipage_off == 1) {
-                view_xpos = -0.5f + ((float)ipage2 - page);
+                view_xpos = -page_xoff + ((float)ipage2 - page);
             }
             // Get zoom ratio
             pdf_current_ratio = pdf_pages[ipage].GetComponent<PDFPage>().ratio();
@@ -110,10 +111,10 @@ namespace MediaMotion.Modules.PDFViewer.Controllers
                 float xpos = 0;
                 float ypos = 0.001f;
                 if (i_off == 0) {
-                    xpos = 0.51f;
+                    xpos = page_xoff;
                 }
                 if (i_off == 1) {
-                    xpos = -0.51f;
+                    xpos = -page_xoff;
                 }
                 // Set rotation for left and right sides
                 if (i_off == 0 && i_num == ipage2_num) {
