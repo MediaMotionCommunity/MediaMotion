@@ -49,7 +49,6 @@ __Core Interaction__
  2. [Overload a Module](advancedModule/overloadModule.md)
  3. [Customize Element Entity](advancedModule/customizeEntity.md)
  4. [Customize Element GameObject](advancedModule/customizeGameObject.md)
- 5. [Element preview (advanced personalisation)](advancedModule/elementPreview.md)
 
 [Coding Convention](codingConvention/index.md)
 ----------------------------------------------
