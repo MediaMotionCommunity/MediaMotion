@@ -8,163 +8,139 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 	/// PDFViewer Document
 	/// </summary>
 	public class PDFDocument : MonoBehaviour {
+		private PDFSession pdfSession;
+		private List<GameObject> pdfPages = new List<GameObject>();
 
-		private PDFSession pdf_session;
-		private List<GameObject> pdf_pages = new List<GameObject>();
+		private string pdfPath = "";
+		private IntPtr pdfDocument = IntPtr.Zero;
 
-		private string pdf_path = "";
-		private IntPtr pdf_document = IntPtr.Zero;
-
-		private float pdf_current_ratio = 1;
+		private float pdfCurrentRatio = 1;
 
 		public void Init(PDFSession session, string path) {
-			// External components
-			pdf_session = session;
-			pdf_path = path;
-			// IF all is ready
-			if (pdf_session.check()) {
-				// Load document
-				pdf_document = LibPDF.libpdf_load_document(pdf_session.get(), path);
-				// Load pages
-				if (ok()) {
-					int pagenum = count();
+			this.pdfSession = session;
+			this.pdfPath = path;
+
+			if (this.pdfSession.Check()) {
+				this.pdfDocument = LibPDF.libpdf_load_document(this.pdfSession.Get(), this.pdfPath);
+				if (this.Ok()) {
+					int pagenum = Count();
+
 					for (int i = 0; i < pagenum; ++i) {
-						// Create new unity node
 						GameObject pdf_page = GameObject.CreatePrimitive(PrimitiveType.Plane);
+
 						pdf_page.name = "Page " + i.ToString();
-						// Attach page script
 						pdf_page.AddComponent<PDFPage>();
-						pdf_page.GetComponent<PDFPage>().Init(pdf_session, this, i);
-						// Set rendering properties
-						pdf_page.transform.parent = transform;
-						// Save
-						pdf_pages.Add(pdf_page);
+						pdf_page.GetComponent<PDFPage>().Init(this.pdfSession, this, i);
+						pdf_page.transform.parent = this.transform;
+						this.pdfPages.Add(pdf_page);
 					}
 				}
 			}
-			View(0.0f);
+			this.View(0.0f);
 		}
 
 		public void OnDestroy() {
-			// Unload doducment
-			if (ok()) {
-				LibPDF.libpdf_free_document(pdf_session.get(), pdf_document);
-				pdf_document = IntPtr.Zero;
+			if (this.Ok()) {
+				LibPDF.libpdf_free_document(pdfSession.Get(), this.pdfDocument);
+				this.pdfDocument = IntPtr.Zero;
 			}
-			// Unload pages
-			for (int i = 0; i < pdf_pages.Count; ++i) {
-				GameObject pdf_page = pdf_pages[i];
-				Destroy(pdf_page);
+			for (int i = 0; i < pdfPages.Count; ++i) {
+				GameObject.Destroy(pdfPages[i]);
 			}
-			pdf_pages.Clear();
+			this.pdfPages.Clear();
 		}
 
-		public float ratio() {
-			return pdf_current_ratio;
+		public float Ratio() {
+			return (this.pdfCurrentRatio);
 		}
 
 		public float DegreeToRadian(float angle) {
-			return Mathf.PI * angle / 180.0f;
+			return (Mathf.PI * angle / 180.0f);
 		}
 
 		public void View(float rpage) {
-			// Clean page position
-			float page = Mathf.Min(Mathf.Max(rpage, 0.0f), pdf_pages.Count - 1);
-			// Get book page indexes
+			float page = Mathf.Min(Mathf.Max(rpage, 0.0f), this.pdfPages.Count - 1);
 			int ipage = (int)page;
 			int ipage_num = (int)(page / 2.0f);
 			int ipage_off = (int)(page % 2.0f);
 			int ipage2 = (int)(page + 1);
 			int ipage2_num = (int)((page + 1) / 2.0f);
-			// Check if rotation is needed
 			float page_xoff = 0.505f;
 			float rotation_mult = 0;
 			float rotation_ratio = 0;
+			float view_xpos = 0.0f;
+
 			if (ipage_num != ipage2_num) {
 				rotation_mult = 1;
 				rotation_ratio = (float)ipage2 - page;
 			}
-			// Focus on the page viewed
-			float view_xpos = 0.0f;
 			if (ipage_off == 0) {
 				view_xpos = page_xoff - ((float)ipage2 - page);
 			}
 			if (ipage_off == 1) {
 				view_xpos = -page_xoff + ((float)ipage2 - page);
 			}
-			// Get zoom ratio
-			pdf_current_ratio = pdf_pages[ipage].GetComponent<PDFPage>().ratio();
+
+			this.pdfCurrentRatio = this.pdfPages[ipage].GetComponent<PDFPage>().Ratio();
 			if (page > ipage) {
-				float next_ratio = pdf_pages[ipage2].GetComponent<PDFPage>().ratio();
-				pdf_current_ratio = (pdf_current_ratio + next_ratio) / 2.0f;
+				float next_ratio = this.pdfPages[ipage2].GetComponent<PDFPage>().Ratio();
+
+				this.pdfCurrentRatio = (this.pdfCurrentRatio + next_ratio) / 2.0f;
 			}
-			// For every page
-			for (int i = 0; i < pdf_pages.Count; ++i) {
-				// Get page
-				GameObject pdf_page = pdf_pages[i];
-				// Get page book position
+			for (int i = 0; i < this.pdfPages.Count; ++i) {
+				GameObject pdf_page = this.pdfPages[i];
 				int i_num = (int)(i / 2.0f);
 				int i_off = (int)(i % 2.0f);
-				// Right or left side of the book
 				float zrot = 0;
 				float xpos = 0;
 				float ypos = 0.001f;
+
 				if (i_off == 0) {
 					xpos = page_xoff;
 				}
 				if (i_off == 1) {
 					xpos = -page_xoff;
 				}
-				// Set rotation for left and right sides
 				if (i_off == 0 && i_num == ipage2_num) {
 					zrot = 180 * rotation_ratio * rotation_mult;
 				}
 				if (i_off == 1 && i_num == ipage_num) {
 					zrot = -180 * (1.0f - rotation_ratio) * rotation_mult;
 				}
-				// Apply transformations
 				if (i_num == ipage_num || i_num == ipage2_num) {
-					// Show only good pages
-					pdf_page.GetComponent<Renderer>().enabled = true;
-					// Rotate center and angle
-					pdf_page.transform.localRotation = Quaternion.Euler(0, 0, zrot);
 					float rcos = Mathf.Cos(DegreeToRadian(zrot));
 					float rsin = Mathf.Sin(DegreeToRadian(zrot));
-					pdf_page.transform.localPosition = new Vector3(
-						xpos * rcos - ypos * rsin + view_xpos,
-						xpos * rsin + ypos * rcos,
-						0
-					);
+
+					pdf_page.GetComponent<Renderer>().enabled = true;
+					pdf_page.transform.localRotation = Quaternion.Euler(0, 0, zrot);
+					pdf_page.transform.localPosition = new Vector3((((xpos * rcos) - (ypos * rsin)) + view_xpos), ((xpos * rsin) + (ypos * rcos)), 0);
 				} else {
 					pdf_page.GetComponent<Renderer>().enabled = false;
 				}
 			}
 		}
 
-		public int count() {
-			if (check()) {
-				return LibPDF.libpdf_count_pages(pdf_session.get(), pdf_document);
+		public int Count() {
+			if (this.Check()) {
+				return (LibPDF.libpdf_count_pages(this.pdfSession.Get(), this.pdfDocument));
 			}
-			return -1;
+			return (-1);
 		}
 
-		public bool ok() {
-			if (pdf_session.ok() && pdf_document != IntPtr.Zero) {
-				return true;
-			}
-			return false;
+		public bool Ok() {
+			return (this.pdfSession.Ok() && this.pdfDocument != IntPtr.Zero);
 		}
 
-		public bool check() {
-			if (!ok()) {
-				Debug.LogError("Unable to load PDF document: " + pdf_path);
-				return false;
+		public bool Check() {
+			if (!this.Ok()) {
+				Debug.LogError("Unable to load PDF document: " + this.pdfPath);
+				return (false);
 			}
-			return true;
+			return (true);
 		}
 
-		public IntPtr get() {
-			return pdf_document;
+		public IntPtr Get() {
+			return (this.pdfDocument);
 		}
 	}
 }

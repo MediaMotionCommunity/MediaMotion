@@ -6,35 +6,33 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 	/// <summary>
 	/// PDF Viewer session
 	/// </summary>
-	public class PDFSession {
-
-		private IntPtr pdf_session;
+	public class PDFSession : IDisposable {
+		private IntPtr pdfSession;
 
 		public PDFSession() {
-			pdf_session = LibPDF.libpdf_load_session();
+			this.pdfSession = LibPDF.libpdf_load_session();
 		}
 
-		~PDFSession() {
-			if (ok()) {
-				LibPDF.libpdf_free_session(pdf_session);
+		public void Dispose() {
+			if (this.Ok()) {
+				LibPDF.libpdf_free_session(pdfSession);
 			}
 		}
 
-		public bool ok() {
-			return pdf_session != IntPtr.Zero;
+		public bool Ok() {
+			return (this.pdfSession != IntPtr.Zero);
 		}
 
-		public bool check() {
-			if (!ok()) {
+		public bool Check() {
+			if (!this.Ok()) {
 				Debug.LogError("Unable to load PDF renderer");
-				return false;
+				return (false);
 			}
-			return true;
+			return (true);
 		}
 
-		public IntPtr get() {
-			return pdf_session;
+		public IntPtr Get() {
+			return (this.pdfSession);
 		}
-
 	}
 }

@@ -8,138 +8,95 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 	/// PDFViewer page
 	/// </summary>
 	public class PDFPage : MonoBehaviour {
-
-		// PDF components
-		private PDFSession pdf_session;
-		private PDFDocument pdf_document;
-
-		// Page infos
-		private IntPtr pdf_page = IntPtr.Zero;
-		private int pdf_pagenum;
-		private int pdf_texture_xsize;
-		private int pdf_texture_ysize;
-
-		// Texture infos
-		private Texture pdf_texture_base = null;
-		private Texture2D pdf_texture = null;
-		private AutoPinner pdf_texture_pixels = null;
+		private PDFSession pdfSession;
+		private PDFDocument pdfDocument;
+		private IntPtr pdfPage = IntPtr.Zero;
+		private int pdfPagenum;
+		private int pdfTextureXSize;
+		private int pdfTextureYSize;
+		private Texture pdfTextureBase = null;
+		private Texture2D pdfTexture = null;
+		private AutoPinner pdfTexturePixels = null;
 
 		public void Init(PDFSession session, PDFDocument document, int pagenum) {
-			// Initial state
-			pdf_texture_base = GetComponent<Renderer>().material.mainTexture;
-			// External components
 			float pdf_dpi = 101;
-			pdf_session = session;
-			pdf_document = document;
-			pdf_pagenum = pagenum;
-			// If all is good
-			if (pdf_session.check() && pdf_document.check()) {
-				// Load page
-				pdf_page = LibPDF.libpdf_load_page(
-					pdf_session.get(),
-					pdf_document.get(),
-					pagenum, pdf_dpi, pdf_dpi
-				);
-				// If page loading success
-				if (pdf_page != IntPtr.Zero) {
-					// Create rendering texture
-					pdf_texture_xsize = LibPDF.libpdf_xsize_page(pdf_session.get(), pdf_page);
-					pdf_texture_ysize = LibPDF.libpdf_ysize_page(pdf_session.get(), pdf_page);
-					pdf_texture_pixels = new AutoPinner(
-						new Color32[pdf_texture_xsize * pdf_texture_ysize]
-					);
-					pdf_texture = new Texture2D(
-						pdf_texture_xsize,
-						pdf_texture_ysize,
-						TextureFormat.RGBA32, false
-					);
-					// First render
-					render();
-					// Scale the model to match the pdf ratio
+
+			this.pdfTextureBase = GetComponent<Renderer>().material.mainTexture;
+			this.pdfSession = session;
+			this.pdfDocument = document;
+			this.pdfPagenum = pagenum;
+			if (this.pdfSession.Check() && this.pdfDocument.Check()) {
+				this.pdfPage = LibPDF.libpdf_load_page(this.pdfSession.Get(), this.pdfDocument.Get(), this.pdfPagenum, pdf_dpi, pdf_dpi);
+				if (this.pdfPage != IntPtr.Zero) {
 					float size = 1.0f / 10.0f;
-					transform.localScale = new Vector3(size, size, -ratio() * size);
-					// Set mesh texture to pdf
-					if (GetComponent<Renderer>() && ok()) {
-						GetComponent<Renderer>().material.mainTexture = pdf_texture;
-						GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Texture");
+
+					this.pdfTextureXSize = LibPDF.libpdf_xsize_page(pdfSession.Get(), pdfPage);
+					this.pdfTextureYSize = LibPDF.libpdf_ysize_page(pdfSession.Get(), pdfPage);
+					this.pdfTexturePixels = new AutoPinner(new Color32[this.pdfTextureXSize * this.pdfTextureYSize]);
+					this.pdfTexture = new Texture2D(this.pdfTextureXSize, this.pdfTextureYSize, TextureFormat.RGBA32, false);
+					this.Render();
+					this.transform.localScale = new Vector3(size, size, -Ratio() * size);
+					if (this.GetComponent<Renderer>() && this.Ok()) {
+						this.GetComponent<Renderer>().material.mainTexture = this.pdfTexture;
+						this.GetComponent<Renderer>().material.shader = Shader.Find("Unlit/Texture");
 					}
 				}
 			}
 		}
 
 		public void OnDestoy() {
-			// Unload page
-			if (pdf_page != IntPtr.Zero) {
-				LibPDF.libpdf_free_page(pdf_session.get(), pdf_page);
+			if (this.pdfPage != IntPtr.Zero) {
+				LibPDF.libpdf_free_page(this.pdfSession.Get(), this.pdfPage);
 			}
-			// Unload render texture
-			GetComponent<Renderer>().material.mainTexture = pdf_texture_base;
-			if (pdf_texture != null) {
-				Destroy(pdf_texture);
+			this.GetComponent<Renderer>().material.mainTexture = this.pdfTextureBase;
+			if (this.pdfTexture != null) {
+				Texture2D.Destroy(this.pdfTexture);
 			}
 		}
 
-		public void render() {
-			// If page loaded
-			if (ok()) {
-				// Render page into internal page buffer
-				LibPDF.libpdf_render_page(
-					pdf_session.get(), pdf_page,
-					0, 0, // Offset
-					1, 1, // Scale
-					0     // Rotation
-				);
-				// Copy internal page buffer into pixel buffer
-				if (pdf_texture_pixels != null) {
-					LibPDF.memcpy(
-						pdf_texture_pixels.Ptr(),
-						LibPDF.libpdf_pixels_page(pdf_session.get(), pdf_page),
-						pdf_texture_xsize * pdf_texture_ysize * 4
-					);
+		public void Render() {
+			if (this.Ok()) {
+				LibPDF.libpdf_render_page(this.pdfSession.Get(), this.pdfPage, 0, 0, 1, 1, 0);
+				if (this.pdfTexturePixels != null) {
+					LibPDF.memcpy(this.pdfTexturePixels.Ptr(), LibPDF.libpdf_pixels_page(this.pdfSession.Get(), this.pdfPage), this.pdfTextureXSize * this.pdfTextureYSize * 4);
 				}
-				// Copy pixel buffer to texture
-				if (pdf_texture != null) {
-					pdf_texture.SetPixels32((Color32[])pdf_texture_pixels.Obj());
-					pdf_texture.Apply();
+				if (this.pdfTexture != null) {
+					this.pdfTexture.SetPixels32((Color32[])this.pdfTexturePixels.Obj());
+					this.pdfTexture.Apply();
 				}
 			}
 		}
 
-		public float ratio() {
-			return (float)pdf_texture_ysize / (float)pdf_texture_xsize;
+		public float Ratio() {
+			return ((float)this.pdfTextureYSize / (float)this.pdfTextureXSize);
 		}
 
-		public int error() {
-			// If dependencies are ok
-			if (pdf_session.ok() && pdf_document.ok() && pdf_page != IntPtr.Zero) {
-				// Get potential frame error code
-				return LibPDF.libpdf_error_page(pdf_session.get(), pdf_page);
+		public int Error() {
+			if (this.pdfSession.Ok() && this.pdfDocument.Ok() && this.pdfPage != IntPtr.Zero) {
+				return (LibPDF.libpdf_error_page(this.pdfSession.Get(), this.pdfPage));
 			}
-			// Invalid load
-			return -1;
+			return (-1);
 		}
 
-		public bool ok() {
-			// If page loaded correctly
-			if (error() == 0) {
-				// If texture loaded correctly
-				if (pdf_texture_pixels != null && pdf_texture != null) {
-					return true;
+		public bool Ok() {
+			if (this.Error() == 0) {
+				if (this.pdfTexturePixels != null && this.pdfTexture != null) {
+					return (true);
 				}
 			}
-			return false;
+			return (false);
 		}
 
-		public bool check() {
-			if (!ok()) {
-				Debug.LogError("Unable to load PDF page: " + pdf_pagenum + " (error " + error().ToString() + ")");
-				return false;
+		public bool Check() {
+			if (!this.Ok()) {
+				Debug.LogError("Unable to load PDF page: " + this.pdfPagenum + " (error " + this.Error().ToString() + ")");
+				return (false);
 			}
-			return true;
+			return (true);
 		}
 
-		public IntPtr get() {
-			return pdf_page;
+		public IntPtr Get() {
+			return (this.pdfPage);
 		}
 	}
 }
