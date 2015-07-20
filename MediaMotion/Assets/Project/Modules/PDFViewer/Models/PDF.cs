@@ -1,13 +1,11 @@
 ﻿using System.IO;
 using MediaMotion.Core.Services.FileSystem.Models.Abstracts;
 
-namespace MediaMotion.Modules.PDFViewer.Models
-{
+namespace MediaMotion.Modules.PDFViewer.Models {
 	/// <summary>
 	/// Abstract Video model
 	/// </summary>
-	public class PDF : AFile, IPDF
-	{
+	public class PDF : AFile, IPDF {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PDF"/> class.
 		/// </summary>

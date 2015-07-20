@@ -15,7 +15,7 @@ namespace MediaMotion.Modules.ImageViewer.Observers {
 		/// The gameObject drew
 		/// </returns>
 		public GameObject Draw(IElement element) {
-			GameObject drewElement = GameObject.Instantiate(Resources.Load("File3D")) as GameObject;
+			GameObject drewElement = GameObject.Instantiate(Resources.Load("3DObject")) as GameObject;
 
 			drewElement.transform.localScale = new Vector3(2, 6, 5.5f);
 			drewElement.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
