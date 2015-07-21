@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MediaMotion.Modules.PDFViewer.Controllers.Binding;
+using MediaMotion.Modules.PDFViewer.Models;
 using UnityEngine;
 
 namespace MediaMotion.Modules.PDFViewer.Controllers {
@@ -8,41 +9,61 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 	/// PDFViewer Document
 	/// </summary>
 	public class PDFDocument : MonoBehaviour {
-		private PDFSession pdfSession;
-		private List<GameObject> pdfPages = new List<GameObject>();
+		/// <summary>
+		/// Gets the session.
+		/// </summary>
+		/// <value>
+		/// The session.
+		/// </value>
+		public PDFSession Session { get; private set; }
 
-		private string pdfPath = "";
-		private IntPtr pdfDocument = IntPtr.Zero;
+		/// <summary>
+		/// Gets the PDF.
+		/// </summary>
+		/// <value>
+		/// The PDF.
+		/// </value>
+		public IntPtr Document { get; private set; }
+
+		/// <summary>
+		/// Gets the document.
+		/// </summary>
+		/// <value>
+		/// The document.
+		/// </value>
+		public IPDF Element { get; private set; }
+
+		private List<GameObject> pdfPages = new List<GameObject>();
 
 		private float pdfCurrentRatio = 1;
 
-		public void Init(PDFSession session, string path) {
-			this.pdfSession = session;
-			this.pdfPath = path;
+		public void Init(PDFSession session, IPDF element) {
+			this.Session = session;
+			this.Element = element;
 
-			if (this.pdfSession.Check()) {
-				this.pdfDocument = LibPDF.libpdf_load_document(this.pdfSession.Get(), this.pdfPath);
+			if (this.Session.Check()) {
+				this.Document = LibPDF.libpdf_load_document(this.Session.Get(), this.Element.GetPath());
 				if (this.Ok()) {
-					int pagenum = Count();
+					int pagenum = this.Count();
 
-					for (int i = 0; i < pagenum; ++i) {
-						GameObject pdf_page = GameObject.CreatePrimitive(PrimitiveType.Plane);
+				for (int i = 0; i < pagenum; ++i) {
+						GameObject pdfPage = GameObject.CreatePrimitive(PrimitiveType.Plane);
 
-						pdf_page.name = "Page " + i.ToString();
-						pdf_page.AddComponent<PDFPage>();
-						pdf_page.GetComponent<PDFPage>().Init(this.pdfSession, this, i);
-						pdf_page.transform.parent = this.transform;
-						this.pdfPages.Add(pdf_page);
+						pdfPage.name = "Page " + i.ToString();
+						pdfPage.AddComponent<PDFPage>();
+						pdfPage.GetComponent<PDFPage>().Init(this.Session, this, i);
+						pdfPage.transform.parent = this.transform;
+						this.pdfPages.Add(pdfPage);
 					}
 				}
+				this.View(0.0f);
 			}
-			this.View(0.0f);
 		}
 
 		public void OnDestroy() {
 			if (this.Ok()) {
-				LibPDF.libpdf_free_document(pdfSession.Get(), this.pdfDocument);
-				this.pdfDocument = IntPtr.Zero;
+				LibPDF.libpdf_free_document(Session.Get(), this.Document);
+				this.Document = IntPtr.Zero;
 			}
 			for (int i = 0; i < pdfPages.Count; ++i) {
 				GameObject.Destroy(pdfPages[i]);
@@ -59,6 +80,9 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		}
 
 		public void View(float rpage) {
+			if (this.pdfPages.Count <= 0) {
+				return ;
+			}
 			float page = Mathf.Min(Mathf.Max(rpage, 0.0f), this.pdfPages.Count - 1);
 			int ipage = (int)page;
 			int ipage_num = (int)(page / 2.0f);
@@ -121,26 +145,26 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		}
 
 		public int Count() {
-			if (this.Check()) {
-				return (LibPDF.libpdf_count_pages(this.pdfSession.Get(), this.pdfDocument));
+			if (this.Ok()) {
+				return (LibPDF.libpdf_count_pages(this.Session.Get(), this.Document));
 			}
 			return (-1);
 		}
 
 		public bool Ok() {
-			return (this.pdfSession.Ok() && this.pdfDocument != IntPtr.Zero);
+			return (this.Session.Ok() && this.Document != IntPtr.Zero);
 		}
 
 		public bool Check() {
 			if (!this.Ok()) {
-				Debug.LogError("Unable to load PDF document: " + this.pdfPath);
+				Debug.LogError("Unable to load PDF document: " + this.Element);
 				return (false);
 			}
 			return (true);
 		}
 
 		public IntPtr Get() {
-			return (this.pdfDocument);
+			return (this.Document);
 		}
 	}
 }

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Modules.PDFViewer.Controllers.Binding;
 using UnityEngine;
+using MediaMotion.Modules.PDFViewer.Models;
 
 namespace MediaMotion.Modules.PDFViewer.Controllers {
 	/// <summary>
@@ -28,7 +30,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		public void Init(IInputService inputService) {
 			this.inputService = inputService;
 			this.InitViewer();
-			this.AddDocument("/Users/vincentbrunet/TEST-PDF.pdf");
+			this.AddDocument((IPDF)this.module.Parameters.FirstOrDefault());
 		}
 
 		/// <summary>
@@ -61,13 +63,13 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		/// <summary>
 		/// Load a document in the Scene
 		/// </summary>
-		public void AddDocument(string path) {
+		public void AddDocument(IPDF element) {
 			// Create new unity node
 			GameObject pdf_document = new GameObject();
 
-			pdf_document.name = "Document " + path;
+			pdf_document.name = "Document " + element.GetName();
 			pdf_document.AddComponent<PDFDocument>();
-			pdf_document.GetComponent<PDFDocument>().Init(this.pdf_session, path);
+			pdf_document.GetComponent<PDFDocument>().Init(this.pdf_session, element);
 			pdf_document.transform.parent = this.pdf_scene.transform;
 			pdf_document.AddComponent<MeshRenderer>();
 			this.pdf_documents.Add(pdf_document);
@@ -95,21 +97,21 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		/// <summary>
 		/// Sample View
 		/// </summary>
-		private int pdf_document_idx = 0;
-		private float pdf_page = 1;
-		private float pdf_zoom = 0.865f;
-		private float pdf_yoff = 0.0f;
+		private int pdfDocumentIdx = 0;
+		private float pdfPage = 1;
+		private float pdfZoom = 0.865f;
+		private float pdfYoff = 0.0f;
 
 		public void Update() {
 			if (this.pdf_documents.Count > 0) {
-				float slow_motion = 10.0f;
+				float slowMotion = 10.0f;
 				GameObject document = this.pdf_documents[0];
 				PDFDocument behavior = document.GetComponent<PDFDocument>();
 				float hpagecount = (behavior.Count() - 1) / 2.0f;
 
-				this.pdf_page = hpagecount + Mathf.Sin(Time.time / slow_motion) * hpagecount;
-				this.pdf_yoff = Mathf.Sin(Time.time / slow_motion * hpagecount * 2.0f) / 2.0f;
-				this.ViewDocument(this.pdf_document_idx, this.pdf_page, this.pdf_zoom, this.pdf_yoff);
+				this.pdfPage = hpagecount + Mathf.Sin(Time.time / slowMotion) * hpagecount;
+				this.pdfYoff = Mathf.Sin(Time.time / slowMotion * hpagecount * 2.0f) / 2.0f;
+				this.ViewDocument(this.pdfDocumentIdx, this.pdfPage, this.pdfZoom, this.pdfYoff);
 			}
 			foreach (IAction action in this.inputService.GetMovements()) {
 				switch (action.Type) {
