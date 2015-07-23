@@ -58,10 +58,10 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 			if (this.Ok()) {
 				LibPDF.libpdf_render_page(this.pdfSession.Get(), this.pdfPage, 0, 0, 1, 1, 0);
 				if (this.pdfTexturePixels != null) {
-					LibPDF.memcpy(this.pdfTexturePixels.Ptr(), LibPDF.libpdf_pixels_page(this.pdfSession.Get(), this.pdfPage), this.pdfTextureXSize * this.pdfTextureYSize * 4);
+					LibPDF.memcpy(this.pdfTexturePixels.Ptr, LibPDF.libpdf_pixels_page(this.pdfSession.Get(), this.pdfPage), this.pdfTextureXSize * this.pdfTextureYSize * 4);
 				}
 				if (this.pdfTexture != null) {
-					this.pdfTexture.SetPixels32((Color32[])this.pdfTexturePixels.Obj());
+					this.pdfTexture.SetPixels32((Color32[])this.pdfTexturePixels.Obj);
 					this.pdfTexture.Apply();
 				}
 			}

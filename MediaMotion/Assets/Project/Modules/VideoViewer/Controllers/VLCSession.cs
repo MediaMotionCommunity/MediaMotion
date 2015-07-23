@@ -6,35 +6,49 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 	/// <summary>
 	/// VideoViewer VLC Session
 	/// </summary>
-	public class VLCSession {
+	public class VLCSession : IDisposable {
+		/// <summary>
+		/// Gets the session.
+		/// </summary>
+		/// <value>
+		/// The session.
+		/// </value>
+		public IntPtr Session { get; private set; }
 
-		private IntPtr vlc_session;
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="VLCSession"/> class.
+		/// </summary>
 		public VLCSession() {
-			vlc_session = LibVLC.libvlc_new(0, new string[] { });
+			this.Session = LibVLC.libvlc_new(0, new string[] { });
 		}
 
-		~VLCSession() {
-			if (ok()) {
-				LibVLC.libvlc_release(vlc_session);
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		public void Dispose() {
+			if (this.Ok()) {
+				LibVLC.libvlc_release(this.Session);
 			}
 		}
 
-		public bool ok() {
-			return vlc_session != IntPtr.Zero;
+		/// <summary>
+		/// Oks this instance.
+		/// </summary>
+		/// <returns></returns>
+		public bool Ok() {
+			return (this.Session != IntPtr.Zero);
 		}
 
-		public bool check() {
-			if (!ok()) {
+		/// <summary>
+		/// Checks this instance.
+		/// </summary>
+		/// <returns></returns>
+		public bool Check() {
+			if (!this.Ok()) {
 				Debug.LogError("Unable to load VLC renderer");
-				return false;
+				return (false);
 			}
-			return true;
+			return (true);
 		}
-
-		public IntPtr get() {
-			return vlc_session;
-		}
-
 	}
 }
