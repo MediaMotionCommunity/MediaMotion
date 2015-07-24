@@ -45,9 +45,19 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		public ActionType EditorPreviousAction = ActionType.Left;
 
 		/// <summary>
-		/// The element
+		/// The base element
 		/// </summary>
 		public GameObject BaseElement;
+
+		/// <summary>
+		/// The base floor
+		/// </summary>
+		public GameObject BaseFloor;
+
+		/// <summary>
+		/// The base background
+		/// </summary>
+		public GameObject BaseBackground;
 
 		/// <summary>
 		/// The buffer access
@@ -100,6 +110,16 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected Queue<GameObject> buffer;
 
 		/// <summary>
+		/// The background
+		/// </summary>
+		protected GameObject background;
+
+		/// <summary>
+		/// The floor
+		/// </summary>
+		protected GameObject floor;
+
+		/// <summary>
 		/// Initializes the specified module.
 		/// </summary>
 		/// <param name="inputService">The input.</param>
@@ -117,6 +137,8 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 
 			this.InitPlaylist();
 			this.InitBuffers();
+			this.InitScene();
+			this.Select(this.elements[this.sideElements]);
 		}
 
 		/// <summary>
@@ -132,17 +154,58 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 						break;
 					case ActionType.ZoomIn:
 						if (this.module.SupportedAction.Contains(ActionType.ZoomIn)) {
-							
+
+						}
+						break;
+					case ActionType.Select:
+						if (this.module.SupportedAction.Contains(ActionType.Select)) {
+							this.Select(this.elements[this.sideElements]);
 						}
 						break;
 					default:
 						if (action.Type == this.nextAction) {
+							this.Unselect(this.elements[this.sideElements]);
 							this.Next();
 						} else if (action.Type == this.previousAction) {
+							this.Unselect(this.elements[this.sideElements]);
 							this.Previous();
 						}
 						break;
 				}
+			}
+		}
+
+		/// <summary>
+		/// Selects the specified element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		protected virtual void Select(GameObject element) {
+			foreach (GameObject current in this.elements) {
+				if (current != element) {
+					this.Unselect(current);
+				}
+			}
+			if (element != null) {
+				element.transform.Find("Tile").gameObject.GetComponent<TileScript>().Select();
+			}
+		}
+
+		/// <summary>
+		/// Unselects all.
+		/// </summary>
+		protected virtual void UnselectAll() {
+			foreach (GameObject element in this.elements) {
+				this.Unselect(element);
+			}
+		}
+
+		/// <summary>
+		/// Unselects the specified element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		protected virtual void Unselect(GameObject element) {
+			if (element != null) {
+				element.transform.Find("Tile").gameObject.GetComponent<TileScript>().Unselect();
 			}
 		}
 
@@ -168,6 +231,22 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 			}
 			for (int i = 0; i < this.bufferSize; ++i) {
 				this.buffer.Enqueue(this.CreateSlideshowElement());
+			}
+		}
+
+		/// <summary>
+		/// Initializes the scene.
+		/// </summary>
+		protected virtual void InitScene() {
+			if (this.BaseFloor != null) {
+				this.floor = GameObject.Instantiate(this.BaseFloor);
+				this.floor.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+				this.floor.transform.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f));
+			}
+			if (this.BaseBackground != null) {
+				this.background = GameObject.Instantiate(this.BaseBackground);
+				this.background.transform.localPosition = new Vector3(0.0f, 0.0f, 50.0f);
+				this.background.transform.localRotation = Quaternion.Euler(new Vector3(270.0f, 0.0f, 0.0f));
 			}
 		}
 
@@ -300,7 +379,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		///   The local position
 		/// </returns>
 		protected virtual Vector3 ComputeLocalPosition(int offset) {
-			return (new Vector3(Math.Sign(offset) * ((5 + Math.Abs(offset)) - 1), 0.0f, Math.Abs(Math.Sign(offset)) * (3.0f - (Math.Abs(offset) * 0.5f))));
+			return (new Vector3(Math.Sign(offset) * ((5 + Math.Abs(offset)) - 1), 2.2f, Math.Abs(Math.Sign(offset)) * (3.0f - (Math.Abs(offset) * 0.5f))));
 		}
 
 		/// <summary>

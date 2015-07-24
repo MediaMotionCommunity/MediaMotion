@@ -7,9 +7,26 @@ namespace MediaMotion.Core.Utils {
 	/// </summary>
 	public class AutoPinner : IDisposable {
 		/// <summary>
+		/// The object handle
+		/// </summary>
+		protected GCHandle objHandle;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AutoPinner"/> class.
+		/// </summary>
+		/// <param name="obj">The object.</param>
+		public AutoPinner(object obj) {
+			this.objHandle = GCHandle.Alloc(obj, GCHandleType.Pinned);
+		}
+
+		/// <summary>
 		/// The object
 		/// </summary>
-		public object Obj { get; private set; }
+		public object Obj {
+			get {
+				return (this.objHandle.Target);
+			}
+		}
 
 		/// <summary>
 		/// Gets the pinned object pointer.
@@ -21,20 +38,6 @@ namespace MediaMotion.Core.Utils {
 			get {
 				return (this.objHandle.AddrOfPinnedObject());
 			}
-		}
-
-		/// <summary>
-		/// The object handle
-		/// </summary>
-		protected GCHandle objHandle;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="AutoPinner"/> class.
-		/// </summary>
-		/// <param name="obj">The object.</param>
-		public AutoPinner(object obj) {
-			this.Obj = obj;
-			this.objHandle = GCHandle.Alloc(this.Obj, GCHandleType.Pinned);
 		}
 
 		/// <summary>

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace MediaMotion.Modules {
+namespace MediaMotion.Core.Models {
 	/// <summary>
 	/// Mirror reflection (http://wiki.unity3d.com/index.php/MirrorReflection4)
 	/// </summary>
