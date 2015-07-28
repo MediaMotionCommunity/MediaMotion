@@ -1,5 +1,5 @@
 using System;
-using MediaMotion.Modules.VideoViewer.Services.VLC.Binding;
+using MediaMotion.Modules.VideoViewer.Services.VLC.Bindings;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using MediaMotion.Modules.VideoViewer.Services.VLC.Models.Interfaces;

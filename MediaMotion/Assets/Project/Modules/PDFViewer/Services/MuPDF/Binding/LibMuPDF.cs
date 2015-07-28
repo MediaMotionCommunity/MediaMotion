@@ -1,33 +1,11 @@
-using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 
-/**
-    How to compile:
-
-Mac OS:
-    Compiled MuPDF -> $CCDIR
-    PDFViewer Binding path -> $BIND
-    Output DLL path -> $OUT
-
-    mkdir $OUT
-    mkdir $OUT/pdf/
-    gcc -dynamiclib -o $OUT/pdf/libpdf.bundle $BIND/LibPDF.c $CCDIR/build/debug/*.a -I$CCDIR/include -lm
-
-    Example (with $PWD == LibPDF.c directory):
-        export CCDIR="/Users/vincentbrunet/Downloads/mupdf"
-        export OUT="../../../../../ModulesLibraries"
-        export BIND="."
-
-Windows:
-    FIX-ME
-
- */
-namespace MediaMotion.Modules.PDFViewer.Controllers.Binding {
+namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Binding {
 	/// <summary>
 	/// LibPDF CSharp binding
 	/// </summary>
-	static class LibPDF {
+	static class LibMuPDF {
 		/// <summary>
 		/// Load a LibPDF's session.
 		/// </summary>

@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using MediaMotion.Core.Utils;
-using MediaMotion.Modules.VideoViewer.Services.VLC.Binding;
+using MediaMotion.Modules.VideoViewer.Services.VLC.Bindings;
 using MediaMotion.Modules.VideoViewer.Services.VLC.Models.Interfaces;
 
 namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
@@ -31,6 +31,8 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
 			}
 			LibVLC.libvlc_video_set_format_callbacks(this.Resource, PlayerCallbacks.VideoFormat, PlayerCallbacks.VideoUnformat, (IntPtr)GCHandle.Alloc(this));
 			LibVLC.libvlc_video_set_callbacks(this.Resource, PlayerCallbacks.VideoLock, PlayerCallbacks.VideoUnlock, PlayerCallbacks.VideoDisplay, (IntPtr)GCHandle.Alloc(this));
+			this.Play();
+			this.Pause();
 		}
 
 		/// <summary>
@@ -124,6 +126,18 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
 		}
 
 		/// <summary>
+		/// Gets the duration.
+		/// </summary>
+		/// <value>
+		/// The duration.
+		/// </value>
+		public int Duration {
+			get {
+				return ((int)(LibVLC.libvlc_media_player_get_length(this.Resource) / 1000));
+			}
+		}
+
+		/// <summary>
 		/// Gets or sets the time.
 		/// </summary>
 		/// <value>
@@ -134,7 +148,9 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
 				return ((int)(LibVLC.libvlc_media_player_get_time(this.Resource) / 1000));
 			}
 			set {
-				LibVLC.libvlc_media_player_set_time(this.Resource, (long)value);
+				if (this.Duration >= value) {
+					LibVLC.libvlc_media_player_set_time(this.Resource, (long)value * 1000);
+				}
 			}
 		}
 

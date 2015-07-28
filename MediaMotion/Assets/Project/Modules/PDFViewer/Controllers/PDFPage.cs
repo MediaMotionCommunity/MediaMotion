@@ -1,6 +1,6 @@
 using System;
 using MediaMotion.Core.Utils;
-using MediaMotion.Modules.PDFViewer.Controllers.Binding;
+using MediaMotion.Modules.PDFViewer.Services.MuPDF.Binding;
 using UnityEngine;
 
 namespace MediaMotion.Modules.PDFViewer.Controllers {
@@ -26,12 +26,12 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 			this.pdfDocument = document;
 			this.pdfPagenum = pagenum;
 			if (this.pdfSession.Check() && this.pdfDocument.Check()) {
-				this.pdfPage = LibPDF.libpdf_load_page(this.pdfSession.Get(), this.pdfDocument.Get(), this.pdfPagenum, pdf_dpi, pdf_dpi);
+				this.pdfPage = LibMuPDF.libpdf_load_page(this.pdfSession.Get(), this.pdfDocument.Get(), this.pdfPagenum, pdf_dpi, pdf_dpi);
 				if (this.pdfPage != IntPtr.Zero) {
 					float size = 1.0f / 10.0f;
 
-					this.pdfTextureXSize = LibPDF.libpdf_xsize_page(pdfSession.Get(), pdfPage);
-					this.pdfTextureYSize = LibPDF.libpdf_ysize_page(pdfSession.Get(), pdfPage);
+					this.pdfTextureXSize = LibMuPDF.libpdf_xsize_page(pdfSession.Get(), pdfPage);
+					this.pdfTextureYSize = LibMuPDF.libpdf_ysize_page(pdfSession.Get(), pdfPage);
 					this.pdfTexturePixels = new AutoPinner(new Color32[this.pdfTextureXSize * this.pdfTextureYSize]);
 					this.pdfTexture = new Texture2D(this.pdfTextureXSize, this.pdfTextureYSize, TextureFormat.RGBA32, false);
 					this.Render();
@@ -46,7 +46,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 
 		public void OnDestoy() {
 			if (this.pdfPage != IntPtr.Zero) {
-				LibPDF.libpdf_free_page(this.pdfSession.Get(), this.pdfPage);
+				LibMuPDF.libpdf_free_page(this.pdfSession.Get(), this.pdfPage);
 			}
 			this.GetComponent<Renderer>().material.mainTexture = this.pdfTextureBase;
 			if (this.pdfTexture != null) {
@@ -56,9 +56,9 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 
 		public void Render() {
 			if (this.Ok()) {
-				LibPDF.libpdf_render_page(this.pdfSession.Get(), this.pdfPage, 0, 0, 1, 1, 0);
+				LibMuPDF.libpdf_render_page(this.pdfSession.Get(), this.pdfPage, 0, 0, 1, 1, 0);
 				if (this.pdfTexturePixels != null) {
-					LibPDF.memcpy(this.pdfTexturePixels.Ptr, LibPDF.libpdf_pixels_page(this.pdfSession.Get(), this.pdfPage), this.pdfTextureXSize * this.pdfTextureYSize * 4);
+					LibMuPDF.memcpy(this.pdfTexturePixels.Ptr, LibMuPDF.libpdf_pixels_page(this.pdfSession.Get(), this.pdfPage), this.pdfTextureXSize * this.pdfTextureYSize * 4);
 				}
 				if (this.pdfTexture != null) {
 					this.pdfTexture.SetPixels32((Color32[])this.pdfTexturePixels.Obj);
@@ -72,8 +72,8 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		}
 
 		public int Error() {
-			if (this.pdfSession.Ok() && this.pdfDocument.Ok() && this.pdfPage != IntPtr.Zero) {
-				return (LibPDF.libpdf_error_page(this.pdfSession.Get(), this.pdfPage));
+			if (this.pdfSession.Check() && this.pdfDocument.Ok() && this.pdfPage != IntPtr.Zero) {
+				return (LibMuPDF.libpdf_error_page(this.pdfSession.Get(), this.pdfPage));
 			}
 			return (-1);
 		}

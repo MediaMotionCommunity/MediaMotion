@@ -10,9 +10,10 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// </summary>
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="Child">The type of the child.</typeparam>
-	public abstract class ASlideshowTile<Module, Child> : AScript<Module, Child>, ISlideshowTile
+	public abstract class ASlideshowTile<Module, Child> : ASlideshowEnvironment<Module, Child>, ISlideshowTile
 		where Module : class, IModule
 		where Child : ASlideshowTile<Module, Child> {
+
 		/// <summary>
 		/// The texture
 		/// </summary>
@@ -39,11 +40,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected bool oppositeYScale = false;
 
 		/// <summary>
-		/// The selected
-		/// </summary>
-		protected bool selected = false;
-
-		/// <summary>
 		/// Gets a value indicating whether [texture2 d applied].
 		/// </summary>
 		/// <value>
@@ -56,20 +52,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		public virtual void Update() {
 			this.Texture2DLoadingProcess();
-		}
-
-		/// <summary>
-		/// Selects this instance.
-		/// </summary>
-		public virtual void Select() {
-			this.selected = true;
-		}
-
-		/// <summary>
-		/// Unselects this instance.
-		/// </summary>
-		public virtual void Unselect() {
-			this.selected = false;
 		}
 
 		/// <summary>

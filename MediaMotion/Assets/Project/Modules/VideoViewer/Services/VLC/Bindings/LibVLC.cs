@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace MediaMotion.Modules.VideoViewer.Services.VLC.Binding {
+namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 	/// <summary>
 	/// C# binding class of lib VLC
 	/// </summary>

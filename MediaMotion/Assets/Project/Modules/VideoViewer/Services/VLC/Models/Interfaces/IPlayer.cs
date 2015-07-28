@@ -80,6 +80,14 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models.Interfaces {
 		int Time { get; set; }
 
 		/// <summary>
+		/// Gets the duration.
+		/// </summary>
+		/// <value>
+		/// The duration.
+		/// </value>
+		int Duration { get; }
+
+		/// <summary>
 		/// Sets the texture.
 		/// </summary>
 		/// <param name="texture">The texture.</param>

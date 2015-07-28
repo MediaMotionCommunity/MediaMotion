@@ -18,10 +18,17 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		private IPlayer player;
 
 		/// <summary>
+		/// The progress bar
+		/// </summary>
+		private ProgressBarController progressBar;
+
+		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
 		public void Init(IVLCService vlcService) {
 			this.player = vlcService.GetPlayer((IVideo)this.file);
+			this.progressBar = this.gameObject.transform.Find("ProgressBar").gameObject.AddComponent<ProgressBarController>();
+			this.progressBar.enabled = false;
 		}
 
 		/// <summary>
@@ -37,20 +44,20 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// Selects this instance.
 		/// </summary>
-		public override void Select() {
+		public override void EnterFullscreen() {
 			if (this.player != null) {
-				base.Select();
 				this.player.IsPlaying = !this.player.IsPlaying;
+				this.progressBar.enabled = true;
 			}
 		}
 
 		/// <summary>
 		/// Unselects this instance.
 		/// </summary>
-		public override void Unselect() {
+		public override void LeaveFullscreen() {
 			if (this.player != null) {
-				base.Unselect();
 				this.player.Stop();
+				this.progressBar.enabled = false;
 			}
 		}
 
@@ -59,7 +66,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// </summary>
 		protected override void Texture2DLoadingProcess() {
 			if (this.IsTexture2DReady()) {
-				if (this.selected || !this.Texture2DApplied) {
+				if (this.Fullscreen || !this.Texture2DApplied) {
 					this.ApplyTexture2D();
 				}
 			} else {
@@ -75,6 +82,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 			if (this.player != null && this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
 				this.texture2D.SetPixels32((Color32[])this.player.Texture.Obj, 0);
 				this.texture2D.Apply();
+				this.progressBar.Ratio = ((float)this.player.Time) / (float)this.player.Duration;
 				this.Texture2DApplied = true;
 			}
 		}

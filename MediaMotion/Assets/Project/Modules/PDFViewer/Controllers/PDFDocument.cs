@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MediaMotion.Modules.PDFViewer.Controllers.Binding;
+using MediaMotion.Modules.PDFViewer.Services.MuPDF.Binding;
 using MediaMotion.Modules.PDFViewer.Models;
 using UnityEngine;
 
@@ -42,7 +42,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 			this.Element = element;
 
 			if (this.Session.Check()) {
-				this.Document = LibPDF.libpdf_load_document(this.Session.Get(), this.Element.GetPath());
+				this.Document = LibMuPDF.libpdf_load_document(this.Session.Get(), this.Element.GetPath());
 				if (this.Ok()) {
 					int pagenum = this.Count();
 
@@ -62,7 +62,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 
 		public void OnDestroy() {
 			if (this.Ok()) {
-				LibPDF.libpdf_free_document(Session.Get(), this.Document);
+				LibMuPDF.libpdf_free_document(Session.Get(), this.Document);
 				this.Document = IntPtr.Zero;
 			}
 			for (int i = 0; i < pdfPages.Count; ++i) {
@@ -146,13 +146,13 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 
 		public int Count() {
 			if (this.Ok()) {
-				return (LibPDF.libpdf_count_pages(this.Session.Get(), this.Document));
+				return (LibMuPDF.libpdf_count_pages(this.Session.Get(), this.Document));
 			}
 			return (-1);
 		}
 
 		public bool Ok() {
-			return (this.Session.Ok() && this.Document != IntPtr.Zero);
+			return (this.Session.Check() && this.Document != IntPtr.Zero);
 		}
 
 		public bool Check() {

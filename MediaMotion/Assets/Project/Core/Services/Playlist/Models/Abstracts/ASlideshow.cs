@@ -18,10 +18,12 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
 	/// <typeparam name="ElementScript">The type of the animation script.</typeparam>
-	public class ASlideshow<Module, TileScript, ElementScript> : AScript<Module, ASlideshow<Module, TileScript, ElementScript>>
+	public class ASlideshow<Module, TileScript, ElementScript, FloorScript, BackgroundScript> : AScript<Module, ASlideshow<Module, TileScript, ElementScript, FloorScript, BackgroundScript>>
 		where Module : class, IModule
 		where TileScript : MonoBehaviour, ISlideshowTile
-		where ElementScript : MonoBehaviour, ISlideshowElement {
+		where ElementScript : MonoBehaviour, ISlideshowElement
+		where FloorScript : MonoBehaviour, ISlideshowEnvironment
+		where BackgroundScript : MonoBehaviour, ISlideshowEnvironment {
 		/// <summary>
 		/// The editor number of side elements
 		/// </summary>
@@ -50,14 +52,14 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		public GameObject BaseElement;
 
 		/// <summary>
-		/// The base floor
+		/// The floor
 		/// </summary>
-		public GameObject BaseFloor;
+		public GameObject Floor;
 
 		/// <summary>
-		/// The base background
+		/// The background
 		/// </summary>
-		public GameObject BaseBackground;
+		public GameObject Background;
 
 		/// <summary>
 		/// The buffer access
@@ -108,16 +110,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// The buffer
 		/// </summary>
 		protected Queue<GameObject> buffer;
-
-		/// <summary>
-		/// The background
-		/// </summary>
-		protected GameObject background;
-
-		/// <summary>
-		/// The floor
-		/// </summary>
-		protected GameObject floor;
 
 		/// <summary>
 		/// Initializes the specified module.
@@ -186,7 +178,13 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 				}
 			}
 			if (element != null) {
-				element.transform.Find("Tile").gameObject.GetComponent<TileScript>().Select();
+				element.transform.Find("Tile").gameObject.GetComponent<TileScript>().Fullscreen = true;
+			}
+			if (this.Floor != null) {
+				this.Floor.GetComponent<FloorScript>().Fullscreen = true;
+			}
+			if (this.Background != null) {
+				this.Background.GetComponent<BackgroundScript>().Fullscreen = true;
 			}
 		}
 
@@ -205,7 +203,13 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <param name="element">The element.</param>
 		protected virtual void Unselect(GameObject element) {
 			if (element != null) {
-				element.transform.Find("Tile").gameObject.GetComponent<TileScript>().Unselect();
+				element.transform.Find("Tile").gameObject.GetComponent<TileScript>().Fullscreen = false;
+			}
+			if (this.Floor != null) {
+				this.Floor.GetComponent<FloorScript>().Fullscreen = false;
+			}
+			if (this.Background != null) {
+				this.Background.GetComponent<BackgroundScript>().Fullscreen = false;
 			}
 		}
 
@@ -238,15 +242,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// Initializes the scene.
 		/// </summary>
 		protected virtual void InitScene() {
-			if (this.BaseFloor != null) {
-				this.floor = GameObject.Instantiate(this.BaseFloor);
-				this.floor.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
-				this.floor.transform.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f));
+			if (this.Floor != null) {
+				this.Floor.AddComponent<FloorScript>();
 			}
-			if (this.BaseBackground != null) {
-				this.background = GameObject.Instantiate(this.BaseBackground);
-				this.background.transform.localPosition = new Vector3(0.0f, 0.0f, 50.0f);
-				this.background.transform.localRotation = Quaternion.Euler(new Vector3(270.0f, 0.0f, 0.0f));
+			if (this.Background != null) {
+				this.Background.AddComponent<BackgroundScript>();
 			}
 		}
 
@@ -399,7 +399,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// </summary>
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
-	public class ASlideshow<Module, TileScript> : ASlideshow<Module, TileScript, SlideshowElement>
+	public class ASlideshow<Module, TileScript> : ASlideshow<Module, TileScript, SlideshowElement, SlideshowFloor, SlideshowBackground>
 		where Module : class, IModule
 		where TileScript : MonoBehaviour, ISlideshowTile {
 	}

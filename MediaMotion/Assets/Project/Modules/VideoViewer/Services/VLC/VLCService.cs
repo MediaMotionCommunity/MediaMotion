@@ -1,5 +1,5 @@
 ﻿using System;
-using MediaMotion.Modules.VideoViewer.Services.VLC.Binding;
+using MediaMotion.Modules.VideoViewer.Services.VLC.Bindings;
 using MediaMotion.Modules.VideoViewer.Models.Interfaces;
 using MediaMotion.Modules.VideoViewer.Services.VLC.Models;
 using MediaMotion.Modules.VideoViewer.Services.VLC.Models.Interfaces;
@@ -53,10 +53,10 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC {
 		}
 
 		/// <summary>
-		/// Loads the specified media.
+		/// Get the media for the specified video.
 		/// </summary>
 		/// <param name="video">The video.</param>
-		/// <returns>The player</returns>
+		/// <returns>The media.</returns>
 		public IMedia GetMedia(IVideo video) {
 			if (this.Session != IntPtr.Zero) {
 				return (new Media(this.Session, video));
@@ -65,10 +65,10 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC {
 		}
 
 		/// <summary>
-		/// Gets the player.
+		/// Gets the player for the specified video.
 		/// </summary>
 		/// <param name="video">The video.</param>
-		/// <returns>The player</returns>
+		/// <returns>The player.</returns>
 		public IPlayer GetPlayer(IVideo video) {
 			IMedia media = this.GetMedia(video);
 

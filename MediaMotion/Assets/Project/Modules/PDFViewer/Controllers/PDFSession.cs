@@ -1,5 +1,5 @@
 using System;
-using MediaMotion.Modules.PDFViewer.Controllers.Binding;
+using MediaMotion.Modules.PDFViewer.Services.MuPDF.Binding;
 using UnityEngine;
 
 namespace MediaMotion.Modules.PDFViewer.Controllers {
@@ -7,30 +7,39 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 	/// PDF Viewer session
 	/// </summary>
 	public class PDFSession : IDisposable {
+		/// <summary>
+		/// The PDF session
+		/// </summary>
 		private IntPtr pdfSession;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PDFSession"/> class.
+		/// </summary>
 		public PDFSession() {
-			this.pdfSession = LibPDF.libpdf_load_session();
+			this.pdfSession = LibMuPDF.libpdf_load_session();
 		}
 
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
 		public void Dispose() {
-			if (this.Ok()) {
-				LibPDF.libpdf_free_session(pdfSession);
+			if (this.Check()) {
+				LibMuPDF.libpdf_free_session(this.pdfSession);
 			}
 		}
 
-		public bool Ok() {
+		/// <summary>
+		/// Checks this instance.
+		/// </summary>
+		/// <returns></returns>
+		public bool Check() {
 			return (this.pdfSession != IntPtr.Zero);
 		}
 
-		public bool Check() {
-			if (!this.Ok()) {
-				Debug.LogError("Unable to load PDF renderer");
-				return (false);
-			}
-			return (true);
-		}
-
+		/// <summary>
+		/// Gets this instance.
+		/// </summary>
+		/// <returns></returns>
 		public IntPtr Get() {
 			return (this.pdfSession);
 		}

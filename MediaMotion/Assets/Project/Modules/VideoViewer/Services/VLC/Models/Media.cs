@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using MediaMotion.Modules.VideoViewer.Services.VLC.Binding;
+using MediaMotion.Modules.VideoViewer.Services.VLC.Bindings;
 using MediaMotion.Modules.VideoViewer.Models.Interfaces;
 using MediaMotion.Modules.VideoViewer.Services.VLC.Models.Interfaces;
 
@@ -102,7 +102,6 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
 		private void RetrieveMediaInfo() {
 			LibVLC.libvlc_media_track_info_t[] tracks;
 
-			this.Duration = (int)(LibVLC.libvlc_media_get_duration(this.Resource) / 1000);
 			LibVLC.libvlc_media_fetch_tracks_info(this.Resource, out tracks);
 			for (int i = 0; i < tracks.Length; i++) {
 				switch (tracks[i].i_type) {
@@ -116,6 +115,7 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
 						break;
 				}
 			}
+			this.Duration = (int)(LibVLC.libvlc_media_get_duration(this.Resource) / 1000);
 		}
 	}
 }
