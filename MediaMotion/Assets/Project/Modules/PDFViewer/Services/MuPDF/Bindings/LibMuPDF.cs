@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Binding {
+namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Bindings {
 	/// <summary>
 	/// LibPDF CSharp binding
 	/// </summary>

@@ -1,6 +1,6 @@
 ﻿using System;
 using MediaMotion.Modules.PDFViewer.Models;
-using MediaMotion.Modules.PDFViewer.Services.MuPDF.Binding;
+using MediaMotion.Modules.PDFViewer.Services.MuPDF.Bindings;
 using MediaMotion.Modules.PDFViewer.Services.MuPDF.Interfaces;
 using MediaMotion.Modules.PDFViewer.Services.MuPDF.Models;
 using MediaMotion.Modules.PDFViewer.Services.MuPDF.Models.Interfaces;

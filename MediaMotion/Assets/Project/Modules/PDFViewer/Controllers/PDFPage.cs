@@ -1,6 +1,6 @@
 using System;
 using MediaMotion.Core.Utils;
-using MediaMotion.Modules.PDFViewer.Services.MuPDF.Binding;
+using MediaMotion.Modules.PDFViewer.Services.MuPDF.Bindings;
 using UnityEngine;
 
 namespace MediaMotion.Modules.PDFViewer.Controllers {

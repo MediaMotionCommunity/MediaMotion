@@ -4,7 +4,7 @@ using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Motion.Actions;
-using MediaMotion.Modules.PDFViewer.Services.MuPDF.Binding;
+using MediaMotion.Modules.PDFViewer.Services.MuPDF.Bindings;
 using UnityEngine;
 using MediaMotion.Modules.PDFViewer.Models;
 

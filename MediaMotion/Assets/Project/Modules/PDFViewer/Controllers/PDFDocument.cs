@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MediaMotion.Modules.PDFViewer.Services.MuPDF.Binding;
+using MediaMotion.Modules.PDFViewer.Services.MuPDF.Bindings;
 using MediaMotion.Modules.PDFViewer.Models;
 using UnityEngine;
 
