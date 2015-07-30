@@ -26,7 +26,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// Initializes this instance.
 		/// </summary>
 		public void Init(IVLCService vlcService) {
-			this.player = vlcService.GetPlayer((IVideo)this.file);
+			this.player = vlcService.GetPlayer((IVideo)this.element);
 			this.progressBar = this.gameObject.transform.Find("ProgressBar").gameObject.AddComponent<ProgressBarController>();
 			this.progressBar.enabled = false;
 		}

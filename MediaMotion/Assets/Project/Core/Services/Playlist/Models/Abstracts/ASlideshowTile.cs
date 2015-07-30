@@ -20,9 +20,9 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected Texture2D texture2D;
 
 		/// <summary>
-		/// The file
+		/// The element
 		/// </summary>
-		protected IFile file;
+		protected object element;
 
 		/// <summary>
 		/// The cumulative rotation
@@ -64,15 +64,12 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		}
 
 		/// <summary>
-		/// Loads the file.
+		/// Loads the element.
 		/// </summary>
-		/// <param name="file">The file.</param>
-		public void LoadFile(IFile file) {
-			if (file != null) {
-				if (this.file != null && this.file.GetPath().CompareTo(file.GetPath()) == 0) {
-					return;
-				}
-				this.file = file;
+		/// <param name="element">The element.</param>
+		public void Load(object element) {
+			if (element != null) {
+				this.element = element;
 				this.ClearAll();
 			}
 		}

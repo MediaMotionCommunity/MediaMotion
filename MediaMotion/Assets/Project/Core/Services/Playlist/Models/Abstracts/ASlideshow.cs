@@ -37,16 +37,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		public int EditorBufferSize = 8;
 
 		/// <summary>
-		/// The editor next action
-		/// </summary>
-		public ActionType EditorNextAction = ActionType.Right;
-
-		/// <summary>
-		/// The editor next action
-		/// </summary>
-		public ActionType EditorPreviousAction = ActionType.Left;
-
-		/// <summary>
 		/// The base element
 		/// </summary>
 		public GameObject BaseElement;
@@ -82,16 +72,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected IPlaylistService playlistService;
 
 		/// <summary>
-		/// The next action
-		/// </summary>
-		protected ActionType nextAction;
-
-		/// <summary>
-		/// The previous action
-		/// </summary>
-		protected ActionType previousAction;
-
-		/// <summary>
 		/// The side elements
 		/// </summary>
 		protected int sideElements;
@@ -124,8 +104,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 
 			this.sideElements = this.EditorSideElements;
 			this.bufferSize = this.EditorBufferSize;
-			this.nextAction = this.EditorNextAction;
-			this.previousAction = this.EditorPreviousAction;
 
 			this.InitPlaylist();
 			this.InitBuffers();
@@ -139,6 +117,19 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		public virtual void Update() {
 			foreach (IAction action in this.inputService.GetMovements()) {
 				switch (action.Type) {
+					case ActionType.Right:
+						this.Unselect(this.elements[this.sideElements]);
+						this.Next();
+						break;
+					case ActionType.Left:
+						this.Unselect(this.elements[this.sideElements]);
+						this.Previous();
+						break;
+					case ActionType.Select:
+						if (this.module.SupportedAction.Contains(ActionType.Select)) {
+							this.Select(this.elements[this.sideElements]);
+						}
+						break;
 					case ActionType.Rotate:
 						if (this.module.SupportedAction.Contains(ActionType.Rotate) && this.elements[this.sideElements] != null) {
 							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Rotate(90.0f);
@@ -149,18 +140,9 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 
 						}
 						break;
-					case ActionType.Select:
-						if (this.module.SupportedAction.Contains(ActionType.Select)) {
-							this.Select(this.elements[this.sideElements]);
-						}
-						break;
-					default:
-						if (action.Type == this.nextAction) {
-							this.Unselect(this.elements[this.sideElements]);
-							this.Next();
-						} else if (action.Type == this.previousAction) {
-							this.Unselect(this.elements[this.sideElements]);
-							this.Previous();
+					case ActionType.ZoomOut:
+						if (this.module.SupportedAction.Contains(ActionType.ZoomOut)) {
+
 						}
 						break;
 				}
@@ -302,7 +284,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		/// <param name="offset">The offset.</param>
 		/// <returns>
-		///   The game object initialized using the file <see cref="offset"/> or <c>null</c> if any file match
+		///   The game object initialized using the file <see cref="offset"/> or <c>null</c> if any object match
 		/// </returns>
 		protected virtual GameObject GetSlideshowElement(int offset) {
 			lock (this.BufferAccess) {
@@ -336,26 +318,26 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <summary>
 		/// Initializes the slideshow element.
 		/// </summary>
-		/// <param name="element">The element.</param>
+		/// <param name="gameObject">The element.</param>
 		/// <param name="offset">The offset.</param>
 		/// <returns>
 		/// The game object or <c>null</c> if no file found
 		/// </returns>
-		protected virtual GameObject InitSlideshowElement(GameObject element, int offset) {
-			IFile file = this.playlistService.Peek(offset);
+		protected virtual GameObject InitSlideshowElement(GameObject gameObject, int offset) {
+			object element = this.playlistService.Peek(offset);
 
-			if (file != null) {
-				if (element == null) {
-					element = this.CreateSlideshowElement();
+			if (element != null) {
+				if (gameObject == null) {
+					gameObject = this.CreateSlideshowElement();
 				}
-				element.GetComponent<ElementScript>().Reload();
-				element.transform.FindChild("Tile").gameObject.GetComponent<TileScript>().LoadFile(file);
+				gameObject.GetComponent<ElementScript>().Reload();
+				gameObject.transform.FindChild("Tile").gameObject.GetComponent<TileScript>().Load(element);
 
-				element.transform.localScale = this.ComputeLocalScale(offset);
-				element.transform.localPosition = this.ComputeLocalPosition(offset);
-				element.transform.localRotation = this.ComputeLocalRotation(offset);
-				element.SetActive(true);
-				return (element);
+				gameObject.transform.localScale = this.ComputeLocalScale(offset);
+				gameObject.transform.localPosition = this.ComputeLocalPosition(offset);
+				gameObject.transform.localRotation = this.ComputeLocalRotation(offset);
+				gameObject.SetActive(true);
+				return (gameObject);
 			}
 			return (null);
 		}

@@ -1,4 +1,5 @@
-﻿using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
+﻿using System;
+using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Services.Playlist.Interfaces {
 	/// <summary>
@@ -30,12 +31,28 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 		bool Loop { get; set; }
 
 		/// <summary>
+		/// Gets the elements.
+		/// </summary>
+		/// <value>
+		/// The elements.
+		/// </value>
+		IComparable[] Elements { get; }
+
+		/// <summary>
 		/// Gets the length.
 		/// </summary>
 		/// <value>
 		/// The length.
 		/// </value>
 		int Length { get; }
+
+		/// <summary>
+		/// Gets the index.
+		/// </summary>
+		/// <value>
+		/// The index.
+		/// </value>
+		int Index { get; }
 
 		/// <summary>
 		/// Configure the playlist
@@ -48,36 +65,46 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 		bool Configure(IElement element, string[] filterExtension);
 
 		/// <summary>
+		/// Configure the playlist
+		/// </summary>
+		/// <param name="elements">The elements.</param>
+		/// <param name="element">The element.</param>
+		/// <returns>
+		///   <c>true</c> if the playlist is correctly configured otherwise, <c>false</c>
+		/// </returns>
+		bool Configure(IComparable[] elements, IComparable element = null);
+
+		/// <summary>
 		/// Current file in the list.
 		/// </summary>
 		/// <returns>
-		/// The file
+		///   The element or <c>null</c>
 		/// </returns>
-		IFile Current();
+		object Current();
 
 		/// <summary>
 		/// Previous file in the list.
 		/// </summary>
 		/// <returns>
-		/// The file
+		///   The element or <c>null</c>
 		/// </returns>
-		IFile Previous();
+		object Previous();
 
 		/// <summary>
 		/// Next file in the list.
 		/// </summary>
 		/// <returns>
-		/// The file
+		///   The element or <c>null</c>
 		/// </returns>
-		IFile Next();
+		object Next();
 
 		/// <summary>
 		/// Peeks the specified offset.
 		/// </summary>
 		/// <param name="offset">The offset.</param>
 		/// <returns>
-		/// The file
+		///   The element or <c>null</c>
 		/// </returns>
-		IFile Peek(int offset = 0);
+		object Peek(int offset = 0);
 	}
 }

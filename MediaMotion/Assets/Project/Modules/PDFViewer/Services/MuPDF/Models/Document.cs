@@ -67,6 +67,19 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 		}
 
 		/// <summary>
+		/// Gets the pages.
+		/// </summary>
+		/// <returns>The pages</returns>
+		public IPage[] GetPages() {
+			IPage[] pages = new IPage[this.Count];
+
+			for (int i = 0; i < this.Count; ++i) {
+				pages[i] = new Page(this, i);
+			}
+			return (pages);
+		}
+
+		/// <summary>
 		/// Gets the page.
 		/// </summary>
 		/// <param name="pageNumber">The page number.</param>

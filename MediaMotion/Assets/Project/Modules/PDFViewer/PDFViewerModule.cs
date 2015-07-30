@@ -6,6 +6,8 @@ using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.Observers.Interfaces;
 using MediaMotion.Modules.PDFViewer.Observers;
+using MediaMotion.Modules.PDFViewer.Services.MuPDF;
+using MediaMotion.Modules.PDFViewer.Services.MuPDF.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
@@ -47,6 +49,7 @@ namespace MediaMotion.Modules.PDFViewer {
 		private IContainer BuildContainer(IContainer container) {
 			IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
 
+			containerBuilderService.Register<MuPDFService>().As<IMuPDFService>().SingleInstance = true;
 			containerBuilderService.Register<ElementDrawObserver>().As<IElementDrawObserver>().SingleInstance = true;
 			containerBuilderService.Register<ElementFactoryObserver>().As<IElementFactoryObserver>().SingleInstance = true;
 			return (containerBuilderService.Build(container));

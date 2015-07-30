@@ -39,10 +39,20 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models.Interfaces {
 		int Count { get; }
 
 		/// <summary>
+		/// Gets the pages.
+		/// </summary>
+		/// <returns>
+		/// The pages.
+		/// </returns>
+		IPage[] GetPages();
+
+		/// <summary>
 		/// Gets the page.
 		/// </summary>
 		/// <param name="pageNumber">The page number.</param>
-		/// <returns>The page</returns>
+		/// <returns>
+		/// The page
+		/// </returns>
 		IPage GetPage(int pageNumber);
 	}
 }
