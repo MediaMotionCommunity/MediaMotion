@@ -92,6 +92,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 					this.ScaleTexture2D();
 					this.ApplyTexture2D();
 					this.CleanTexture2D();
+					this.ResetElement();
 				} else {
 					this.LoadTexture2D();
 				}
@@ -144,6 +145,15 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		protected virtual void CleanTexture2D() {
 			this.texture2D = null;
+		}
+
+		/// <summary>
+		/// Resets the element.
+		/// </summary>
+		protected virtual void ResetElement() {
+			if (this.element is IResetable) {
+				((IResetable)this.element).Reset();
+			}
 		}
 
 		/// <summary>

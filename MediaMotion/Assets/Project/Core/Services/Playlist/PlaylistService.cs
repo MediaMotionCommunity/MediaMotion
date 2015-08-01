@@ -124,6 +124,21 @@ namespace MediaMotion.Core.Services.Playlist {
 		}
 
 		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. But leave the instance usable (contrary to Dispose)
+		/// </summary>
+		public void Reset() {
+			foreach (IComparable element in this.Elements) {
+				if (element is IDisposable) {
+					((IDisposable)element).Dispose();
+				}
+			}
+			this.Index = 0;
+			this.Length = 0;
+			this.Elements = null;
+			this.IsConfigured = false;
+		}
+
+		/// <summary>
 		/// Current file in the list.
 		/// </summary>
 		/// <returns>

@@ -9,6 +9,20 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 	/// </summary>
 	public class Page : IPage {
 		/// <summary>
+		/// Initializes a new instance of the <see cref="Resource"/> class.
+		/// </summary>
+		/// <param name="document">The document.</param>
+		/// <param name="pageNumber">The page number.</param>
+		public Page(IDocument document, int pageNumber) {
+			this.Session = document.Session;
+			this.Document = document;
+			this.PageNumber = pageNumber;
+			if (!this.Load()) {
+				throw new Exception("Could not load page " + this.PageNumber.ToString() + " of the document " + this.Document.Element.GetName());
+			}
+		}
+
+		/// <summary>
 		/// Gets the session.
 		/// </summary>
 		/// <value>
@@ -65,24 +79,6 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 		public AutoPinner Texture { get; private set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Resource"/> class.
-		/// </summary>
-		/// <param name="document">The document.</param>
-		/// <param name="pageNumber">The page number.</param>
-		public Page(IDocument document, int pageNumber) {
-			this.Session = document.Session;
-			this.Document = document;
-			this.PageNumber = pageNumber;
-			this.Resource = LibMuPDF.libpdf_load_page(this.Session, this.Document.Resource, this.PageNumber, 101, 101);
-
-			if (this.Resource == IntPtr.Zero) {
-				throw new Exception("Could not load page " + this.PageNumber.ToString() + " of the document " + this.Document.Element.GetName());
-			}
-			this.Width = LibMuPDF.libpdf_xsize_page(this.Session, this.Resource);
-			this.Height = LibMuPDF.libpdf_ysize_page(this.Session, this.Resource);
-		}
-
-		/// <summary>
 		/// Sets the texture.
 		/// </summary>
 		/// <param name="texture">The texture.</param>
@@ -99,14 +95,18 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
 		public void Dispose() {
-			if (this.Texture != null) {
-				this.Texture.Dispose();
-				this.Texture = null;
-			}
-			if (this.Resource != IntPtr.Zero) {
-				LibMuPDF.libpdf_free_page(this.Document.Session, this.Resource);
-				this.Resource = IntPtr.Zero;
-			}
+			this.Clean();
+			this.PageNumber = 0;
+			this.Document = null;
+			this.Session = IntPtr.Zero;
+		}
+
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. But leave the instance usable (contrary to Dispose)
+		/// </summary>
+		public void Reset() {
+			this.Clean();
+			this.Load();
 		}
 
 		/// <summary>
@@ -121,6 +121,39 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 				return (this.PageNumber - ((IPage)obj).PageNumber);
 			}
 			return (-1);
+		}
+
+		/// <summary>
+		/// Cleans this instance.
+		/// </summary>
+		private void Clean() {
+			if (this.Texture != null) {
+				this.Texture.Dispose();
+				this.Texture = null;
+			}
+			if (this.Resource != IntPtr.Zero) {
+				LibMuPDF.libpdf_free_page(this.Document.Session, this.Resource);
+				this.Resource = IntPtr.Zero;
+			}
+			this.Height = 0;
+			this.Width = 0;
+		}
+
+		/// <summary>
+		/// Loads the resource.
+		/// </summary>
+		/// <returns><c>true</c> if the resource is correctly loaded, <c>false</c> otherwise.</returns>
+		private bool Load() {
+			if (this.Resource == IntPtr.Zero) {
+				this.Resource = LibMuPDF.libpdf_load_page(this.Session, this.Document.Resource, this.PageNumber, 101, 101);
+
+				if (this.Resource == IntPtr.Zero) {
+					return (false);
+				}
+				this.Width = LibMuPDF.libpdf_xsize_page(this.Session, this.Resource);
+				this.Height = LibMuPDF.libpdf_ysize_page(this.Session, this.Resource);
+			}
+			return (true);
 		}
 	}
 }

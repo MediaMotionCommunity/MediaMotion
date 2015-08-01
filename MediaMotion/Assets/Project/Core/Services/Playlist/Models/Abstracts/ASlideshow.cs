@@ -150,6 +150,13 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		}
 
 		/// <summary>
+		/// Called when [destroy].
+		/// </summary>
+		public void OnDestroy() {
+			this.playlistService.Reset();
+		}
+
+		/// <summary>
 		/// Selects the specified element.
 		/// </summary>
 		/// <param name="element">The element.</param>

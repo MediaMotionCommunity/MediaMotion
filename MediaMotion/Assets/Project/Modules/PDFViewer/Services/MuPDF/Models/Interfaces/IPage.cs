@@ -1,11 +1,12 @@
 ﻿using System;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Utils;
 
 namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models.Interfaces {
 	/// <summary>
 	/// Page interface
 	/// </summary>
-	public interface IPage : IDisposable, IComparable {
+	public interface IPage : IDisposable, IResetable, IComparable {
 		/// <summary>
 		/// Gets the session.
 		/// </summary>

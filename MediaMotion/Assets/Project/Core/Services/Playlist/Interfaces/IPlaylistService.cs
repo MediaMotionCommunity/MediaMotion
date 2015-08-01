@@ -1,11 +1,12 @@
 ﻿using System;
+using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 
 namespace MediaMotion.Core.Services.Playlist.Interfaces {
 	/// <summary>
 	/// Playlist Service Interface
 	/// </summary>
-	public interface IPlaylistService {
+	public interface IPlaylistService : IResetable {
 		/// <summary>
 		/// Gets a value indicating whether this instance is configured.
 		/// </summary>
