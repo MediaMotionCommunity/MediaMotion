@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace MediaMotion.Core.Models {
 	/// <summary>
@@ -10,62 +10,65 @@ namespace MediaMotion.Core.Models {
 		/// <summary>
 		/// The m_ disable pixel lights
 		/// </summary>
-		public bool m_DisablePixelLights = true;
+		public bool DisablePixelLights = true;
 
 		/// <summary>
 		/// The m_ texture size
 		/// </summary>
-		public int m_TextureSize = 256;
+		public int TextureSize = 256;
 
 		/// <summary>
 		/// The m_ clip plane offset
 		/// </summary>
-		public float m_ClipPlaneOffset = 0.07f;
+		public float ClipPlaneOffset = 0.07f;
 
 		/// <summary>
 		/// The m_ reflect layers
 		/// </summary>
-		public LayerMask m_ReflectLayers = -1;
-
-		/// <summary>
-		/// The m_ reflection cameras
-		/// </summary>
-		private Hashtable m_ReflectionCameras = new Hashtable();
-
-		/// <summary>
-		/// The m_ reflection texture
-		/// </summary>
-		private RenderTexture m_ReflectionTexture = null;
-
-		/// <summary>
-		/// The m_ old reflection texture size
-		/// </summary>
-		private int m_OldReflectionTextureSize = 0;
+		public LayerMask ReflectLayers = -1;
 
 		/// <summary>
 		/// The s_ inside rendering
 		/// </summary>
-		private static bool s_InsideRendering = false;
+		private static bool InsideRendering = false;
+
+		/// <summary>
+		/// The m_ reflection cameras
+		/// </summary>
+		private Hashtable ReflectionCameras = new Hashtable();
+
+		/// <summary>
+		/// The m_ reflection texture
+		/// </summary>
+		private RenderTexture ReflectionTexture = null;
+
+		/// <summary>
+		/// The m_ old reflection texture size
+		/// </summary>
+		private int OldReflectionTextureSize = 0;
 
 		/// <summary>
 		/// Called when [will render object].
 		/// </summary>
 		public void OnWillRenderObject() {
 			var rend = GetComponent<Renderer>();
-			if (!enabled || !rend || !rend.sharedMaterial || !rend.enabled)
+			if (!this.enabled || !rend || !rend.sharedMaterial || !rend.enabled) {
 				return;
+			}
 
 			Camera cam = Camera.current;
-			if (!cam)
+			if (!cam) {
 				return;
+			}
 
-			// Safeguard from recursive reflections.        
-			if (s_InsideRendering)
+			// Safeguard from recursive reflections.
+			if (InsideRendering) {
 				return;
-			s_InsideRendering = true;
+			}
+			InsideRendering = true;
 
 			Camera reflectionCamera;
-			CreateMirrorObjects(cam, out reflectionCamera);
+			this.CreateMirrorObjects(cam, out reflectionCamera);
 
 			// find out the reflection plane: position and normal in world space
 			Vector3 pos = transform.position;
@@ -73,14 +76,15 @@ namespace MediaMotion.Core.Models {
 
 			// Optionally disable pixel lights for reflection
 			int oldPixelLightCount = QualitySettings.pixelLightCount;
-			if (m_DisablePixelLights)
+			if (this.DisablePixelLights) {
 				QualitySettings.pixelLightCount = 0;
+			}
 
-			UpdateCameraModes(cam, reflectionCamera);
+			this.UpdateCameraModes(cam, reflectionCamera);
 
 			// Render reflection
 			// Reflect camera around reflection plane
-			float d = -Vector3.Dot(normal, pos) - m_ClipPlaneOffset;
+			float d = -Vector3.Dot(normal, pos) - this.ClipPlaneOffset;
 			Vector4 reflectionPlane = new Vector4(normal.x, normal.y, normal.z, d);
 
 			Matrix4x4 reflection = Matrix4x4.zero;
@@ -91,13 +95,16 @@ namespace MediaMotion.Core.Models {
 
 			// Setup oblique projection matrix so that near plane is our reflection
 			// plane. This way we clip everything below/above it for free.
-			Vector4 clipPlane = CameraSpacePlane(reflectionCamera, pos, normal, 1.0f);
-			//Matrix4x4 projection = cam.projectionMatrix;
+			Vector4 clipPlane = this.CameraSpacePlane(reflectionCamera, pos, normal, 1.0f);
+
+			// Matrix4x4 projection = cam.projectionMatrix;
 			Matrix4x4 projection = cam.CalculateObliqueMatrix(clipPlane);
 			reflectionCamera.projectionMatrix = projection;
 
-			reflectionCamera.cullingMask = ~(1 << 4) & m_ReflectLayers.value; // never render water layer
-			reflectionCamera.targetTexture = m_ReflectionTexture;
+			// never render water layer
+			reflectionCamera.cullingMask = ~(1 << 4) & this.ReflectLayers.value;
+			reflectionCamera.targetTexture = this.ReflectionTexture;
+
 			// GL.SetRevertBackfacing(true);
 			GL.invertCulling = true;
 			reflectionCamera.transform.position = newpos;
@@ -105,48 +112,96 @@ namespace MediaMotion.Core.Models {
 			reflectionCamera.transform.eulerAngles = new Vector3(0, euler.y, euler.z);
 			reflectionCamera.Render();
 			reflectionCamera.transform.position = oldpos;
+
 			// GL.SetRevertBackfacing(false);
 			GL.invertCulling = false;
 			Material[] materials = rend.sharedMaterials;
 			foreach (Material mat in materials) {
-				if (mat.HasProperty("_ReflectionTex"))
-					mat.SetTexture("_ReflectionTex", m_ReflectionTexture);
+				if (mat.HasProperty("_ReflectionTex")) {
+					mat.SetTexture("_ReflectionTex", this.ReflectionTexture);
+				}
 			}
 
 			// Restore pixel light count
-			if (m_DisablePixelLights)
+			if (this.DisablePixelLights) {
 				QualitySettings.pixelLightCount = oldPixelLightCount;
+			}
 
-			s_InsideRendering = false;
+			InsideRendering = false;
 		}
 
 		/// <summary>
 		/// Called when [disable].
 		/// </summary>
-		void OnDisable() {
-			if (m_ReflectionTexture) {
-				DestroyImmediate(m_ReflectionTexture);
-				m_ReflectionTexture = null;
+		public void OnDisable() {
+			if (this.ReflectionTexture) {
+				RenderTexture.DestroyImmediate(this.ReflectionTexture);
+				this.ReflectionTexture = null;
 			}
-			foreach (DictionaryEntry kvp in m_ReflectionCameras)
-				DestroyImmediate(((Camera)kvp.Value).gameObject);
-			m_ReflectionCameras.Clear();
+			foreach (DictionaryEntry kvp in this.ReflectionCameras) {
+				GameObject.DestroyImmediate(((Camera)kvp.Value).gameObject);
+			}
+			this.ReflectionCameras.Clear();
+		}
+
+		/// <summary>
+		/// SGNs the specified a.
+		/// </summary>
+		/// <param name="a">a.</param>
+		/// <returns>The sign of the float</returns>
+		private static float Sgn(float a) {
+			if (a > 0.0f) {
+				return (1.0f);
+			}
+			if (a < 0.0f) {
+				return (-1.0f);
+			}
+			return (0.0f);
+		}
+
+		/// <summary>
+		/// Calculates the reflection matrix.
+		/// </summary>
+		/// <param name="reflectionMat">The reflection mat.</param>
+		/// <param name="plane">The plane.</param>
+		private static void CalculateReflectionMatrix(ref Matrix4x4 reflectionMat, Vector4 plane) {
+			reflectionMat.m00 = (1F - (2F * plane[0] * plane[0]));
+			reflectionMat.m01 = (-2F * plane[0] * plane[1]);
+			reflectionMat.m02 = (-2F * plane[0] * plane[2]);
+			reflectionMat.m03 = (-2F * plane[3] * plane[0]);
+
+			reflectionMat.m10 = (-2F * plane[1] * plane[0]);
+			reflectionMat.m11 = (1F - (2F * plane[1] * plane[1]));
+			reflectionMat.m12 = (-2F * plane[1] * plane[2]);
+			reflectionMat.m13 = (-2F * plane[3] * plane[1]);
+
+			reflectionMat.m20 = (-2F * plane[2] * plane[0]);
+			reflectionMat.m21 = (-2F * plane[2] * plane[1]);
+			reflectionMat.m22 = (1F - (2F * plane[2] * plane[2]));
+			reflectionMat.m23 = (-2F * plane[3] * plane[2]);
+
+			reflectionMat.m30 = 0F;
+			reflectionMat.m31 = 0F;
+			reflectionMat.m32 = 0F;
+			reflectionMat.m33 = 1F;
 		}
 
 		/// <summary>
 		/// Updates the camera modes.
 		/// </summary>
-		/// <param name="src">The source.</param>
-		/// <param name="dest">The dest.</param>
-		private void UpdateCameraModes(Camera src, Camera dest) {
-			if (dest == null)
+		/// <param name="source">The source.</param>
+		/// <param name="destination">The destination.</param>
+		private void UpdateCameraModes(Camera source, Camera destination) {
+			if (destination == null) {
 				return;
+			}
+
 			// set camera to clear the same way as current camera
-			dest.clearFlags = src.clearFlags;
-			dest.backgroundColor = src.backgroundColor;
-			if (src.clearFlags == CameraClearFlags.Skybox) {
-				Skybox sky = src.GetComponent(typeof(Skybox)) as Skybox;
-				Skybox mysky = dest.GetComponent(typeof(Skybox)) as Skybox;
+			destination.clearFlags = source.clearFlags;
+			destination.backgroundColor = source.backgroundColor;
+			if (source.clearFlags == CameraClearFlags.Skybox) {
+				Skybox sky = source.GetComponent(typeof(Skybox)) as Skybox;
+				Skybox mysky = destination.GetComponent(typeof(Skybox)) as Skybox;
 				if (!sky || !sky.material) {
 					mysky.enabled = false;
 				} else {
@@ -154,15 +209,16 @@ namespace MediaMotion.Core.Models {
 					mysky.material = sky.material;
 				}
 			}
+
 			// update other values to match current camera.
 			// even if we are supplying custom camera&projection matrices,
 			// some of values are used elsewhere (e.g. skybox uses far plane)
-			dest.farClipPlane = src.farClipPlane;
-			dest.nearClipPlane = src.nearClipPlane;
-			dest.orthographic = src.orthographic;
-			dest.fieldOfView = src.fieldOfView;
-			dest.aspect = src.aspect;
-			dest.orthographicSize = src.orthographicSize;
+			destination.farClipPlane = source.farClipPlane;
+			destination.nearClipPlane = source.nearClipPlane;
+			destination.orthographic = source.orthographic;
+			destination.fieldOfView = source.fieldOfView;
+			destination.aspect = source.aspect;
+			destination.orthographicSize = source.orthographicSize;
 		}
 
 		/// <summary>
@@ -174,20 +230,22 @@ namespace MediaMotion.Core.Models {
 			reflectionCamera = null;
 
 			// Reflection render texture
-			if (!m_ReflectionTexture || m_OldReflectionTextureSize != m_TextureSize) {
-				if (m_ReflectionTexture)
-					DestroyImmediate(m_ReflectionTexture);
-				m_ReflectionTexture = new RenderTexture(m_TextureSize, m_TextureSize, 16);
-				m_ReflectionTexture.name = "__MirrorReflection" + GetInstanceID();
-				m_ReflectionTexture.isPowerOfTwo = true;
-				m_ReflectionTexture.hideFlags = HideFlags.DontSave;
-				m_OldReflectionTextureSize = m_TextureSize;
+			if (!this.ReflectionTexture || this.OldReflectionTextureSize != this.TextureSize) {
+				if (this.ReflectionTexture) {
+					RenderTexture.DestroyImmediate(this.ReflectionTexture);
+				}
+				this.ReflectionTexture = new RenderTexture(this.TextureSize, this.TextureSize, 16);
+				this.ReflectionTexture.name = "__MirrorReflection" + this.GetInstanceID();
+				this.ReflectionTexture.isPowerOfTwo = true;
+				this.ReflectionTexture.hideFlags = HideFlags.DontSave;
+				this.OldReflectionTextureSize = this.TextureSize;
 			}
 
 			// Camera for reflection
-			reflectionCamera = m_ReflectionCameras[currentCamera] as Camera;
-			if (!reflectionCamera) // catch both not-in-dictionary and in-dictionary-but-deleted-GO
-		{
+			reflectionCamera = this.ReflectionCameras[currentCamera] as Camera;
+
+			// catch both not-in-dictionary and in-dictionary-but-deleted-GO
+			if (!reflectionCamera) {
 				GameObject go = new GameObject("Mirror Refl Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox));
 				reflectionCamera = go.GetComponent<Camera>();
 				reflectionCamera.enabled = false;
@@ -195,19 +253,8 @@ namespace MediaMotion.Core.Models {
 				reflectionCamera.transform.rotation = transform.rotation;
 				reflectionCamera.gameObject.AddComponent<FlareLayer>();
 				go.hideFlags = HideFlags.HideAndDontSave;
-				m_ReflectionCameras[currentCamera] = reflectionCamera;
+				this.ReflectionCameras[currentCamera] = reflectionCamera;
 			}
-		}
-
-		/// <summary>
-		/// SGNs the specified a.
-		/// </summary>
-		/// <param name="a">a.</param>
-		/// <returns></returns>
-		private static float sgn(float a) {
-			if (a > 0.0f) return 1.0f;
-			if (a < 0.0f) return -1.0f;
-			return 0.0f;
 		}
 
 		/// <summary>
@@ -217,40 +264,14 @@ namespace MediaMotion.Core.Models {
 		/// <param name="pos">The position.</param>
 		/// <param name="normal">The normal.</param>
 		/// <param name="sideSign">The side sign.</param>
-		/// <returns></returns>
+		/// <returns>Camera space plane</returns>
 		private Vector4 CameraSpacePlane(Camera cam, Vector3 pos, Vector3 normal, float sideSign) {
-			Vector3 offsetPos = pos + normal * m_ClipPlaneOffset;
+			Vector3 offsetPos = pos + (normal * this.ClipPlaneOffset);
 			Matrix4x4 m = cam.worldToCameraMatrix;
 			Vector3 cpos = m.MultiplyPoint(offsetPos);
 			Vector3 cnormal = m.MultiplyVector(normal).normalized * sideSign;
-			return new Vector4(cnormal.x, cnormal.y, cnormal.z, -Vector3.Dot(cpos, cnormal));
-		}
 
-		/// <summary>
-		/// Calculates the reflection matrix.
-		/// </summary>
-		/// <param name="reflectionMat">The reflection mat.</param>
-		/// <param name="plane">The plane.</param>
-		private static void CalculateReflectionMatrix(ref Matrix4x4 reflectionMat, Vector4 plane) {
-			reflectionMat.m00 = (1F - 2F * plane[0] * plane[0]);
-			reflectionMat.m01 = (-2F * plane[0] * plane[1]);
-			reflectionMat.m02 = (-2F * plane[0] * plane[2]);
-			reflectionMat.m03 = (-2F * plane[3] * plane[0]);
-
-			reflectionMat.m10 = (-2F * plane[1] * plane[0]);
-			reflectionMat.m11 = (1F - 2F * plane[1] * plane[1]);
-			reflectionMat.m12 = (-2F * plane[1] * plane[2]);
-			reflectionMat.m13 = (-2F * plane[3] * plane[1]);
-
-			reflectionMat.m20 = (-2F * plane[2] * plane[0]);
-			reflectionMat.m21 = (-2F * plane[2] * plane[1]);
-			reflectionMat.m22 = (1F - 2F * plane[2] * plane[2]);
-			reflectionMat.m23 = (-2F * plane[3] * plane[2]);
-
-			reflectionMat.m30 = 0F;
-			reflectionMat.m31 = 0F;
-			reflectionMat.m32 = 0F;
-			reflectionMat.m33 = 1F;
+			return (new Vector4(cnormal.x, cnormal.y, cnormal.z, -Vector3.Dot(cpos, cnormal)));
 		}
 	}
 }

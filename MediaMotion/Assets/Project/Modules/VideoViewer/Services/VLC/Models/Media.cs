@@ -1,11 +1,31 @@
 ﻿using System;
 using System.Collections;
-using MediaMotion.Modules.VideoViewer.Services.VLC.Bindings;
 using MediaMotion.Modules.VideoViewer.Models.Interfaces;
+using MediaMotion.Modules.VideoViewer.Services.VLC.Bindings;
 using MediaMotion.Modules.VideoViewer.Services.VLC.Models.Interfaces;
 
 namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
+	/// <summary>
+	/// VLC Media
+	/// </summary>
 	public class Media : IMedia {
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Media" /> class.
+		/// </summary>
+		/// <param name="session">The session.</param>
+		/// <param name="element">The element.</param>
+		/// <exception cref="System.Exception">Could not load media  + this.Element.GetName()</exception>
+		public Media(IntPtr session, IVideo element) {
+			this.Session = session;
+			this.Element = element;
+			this.Resource = LibVLC.libvlc_media_new_path(this.Session, this.Element.GetPath());
+
+			if (this.Resource == IntPtr.Zero) {
+				throw new Exception("Could not load media " + this.Element.GetName());
+			}
+			this.RetrieveMediaInfo();
+		}
+
 		/// <summary>
 		/// Gets the session.
 		/// </summary>
@@ -71,22 +91,6 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
 		public int Rate { get; private set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Resource"/> class.
-		/// </summary>
-		/// <param name="session">The session.</param>
-		/// <param name="element">The element.</param>
-		public Media(IntPtr session, IVideo element) {
-			this.Session = session;
-			this.Element = element;
-			this.Resource = LibVLC.libvlc_media_new_path(this.Session, this.Element.GetPath());
-
-			if (this.Resource == IntPtr.Zero) {
-				throw new Exception("Could not load media " + this.Element.GetName());
-			}
-			this.RetrieveMediaInfo();
-		}
-
-		/// <summary>
 		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
 		public void Dispose() {
@@ -97,21 +101,21 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
 		}
 
 		/// <summary>
-		/// Gets the infos.
+		/// Gets the information.
 		/// </summary>
 		private void RetrieveMediaInfo() {
 			LibVLC.libvlc_media_track_info_t[] tracks;
 
 			LibVLC.libvlc_media_fetch_tracks_info(this.Resource, out tracks);
 			for (int i = 0; i < tracks.Length; i++) {
-				switch (tracks[i].i_type) {
+				switch (tracks[i].Type) {
 					case LibVLC.libvlc_track_type_t.libvlc_track_video:
-						this.Width = (int)tracks[i].video.i_width;
-						this.Height = (int)tracks[i].video.i_height;
+						this.Width = (int)tracks[i].Video.Width;
+						this.Height = (int)tracks[i].Video.Height;
 						break;
 					case LibVLC.libvlc_track_type_t.libvlc_track_audio:
-						this.Channel = (int)tracks[i].audio.i_channels;
-						this.Rate = (int)tracks[i].audio.i_rate;
+						this.Channel = (int)tracks[i].Audio.i_channels;
+						this.Rate = (int)tracks[i].Audio.i_rate;
 						break;
 				}
 			}

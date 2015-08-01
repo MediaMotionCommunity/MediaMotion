@@ -19,6 +19,13 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF {
 		private IntPtr session;
 
 		/// <summary>
+		/// Initializes a new instance of the <see cref="MuPDFService"/> class.
+		/// </summary>
+		public MuPDFService() {
+			this.Session = IntPtr.Zero;
+		}
+
+		/// <summary>
 		/// Gets the session.
 		/// </summary>
 		/// <value>
@@ -34,13 +41,6 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF {
 			private set {
 				this.session = value;
 			}
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="PlayerManagerService"/> class.
-		/// </summary>
-		public MuPDFService() {
-			this.Session = IntPtr.Zero;
 		}
 
 		/// <summary>

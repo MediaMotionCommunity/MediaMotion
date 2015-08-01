@@ -13,7 +13,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	public abstract class ASlideshowTile<Module, Child> : ASlideshowEnvironment<Module, Child>, ISlideshowTile
 		where Module : class, IModule
 		where Child : ASlideshowTile<Module, Child> {
-
 		/// <summary>
 		/// The texture
 		/// </summary>
@@ -121,7 +120,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 				if (maxWidth * coeff <= maxHeight) {
 					this.gameObject.transform.localScale = new Vector3(maxWidth * ((this.oppositeXScale) ? (-1) : (1)), 1.0f, maxWidth * coeff * ((this.oppositeYScale) ? (-1) : (1)));
 				} else {
-					coeff = (float)texture2D.width / (float)texture2D.height;
+					coeff = (float)this.texture2D.width / (float)this.texture2D.height;
 					this.gameObject.transform.localScale = new Vector3(maxHeight * coeff * ((this.oppositeXScale) ? (-1) : (1)), 1.0f, maxHeight * ((this.oppositeYScale) ? (-1) : (1)));
 				}
 			}
@@ -130,8 +129,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <summary>
 		/// Apply the texture 2D.
 		/// </summary>
-		/// <param name="maxWidth">The maximum width.</param>
-		/// <param name="maxHeight">The maximum height.</param>
 		protected virtual void ApplyTexture2D() {
 			if (this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
 				this.texture2D.wrapMode = TextureWrapMode.Clamp;

@@ -28,15 +28,15 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// </summary>
 		private readonly Detections movementsDetection;
 
-        /// <summary>
-        /// Listener for leap motion states events
-        /// </summary>
-        private readonly LeapMotionListener listener;
+		/// <summary>
+		/// Listener for leap motion states events
+		/// </summary>
+		private readonly LeapMotionListener listener;
 
-        /// <summary>
-        /// Object for lock use of detection class
-        /// </summary>
-        private readonly object thisLock = new object();
+		/// <summary>
+		/// Object for lock use of detection class
+		/// </summary>
+		private readonly object thisLock = new object();
 
 		#endregion
 
@@ -47,9 +47,9 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		public LeapMotionCore() {
 			this.controller = new Controller();
 			this.movementsDetection = new Detections();
-            this.listener = new LeapMotionListener(this.movementsDetection, this.thisLock);
+			this.listener = new LeapMotionListener(this.movementsDetection, this.thisLock);
 			this.Configuration();
-            this.controller.AddListener(this.listener);
+			this.controller.AddListener(this.listener);
 		}
 		#endregion
 
@@ -67,27 +67,27 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// The <see cref="IEnumerable"/>.
 		/// </returns>
 		public IEnumerable<IAction> Frame() {
-            return this.listener.RetrieveActions();
-        }
+			return this.listener.RetrieveActions();
+		}
 
 		public void EnableAction(ActionType action) {
-            lock (this.thisLock) {
-                this.movementsDetection.DisableAllDetection();
-                if (action != null) {
-                    this.movementsDetection.EnableDetectionByAction(action);
-                }
-            }
+			lock (this.thisLock) {
+				this.movementsDetection.DisableAllDetection();
+				if (action != null) {
+					this.movementsDetection.EnableDetectionByAction(action);
+				}
+			}
 		}
 
 		public void EnableAction(IEnumerable<ActionType> actions) {
-            lock (this.thisLock) {
-                this.movementsDetection.DisableAllDetection();
-                if (actions != null) {
-                    foreach (var action in actions) {
-                        this.movementsDetection.EnableDetectionByAction(action);
-                    }
-                }
-            }
+			lock (this.thisLock) {
+				this.movementsDetection.DisableAllDetection();
+				if (actions != null) {
+					foreach (var action in actions) {
+						this.movementsDetection.EnableDetectionByAction(action);
+					}
+				}
+			}
 		}
 
 		#region Private

@@ -16,9 +16,10 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models {
 		private IntPtr buffer;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Resource"/> class.
+		/// Initializes a new instance of the <see cref="Player"/> class.
 		/// </summary>
 		/// <param name="media">The media.</param>
+		/// <exception cref="System.Exception">Could not load Player for  + this.Media.Element.GetName()</exception>
 		public Player(IMedia media) {
 			this.Media = media;
 			this.Lock = new Mutex();

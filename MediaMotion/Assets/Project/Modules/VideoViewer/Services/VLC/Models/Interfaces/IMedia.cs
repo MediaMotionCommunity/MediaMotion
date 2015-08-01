@@ -19,7 +19,7 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Models.Interfaces {
 		/// </summary>
 		/// <value>
 		/// The element.
-		/// </vRessource
+		/// </value>
 		IVideo Element { get; }
 
 		/// <summary>

@@ -138,12 +138,10 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 						break;
 					case ActionType.ZoomIn:
 						if (this.module.SupportedAction.Contains(ActionType.ZoomIn)) {
-
 						}
 						break;
 					case ActionType.ZoomOut:
 						if (this.module.SupportedAction.Contains(ActionType.ZoomOut)) {
-
 						}
 						break;
 				}
@@ -210,7 +208,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		///   <c>true</c> if the playlist is correctly initialized, <c>false</c> otherwise
 		/// </returns>
 		protected virtual bool InitPlaylist() {
-			return (this.module.Parameters != null && (this.module.Parameters.Count() > 1) ? (this.playlistService.Configure(this.module.Parameters)) : (this.playlistService.Configure(this.module.Parameters.FirstOrDefault(), this.module.SupportedExtensions)));
+			return (this.module.Parameters != null && ((this.module.Parameters.Count() > 1) ? (this.playlistService.Configure(this.module.Parameters)) : (this.playlistService.Configure(this.module.Parameters.FirstOrDefault(), this.module.SupportedExtensions))));
 		}
 
 		/// <summary>
@@ -387,9 +385,9 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// <summary>
 	/// Slideshow Abstract
 	/// </summary>
-	/// <typeparam name="Module">The type of the odule.</typeparam>
-	/// <typeparam name="Child">The type of the hild.</typeparam>
-	/// <typeparam name="TileScript">The type of the ile script.</typeparam>
+	/// <typeparam name="Module">The type of the module.</typeparam>
+	/// <typeparam name="Child">The type of the child.</typeparam>
+	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
 	public class ASlideshow<Module, Child, TileScript> : ASlideshow<Module, Child, TileScript, SlideshowElement, SlideshowFloor, SlideshowBackground>
 		where Module : class, IModule
 		where Child : ASlideshow<Module, Child, TileScript>

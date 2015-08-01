@@ -7,10 +7,9 @@ namespace MediaMotion.Modules.PDFViewer.Models {
 	/// </summary>
 	public class PDF : AFile, IPDF {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="PDF"/> class.
+		/// Initializes a new instance of the <see cref="PDF" /> class.
 		/// </summary>
 		/// <param name="fileInfo">The file information.</param>
-		/// <param name="resourceId">The resource Id.</param>
 		public PDF(FileInfo fileInfo)
 			: base(fileInfo) {
 		}

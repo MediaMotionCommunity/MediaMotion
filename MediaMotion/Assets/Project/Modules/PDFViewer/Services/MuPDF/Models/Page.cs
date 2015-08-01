@@ -5,14 +5,15 @@ using MediaMotion.Modules.PDFViewer.Services.MuPDF.Models.Interfaces;
 
 namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 	/// <summary>
-	/// Page
+	/// PDF Page
 	/// </summary>
-	sealed public class Page : IPage {
+	public sealed class Page : IPage {
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Resource"/> class.
+		/// Initializes a new instance of the <see cref="Page"/> class.
 		/// </summary>
 		/// <param name="document">The document.</param>
 		/// <param name="pageNumber">The page number.</param>
+		/// <exception cref="System.Exception">Could not load page  + this.PageNumber.ToString() +  of the document  + this.Document.Element.GetName()</exception>
 		public Page(IDocument document, int pageNumber) {
 			this.Session = document.Session;
 			this.Document = document;

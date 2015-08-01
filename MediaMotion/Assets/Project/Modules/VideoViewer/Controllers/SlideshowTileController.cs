@@ -6,12 +6,11 @@ using MediaMotion.Modules.VideoViewer.Services.Session.Interfaces;
 using MediaMotion.Modules.VideoViewer.Services.VLC.Models.Interfaces;
 using UnityEngine;
 
-
 namespace MediaMotion.Modules.VideoViewer.Controllers {
 	/// <summary>
-	/// SlideshowTileController
+	/// Slideshow tile controller
 	/// </summary>
-	sealed public class SlideshowTileController : ASlideshowTile<VideoViewerModule, SlideshowTileController> {
+	public sealed class SlideshowTileController : ASlideshowTile<VideoViewerModule, SlideshowTileController> {
 		/// <summary>
 		/// The player
 		/// </summary>
@@ -25,7 +24,8 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
-		public void Init(IVLCService vlcService) {
+		/// <param name="vlcService">The VLC service.</param>
+ 		public void Init(IVLCService vlcService) {
 			this.player = vlcService.GetPlayer((IVideo)this.element);
 			this.progressBar = this.gameObject.transform.Find("ProgressBar").gameObject.AddComponent<ProgressBarController>();
 			this.progressBar.enabled = false;

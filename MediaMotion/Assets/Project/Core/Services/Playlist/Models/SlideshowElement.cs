@@ -13,34 +13,34 @@ namespace MediaMotion.Core.Services.Playlist.Models {
 		private readonly object locker = new object();
 
 		/// <summary>
-		/// The dest scale
+		/// The destination scale
 		/// </summary>
-		private Vector3 destScale;
+		private Vector3 destinationScale;
 
 		/// <summary>
-		/// To scale
+		/// The difference scale
 		/// </summary>
-		private Vector3 diffScale;
+		private Vector3 differenceScale;
 
 		/// <summary>
-		/// The dest position
+		/// The destination position
 		/// </summary>
-		private Vector3 destPosition;
+		private Vector3 destinationPosition;
 
 		/// <summary>
 		/// The difference position
 		/// </summary>
-		private Vector3 diffPosition;
+		private Vector3 differencePosition;
 
 		/// <summary>
-		/// The dest rotation
+		/// The destination rotation
 		/// </summary>
-		private Quaternion destRotation;
+		private Quaternion destinationRotation;
 
 		/// <summary>
 		/// The difference rotation
 		/// </summary>
-		private Vector3 diffRotation;
+		private Vector3 differenceRotation;
 
 		/// <summary>
 		/// The destroy
@@ -62,13 +62,13 @@ namespace MediaMotion.Core.Services.Playlist.Models {
 		/// </summary>
 		public void Reload() {
 			lock (this.locker) {
-				this.destScale = default(Vector3);
-				this.destPosition = default(Vector3);
-				this.destRotation = default(Quaternion);
+				this.destinationScale = default(Vector3);
+				this.destinationPosition = default(Vector3);
+				this.destinationRotation = default(Quaternion);
 
-				this.diffScale = default(Vector3);
-				this.diffPosition = default(Vector3);
-				this.diffRotation = default(Vector3);
+				this.differenceScale = default(Vector3);
+				this.differencePosition = default(Vector3);
+				this.differenceRotation = default(Vector3);
 
 				this.disable = default(bool);
 				this.totalTime = 0.0f;
@@ -86,18 +86,18 @@ namespace MediaMotion.Core.Services.Playlist.Models {
 		/// <param name="time">The time.</param>
 		public void AnimateTo(Vector3 scale, Vector3 position, Quaternion rotation, bool disable = false, float time = 0.3f) {
 			lock (this.locker) {
-				this.destScale = scale;
-				this.destPosition = position;
-				this.destRotation = rotation;
+				this.destinationScale = scale;
+				this.destinationPosition = position;
+				this.destinationRotation = rotation;
 
-				this.diffScale = this.destScale - this.gameObject.transform.localScale;
-				this.diffPosition = this.destPosition - this.gameObject.transform.localPosition;
-				this.diffRotation = this.destRotation.eulerAngles - this.gameObject.transform.localRotation.eulerAngles;
+				this.differenceScale = this.destinationScale - this.gameObject.transform.localScale;
+				this.differencePosition = this.destinationPosition - this.gameObject.transform.localPosition;
+				this.differenceRotation = this.destinationRotation.eulerAngles - this.gameObject.transform.localRotation.eulerAngles;
 
 				/* shortest rotation */
-				this.diffRotation.x = Mathf.Repeat(this.diffRotation.x + 180.0f, 360.0f) - 180.0f;
-				this.diffRotation.y = Mathf.Repeat(this.diffRotation.y + 180.0f, 360.0f) - 180.0f;
-				this.diffRotation.z = Mathf.Repeat(this.diffRotation.z + 180.0f, 360.0f) - 180.0f;
+				this.differenceRotation.x = Mathf.Repeat(this.differenceRotation.x + 180.0f, 360.0f) - 180.0f;
+				this.differenceRotation.y = Mathf.Repeat(this.differenceRotation.y + 180.0f, 360.0f) - 180.0f;
+				this.differenceRotation.z = Mathf.Repeat(this.differenceRotation.z + 180.0f, 360.0f) - 180.0f;
 
 				this.disable = disable;
 				this.totalTime = time;
@@ -113,14 +113,14 @@ namespace MediaMotion.Core.Services.Playlist.Models {
 				if (this.elapsedTime < this.totalTime) {
 					float coefficient = Time.deltaTime / this.totalTime;
 
-					this.gameObject.transform.localScale += this.diffScale * coefficient;
-					this.gameObject.transform.localRotation = Quaternion.Euler(this.gameObject.transform.localRotation.eulerAngles + (this.diffRotation * coefficient));
-					this.gameObject.transform.localPosition += this.diffPosition * coefficient;
+					this.gameObject.transform.localScale += this.differenceScale * coefficient;
+					this.gameObject.transform.localRotation = Quaternion.Euler(this.gameObject.transform.localRotation.eulerAngles + (this.differenceRotation * coefficient));
+					this.gameObject.transform.localPosition += this.differencePosition * coefficient;
 
 					if ((this.elapsedTime += Time.deltaTime) >= this.totalTime) {
-						this.gameObject.transform.localScale = this.destScale;
-						this.gameObject.transform.localRotation = this.destRotation;
-						this.gameObject.transform.localPosition = this.destPosition;
+						this.gameObject.transform.localScale = this.destinationScale;
+						this.gameObject.transform.localRotation = this.destinationRotation;
+						this.gameObject.transform.localPosition = this.destinationPosition;
 						if (this.disable) {
 							this.gameObject.SetActive(false);
 						}

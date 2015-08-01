@@ -24,11 +24,17 @@ namespace MediaMotion.Core.Services.Playlist {
 		private bool isRandomized;
 
 		/// <summary>
+		/// The PRNG
+		/// </summary>
+		private Random prng;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="PlaylistService"/> class.
 		/// </summary>
 		/// <param name="fileSystem">The file system.</param>
 		public PlaylistService(IFileSystemService fileSystem) {
 			this.fileSystemService = fileSystem;
+			this.prng = new Random();
 		}
 
 		/// <summary>
@@ -86,7 +92,6 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// The index.
 		/// </value>
 		public int Index { get; private set; }
-
 
 		/// <summary>
 		/// Configures the directory.
@@ -242,6 +247,24 @@ namespace MediaMotion.Core.Services.Playlist {
 		}
 
 		/// <summary>
+		/// Sorts the callback.
+		/// </summary>
+		/// <param name="element1">The element1.</param>
+		/// <param name="element2">The element2.</param>
+		/// <returns>
+		/// <c>-1</c> if the element1 is inferior to the element2, <c>1</c> if the element1 is superior to the element2, <c>0</c> otherwise
+		/// </returns>
+		private int SortCallback(IComparable element1, IComparable element2) {
+			switch (this.Random) {
+				case true:
+					return (this.prng.Next(3) - 1);
+				case false:
+					return (element1.CompareTo(element2));
+			}
+			return (0);
+		}
+
+		/// <summary>
 		/// Sorts the array.
 		/// </summary>
 		/// <returns>
@@ -249,18 +272,9 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// </returns>
 		private int? SortArray() {
 			if (this.IsConfigured) {
-				Random prng = new Random();
 				object element = this.Current();
 
-				Array.Sort(this.Elements, delegate(IComparable element1, IComparable element2) {
-					switch (this.Random) {
-						case true:
-							return (prng.Next(3) - 1);
-						case false:
-							return (element1.CompareTo(element2));
-					}
-					return (0);
-				});
+				Array.Sort(this.Elements, this.SortCallback);
 				return (this.GetIndex((IComparable)element));
 			}
 			return (null);

@@ -5,7 +5,53 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 	/// <summary>
 	/// C# binding class of lib VLC
 	/// </summary>
-	static class LibVLC {
+	public static class LibVLC {
+		/// <summary>
+		/// Format callback delegate
+		/// </summary>
+		/// <param name="opaque">The opaque.</param>
+		/// <param name="chroma">The chroma.</param>
+		/// <param name="width">The width.</param>
+		/// <param name="height">The height.</param>
+		/// <param name="pitches">The pitches.</param>
+		/// <param name="lines">The lines.</param>
+		/// <returns><c>0</c> if no error, the error otherwise</returns>
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+		public delegate uint libvlc_video_format_cb(ref IntPtr opaque, ref uint chroma, ref uint width, ref uint height, ref uint pitches, ref uint lines);
+
+		/// <summary>
+		/// Cleanup callback delegate.
+		/// </summary>
+		/// <param name="opaque">The opaque.</param>
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+		public delegate void libvlc_video_cleanup_cb(IntPtr opaque);
+
+		/// <summary>
+		/// Lock callback delegate
+		/// </summary>
+		/// <param name="opaque">The opaque.</param>
+		/// <param name="planes">The planes.</param>
+		/// <returns>a pointer</returns>
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+		public delegate IntPtr libvlc_video_lock_cb(IntPtr opaque, ref IntPtr planes);
+
+		/// <summary>
+		/// Unlock callback delegate
+		/// </summary>
+		/// <param name="opaque">The opaque.</param>
+		/// <param name="picture">The picture.</param>
+		/// <param name="planes">The planes.</param>
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+		public delegate void libvlc_video_unlock_cb(IntPtr opaque, IntPtr picture, ref IntPtr planes);
+
+		/// <summary>
+		/// Display callback delegate
+		/// </summary>
+		/// <param name="opaque">The opaque.</param>
+		/// <param name="picture">The picture.</param>
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+		public delegate void libvlc_video_display_cb(IntPtr opaque, IntPtr picture);
+
 		/// <summary>
 		/// track enum
 		/// </summary>
@@ -17,52 +63,25 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 		}
 
 		/// <summary>
-		/// audio track info structure
+		/// Set callbacks for the specified player event.
 		/// </summary>
-		[StructLayout(LayoutKind.Sequential)]
-		public struct libvlc_media_track_info_t_audio {
-			public uint i_channels;
-			public uint i_rate;
-		}
-
-		/// <summary>
-		/// video track info structure
-		/// </summary>
-		[StructLayout(LayoutKind.Sequential)]
-		public struct libvlc_media_track_info_t_video {
-			public uint i_height;
-			public uint i_width;
-		}
-
-		/// <summary>
-		/// track info structure
-		/// </summary>
-		[StructLayout(LayoutKind.Explicit)]
-		public struct libvlc_media_track_info_t {
-			[FieldOffset(0)]
-			public uint i_codec;
-			[FieldOffset(4)]
-			public int i_id;
-			[FieldOffset(8)]
-			public libvlc_track_type_t i_type;
-			[FieldOffset(12)]
-			public int i_profile;
-			[FieldOffset(16)]
-			public int i_level;
-			[FieldOffset(20)]
-			public libvlc_media_track_info_t_audio audio;
-			[FieldOffset(20)]
-			public libvlc_media_track_info_t_video video;
-		}
+		/// <param name="player">The player.</param>
+		/// <param name="setupCallback">The setup callback.</param>
+		/// <param name="cleanupCallback">The cleanup callback.</param>
+		/// <param name="opaque">The opaque.</param>
+		[DllImport("libvlc")]
+		public static extern void libvlc_video_set_format_callbacks(IntPtr player, libvlc_video_format_cb setupCallback, libvlc_video_cleanup_cb cleanupCallback, IntPtr opaque);
 
 		/// <summary>
 		/// Create a new session.
 		/// </summary>
-		/// <param name="argc">The argc.</param>
-		/// <param name="argv">The argv.</param>
-		/// <returns></returns>
+		/// <param name="count">The count.</param>
+		/// <param name="arguments">The arguments.</param>
+		/// <returns>
+		/// The session.
+		/// </returns>
 		[DllImport("libvlc")]
-		public static extern IntPtr libvlc_new(int argc, [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[] argv);
+		public static extern IntPtr libvlc_new(int count, [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[] arguments);
 
 		/// <summary>
 		/// Release a session.
@@ -74,11 +93,13 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 		/// <summary>
 		/// Create a media object.
 		/// </summary>
-		/// <param name="inst">The inst.</param>
+		/// <param name="session">The session.</param>
 		/// <param name="path">The path.</param>
-		/// <returns></returns>
+		/// <returns>
+		/// The media.
+		/// </returns>
 		[DllImport("libvlc")]
-		public static extern IntPtr libvlc_media_new_path(IntPtr inst, [MarshalAs(UnmanagedType.LPStr)] string path);
+		public static extern IntPtr libvlc_media_new_path(IntPtr session, [MarshalAs(UnmanagedType.LPStr)] string path);
 
 		/// <summary>
 		/// Release a media object.
@@ -95,15 +116,6 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 		public static extern void libvlc_media_parse(IntPtr media);
 
 		/// <summary>
-		/// Get the number of tracks info.
-		/// </summary>
-		/// <param name="media">The media.</param>
-		/// <param name="res">The resource.</param>
-		/// <returns>The number of tracks info.</returns>
-		[DllImport("libvlc")]
-		private static extern int libvlc_media_get_tracks_info(IntPtr media, out IntPtr res);
-
-		/// <summary>
 		/// Get the duration of the media.
 		/// </summary>
 		/// <param name="media">The media.</param>
@@ -114,9 +126,9 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 		/// <summary>
 		/// Free a VLC pointer.
 		/// </summary>
-		/// <param name="inst">The inst.</param>
+		/// <param name="session">The session.</param>
 		[DllImport("libvlc")]
-		public static extern void libvlc_free(IntPtr inst);
+		public static extern void libvlc_free(IntPtr session);
 
 		/// <summary>
 		/// Get media tracks info.
@@ -191,7 +203,7 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 		/// <param name="player">The player.</param>
 		/// <returns>The time.</returns>
 		[DllImport("libvlc")]
-		public static extern Int64 libvlc_media_player_get_time(IntPtr player);
+		public static extern long libvlc_media_player_get_time(IntPtr player);
 
 		/// <summary>
 		/// Set player time.
@@ -199,7 +211,7 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 		/// <param name="player">The player.</param>
 		/// <param name="time">The time.</param>
 		[DllImport("libvlc")]
-		public static extern void libvlc_media_player_set_time(IntPtr player, Int64 time);
+		public static extern void libvlc_media_player_set_time(IntPtr player, long time);
 
 		/// <summary>
 		/// Get player length
@@ -207,63 +219,7 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 		/// <param name="player">The player.</param>
 		/// <returns>The length.</returns>
 		[DllImport("libvlc")]
-		public static extern Int64 libvlc_media_player_get_length(IntPtr player);
-
-		/// <summary>
-		/// Format callback delegate
-		/// </summary>
-		/// <param name="opaque">The opaque.</param>
-		/// <param name="chroma">The chroma.</param>
-		/// <param name="width">The width.</param>
-		/// <param name="height">The height.</param>
-		/// <param name="pitches">The pitches.</param>
-		/// <param name="lines">The lines.</param>
-		/// <returns></returns>
-		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate uint libvlc_video_format_cb(ref IntPtr opaque, ref uint chroma, ref uint width, ref uint height, ref uint pitches, ref uint lines);
-
-		/// <summary>
-		/// Cleanup callback delegate.
-		/// </summary>
-		/// <param name="opaque">The opaque.</param>
-		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate void libvlc_video_cleanup_cb(IntPtr opaque);
-
-		/// <summary>
-		/// Set callbacks for the specified player event.
-		/// </summary>
-		/// <param name="player">The player.</param>
-		/// <param name="setupCallback">The setup callback.</param>
-		/// <param name="cleanupCallback">The cleanup callback.</param>
-		/// <param name="opaque">The opaque.</param>
-		[DllImport("libvlc")]
-		public static extern void libvlc_video_set_format_callbacks(IntPtr player, libvlc_video_format_cb setupCallback, libvlc_video_cleanup_cb cleanupCallback, IntPtr opaque);
-
-		/// <summary>
-		/// Lock callback delegate
-		/// </summary>
-		/// <param name="opaque">The opaque.</param>
-		/// <param name="planes">The planes.</param>
-		/// <returns></returns>
-		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate IntPtr libvlc_video_lock_cb(IntPtr opaque, ref IntPtr planes);
-
-		/// <summary>
-		/// Unlock callback delegate
-		/// </summary>
-		/// <param name="opaque">The opaque.</param>
-		/// <param name="picture">The picture.</param>
-		/// <param name="planes">The planes.</param>
-		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate void libvlc_video_unlock_cb(IntPtr opaque, IntPtr picture, ref IntPtr planes);
-
-		/// <summary>
-		/// Display callback delegate
-		/// </summary>
-		/// <param name="opaque">The opaque.</param>
-		/// <param name="picture">The picture.</param>
-		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate void libvlc_video_display_cb(IntPtr opaque, IntPtr picture);
+		public static extern long libvlc_media_player_get_length(IntPtr player);
 
 		/// <summary>
 		/// Set callbacks for the specified player event.
@@ -291,13 +247,104 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC.Bindings {
 		public static extern IntPtr libvlc_errmsg();
 
 		/// <summary>
-		/// Binary copy of <see cref="count"/> bytes from <see cref="src"/> to <see cref="dest"/>.
+		/// Binary copy of <see cref="count" /> bytes from <see cref="src" /> to <see cref="dest" />.
 		/// </summary>
-		/// <param name="dest">The dest.</param>
-		/// <param name="src">The source.</param>
+		/// <param name="destination">The destination.</param>
+		/// <param name="source">The source.</param>
 		/// <param name="count">The count.</param>
-		/// <returns>The <see cref="dest"/>.</returns>
+		/// <returns>
+		/// The <see cref="destination" />.
+		/// </returns>
 		[DllImport("msvcrt")]
-		public static extern IntPtr memcpy(IntPtr dest, IntPtr src, uint count);
+		public static extern IntPtr memcpy(IntPtr destination, IntPtr source, uint count);
+
+		/// <summary>
+		/// Get the number of tracks info.
+		/// </summary>
+		/// <param name="media">The media.</param>
+		/// <param name="res">The resource.</param>
+		/// <returns>The number of tracks info.</returns>
+		[DllImport("libvlc")]
+		private static extern int libvlc_media_get_tracks_info(IntPtr media, out IntPtr res);
+
+		/// <summary>
+		/// audio track info structure
+		/// </summary>
+		[StructLayout(LayoutKind.Sequential)]
+		public struct libvlc_media_track_info_t_audio {
+			/// <summary>
+			/// The i_channels
+			/// </summary>
+			public uint i_channels;
+
+			/// <summary>
+			/// The i_rate
+			/// </summary>
+			public uint i_rate;
+		}
+
+		/// <summary>
+		/// video track info structure
+		/// </summary>
+		[StructLayout(LayoutKind.Sequential)]
+		public struct libvlc_media_track_info_t_video {
+			/// <summary>
+			/// The i_height
+			/// </summary>
+			public uint Height;
+
+			/// <summary>
+			/// The i_width
+			/// </summary>
+			public uint Width;
+		}
+
+		/// <summary>
+		/// track info structure
+		/// </summary>
+		[StructLayout(LayoutKind.Explicit)]
+		public struct libvlc_media_track_info_t {
+			/// <summary>
+			/// The i_codec
+			/// </summary>
+			[FieldOffset(0)]
+			public uint Codec;
+
+			/// <summary>
+			/// The i_id
+			/// </summary>
+			[FieldOffset(4)]
+			public int Id;
+
+			/// <summary>
+			/// The i_type
+			/// </summary>
+			[FieldOffset(8)]
+			public libvlc_track_type_t Type;
+
+			/// <summary>
+			/// The i_profile
+			/// </summary>
+			[FieldOffset(12)]
+			public int Profile;
+
+			/// <summary>
+			/// The i_level
+			/// </summary>
+			[FieldOffset(16)]
+			public int Level;
+
+			/// <summary>
+			/// The audio
+			/// </summary>
+			[FieldOffset(20)]
+			public libvlc_media_track_info_t_audio Audio;
+
+			/// <summary>
+			/// The video
+			/// </summary>
+			[FieldOffset(20)]
+			public libvlc_media_track_info_t_video Video;
+		}
 	}
 }

@@ -1,9 +1,9 @@
 ﻿using System;
-using MediaMotion.Modules.VideoViewer.Services.VLC.Bindings;
 using MediaMotion.Modules.VideoViewer.Models.Interfaces;
+using MediaMotion.Modules.VideoViewer.Services.Session.Interfaces;
+using MediaMotion.Modules.VideoViewer.Services.VLC.Bindings;
 using MediaMotion.Modules.VideoViewer.Services.VLC.Models;
 using MediaMotion.Modules.VideoViewer.Services.VLC.Models.Interfaces;
-using MediaMotion.Modules.VideoViewer.Services.Session.Interfaces;
 
 namespace MediaMotion.Modules.VideoViewer.Services.VLC {
 	/// <summary>
@@ -17,6 +17,13 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC {
 		/// The session.
 		/// </value>
 		private IntPtr session;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="VLCService"/> class.
+		/// </summary>
+		public VLCService() {
+			this.Session = IntPtr.Zero;
+		}
 
 		/// <summary>
 		/// Gets the session.
@@ -34,13 +41,6 @@ namespace MediaMotion.Modules.VideoViewer.Services.VLC {
 			private set {
 				this.session = value;
 			}
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="PlayerManagerService"/> class.
-		/// </summary>
-		public VLCService() {
-			this.Session = IntPtr.Zero;
 		}
 
 		/// <summary>

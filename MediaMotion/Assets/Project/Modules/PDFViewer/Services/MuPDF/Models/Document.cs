@@ -5,9 +5,26 @@ using MediaMotion.Modules.PDFViewer.Services.MuPDF.Models.Interfaces;
 
 namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 	/// <summary>
-	/// Document
+	/// PDF Document
 	/// </summary>
 	public class Document : IDocument {
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Document" /> class.
+		/// </summary>
+		/// <param name="session">The session.</param>
+		/// <param name="element">The element.</param>
+		/// <exception cref="System.Exception">Could not load document  + this.Element.GetName()</exception>
+		public Document(IntPtr session, IPDF element) {
+			this.Session = session;
+			this.Element = element;
+			this.Resource = LibMuPDF.libpdf_load_document(this.Session, this.Element.GetPath());
+
+			if (this.Resource == IntPtr.Zero) {
+				throw new Exception("Could not load document " + this.Element.GetName());
+			}
+			this.Count = LibMuPDF.libpdf_count_pages(this.Session, this.Resource);
+		}
+
 		/// <summary>
 		/// Gets the session.
 		/// </summary>
@@ -39,22 +56,6 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 		/// The pages.
 		/// </value>
 		public int Count { get; private set; }
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Resource"/> class.
-		/// </summary>
-		/// <param name="session">The session.</param>
-		/// <param name="element">The element.</param>
-		public Document(IntPtr session, IPDF element) {
-			this.Session = session;
-			this.Element = element;
-			this.Resource = LibMuPDF.libpdf_load_document(this.Session, this.Element.GetPath());
-
-			if (this.Resource == IntPtr.Zero) {
-				throw new Exception("Could not load document " + this.Element.GetName());
-			}
-			this.Count = LibMuPDF.libpdf_count_pages(this.Session, this.Resource);
-		}
 
 		/// <summary>
 		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
