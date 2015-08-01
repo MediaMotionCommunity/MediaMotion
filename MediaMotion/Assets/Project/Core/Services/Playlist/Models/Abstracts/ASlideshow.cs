@@ -18,8 +18,9 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
 	/// <typeparam name="ElementScript">The type of the animation script.</typeparam>
-	public class ASlideshow<Module, TileScript, ElementScript, FloorScript, BackgroundScript> : AScript<Module, ASlideshow<Module, TileScript, ElementScript, FloorScript, BackgroundScript>>
+	public class ASlideshow<Module, Child, TileScript, ElementScript, FloorScript, BackgroundScript> : AScript<Module, Child>
 		where Module : class, IModule
+		where Child : ASlideshow<Module, Child, TileScript, ElementScript, FloorScript, BackgroundScript>
 		where TileScript : MonoBehaviour, ISlideshowTile
 		where ElementScript : MonoBehaviour, ISlideshowElement
 		where FloorScript : MonoBehaviour, ISlideshowEnvironment
@@ -152,7 +153,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <summary>
 		/// Called when [destroy].
 		/// </summary>
-		public void OnDestroy() {
+		public virtual void OnDestroy() {
 			this.playlistService.Reset();
 		}
 
@@ -386,9 +387,21 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// <summary>
 	/// Slideshow Abstract
 	/// </summary>
+	/// <typeparam name="Module">The type of the odule.</typeparam>
+	/// <typeparam name="Child">The type of the hild.</typeparam>
+	/// <typeparam name="TileScript">The type of the ile script.</typeparam>
+	public class ASlideshow<Module, Child, TileScript> : ASlideshow<Module, Child, TileScript, SlideshowElement, SlideshowFloor, SlideshowBackground>
+		where Module : class, IModule
+		where Child : ASlideshow<Module, Child, TileScript>
+		where TileScript : MonoBehaviour, ISlideshowTile {
+	}
+
+	/// <summary>
+	/// Slideshow Abstract
+	/// </summary>
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
-	public class ASlideshow<Module, TileScript> : ASlideshow<Module, TileScript, SlideshowElement, SlideshowFloor, SlideshowBackground>
+	public class ASlideshow<Module, TileScript> : ASlideshow<Module, ASlideshow<Module, TileScript>, TileScript>
 		where Module : class, IModule
 		where TileScript : MonoBehaviour, ISlideshowTile {
 	}

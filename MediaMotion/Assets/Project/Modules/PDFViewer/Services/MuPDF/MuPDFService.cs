@@ -10,7 +10,7 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF {
 	/// MuPDF service
 	/// </summary>
 	public class MuPDFService : IMuPDFService {
-	/// <summary>
+		/// <summary>
 		/// Gets the session.
 		/// </summary>
 		/// <value>
@@ -44,12 +44,20 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF {
 		}
 
 		/// <summary>
-		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. But leave the instance usable (contrary to Dispose)
 		/// </summary>
-		public void Dispose() {
+		public void Reset() {
 			if (this.Session != IntPtr.Zero) {
 				LibMuPDF.libpdf_free_session(this.Session);
 			}
+			this.Session = IntPtr.Zero;
+		}
+
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		public void Dispose() {
+			this.Reset();
 		}
 
 		/// <summary>

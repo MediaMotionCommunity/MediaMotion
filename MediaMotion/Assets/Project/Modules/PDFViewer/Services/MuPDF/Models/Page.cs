@@ -7,7 +7,7 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 	/// <summary>
 	/// Page
 	/// </summary>
-	public class Page : IPage {
+	sealed public class Page : IPage {
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Resource"/> class.
 		/// </summary>
@@ -132,7 +132,7 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 				this.Texture = null;
 			}
 			if (this.Resource != IntPtr.Zero) {
-				LibMuPDF.libpdf_free_page(this.Document.Session, this.Resource);
+				LibMuPDF.libpdf_free_page(this.Session, this.Resource);
 				this.Resource = IntPtr.Zero;
 			}
 			this.Height = 0;
