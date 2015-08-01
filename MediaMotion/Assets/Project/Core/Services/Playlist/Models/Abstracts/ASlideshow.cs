@@ -210,7 +210,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		///   <c>true</c> if the playlist is correctly initialized, <c>false</c> otherwise
 		/// </returns>
 		protected virtual bool InitPlaylist() {
-			return (this.module.Parameters != null && this.playlistService.Configure(this.module.Parameters.FirstOrDefault(), this.module.SupportedExtensions));
+			return (this.module.Parameters != null && (this.module.Parameters.Count() > 1) ? (this.playlistService.Configure(this.module.Parameters)) : (this.playlistService.Configure(this.module.Parameters.FirstOrDefault(), this.module.SupportedExtensions)));
 		}
 
 		/// <summary>
