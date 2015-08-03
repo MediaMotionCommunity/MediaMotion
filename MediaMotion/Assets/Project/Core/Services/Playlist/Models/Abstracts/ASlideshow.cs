@@ -271,7 +271,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 				if (this.elements[index] != null) {
 					int newPosition = index - this.sideElements + step;
 
-					this.elements[index].GetComponent<ElementScript>().AnimateTo(this.ComputeLocalScale(newPosition), this.ComputeLocalPosition(newPosition), this.ComputeLocalRotation(newPosition), !keepInSlideshow);
+					this.elements[index].GetComponent<ElementScript>().AnimateTo(this.ComputeLocalScale(this.elements[index], newPosition), this.ComputeLocalPosition(this.elements[index], newPosition), this.ComputeLocalRotation(this.elements[index], newPosition), !keepInSlideshow);
 					if (!keepInSlideshow) {
 						lock (this.BufferAccess) {
 							this.buffer.Enqueue(this.elements[index]);
@@ -339,9 +339,9 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 				gameObject.GetComponent<ElementScript>().Reload();
 				gameObject.transform.FindChild("Tile").gameObject.GetComponent<TileScript>().Load(element);
 
-				gameObject.transform.localScale = this.ComputeLocalScale(offset);
-				gameObject.transform.localPosition = this.ComputeLocalPosition(offset);
-				gameObject.transform.localRotation = this.ComputeLocalRotation(offset);
+				gameObject.transform.localScale = this.ComputeLocalScale(gameObject, offset);
+				gameObject.transform.localPosition = this.ComputeLocalPosition(gameObject, offset);
+				gameObject.transform.localRotation = this.ComputeLocalRotation(gameObject, offset);
 				gameObject.SetActive(true);
 				return (gameObject);
 			}
@@ -355,7 +355,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <returns>
 		///   The local scale
 		/// </returns>
-		protected virtual Vector3 ComputeLocalScale(int offset) {
+		protected virtual Vector3 ComputeLocalScale(GameObject element, int offset) {
 			return (new Vector3(Math.Max(0.38f - (Math.Abs(offset) * 0.05f), 0.0f), Math.Max(0.38f - (Math.Abs(offset) * 0.05f), 0.0f), Math.Max(0.38f - (Math.Abs(offset) * 0.05f), 0.0f)));
 		}
 
@@ -366,7 +366,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <returns>
 		///   The local position
 		/// </returns>
-		protected virtual Vector3 ComputeLocalPosition(int offset) {
+		protected virtual Vector3 ComputeLocalPosition(GameObject element, int offset) {
 			return (new Vector3(Math.Sign(offset) * ((5 + Math.Abs(offset)) - 1), 2.2f, Math.Abs(Math.Sign(offset)) * (3.0f - (Math.Abs(offset) * 0.5f))));
 		}
 
@@ -377,7 +377,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <returns>
 		///   The local rotation
 		/// </returns>
-		protected virtual Quaternion ComputeLocalRotation(int offset) {
+		protected virtual Quaternion ComputeLocalRotation(GameObject element, int offset) {
 			return (Quaternion.Euler(0.0f, Math.Sign(offset) * (50f + (Math.Abs(offset) * 10)), 0.0f));
 		}
 	}

@@ -77,7 +77,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		/// <returns>
 		/// The local scale
 		/// </returns>
-		protected override Vector3 ComputeLocalScale(int offset) {
+		protected override Vector3 ComputeLocalScale(GameObject element, int offset) {
 			return (new Vector3(0.38f, 0.38f, 0.38f));
 		}
 
@@ -88,11 +88,12 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		/// <returns>
 		/// The local position
 		/// </returns>
-		protected override Vector3 ComputeLocalPosition(int offset) {
+		protected override Vector3 ComputeLocalPosition(GameObject element, int offset) {
+			float childWidth = element.transform.Find("Tile").gameObject.transform.localScale.x;
 			int index = this.playlistService.Index + offset;
 			int diff = index % 2;
 
-			return (new Vector3(((offset >= diff) ? (1) : (-1)) * 1.325f, 2.2f, (((offset + diff) > 1 || (offset + diff) < 0)) ? (1.0f) : (0.0f)));
+			return (new Vector3(((offset >= diff) ? (1) : (-1)) * (childWidth * 1.9f), 2.2f, (((offset + diff) > 1 || (offset + diff) < 0)) ? (1.0f) : (0.0f)));
 		}
 
 		/// <summary>
@@ -102,7 +103,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 		/// <returns>
 		/// The local rotation
 		/// </returns>
-		protected override Quaternion ComputeLocalRotation(int offset) {
+		protected override Quaternion ComputeLocalRotation(GameObject element, int offset) {
 			int index = this.playlistService.Index + offset;
 
 			if (offset > 1) {
