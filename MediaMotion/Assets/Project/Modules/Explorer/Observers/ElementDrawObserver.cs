@@ -15,7 +15,7 @@ namespace MediaMotion.Modules.Explorer.Observers {
 		/// The gameObject drew
 		/// </returns>
 		public GameObject Draw(IElement element) {
-			GameObject drewElement = GameObject.Instantiate(Resources.Load("File3D")) as GameObject;
+			GameObject drewElement = GameObject.Instantiate(Resources.Load("3DObject")) as GameObject;
 
 			float scale = 1.8f;
 			drewElement.transform.localScale = new Vector3(1 / 0.09f / 1.3f / scale, 1 / 0.05f / 4 / scale, 1 / 0.09f / 1.3f / scale);

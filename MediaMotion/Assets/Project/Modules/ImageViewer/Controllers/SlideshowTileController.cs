@@ -1,4 +1,5 @@
-﻿using MediaMotion.Core.Services.Playlist.Models.Abstracts;
+﻿using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
+using MediaMotion.Core.Services.Playlist.Models.Abstracts;
 using UnityEngine;
 
 namespace MediaMotion.Modules.ImageViewer.Controllers {
@@ -15,9 +16,9 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// Loads the texture 2D.
 		/// </summary>
 		protected override void LoadTexture2D() {
-			if (this.file != null) {
+			if (this.element != null) {
 				if (this.imageDownload == null) {
-					this.imageDownload = new WWW("file:///" + this.file.GetPath());
+					this.imageDownload = new WWW("file:///" + ((IFile)this.element).GetPath());
 				}
 				if (this.imageDownload.isDone) {
 					if (string.IsNullOrEmpty(this.imageDownload.error)) {

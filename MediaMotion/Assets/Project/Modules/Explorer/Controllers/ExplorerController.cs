@@ -36,6 +36,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public GameObject BaseElement;
 
 		/// <summary>
+		/// Visibility of popup
+		/// </summary>
+		public bool PopupVisibility;
+
+		/// <summary>
 		/// The element factory
 		/// </summary>
 		private IElementFactory elementFactory;
@@ -81,11 +86,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private MenuBehavior wheelLaunch;
 
 		/// <summary>
-		/// Visibility of popup
-		/// </summary>
-		public bool popupVisibility;
-
-		/// <summary>
 		/// Popup container
 		/// </summary>
 		private Rect popupRect;
@@ -108,7 +108,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.moduleManagerService = moduleManagerService;
 
 			// popup
-			this.popupVisibility = false;
+			this.PopupVisibility = false;
 			this.popupRect = new Rect(20, 20, 320, 65);
 
 			// game object
@@ -166,13 +166,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Called when [GUI].
 		/// </summary>
 		public void OnGUI() {
-			if (this.popupVisibility == true) {
+			if (this.PopupVisibility == true) {
 				this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Warning");
 			}
-		}
-
-		private void HydratePopupContent(int WindowID) {
-			GUI.Label(new Rect(10, 20, 320, 20), "Do you want to open the file outside MediaMotion ?");
 		}
 
 		/// <summary>
@@ -199,6 +195,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				this.popupController.UnsetFile();
 				this.selectedElement = null;
 			}
+		}
+
+		/// <summary>
+		/// Hydrates the content of the popup.
+		/// </summary>
+		/// <param name="WindowID">The window identifier.</param>
+		private void HydratePopupContent(int WindowID) {
+			GUI.Label(new Rect(10, 20, 320, 20), "Do you want to open the file outside MediaMotion ?");
 		}
 
 		/// <summary>
@@ -231,7 +235,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private void Open(IElement element) {
 			if (!this.moduleManagerService.Load(new IElement[] { element })) {
 				this.wheelLaunch.ActiveWheelTool(element);
-				this.popupVisibility = true;
+				this.PopupVisibility = true;
 			}
 		}
 

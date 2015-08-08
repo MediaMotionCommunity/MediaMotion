@@ -1,10 +1,11 @@
+using System;
 using MediaMotion.Core.Services.FileSystem.Models.Enums;
 
 namespace MediaMotion.Core.Services.FileSystem.Models.Interfaces {
 	/// <summary>
 	/// Interface Element
 	/// </summary>
-	public interface IElement {
+	public interface IElement : IComparable {
 		/// <summary>
 		/// Gets the type of the element.
 		/// </summary>

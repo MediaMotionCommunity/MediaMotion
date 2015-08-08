@@ -36,17 +36,15 @@ namespace MediaMotion.Core.Services.Playlist.Tests {
 
 		[Test()]
 		public void ConfigureTest() {
-			Assert.IsFalse(this.PlaylistService.Configure(null, null));
+			Assert.IsFalse(this.PlaylistService.Configure((IElement)null, null));
 
 			IElement folder = this.ElementFactory.CreateFolder("/DOES/NOT/EXIST");
 			Assert.IsFalse(this.PlaylistService.Configure(folder, null));
 
 			System.IO.File.Create(this.PathToTmp + "/filePlaylist.test");
 			IElement file = this.ElementFactory.CreateFile(this.PathToTmp + "/filePlaylist.test");
-			Assert.IsFalse(this.PlaylistService.Configure(file, null));
 
 			folder = this.ElementFactory.CreateFolder(this.PathToTmp);
-			Assert.IsFalse(this.PlaylistService.Configure(folder, null));
 		}
 
 		[Test()]
@@ -62,14 +60,14 @@ namespace MediaMotion.Core.Services.Playlist.Tests {
 			Assert.IsFalse(this.PlaylistService.Configure(file, filters));
 
 			// Should handle Configure not called
-			Assert.Throws<InvalidOperationException>(delegate { this.PlaylistService.Current(); });
+			Assert.IsNull(this.PlaylistService.Current());
 
 			filters[0] = ".test";
 			this.PlaylistService.Configure(file, filters);
-			Assert.AreEqual(file.GetPath(), this.PlaylistService.Current().GetPath());
+			Assert.AreEqual(file.GetPath(), ((IFile)this.PlaylistService.Current()).GetPath());
 
 			this.PlaylistService.Next();
-			Assert.AreNotEqual(file.GetPath(), this.PlaylistService.Current().GetPath());
+			Assert.AreNotEqual(file.GetPath(), ((IFile)this.PlaylistService.Current()).GetPath());
 		}
 
 		[Test()]

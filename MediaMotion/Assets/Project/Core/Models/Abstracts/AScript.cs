@@ -35,10 +35,10 @@ namespace MediaMotion.Core.Models.Abstracts {
 			this.module = moduleManager.Get<Module>();
 			if (this.module != null) {
 				IResolverService resolver = this.module.Container.Get<IResolverService>();
-				MethodInfo method = typeof(Child).GetMethod(MethodName);
-
-				if (method != null && method.IsPublic) {
-					method.Invoke((Child)this, resolver.ResolveParameters(method.GetParameters()));
+				foreach (MethodInfo method in typeof(Child).GetMethods()) {
+					if (method != null && method.IsPublic && !method.IsAbstract && method.Name.Equals(MethodName)) {
+						method.Invoke((Child)this, resolver.ResolveParameters(method.GetParameters()));
+					}
 				}
 			}
 		}

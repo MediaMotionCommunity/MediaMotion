@@ -12,7 +12,7 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// The input service
 		/// </summary>
 		private IInputService inputService;
-
+		
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
@@ -28,10 +28,10 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 			foreach (IAction action in this.inputService.GetMovements()) {
 				switch (action.Type) {
 					case ActionType.ZoomIn:
-						this.ZoomIn();
+						this.ZoomIn((float)action.Parameter);
 						break;
 					case ActionType.ZoomOut:
-						this.ZoomOut();
+						this.ZoomOut((float)action.Parameter);
 						break;
 				}
 			}

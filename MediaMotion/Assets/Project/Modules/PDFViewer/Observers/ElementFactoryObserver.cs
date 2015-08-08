@@ -13,9 +13,15 @@ namespace MediaMotion.Modules.PDFViewer.Observers {
 		/// Creates the element.
 		/// </summary>
 		/// <param name="path">The path of the element.</param>
-		/// <returns>The element</returns>
+		/// <returns>
+		/// The element
+		/// </returns>
 		public IElement Create(string path) {
-			return (new PDF(new FileInfo(path)));
+			FileInfo fileInfo = new FileInfo(path);
+			switch (fileInfo.Extension.ToLower()) {
+				default:
+					return (new PDF(fileInfo));
+			}
 		}
 	}
 }

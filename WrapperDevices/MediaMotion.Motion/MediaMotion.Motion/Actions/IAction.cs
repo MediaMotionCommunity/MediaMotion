@@ -3,7 +3,6 @@
 	/// The action type.
 	/// </summary>
 	public enum ActionType {
-		Cursor,
 		Up,
 		Down,
 		Right,
@@ -22,7 +21,8 @@
 		ZoomOut,
 		RotateRight,
 		RotationLeft,
-		Rotate
+		SoundUp,
+		SoundDown
 	}
 
 	/// <summary>

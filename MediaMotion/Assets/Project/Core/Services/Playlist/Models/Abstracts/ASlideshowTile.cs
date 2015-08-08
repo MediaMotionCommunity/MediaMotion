@@ -10,7 +10,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// </summary>
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="Child">The type of the child.</typeparam>
-	public abstract class ASlideshowTile<Module, Child> : AScript<Module, Child>, ISlideshowTile
+	public abstract class ASlideshowTile<Module, Child> : ASlideshowEnvironment<Module, Child>, ISlideshowTile
 		where Module : class, IModule
 		where Child : ASlideshowTile<Module, Child> {
 		/// <summary>
@@ -19,14 +19,24 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected Texture2D texture2D;
 
 		/// <summary>
-		/// The file
+		/// The element
 		/// </summary>
-		protected IFile file;
+		protected object element;
 
 		/// <summary>
 		/// The cumulative rotation
 		/// </summary>
 		protected float cumulativeRotation = 0.0f;
+
+		/// <summary>
+		/// The opposite x scale
+		/// </summary>
+		protected bool oppositeXScale = false;
+
+		/// <summary>
+		/// The opposite y scale
+		/// </summary>
+		protected bool oppositeYScale = false;
 
 		/// <summary>
 		/// Gets a value indicating whether [texture2 d applied].
@@ -53,15 +63,12 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		}
 
 		/// <summary>
-		/// Loads the file.
+		/// Loads the element.
 		/// </summary>
-		/// <param name="file">The file.</param>
-		public void LoadFile(IFile file) {
-			if (file != null) {
-				if (this.file != null && this.file.GetPath().CompareTo(file.GetPath()) == 0) {
-					return;
-				}
-				this.file = file;
+		/// <param name="element">The element.</param>
+		public void Load(object element) {
+			if (element != null) {
+				this.element = element;
 				this.ClearAll();
 			}
 		}
@@ -81,9 +88,10 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected virtual void Texture2DLoadingProcess() {
 			if (!this.Texture2DApplied) {
 				if (this.IsTexture2DReady()) {
-					this.ScaleTexture2D(this.texture2D);
+					this.ScaleTexture2D();
 					this.ApplyTexture2D();
 					this.CleanTexture2D();
+					this.ResetElement();
 				} else {
 					this.LoadTexture2D();
 				}
@@ -103,18 +111,17 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <summary>
 		/// Scales the texture2 d.
 		/// </summary>
-		/// <param name="texture2D">The texture2 d.</param>
 		/// <param name="maxWidth">The maximum width.</param>
 		/// <param name="maxHeight">The maximum height.</param>
-		protected virtual void ScaleTexture2D(Texture2D texture2D, float maxWidth = 1.3f, float maxHeight = 1.0f) {
-			if (texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
-				float coeff = (float)texture2D.height / (float)texture2D.width;
+		protected virtual void ScaleTexture2D(float maxWidth = 1.3f, float maxHeight = 1.0f) {
+			if (this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
+				float coeff = (float)this.texture2D.height / (float)this.texture2D.width;
 
 				if (maxWidth * coeff <= maxHeight) {
-					this.gameObject.transform.localScale = new Vector3(maxWidth, 1.0f, maxWidth * coeff);
+					this.gameObject.transform.localScale = new Vector3(maxWidth * ((this.oppositeXScale) ? (-1) : (1)), 1.0f, maxWidth * coeff * ((this.oppositeYScale) ? (-1) : (1)));
 				} else {
-					coeff = (float)texture2D.width / (float)texture2D.height;
-					this.gameObject.transform.localScale = new Vector3(maxHeight * coeff, 1.0f, maxHeight);
+					coeff = (float)this.texture2D.width / (float)this.texture2D.height;
+					this.gameObject.transform.localScale = new Vector3(maxHeight * coeff * ((this.oppositeXScale) ? (-1) : (1)), 1.0f, maxHeight * ((this.oppositeYScale) ? (-1) : (1)));
 				}
 			}
 		}
@@ -122,8 +129,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <summary>
 		/// Apply the texture 2D.
 		/// </summary>
-		/// <param name="maxWidth">The maximum width.</param>
-		/// <param name="maxHeight">The maximum height.</param>
 		protected virtual void ApplyTexture2D() {
 			if (this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
 				this.texture2D.wrapMode = TextureWrapMode.Clamp;
@@ -137,6 +142,15 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		protected virtual void CleanTexture2D() {
 			this.texture2D = null;
+		}
+
+		/// <summary>
+		/// Resets the element.
+		/// </summary>
+		protected virtual void ResetElement() {
+			if (this.element is IResetable) {
+				((IResetable)this.element).Reset();
+			}
 		}
 
 		/// <summary>

@@ -20,14 +20,18 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		private readonly List<ICustomDetection> customDetections;
 
 		private List<IDetectorDocker> detectionTypes;
+		private List<ActionType> enabledActions;
 
 		public DetectionContainer() {
 			this.customDetections = new List<ICustomDetection>();
 			this.leapDetections = new Dictionary<Gesture.GestureType, ILeapDetection>();
 			this.detectionTypes = new List<IDetectorDocker>();
+			this.enabledActions = new List<ActionType>();
 		}
 
 		private interface IDetectorDocker {
+			IEnumerable<ActionType> Actions { get; }
+
 			bool IsUsing(ActionType action);
 
 			IMouvementDetection Create(ICollection<KeyValuePair<Gesture.GestureType, ILeapDetection>> leapDetections, IEnumerable<ICustomDetection> customDetections);
@@ -64,18 +68,25 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		public void Clear() {
 			this.leapDetections.Clear();
 			this.customDetections.Clear();
+			this.enabledActions.Clear();
 		}
 
 		public void Enable(ActionType action) {
+			if (this.enabledActions.Contains(action)) {
+				return;
+			}
+
 			foreach (var detectorDocker in this.detectionTypes) {
-				if (detectorDocker.IsUsing(action)) {
-					var detector = detectorDocker.Create(this.leapDetections, this.customDetections);
-					if (detectorDocker.IsCustomDetector()) {
-						this.Register(detector as ICustomDetection);
-					}
-					else {
-						this.Register(detector as ILeapDetection);
-					}
+				if (!detectorDocker.IsUsing(action)) {
+					continue;
+				}
+				this.enabledActions = this.enabledActions.Concat(detectorDocker.Actions).ToList();
+				var detector = detectorDocker.Create(this.leapDetections, this.customDetections);
+				if (detectorDocker.IsCustomDetector()) {
+					this.Register(detector as ICustomDetection);
+				}
+				else {
+					this.Register(detector as ILeapDetection);
 				}
 			}
 		}
@@ -101,6 +112,10 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 				this.globalType = typeof(T);
 			}
 
+			public IEnumerable<ActionType> Actions {
+				get { return this.actions; }
+			}
+
 			public bool IsUsing(ActionType action) {
 				return this.actions.Contains(action);
 			}
@@ -121,7 +136,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 					var parameterInfos = info.GetParameters();
 
 					if (parameterInfos.Any(p => this.IsTypeOf(p.ParameterType))) {
-						throw new DetectionResolveException("Cannot inject him self");						
+						throw new DetectionResolveException("Cannot inject him self");
 					}
 					if (!parameterInfos.All(p => types.Any(t => t.IsTypeOf(p.ParameterType)))) {
 						continue;
@@ -136,6 +151,7 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 			public bool IsTypeOf(Type parameterType) {
 				return parameterType == this.globalType;
 			}
+
 			private object[] GetParameters(ICollection<KeyValuePair<Gesture.GestureType, ILeapDetection>> leapDetections, IEnumerable<ICustomDetection> customDetections) {
 				var parameters = new object[this.parametersTypes.Count()];
 
