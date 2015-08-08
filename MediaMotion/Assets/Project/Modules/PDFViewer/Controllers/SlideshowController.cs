@@ -15,7 +15,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 	/// <summary>
 	/// Slideshow Controller
 	/// </summary>
-	public class SlideshowController : ASlideshow<PDFViewerModule, SlideshowController, SlideshowTileController> {
+	public class SlideshowController : ASlideshow<PDFViewerModule, SlideshowController, SlideshowTileController, SlideshowElementController> {
 		/// <summary>
 		/// The file system service
 		/// </summary>

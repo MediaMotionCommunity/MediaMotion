@@ -50,49 +50,4 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		public virtual void LeaveFullscreen() {
 		}
 	}
-
-	/// <summary>
-	/// Slideshow environment abstract
-	/// </summary>
-	public class ASlideshowEnvironment : MonoBehaviour, ISlideshowEnvironment {
-		/// <summary>
-		/// The fullscreen
-		/// </summary>
-		private bool fullscreen;
-
-		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="IFloor" /> is fullscreen.
-		/// </summary>
-		/// <value>
-		///   <c>true</c> if fullscreen; otherwise, <c>false</c>.
-		/// </value>
-		public bool Fullscreen {
-			get {
-				return (this.fullscreen);
-			}
-			set {
-				switch (value) {
-					case true:
-						this.EnterFullscreen();
-						break;
-					case false:
-						this.LeaveFullscreen();
-						break;
-				}
-				this.fullscreen = value;
-			}
-		}
-
-		/// <summary>
-		/// Enters the fullscreen.
-		/// </summary>
-		public virtual void EnterFullscreen() {
-		}
-
-		/// <summary>
-		/// Leaves the fullscreen.
-		/// </summary>
-		public virtual void LeaveFullscreen() {
-		}
-	}
 }

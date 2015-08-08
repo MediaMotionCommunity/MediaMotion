@@ -6,7 +6,7 @@ namespace MediaMotion.Modules.VideoViewer.Controllers {
 	/// <summary>
 	/// Slideshow Controller
 	/// </summary>
-	public class SlideshowController : ASlideshow<VideoViewerModule, SlideshowTileController> {
+	public class SlideshowController : ASlideshow<VideoViewerModule, SlideshowTileController, SlideshowElementController> {
 		/// <summary>
 		/// Initializes the playlist.
 		/// </summary>

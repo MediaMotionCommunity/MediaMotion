@@ -8,13 +8,15 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// </summary>
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="Child">The type of the child.</typeparam>
-	public class SlideshowBackground : ASlideshowEnvironment {
+	public class ASlideshowFloor<Module, Child> : ASlideshowEnvironment<Module, Child>
+		where Module : class, IModule
+		where Child : ASlideshowFloor<Module, Child> {
 		/// <summary>
 		/// Enters the fullscreen.
 		/// </summary>
 		public override void EnterFullscreen() {
 			if (this.Fullscreen == false) {
-				this.Colorate(new Color(0, 0, 0, 1));
+				this.Rotate(new Vector3(-45.0f, 0.0f, 0.0f));
 			}
 		}
 
@@ -23,17 +25,24 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		public override void LeaveFullscreen() {
 			if (this.Fullscreen == true) {
-				this.Colorate(new Color(0, 0, 0, 0));
+				this.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
 			}
 		}
 
 		/// <summary>
-		/// Colorates the specified color.
+		/// Rotates the specified angles.
 		/// </summary>
-		/// <param name="color">The color.</param>
-		private void Colorate(Color color) {
+		/// <param name="angles">The angles.</param>
+		private void Rotate(Vector3 angles) {
 			iTween.Stop(this.gameObject);
-			iTween.ColorTo(this.gameObject, color, 1.5f);
+			iTween.RotateTo(this.gameObject, angles, 10.0f);
 		}
+	}
+	/// <summary>
+	/// Slideshow floor
+	/// </summary>
+	/// <typeparam name="Module">The type of the module.</typeparam>
+	public class ASlideshowFloor<Module> : ASlideshowFloor<Module, ASlideshowFloor<Module>>
+		where Module : class, IModule {
 	}
 }

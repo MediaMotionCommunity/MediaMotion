@@ -388,10 +388,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="Child">The type of the child.</typeparam>
 	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
-	public class ASlideshow<Module, Child, TileScript> : ASlideshow<Module, Child, TileScript, SlideshowElement, SlideshowFloor, SlideshowBackground>
+	public class ASlideshow<Module, Child, TileScript, ElementScript> : ASlideshow<Module, Child, TileScript, ElementScript, SlideshowDefaultEnvironment, SlideshowDefaultEnvironment>
 		where Module : class, IModule
-		where Child : ASlideshow<Module, Child, TileScript>
-		where TileScript : MonoBehaviour, ISlideshowTile {
+		where Child : ASlideshow<Module, Child, TileScript, ElementScript>
+		where TileScript : MonoBehaviour, ISlideshowTile
+		where ElementScript : MonoBehaviour, ISlideshowElement {
 	}
 
 	/// <summary>
@@ -399,8 +400,9 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// </summary>
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
-	public class ASlideshow<Module, TileScript> : ASlideshow<Module, ASlideshow<Module, TileScript>, TileScript>
+	public class ASlideshow<Module, TileScript, ElementScript> : ASlideshow<Module, ASlideshow<Module, TileScript, ElementScript>, TileScript, ElementScript>
 		where Module : class, IModule
-		where TileScript : MonoBehaviour, ISlideshowTile {
+		where TileScript : MonoBehaviour, ISlideshowTile
+		where ElementScript : MonoBehaviour, ISlideshowElement {
 	}
 }

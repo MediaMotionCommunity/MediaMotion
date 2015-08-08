@@ -10,15 +10,5 @@
 		///   <c>true</c> if fullscreen; otherwise, <c>false</c>.
 		/// </value>
 		bool Fullscreen { get; set; }
-
-		/// <summary>
-		/// Enters the fullscreen.
-		/// </summary>
-		void EnterFullscreen();
-
-		/// <summary>
-		/// Leaves the fullscreen.
-		/// </summary>
-		void LeaveFullscreen();
 	}
 }
