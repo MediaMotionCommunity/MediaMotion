@@ -28,7 +28,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// The line spacing
 		/// </summary>
-		public const float LineSpacing = 1.5f;
+		public const float LineSpacing = 2.3f;
 
 		/// <summary>
 		/// The base element
