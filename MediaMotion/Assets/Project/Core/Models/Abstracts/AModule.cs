@@ -99,7 +99,9 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// Configures the module.
 		/// </summary>
 		/// <param name="container">The container</param>
-		public abstract void Configure(IContainer container);
+		public virtual void Configure(IContainer container) {
+			this.Container = container;
+		}
 
 		/// <summary>
 		/// Loads the specified files.

@@ -1,3 +1,7 @@
+\> [Documentation](../index.md)
+
+----------
+
 Glossary
 ========
 
@@ -16,7 +20,7 @@ Module
 ------
 > A Module a set of assets, scripts and class that handle a specific type of Element and provide an environment adapted to it.
 > To summarize a Module is a [Unity](https://unity3d.com/) scene with a specific functionality (such as Video Player, Book Reader, Folder Explorer...)
-> A Module can have its own Services or overload existing Services (see [Overload an existing Service](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Resources/doc/advancedModule/overloadService.md))
+> A Module can have its own Services or overload existing Services (see [Overload an existing Service](../advancedModule/overloadService.md))
 
 Script
 ------
@@ -30,4 +34,4 @@ Service
 > The Core provide a set of Services to handle low level operation that can be use by all the Module.
 
 ----------
-*__Notice:__ The documentation above is available offline in [PDF format](https://github.com/MediaMotionCommunity/MediaMotion/blob/master/Resources/doc/doc.pdf).*
+*__Notice:__ The documentation above is available offline in [PDF format](../doc.pdf).*

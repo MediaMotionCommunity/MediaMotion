@@ -12,12 +12,12 @@ namespace MediaMotion.Core.Loader.Controllers {
 		/// Initializes the specified version.
 		/// </summary>
 		/// <param name="version">The version.</param>
-		/// <param name="BuildMode">The build mode.</param>
-		public void Init([Parameter("Version")] Version version, [Parameter("BuildMode")] string BuildMode) {
+		/// <param name="buildMode">The build mode.</param>
+		public void Init([Parameter("Version")] Version version, [Parameter("BuildMode")] string buildMode) {
 			string versionString = "Version " + version.ToString(3);
 
-			if (BuildMode.CompareTo("Release") != 0) {
-				versionString = "[" + BuildMode + "] " + versionString;
+			if (buildMode.CompareTo("Release") != 0) {
+				versionString = "[" + buildMode + "] " + versionString;
 			}
 			this.gameObject.GetComponent<GUIText>().text = versionString;
 		}
