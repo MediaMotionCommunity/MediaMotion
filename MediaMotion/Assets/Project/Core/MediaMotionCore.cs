@@ -25,7 +25,7 @@ using MediaMotion.Core.Services.Playlist.Interfaces;
 using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Modules.PDFViewer;
-using MediaMotion.Modules.VideoViewer;
+using MediaMotion.Modules.MediaViewer;
 
 namespace MediaMotion.Core {
 	/// <summary>
@@ -77,8 +77,8 @@ namespace MediaMotion.Core {
 			moduleManager.Register<ModuleLoader>();
 			moduleManager.Register<ExplorerModule>();
 			moduleManager.Register<ImageViewerModule>();
-			moduleManager.Register<VideoViewerModule>();
 			moduleManager.Register<PDFViewerModule>();
+			moduleManager.RegisterAdvanced<MediaViewerModule>();
 		}
 
 		/// <summary>
