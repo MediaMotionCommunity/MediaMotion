@@ -55,6 +55,7 @@
     <Compile Include="MovementsDetection\ASecureLeapDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\EasyFileBrowsingDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\KeyTapDetection.cs" />
+    <Compile Include="MovementsDetection\Detectors\OpenHandDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\PinchGrabDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\PinchSelectionDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\RightLeftDetection.cs" />
