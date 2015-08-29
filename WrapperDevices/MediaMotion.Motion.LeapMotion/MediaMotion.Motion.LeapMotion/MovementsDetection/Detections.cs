@@ -55,6 +55,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			this.detectionContainer.Register<PinchSelectionDetection>(ActionType.Select);
 			this.detectionContainer.Register<PinchGrabDetection>(ActionType.GrabStart, ActionType.GrabStop);
 			this.detectionContainer.Register<RightLeftDetection>(ActionType.Left, ActionType.Right);
+			this.detectionContainer.Register<SoundDetection>(ActionType.SoundUp, ActionType.SoundDown);
             this.detectionContainer.Build();
 		}
 		#endregion
