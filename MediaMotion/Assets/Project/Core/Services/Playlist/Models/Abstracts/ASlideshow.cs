@@ -18,10 +18,13 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// <typeparam name="Module">The type of the module.</typeparam>
 	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
 	/// <typeparam name="ElementScript">The type of the animation script.</typeparam>
-	public class ASlideshow<Module, TileScript, ElementScript> : AScript<Module, ASlideshow<Module, TileScript, ElementScript>>
+	public class ASlideshow<Module, Child, TileScript, ElementScript, FloorScript, BackgroundScript> : AScript<Module, Child>
 		where Module : class, IModule
+		where Child : ASlideshow<Module, Child, TileScript, ElementScript, FloorScript, BackgroundScript>
 		where TileScript : MonoBehaviour, ISlideshowTile
-		where ElementScript : MonoBehaviour, ISlideshowElement {
+		where ElementScript : MonoBehaviour, ISlideshowElement
+		where FloorScript : MonoBehaviour, ISlideshowEnvironment
+		where BackgroundScript : MonoBehaviour, ISlideshowEnvironment {
 		/// <summary>
 		/// The editor number of side elements
 		/// </summary>
@@ -35,19 +38,19 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		public int EditorBufferSize = 8;
 
 		/// <summary>
-		/// The editor next action
-		/// </summary>
-		public ActionType EditorNextAction = ActionType.Right;
-
-		/// <summary>
-		/// The editor next action
-		/// </summary>
-		public ActionType EditorPreviousAction = ActionType.Left;
-
-		/// <summary>
-		/// The element
+		/// The base element
 		/// </summary>
 		public GameObject BaseElement;
+
+		/// <summary>
+		/// The floor
+		/// </summary>
+		public GameObject Floor;
+
+		/// <summary>
+		/// The background
+		/// </summary>
+		public GameObject Background;
 
 		/// <summary>
 		/// The buffer access
@@ -68,16 +71,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// The playlist service
 		/// </summary>
 		protected IPlaylistService playlistService;
-
-		/// <summary>
-		/// The next action
-		/// </summary>
-		protected ActionType nextAction;
-
-		/// <summary>
-		/// The previous action
-		/// </summary>
-		protected ActionType previousAction;
 
 		/// <summary>
 		/// The side elements
@@ -112,11 +105,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 
 			this.sideElements = this.EditorSideElements;
 			this.bufferSize = this.EditorBufferSize;
-			this.nextAction = this.EditorNextAction;
-			this.previousAction = this.EditorPreviousAction;
 
 			this.InitPlaylist();
 			this.InitBuffers();
+			this.InitScene();
+			this.Select(this.elements[this.sideElements]);
 		}
 
 		/// <summary>
@@ -125,6 +118,19 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		public virtual void Update() {
 			foreach (IAction action in this.inputService.GetMovements()) {
 				switch (action.Type) {
+					case ActionType.Right:
+						this.Unselect(this.elements[this.sideElements]);
+						this.Next();
+						break;
+					case ActionType.Left:
+						this.Unselect(this.elements[this.sideElements]);
+						this.Previous();
+						break;
+					case ActionType.Select:
+						if (this.module.SupportedAction.Contains(ActionType.Select)) {
+							this.Select(this.elements[this.sideElements]);
+						}
+						break;
 					case ActionType.Rotate:
 						if (this.module.SupportedAction.Contains(ActionType.Rotate) && this.elements[this.sideElements] != null) {
 							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Rotate(90.0f);
@@ -132,17 +138,66 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 						break;
 					case ActionType.ZoomIn:
 						if (this.module.SupportedAction.Contains(ActionType.ZoomIn)) {
-							
 						}
 						break;
-					default:
-						if (action.Type == this.nextAction) {
-							this.Next();
-						} else if (action.Type == this.previousAction) {
-							this.Previous();
+					case ActionType.ZoomOut:
+						if (this.module.SupportedAction.Contains(ActionType.ZoomOut)) {
 						}
 						break;
 				}
+			}
+		}
+
+		/// <summary>
+		/// Called when [destroy].
+		/// </summary>
+		public virtual void OnDestroy() {
+			this.playlistService.Reset();
+		}
+
+		/// <summary>
+		/// Selects the specified element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		protected virtual void Select(GameObject element) {
+			foreach (GameObject current in this.elements) {
+				if (current != element) {
+					this.Unselect(current);
+				}
+			}
+			if (element != null) {
+				element.transform.Find("Tile").gameObject.GetComponent<TileScript>().Fullscreen = true;
+			}
+			if (this.Floor != null) {
+				this.Floor.GetComponent<FloorScript>().Fullscreen = true;
+			}
+			if (this.Background != null) {
+				this.Background.GetComponent<BackgroundScript>().Fullscreen = true;
+			}
+		}
+
+		/// <summary>
+		/// Unselects all.
+		/// </summary>
+		protected virtual void UnselectAll() {
+			foreach (GameObject element in this.elements) {
+				this.Unselect(element);
+			}
+		}
+
+		/// <summary>
+		/// Unselects the specified element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		protected virtual void Unselect(GameObject element) {
+			if (element != null) {
+				element.transform.Find("Tile").gameObject.GetComponent<TileScript>().Fullscreen = false;
+			}
+			if (this.Floor != null) {
+				this.Floor.GetComponent<FloorScript>().Fullscreen = false;
+			}
+			if (this.Background != null) {
+				this.Background.GetComponent<BackgroundScript>().Fullscreen = false;
 			}
 		}
 
@@ -153,7 +208,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		///   <c>true</c> if the playlist is correctly initialized, <c>false</c> otherwise
 		/// </returns>
 		protected virtual bool InitPlaylist() {
-			return (this.module.Parameters != null && this.playlistService.Configure(this.module.Parameters.FirstOrDefault(), this.module.SupportedExtensions));
+			return (this.module.Parameters != null && ((this.module.Parameters.Count() > 1) ? (this.playlistService.Configure(this.module.Parameters)) : (this.playlistService.Configure(this.module.Parameters.FirstOrDefault(), this.module.SupportedExtensions))));
 		}
 
 		/// <summary>
@@ -168,6 +223,18 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 			}
 			for (int i = 0; i < this.bufferSize; ++i) {
 				this.buffer.Enqueue(this.CreateSlideshowElement());
+			}
+		}
+
+		/// <summary>
+		/// Initializes the scene.
+		/// </summary>
+		protected virtual void InitScene() {
+			if (this.Floor != null) {
+				this.Floor.AddComponent<FloorScript>();
+			}
+			if (this.Background != null) {
+				this.Background.AddComponent<BackgroundScript>();
 			}
 		}
 
@@ -204,7 +271,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 				if (this.elements[index] != null) {
 					int newPosition = index - this.sideElements + step;
 
-					this.elements[index].GetComponent<ElementScript>().AnimateTo(this.ComputeLocalScale(newPosition), this.ComputeLocalPosition(newPosition), this.ComputeLocalRotation(newPosition), !keepInSlideshow);
+					this.elements[index].GetComponent<ElementScript>().AnimateTo(this.ComputeLocalScale(this.elements[index], newPosition), this.ComputeLocalPosition(this.elements[index], newPosition), this.ComputeLocalRotation(this.elements[index], newPosition), !keepInSlideshow);
 					if (!keepInSlideshow) {
 						lock (this.BufferAccess) {
 							this.buffer.Enqueue(this.elements[index]);
@@ -223,7 +290,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		/// <param name="offset">The offset.</param>
 		/// <returns>
-		///   The game object initialized using the file <see cref="offset"/> or <c>null</c> if any file match
+		///   The game object initialized using the file <see cref="offset"/> or <c>null</c> if any object match
 		/// </returns>
 		protected virtual GameObject GetSlideshowElement(int offset) {
 			lock (this.BufferAccess) {
@@ -257,26 +324,26 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <summary>
 		/// Initializes the slideshow element.
 		/// </summary>
-		/// <param name="element">The element.</param>
+		/// <param name="gameObject">The element.</param>
 		/// <param name="offset">The offset.</param>
 		/// <returns>
 		/// The game object or <c>null</c> if no file found
 		/// </returns>
-		protected virtual GameObject InitSlideshowElement(GameObject element, int offset) {
-			IFile file = this.playlistService.Peek(offset);
+		protected virtual GameObject InitSlideshowElement(GameObject gameObject, int offset) {
+			object element = this.playlistService.Peek(offset);
 
-			if (file != null) {
-				if (element == null) {
-					element = this.CreateSlideshowElement();
+			if (element != null) {
+				if (gameObject == null) {
+					gameObject = this.CreateSlideshowElement();
 				}
-				element.GetComponent<ElementScript>().Reload();
-				element.transform.FindChild("Tile").gameObject.GetComponent<TileScript>().LoadFile(file);
+				gameObject.GetComponent<ElementScript>().Reload();
+				gameObject.transform.FindChild("Tile").gameObject.GetComponent<TileScript>().Load(element);
 
-				element.transform.localScale = this.ComputeLocalScale(offset);
-				element.transform.localPosition = this.ComputeLocalPosition(offset);
-				element.transform.localRotation = this.ComputeLocalRotation(offset);
-				element.SetActive(true);
-				return (element);
+				gameObject.transform.localScale = this.ComputeLocalScale(gameObject, offset);
+				gameObject.transform.localPosition = this.ComputeLocalPosition(gameObject, offset);
+				gameObject.transform.localRotation = this.ComputeLocalRotation(gameObject, offset);
+				gameObject.SetActive(true);
+				return (gameObject);
 			}
 			return (null);
 		}
@@ -288,7 +355,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <returns>
 		///   The local scale
 		/// </returns>
-		protected virtual Vector3 ComputeLocalScale(int offset) {
+		protected virtual Vector3 ComputeLocalScale(GameObject element, int offset) {
 			return (new Vector3(Math.Max(0.38f - (Math.Abs(offset) * 0.05f), 0.0f), Math.Max(0.38f - (Math.Abs(offset) * 0.05f), 0.0f), Math.Max(0.38f - (Math.Abs(offset) * 0.05f), 0.0f)));
 		}
 
@@ -299,8 +366,8 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <returns>
 		///   The local position
 		/// </returns>
-		protected virtual Vector3 ComputeLocalPosition(int offset) {
-			return (new Vector3(Math.Sign(offset) * ((5 + Math.Abs(offset)) - 1), 0.0f, Math.Abs(Math.Sign(offset)) * (3.0f - (Math.Abs(offset) * 0.5f))));
+		protected virtual Vector3 ComputeLocalPosition(GameObject element, int offset) {
+			return (new Vector3(Math.Sign(offset) * ((5 + Math.Abs(offset)) - 1), 2.2f, Math.Abs(Math.Sign(offset)) * (3.0f - (Math.Abs(offset) * 0.5f))));
 		}
 
 		/// <summary>
@@ -310,7 +377,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// <returns>
 		///   The local rotation
 		/// </returns>
-		protected virtual Quaternion ComputeLocalRotation(int offset) {
+		protected virtual Quaternion ComputeLocalRotation(GameObject element, int offset) {
 			return (Quaternion.Euler(0.0f, Math.Sign(offset) * (50f + (Math.Abs(offset) * 10)), 0.0f));
 		}
 	}
@@ -319,9 +386,23 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 	/// Slideshow Abstract
 	/// </summary>
 	/// <typeparam name="Module">The type of the module.</typeparam>
+	/// <typeparam name="Child">The type of the child.</typeparam>
 	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
-	public class ASlideshow<Module, TileScript> : ASlideshow<Module, TileScript, SlideshowElement>
+	public class ASlideshow<Module, Child, TileScript, ElementScript> : ASlideshow<Module, Child, TileScript, ElementScript, SlideshowDefaultEnvironment, SlideshowDefaultEnvironment>
 		where Module : class, IModule
-		where TileScript : MonoBehaviour, ISlideshowTile {
+		where Child : ASlideshow<Module, Child, TileScript, ElementScript>
+		where TileScript : MonoBehaviour, ISlideshowTile
+		where ElementScript : MonoBehaviour, ISlideshowElement {
+	}
+
+	/// <summary>
+	/// Slideshow Abstract
+	/// </summary>
+	/// <typeparam name="Module">The type of the module.</typeparam>
+	/// <typeparam name="TileScript">The type of the tile script.</typeparam>
+	public class ASlideshow<Module, TileScript, ElementScript> : ASlideshow<Module, ASlideshow<Module, TileScript, ElementScript>, TileScript, ElementScript>
+		where Module : class, IModule
+		where TileScript : MonoBehaviour, ISlideshowTile
+		where ElementScript : MonoBehaviour, ISlideshowElement {
 	}
 }

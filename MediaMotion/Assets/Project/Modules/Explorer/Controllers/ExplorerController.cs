@@ -28,12 +28,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// The line spacing
 		/// </summary>
-		public const float LineSpacing = 1.5f;
+		public const float LineSpacing = 2.3f;
 
 		/// <summary>
 		/// The base element
 		/// </summary>
 		public GameObject BaseElement;
+
+		/// <summary>
+		/// Visibility of popup
+		/// </summary>
+		public bool PopupVisibility;
 
 		/// <summary>
 		/// The element factory
@@ -81,14 +86,12 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private MenuBehavior wheelLaunch;
 
 		/// <summary>
-		/// Visibility of popup
-		/// </summary>
-		public bool popupVisibility;
-
-		/// <summary>
 		/// Popup container
 		/// </summary>
 		private Rect popupRect;
+
+//		private GameObject cam;
+//		private GameObject sidebar;
 
 		/// <summary>
 		/// Initializes the specified explorer module.
@@ -105,7 +108,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.moduleManagerService = moduleManagerService;
 
 			// popup
-			this.popupVisibility = false;
+			this.PopupVisibility = false;
 			this.popupRect = new Rect(20, 20, 320, 65);
 
 			// game object
@@ -120,6 +123,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			} else {
 				this.OpenDirectory(this.module.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
 			}
+
+//			this.sidebar = GameObject.Find("Sidebar");
+//			this.cam = GameObject.Find("Cameras/Main");
+//			this.cam.transform.position = Camera.main.transform.position;
+//			Camera.main.transform.parent = this.cam.transform;
 		}
 
 		/// <summary>
@@ -141,9 +149,15 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 							this.wheelTool.ActiveWheelTool(this.selectedElement.gameObject.GetComponent<ElementController>().Element);
 						}
 						break;
-					case ActionType.GrabStop:
-						this.wheelTool.DeactiveWheelTool();
-						break;
+				case ActionType.GrabStop:
+					this.wheelTool.DeactiveWheelTool();
+					break;
+//				case ActionType.Left:
+//					this.ShowSidebar();
+//					break;
+//				case ActionType.Right:
+//					this.HideSidebar();
+//					break;
 				}
 			}
 		}
@@ -152,13 +166,9 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// Called when [GUI].
 		/// </summary>
 		public void OnGUI() {
-			if (this.popupVisibility == true) {
+			if (this.PopupVisibility == true) {
 				this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Warning");
 			}
-		}
-
-		private void HydratePopupContent(int WindowID) {
-			GUI.Label(new Rect(10, 20, 320, 20), "Do you want to open the file outside MediaMotion ?");
 		}
 
 		/// <summary>
@@ -185,6 +195,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				this.popupController.UnsetFile();
 				this.selectedElement = null;
 			}
+		}
+
+		/// <summary>
+		/// Hydrates the content of the popup.
+		/// </summary>
+		/// <param name="WindowID">The window identifier.</param>
+		private void HydratePopupContent(int WindowID) {
+			GUI.Label(new Rect(10, 20, 320, 20), "Do you want to open the file outside MediaMotion ?");
 		}
 
 		/// <summary>
@@ -217,7 +235,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private void Open(IElement element) {
 			if (!this.moduleManagerService.Load(new IElement[] { element })) {
 				this.wheelLaunch.ActiveWheelTool(element);
-				this.popupVisibility = true;
+				this.PopupVisibility = true;
 			}
 		}
 
@@ -242,5 +260,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				++count;
 			}
 		}
+			
+//		private void ShowSidebar() {
+//			iTween.MoveTo(this.sidebar, new Vector3(7.0f, 0.93f, 0.05f), 1.5f);
+//			iTween.MoveTo(this.cam, new Vector3(0.0f, 5.0f, -2.5f), 1.5f);
+//		}
+//		private void HideSidebar() {
+//			iTween.MoveTo(this.sidebar, new Vector3(5.5f, 0.93f, 0.05f), 1.5f);
+//			iTween.MoveTo(this.cam, new Vector3(1.6f, 5.0f, -2.5f), 1.5f);
+//		}
 	}
 }

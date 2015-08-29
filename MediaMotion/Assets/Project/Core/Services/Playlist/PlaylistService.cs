@@ -7,7 +7,6 @@ using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.Playlist.Interfaces;
-using UnityEngine;
 
 namespace MediaMotion.Core.Services.Playlist {
 	/// <summary>
@@ -20,19 +19,14 @@ namespace MediaMotion.Core.Services.Playlist {
 		private IFileSystemService fileSystemService;
 
 		/// <summary>
-		/// The file list
-		/// </summary>
-		private IFile[] filesList;
-
-		/// <summary>
-		/// The index
-		/// </summary>
-		private int index;
-
-		/// <summary>
 		/// The is randomized
 		/// </summary>
 		private bool isRandomized;
+
+		/// <summary>
+		/// The PRNG
+		/// </summary>
+		private Random prng;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PlaylistService"/> class.
@@ -40,6 +34,7 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <param name="fileSystem">The file system.</param>
 		public PlaylistService(IFileSystemService fileSystem) {
 			this.fileSystemService = fileSystem;
+			this.prng = new Random();
 		}
 
 		/// <summary>
@@ -62,7 +57,7 @@ namespace MediaMotion.Core.Services.Playlist {
 			}
 			set {
 				this.isRandomized = value;
-				this.index = this.SortArray().GetValueOrDefault();
+				this.Index = this.SortArray().GetValueOrDefault();
 			}
 		}
 
@@ -75,12 +70,28 @@ namespace MediaMotion.Core.Services.Playlist {
 		public bool Loop { get; set; }
 
 		/// <summary>
+		/// Gets the elements.
+		/// </summary>
+		/// <value>
+		/// The elements.
+		/// </value>
+		public IComparable[] Elements { get; private set; }
+
+		/// <summary>
 		/// Gets the length.
 		/// </summary>
 		/// <value>
 		/// The length.
 		/// </value>
 		public int Length { get; private set; }
+
+		/// <summary>
+		/// Gets the index.
+		/// </summary>
+		/// <value>
+		/// The index.
+		/// </value>
+		public int Index { get; private set; }
 
 		/// <summary>
 		/// Configures the directory.
@@ -90,81 +101,95 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		///   <c>true</c> if the playlist is correctly configured otherwise, <c>false</c>
 		/// </returns>
-		/// <exception cref="System.ArgumentNullException">arguments must not be null</exception>
 		public bool Configure(IElement element, string[] filterExtension) {
-			this.IsConfigured = false;
-			try {
-				if (element == null || filterExtension == null) {
-					throw new ArgumentNullException("arguments must not be null");
-				}
-				this.filesList = Array.ConvertAll(this.fileSystemService.GetFolderElements((element.GetElementType() == ElementType.File) ? (element.GetParent()) : (element.GetPath()), filterExtension), item => (IFile)item);
-				this.Length = this.filesList.Length;
-				this.index = 0;
-				if (element.GetElementType() == ElementType.File) {
-					this.index = this.GetIndex(element as IFile).GetValueOrDefault();
-				}
-				this.index = this.SortArray().GetValueOrDefault();
-				this.IsConfigured = true;
-			} catch (ArgumentNullException) {
-				// TODO log message
-			} catch (Exception) {
-				// TODO log message
+			if (element != null) {
+				return (this.Configure(this.fileSystemService.GetFolderElements((element.GetElementType() == ElementType.File) ? (element.GetParent()) : (element.GetPath()), filterExtension), element));
 			}
-			return (this.IsConfigured);
+			return (false);
+		}
+
+		/// <summary>
+		/// Configures the specified elements.
+		/// </summary>
+		/// <param name="elements">The elements.</param>
+		/// <param name="element">The element.</param>
+		/// <returns>
+		///   <c>true</c> if the playlist is correctly configured otherwise, <c>false</c>
+		/// </returns>
+		public bool Configure(IComparable[] elements, IComparable element = null) {
+			if (elements != null) {
+				this.Elements = elements;
+				this.Length = this.Elements.Length;
+				this.Index = this.GetIndex(element).GetValueOrDefault();
+				this.Index = this.SortArray().GetValueOrDefault();
+				this.IsConfigured = true;
+				return (this.IsConfigured);
+			}
+			return (false);
+		}
+
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. But leave the instance usable (contrary to Dispose)
+		/// </summary>
+		public void Reset() {
+			foreach (IComparable element in this.Elements) {
+				if (element is IDisposable) {
+					((IDisposable)element).Dispose();
+				}
+			}
+			this.Index = 0;
+			this.Length = 0;
+			this.Elements = null;
+			this.IsConfigured = false;
 		}
 
 		/// <summary>
 		/// Current file in the list.
 		/// </summary>
 		/// <returns>
-		/// The file
+		///   The element or <c>null</c>
 		/// </returns>
-		/// <exception cref="System.InvalidOperationException">The playlist must be initialized</exception>
-		public IFile Current() {
-			if (!this.IsConfigured) {
-				throw new InvalidOperationException("The playlist must be initialized");
+		public object Current() {
+			if (this.IsConfigured) {
+				return (this.Elements[this.Index]);
 			}
-			return (this.filesList[this.index]);
+			return (null);
 		}
 
 		/// <summary>
 		/// Previous file in the list.
 		/// </summary>
 		/// <returns>
-		/// The file
+		///   The element or <c>null</c>
 		/// </returns>
-		/// <exception cref="System.InvalidOperationException">The playlist must be initialized</exception>
-		public IFile Previous() {
-			if (!this.IsConfigured) {
-				throw new InvalidOperationException("The playlist must be initialized");
-			}
-			int? index = this.GetIndex(-1);
+		public object Previous() {
+			if (this.IsConfigured) {
+				int? index = this.GetIndex(-1);
 
-			if (!index.HasValue) {
-				return (null);
+				if (index.HasValue) {
+					this.Index = index.Value;
+					return (this.Current());
+				}
 			}
-			this.index = index.Value;
-			return (this.Current());
+			return (null);
 		}
 
 		/// <summary>
 		/// Next file in the list.
 		/// </summary>
 		/// <returns>
-		/// The file
+		///   The element or <c>null</c>
 		/// </returns>
-		/// <exception cref="System.InvalidOperationException">The playlist must be initialized</exception>
-		public IFile Next() {
-			if (!this.IsConfigured) {
-				throw new InvalidOperationException("The playlist must be initialized");
-			}
-			int? index = this.GetIndex(1);
+		public object Next() {
+			if (this.IsConfigured) {
+				int? index = this.GetIndex(1);
 
-			if (!index.HasValue) {
-				return (null);
+				if (index.HasValue) {
+					this.Index = index.Value;
+					return (this.Current());
+				}
 			}
-			this.index = index.Value;
-			return (this.Current());
+			return (null);
 		}
 
 		/// <summary>
@@ -174,17 +199,15 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		/// The file
 		/// </returns>
-		/// <exception cref="System.InvalidOperationException">The playlist must be initialized</exception>
-		public IFile Peek(int offset = 0) {
-			if (!this.IsConfigured) {
-				throw new InvalidOperationException("The playlist must be initialized");
-			}
-			int? index = this.GetIndex(offset);
+		public object Peek(int offset = 0) {
+			if (this.IsConfigured) {
+				int? index = this.GetIndex(offset);
 
-			if (!index.HasValue) {
-				return (null);
+				if (index.HasValue) {
+					return (this.Elements[index.Value]);
+				}
 			}
-			return (this.filesList[index.Value]);
+			return (null);
 		}
 
 		/// <summary>
@@ -194,14 +217,13 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		/// The index
 		/// </returns>
-		private int? GetIndex(IFile element) {
+		private int? GetIndex(IComparable element) {
 			if (this.IsConfigured) {
-				int index = Array.IndexOf(this.filesList, this.filesList.First(file => file.GetPath().CompareTo(element.GetPath()) == 0));
+				int index = Array.IndexOf(this.Elements, this.Elements.First(file => file.CompareTo(element) == 0));
 
-				if (this.index < 0) {
-					return (null);
+				if (index >= 0) {
+					return (index);
 				}
-				return (index);
 			}
 			return (null);
 		}
@@ -215,14 +237,31 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// </returns>
 		private int? GetIndex(int offset = 0) {
 			if (this.IsConfigured) {
-				int index = this.index + offset;
+				int index = this.Index + offset;
 
-				if (!this.Loop && (index < 0 || index >= this.Length)) {
-					return (null);
+				if (this.Loop || (index >= 0 && index < this.Length)) {
+					return (((index % this.Length) + this.Length) % this.Length);
 				}
-				return (((index % this.Length) + this.Length) % this.Length);
 			}
 			return (null);
+		}
+
+		/// <summary>
+		/// Sorts the callback.
+		/// </summary>
+		/// <param name="element1">The element1.</param>
+		/// <param name="element2">The element2.</param>
+		/// <returns>
+		/// <c>-1</c> if the element1 is inferior to the element2, <c>1</c> if the element1 is superior to the element2, <c>0</c> otherwise
+		/// </returns>
+		private int SortCallback(IComparable element1, IComparable element2) {
+			switch (this.Random) {
+				case true:
+					return (this.prng.Next(3) - 1);
+				case false:
+					return (element1.CompareTo(element2));
+			}
+			return (0);
 		}
 
 		/// <summary>
@@ -233,17 +272,10 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// </returns>
 		private int? SortArray() {
 			if (this.IsConfigured) {
-				System.Random prng = new System.Random();
-				IFile element = this.Current();
+				object element = this.Current();
 
-				Array.Sort(this.filesList, delegate(IFile file1, IFile file2) {
-					if (this.Random) {
-						return (prng.Next(3) - 1);
-					} else {
-						return (file1.GetName().CompareTo(file2.GetName()));
-					}
-				});
-				return (this.GetIndex(element));
+				Array.Sort(this.Elements, this.SortCallback);
+				return (this.GetIndex((IComparable)element));
 			}
 			return (null);
 		}

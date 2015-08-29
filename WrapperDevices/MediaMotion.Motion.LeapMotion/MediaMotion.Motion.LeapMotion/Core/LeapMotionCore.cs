@@ -22,12 +22,21 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		[SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1215:InstanceReadonlyElementsMustAppearBeforeInstanceNonReadonlyElements", Justification = "Reviewed. Suppression is OK here."),
 		SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1121:UseBuiltInTypeAlias", Justification = "Reviewed. Suppression is OK here."),
 		SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Suppression is OK here.")]
-		private readonly Object thisLock = new Object();
 #endif
 		/// <summary>
 		/// The movement detection class
 		/// </summary>
 		private readonly Detections movementsDetection;
+
+		/// <summary>
+		/// Listener for leap motion states events
+		/// </summary>
+		private readonly LeapMotionListener listener;
+
+		/// <summary>
+		/// Object for lock use of detection class
+		/// </summary>
+		private readonly object thisLock = new object();
 
 		#endregion
 
@@ -38,7 +47,9 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		public LeapMotionCore() {
 			this.controller = new Controller();
 			this.movementsDetection = new Detections();
+			this.listener = new LeapMotionListener(this.movementsDetection, this.thisLock);
 			this.Configuration();
+			this.controller.AddListener(this.listener);
 		}
 		#endregion
 
@@ -56,21 +67,25 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		/// The <see cref="IEnumerable"/>.
 		/// </returns>
 		public IEnumerable<IAction> Frame() {
-			return this.movementsDetection.MovementsDetection(this.controller.Frame());
+			return this.listener.RetrieveActions();
 		}
 
 		public void EnableAction(ActionType action) {
-			this.movementsDetection.DisableAllDetection();
-			if (action != null) {
-				this.movementsDetection.EnableDetectionByAction(action);
+			lock (this.thisLock) {
+				this.movementsDetection.DisableAllDetection();
+				if (action != null) {
+					this.movementsDetection.EnableDetectionByAction(action);
+				}
 			}
 		}
 
 		public void EnableAction(IEnumerable<ActionType> actions) {
-			this.movementsDetection.DisableAllDetection();
-			if (actions != null) {
-				foreach (var action in actions) {
-					this.movementsDetection.EnableDetectionByAction(action);
+			lock (this.thisLock) {
+				this.movementsDetection.DisableAllDetection();
+				if (actions != null) {
+					foreach (var action in actions) {
+						this.movementsDetection.EnableDetectionByAction(action);
+					}
 				}
 			}
 		}

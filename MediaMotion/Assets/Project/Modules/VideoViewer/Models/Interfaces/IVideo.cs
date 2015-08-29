@@ -6,6 +6,22 @@ namespace MediaMotion.Modules.VideoViewer.Models.Interfaces {
 	/// </summary>
 	public interface IVideo : IFile {
 		/// <summary>
+		/// Gets the width.
+		/// </summary>
+		/// <value>
+		/// The width.
+		/// </value>
+		int Width { get; }
+
+		/// <summary>
+		/// Gets the height.
+		/// </summary>
+		/// <value>
+		/// The height.
+		/// </value>
+		int Height { get; }
+
+		/// <summary>
 		/// Gets the duration.
 		/// </summary>
 		/// <value>

@@ -1,4 +1,19 @@
 <StyleCopSettings Version="105">
+  <GlobalSettings>
+    <CollectionProperty Name="RecognizedWords">
+      <Value>absis</Value>
+      <Value>browsable</Value>
+      <Value>bufferized</Value>
+      <Value>bufferizes</Value>
+      <Value>colorates</Value>
+      <Value>fullscreen</Value>
+      <Value>libmupdf</Value>
+      <Value>libpdf</Value>
+      <Value>libvlc</Value>
+      <Value>mupdf</Value>
+      <Value>ordonate</Value>
+    </CollectionProperty>
+  </GlobalSettings>
   <Analyzers>
     <Analyzer AnalyzerId="StyleCop.CSharp.OrderingRules">
       <Rules>
@@ -108,6 +123,11 @@
           </RuleSettings>
         </Rule>
         <Rule Name="GenericTypeParameterDocumentationMustHaveText">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="DocumentationTextMustContainWhitespace">
           <RuleSettings>
             <BooleanProperty Name="Enabled">False</BooleanProperty>
           </RuleSettings>

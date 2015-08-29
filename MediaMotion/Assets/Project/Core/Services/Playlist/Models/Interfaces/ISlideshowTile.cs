@@ -4,12 +4,12 @@ namespace MediaMotion.Core.Services.Playlist.Models.Interfaces {
 	/// <summary>
 	/// Slideshow Tile interface
 	/// </summary>
-	public interface ISlideshowTile {
+	public interface ISlideshowTile : ISlideshowEnvironment {
 		/// <summary>
-		/// Loads the file.
+		/// Loads the element.
 		/// </summary>
-		/// <param name="file">The file.</param>
-		void LoadFile(IFile file);
+		/// <param name="element">The element.</param>
+		void Load(object element);
 
 		/// <summary>
 		/// Rotate the tile

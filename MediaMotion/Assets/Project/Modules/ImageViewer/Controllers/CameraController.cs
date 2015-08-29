@@ -28,10 +28,10 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 			foreach (IAction action in this.inputService.GetMovements()) {
 				switch (action.Type) {
 					case ActionType.ZoomIn:
-						this.ZoomIn((float) action.Parameter);
+						this.ZoomIn((float)action.Parameter);
 						break;
 					case ActionType.ZoomOut:
-						this.ZoomOut((float) action.Parameter);
+						this.ZoomOut((float)action.Parameter);
 						break;
 				}
 			}

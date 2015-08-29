@@ -40,8 +40,10 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private bool sidebarStatus;
 
+		/// <summary>
+		/// Starts this instance.
+		/// </summary>
 		public void Start() {
-			// sidebar
 			this.sidebarVisibility = false;
 			this.sidebarVisibleX = 1000;
 			this.sidebarHiddenX = 1125;

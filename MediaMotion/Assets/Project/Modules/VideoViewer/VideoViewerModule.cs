@@ -4,6 +4,9 @@ using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.Observers.Interfaces;
 using MediaMotion.Modules.VideoViewer.Observers;
+using MediaMotion.Modules.VideoViewer.Services.Session.Interfaces;
+using MediaMotion.Modules.VideoViewer.Services.VLC;
+using MediaMotion.Motion.Actions;
 
 namespace MediaMotion.Modules.VideoViewer {
 	/// <summary>
@@ -18,6 +21,11 @@ namespace MediaMotion.Modules.VideoViewer {
 			this.Scene = "VideoViewer";
 			this.Description = "Watch your movies and videos";
 			this.SupportedExtensions = new string[] { ".avi", ".mkv", ".mp4", ".wav" };
+			this.SupportedAction = new ActionType[] {
+				ActionType.Select,
+				ActionType.Right,
+				ActionType.Left
+			};
 		}
 
 		/// <summary>
@@ -38,6 +46,7 @@ namespace MediaMotion.Modules.VideoViewer {
 		private IContainer BuildContainer(IContainer container) {
 			IContainerBuilderService containerBuilderService = container.Get<IContainerBuilderService>();
 
+			containerBuilderService.Register<VLCService>().As<IVLCService>().SingleInstance = true;
 			containerBuilderService.Register<ElementDrawObserver>().As<IElementDrawObserver>().SingleInstance = true;
 			containerBuilderService.Register<ElementFactoryObserver>().As<IElementFactoryObserver>().SingleInstance = true;
 			return (containerBuilderService.Build(container));

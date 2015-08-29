@@ -16,12 +16,28 @@ namespace MediaMotion.Modules.VideoViewer.Models.Abstract {
 		}
 
 		/// <summary>
+		/// Gets the width.
+		/// </summary>
+		/// <value>
+		/// The width.
+		/// </value>
+		public int Width { get; private set; }
+
+		/// <summary>
+		/// Gets the height.
+		/// </summary>
+		/// <value>
+		/// The height.
+		/// </value>
+		public int Height { get; private set; }
+
+		/// <summary>
 		/// Gets the duration.
 		/// </summary>
 		/// <value>
 		/// The duration.
 		/// </value>
-		public int Duration { get; protected set; }
+		public int Duration { get; private set; }
 
 		/// <summary>
 		/// Gets the human type string.
