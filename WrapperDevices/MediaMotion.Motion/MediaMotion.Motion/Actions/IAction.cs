@@ -16,6 +16,7 @@
 		BrowsingScroll,
 		BrowsingCursor,
 		GrabStart,
+		GrabPerform,
 		GrabStop,
 		ZoomIn,
 		ZoomOut,

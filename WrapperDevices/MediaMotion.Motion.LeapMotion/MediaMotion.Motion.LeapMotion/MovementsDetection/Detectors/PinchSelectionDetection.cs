@@ -1,6 +1,7 @@
 ﻿using System;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
+using Leap;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 	/// <summary>
@@ -39,19 +40,19 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 		/// <summary>
 		/// Check for valid detection of PinchSelection
 		/// </summary>
-		/// <param name="hand">int represent the hand use</param>
+		/// <param name="handId">int represent the hand use</param>
 		/// <param name="strength">float represent the strength of pinch</param>
 		/// <param name="actionCollection"></param>
 		/// <returns>true if the movment is valid</returns>
-		protected override void ValidDetection(int hand, float strength, IActionCollection actionCollection) {
-			if (strength < this.ThresholdDetection && this.states[hand]) {
-				this.states[hand] = false;
+		protected override void ValidDetection(int handId, float strength, Hand hand, IActionCollection actionCollection) {
+			if (strength < this.ThresholdDetection && this.states[handId]) {
+				this.states[handId] = false;
 			}
-			if (strength >= this.ThresholdDetection && !this.states[hand]) {
-				this.states[hand] = true;
-				this.lastDetections[hand] = DateTime.Now;
+			if (strength >= this.ThresholdDetection && !this.states[handId]) {
+				this.states[handId] = true;
+				this.lastDetections[handId] = DateTime.Now;
 			}
-			else if (!this.states[hand] && (DateTime.Now - this.lastDetections[hand] < this.ReleaseTimeMax)) {
+			else if (!this.states[handId] && (DateTime.Now - this.lastDetections[handId] < this.ReleaseTimeMax)) {
 				actionCollection.Add(ActionType.Select);
 				this.DetectionState = false;
 			}

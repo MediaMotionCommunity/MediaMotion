@@ -53,7 +53,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 				if (!frame.Hands.IsEmpty) {
 					foreach (var hand in frame.Hands) {
 						if (hand.IsValid) {
-							this.ValidDetection(hand.IsRight ? 0 : 1, hand.PinchStrength, actionCollection);
+							this.ValidDetection(hand.IsRight ? 0 : 1, hand.PinchStrength, hand, actionCollection);
 							if (!this.DetectionState) {
 								this.lastAction = DateTime.Now;
 								continue;
@@ -74,7 +74,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 		/// <param name="strength">float represent the strength of pinch</param>
 		/// <param name="actionCollection"></param>
 		/// <returns>true if the movment is valid</returns>
-		protected abstract void ValidDetection(int hand, float strength, IActionCollection actionCollection);
+		protected abstract void ValidDetection(int handId, float strength, Hand hand, IActionCollection actionCollection);
 		#endregion
 	}
 }
