@@ -41,24 +41,22 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// Zooms the in.
 		/// </summary>
 		/// <param name="distance">The distance.</param>
-		public void ZoomIn(float distance = 1.0f) {
-			this.Zoom(distance);
+		public void ZoomIn(float velocity) {
+			Vector3 position = this.transform.localPosition;
+
+			position.z = Mathf.Max(position.z / (1.5f * velocity), -25.0f);
+			this.transform.localPosition = position;
 		}
 
 		/// <summary>
 		/// Zooms the out.
 		/// </summary>
 		/// <param name="distance">The distance.</param>
-		public void ZoomOut(float distance = 1.0f) {
-			this.Zoom(-distance);
-		}
+		public void ZoomOut(float velocity) {
+			Vector3 position = this.transform.localPosition;
 
-		/// <summary>
-		/// Zooms the specified coefficient.
-		/// </summary>
-		/// <param name="distance">The distance.</param>
-		public void Zoom(float distance) {
-			this.transform.Translate(new Vector3(0, 0, distance));
+			position.z = Mathf.Max(position.z * (1.5f * velocity), -25.0f);
+			this.transform.localPosition = position;
 		}
 	}
 }

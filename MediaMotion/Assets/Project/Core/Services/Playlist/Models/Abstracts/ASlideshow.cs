@@ -131,9 +131,14 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 							this.Select(this.elements[this.sideElements]);
 						}
 						break;
-					case ActionType.Rotate:
-						if (this.module.SupportedAction.Contains(ActionType.Rotate) && this.elements[this.sideElements] != null) {
-							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Rotate(90.0f);
+					case ActionType.RotateLeft:
+						if (this.module.SupportedAction.Contains(ActionType.RotateLeft) && this.elements[this.sideElements] != null) {
+							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Rotate(5.0f);
+						}
+						break;
+					case ActionType.RotateRight:
+						if (this.module.SupportedAction.Contains(ActionType.RotateRight) && this.elements[this.sideElements] != null) {
+							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Rotate(-5.0f);
 						}
 						break;
 					case ActionType.ZoomIn:
