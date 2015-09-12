@@ -64,10 +64,11 @@ namespace MediaMotion.Core.Services.Playlist.Tests {
 
 			filters[0] = ".test";
 			this.PlaylistService.Configure(file, filters);
-			Assert.AreEqual(file.GetPath(), ((IFile)this.PlaylistService.Current()).GetPath());
+			this.PlaylistService.Loop = true;
+			Assert.AreEqual(0, file.CompareTo(this.PlaylistService.Current()));
 
 			this.PlaylistService.Next();
-			Assert.AreNotEqual(file.GetPath(), ((IFile)this.PlaylistService.Current()).GetPath());
+			Assert.AreNotEqual(0, file.CompareTo(this.PlaylistService.Current()));
 		}
 
 		[Test()]

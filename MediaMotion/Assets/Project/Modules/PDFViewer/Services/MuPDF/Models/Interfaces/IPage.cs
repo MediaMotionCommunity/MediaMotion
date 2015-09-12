@@ -1,12 +1,13 @@
 ﻿using System;
 using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Utils;
+using UnityEngine;
 
 namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models.Interfaces {
 	/// <summary>
 	/// Page interface
 	/// </summary>
-	public interface IPage : IDisposable, IResetable, IComparable {
+	public interface IPage : IDisposable, IComparable {
 		/// <summary>
 		/// Gets the session.
 		/// </summary>
@@ -48,10 +49,10 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models.Interfaces {
 		int Height { get; }
 
 		/// <summary>
-		/// Gets the page.
+		/// Gets the resource.
 		/// </summary>
 		/// <value>
-		/// The page.
+		/// The resource.
 		/// </value>
 		IntPtr Resource { get; }
 
@@ -61,12 +62,19 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models.Interfaces {
 		/// <value>
 		/// The texture.
 		/// </value>
-		AutoPinner Texture { get; }
+		Color32[] Texture { get; }
 
 		/// <summary>
-		/// Sets the texture.
+		/// Gets a value indicating whether this instance is render.
 		/// </summary>
-		/// <param name="texture">The texture.</param>
-		void SetTexture(object texture);
+		/// <value>
+		///   <c>true</c> if this instance is render; otherwise, <c>false</c>.
+		/// </value>
+		bool IsRender { get; }
+
+		/// <summary>
+		/// Renders this page in the texture.
+		/// </summary>
+		void Render();
 	}
 }

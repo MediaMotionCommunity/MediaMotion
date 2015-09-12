@@ -60,7 +60,7 @@ namespace MediaMotion.Core.Services.FileSystem.Models.Abstracts {
 		/// </returns>
 		public virtual int CompareTo(object obj) {
 			if (obj is IElement) {
-				return (((IElement)obj).GetPath().CompareTo(this.GetPath()));
+				return (this.GetPath().CompareTo(((IElement)obj).GetPath()));
 			}
 			return (1);
 		}

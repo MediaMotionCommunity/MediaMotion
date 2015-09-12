@@ -2,6 +2,7 @@
 using MediaMotion.Core.Utils;
 using MediaMotion.Modules.PDFViewer.Services.MuPDF.Bindings;
 using MediaMotion.Modules.PDFViewer.Services.MuPDF.Models.Interfaces;
+using UnityEngine;
 
 namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 	/// <summary>
@@ -64,10 +65,10 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 		public int Height { get; private set; }
 
 		/// <summary>
-		/// Gets the page.
+		/// Gets the resource.
 		/// </summary>
 		/// <value>
-		/// The page.
+		/// The resource.
 		/// </value>
 		public IntPtr Resource { get; private set; }
 
@@ -77,37 +78,30 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 		/// <value>
 		/// The texture.
 		/// </value>
-		public AutoPinner Texture { get; private set; }
+		public Color32[] Texture { get; private set; }
 
 		/// <summary>
-		/// Sets the texture.
+		/// Gets a value indicating whether this instance is render.
 		/// </summary>
-		/// <param name="texture">The texture.</param>
-		public void SetTexture(object texture) {
-			if (this.Texture != null) {
-				this.Texture.Dispose();
-			}
-			this.Texture = new AutoPinner(texture);
-			LibMuPDF.libpdf_render_page(this.Session, this.Resource, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
-			LibMuPDF.memcpy(this.Texture.Ptr, LibMuPDF.libpdf_pixels_page(this.Session, this.Resource), this.Width * this.Height * 4);
-		}
+		/// <value>
+		///   <c>true</c> if this instance is render; otherwise, <c>false</c>.
+		/// </value>
+		public bool IsRender { get; private set; }
 
 		/// <summary>
 		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
 		public void Dispose() {
-			this.Clean();
+			this.Texture = null;
+			if (this.Resource != IntPtr.Zero) {
+				LibMuPDF.libpdf_free_page(this.Session, this.Resource);
+				this.Resource = IntPtr.Zero;
+			}
 			this.PageNumber = 0;
 			this.Document = null;
 			this.Session = IntPtr.Zero;
-		}
-
-		/// <summary>
-		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. But leave the instance usable (contrary to Dispose)
-		/// </summary>
-		public void Reset() {
-			this.Clean();
-			this.Load();
+			this.Height = 0;
+			this.Width = 0;
 		}
 
 		/// <summary>
@@ -125,36 +119,33 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 		}
 
 		/// <summary>
-		/// Cleans this instance.
-		/// </summary>
-		private void Clean() {
-			if (this.Texture != null) {
-				this.Texture.Dispose();
-				this.Texture = null;
-			}
-			if (this.Resource != IntPtr.Zero) {
-				LibMuPDF.libpdf_free_page(this.Session, this.Resource);
-				this.Resource = IntPtr.Zero;
-			}
-			this.Height = 0;
-			this.Width = 0;
-		}
-
-		/// <summary>
 		/// Loads the resource.
 		/// </summary>
 		/// <returns><c>true</c> if the resource is correctly loaded, <c>false</c> otherwise.</returns>
 		private bool Load() {
 			if (this.Resource == IntPtr.Zero) {
 				this.Resource = LibMuPDF.libpdf_load_page(this.Session, this.Document.Resource, this.PageNumber, 101, 101);
-
-				if (this.Resource == IntPtr.Zero) {
+				if (Resource == IntPtr.Zero) {
 					return (false);
 				}
-				this.Width = LibMuPDF.libpdf_xsize_page(this.Session, this.Resource);
 				this.Height = LibMuPDF.libpdf_ysize_page(this.Session, this.Resource);
+				this.Width = LibMuPDF.libpdf_xsize_page(this.Session, this.Resource);
+				this.Texture = new Color32[this.Height * this.Width];
 			}
 			return (true);
+		}
+
+		/// <summary>
+		/// Renders this page in the texture.
+		/// </summary>
+		public void Render() {
+			if (!this.IsRender) {
+				LibMuPDF.libpdf_render_page(this.Session, this.Resource, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+				using (AutoPinner internalTexture = new AutoPinner(this.Texture)) {
+					LibMuPDF.memcpy(internalTexture.Ptr, LibMuPDF.libpdf_pixels_page(this.Session, this.Resource), this.Width * this.Height * 4);
+				}
+				this.IsRender = true;
+			}
 		}
 	}
 }

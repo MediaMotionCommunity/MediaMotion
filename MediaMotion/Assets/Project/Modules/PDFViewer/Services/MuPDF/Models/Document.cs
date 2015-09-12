@@ -9,6 +9,11 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 	/// </summary>
 	public class Document : IDocument {
 		/// <summary>
+		/// The pages
+		/// </summary>
+		private IPage[] Pages;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Document" /> class.
 		/// </summary>
 		/// <param name="session">The session.</param>
@@ -23,6 +28,7 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 				throw new Exception("Could not load document " + this.Element.GetName());
 			}
 			this.Count = LibMuPDF.libpdf_count_pages(this.Session, this.Resource);
+			this.Pages = new IPage[this.Count];
 		}
 
 		/// <summary>
@@ -72,12 +78,10 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 		/// </summary>
 		/// <returns>The pages</returns>
 		public IPage[] GetPages() {
-			IPage[] pages = new IPage[this.Count];
-
-			for (int i = 0; i < this.Count; ++i) {
-				pages[i] = new Page(this, i);
+			for (int pageNumber = 0; pageNumber < this.Count; ++pageNumber) {
+				this.Pages[pageNumber] = this.GetPage(pageNumber);
 			}
-			return (pages);
+			return (this.Pages);
 		}
 
 		/// <summary>
@@ -86,8 +90,8 @@ namespace MediaMotion.Modules.PDFViewer.Services.MuPDF.Models {
 		/// <param name="pageNumber">The page number.</param>
 		/// <returns>The page</returns>
 		public IPage GetPage(int pageNumber) {
-			if (this.Resource != IntPtr.Zero && pageNumber > 0 && pageNumber <= this.Count) {
-				return (new Page(this, pageNumber));
+			if (this.Resource != IntPtr.Zero && pageNumber >= 0 && pageNumber < this.Count) {
+				return (this.Pages[pageNumber] ?? new Page(this, pageNumber));
 			}
 			return (default(IPage));
 		}

@@ -29,7 +29,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 			if (this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
 				IPage page = (IPage)this.element;
 
-				this.texture2D.SetPixels32((Color32[])page.Texture.Obj);
+				this.texture2D.SetPixels32(page.Texture);
 				this.texture2D.Apply();
 
 				this.gameObject.GetComponent<Renderer>().material.mainTexture = this.texture2D;
@@ -46,7 +46,7 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 
 			this.texture2D = new Texture2D(page.Width, page.Height, TextureFormat.RGBA32, false);
 			this.texture2D.wrapMode = TextureWrapMode.Clamp;
-			page.SetTexture(new Color32[page.Width * page.Height]);
+			page.Render();
 		}
 	}
 }
