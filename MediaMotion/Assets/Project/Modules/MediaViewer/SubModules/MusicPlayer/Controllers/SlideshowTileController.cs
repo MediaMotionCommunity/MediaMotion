@@ -35,7 +35,8 @@ namespace MediaMotion.Modules.MediaViewer.SubModules.MusicPlayer.Controllers {
 		/// <summary>
 		/// Called when [destroy].
 		/// </summary>
-		public void OnDestroy() {
+		public override void OnDestroy() {
+			base.OnDestroy();
 			if (this.player != null) {
 				this.player.Dispose();
 				this.player = null;

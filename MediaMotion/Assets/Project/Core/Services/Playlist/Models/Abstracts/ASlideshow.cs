@@ -141,14 +141,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Rotate(-5.0f);
 						}
 						break;
-					case ActionType.ZoomIn:
-						if (this.module.SupportedAction.Contains(ActionType.ZoomIn)) {
-						}
-						break;
-					case ActionType.ZoomOut:
-						if (this.module.SupportedAction.Contains(ActionType.ZoomOut)) {
-						}
-						break;
 				}
 			}
 		}
@@ -335,7 +327,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// The game object or <c>null</c> if no file found
 		/// </returns>
 		protected virtual GameObject InitSlideshowElement(GameObject gameObject, int offset) {
-			object element = this.playlistService.Peek(offset);
+			IComparable element = this.playlistService.Peek(offset);
 
 			if (element != null) {
 				if (gameObject == null) {
