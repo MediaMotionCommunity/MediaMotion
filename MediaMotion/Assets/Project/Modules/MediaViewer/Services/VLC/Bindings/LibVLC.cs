@@ -188,7 +188,7 @@ namespace MediaMotion.Modules.MediaViewer.Services.VLC.Bindings {
 		/// </summary>
 		/// <param name="player">The player.</param>
 		[DllImport("libvlc")]
-		public static extern void libvlc_media_player_pause(IntPtr player);
+		public static extern void libvlc_media_player_set_pause(IntPtr player, int do_pause);
 
 		/// <summary>
 		/// Stop the player.

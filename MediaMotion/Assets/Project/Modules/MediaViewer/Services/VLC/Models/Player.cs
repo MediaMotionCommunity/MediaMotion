@@ -114,13 +114,10 @@ namespace MediaMotion.Modules.MediaViewer.Services.VLC.Models {
 			}
 			set {
 				if (value != this.IsPlaying) {
-					switch (value) {
-						case true:
-							this.Play();
-							break;
-						case false:
-							this.Pause();
-							break;
+					if (value) {
+						this.Play();
+					} else {
+						this.Pause();
 					}
 				}
 			}
@@ -195,7 +192,7 @@ namespace MediaMotion.Modules.MediaViewer.Services.VLC.Models {
 		/// </summary>
 		public void Pause() {
 			if (this.Resource != IntPtr.Zero) {
-				LibVLC.libvlc_media_player_pause(this.Resource);
+				LibVLC.libvlc_media_player_set_pause(this.Resource, 1);
 			}
 		}
 

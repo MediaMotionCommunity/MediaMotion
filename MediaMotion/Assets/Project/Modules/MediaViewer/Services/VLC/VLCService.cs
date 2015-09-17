@@ -61,6 +61,7 @@ namespace MediaMotion.Modules.MediaViewer.Services.VLC {
 			if (this.Session != IntPtr.Zero) {
 				return (new MediaInfo(this.Session, media));
 			}
+			UnityEngine.Debug.Log("Can't load the media because the session is not loaded.");
 			return (default(IMediaInfo));
 		}
 
@@ -75,6 +76,7 @@ namespace MediaMotion.Modules.MediaViewer.Services.VLC {
 			if (media != default(IMediaInfo)) {
 				return (new Player(media));
 			}
+			UnityEngine.Debug.Log("Can't load the player because the media is not loaded.");
 			return (default(IPlayer));
 		}
 	}

@@ -83,7 +83,7 @@ namespace MediaMotion.Modules.MediaViewer.SubModules.VideoPlayer.Controllers {
 			if (this.player != null && this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
 				this.texture2D.SetPixels32((Color32[])this.player.Texture.Obj, 0);
 				this.texture2D.Apply();
-				this.progressBar.Ratio = ((float)this.player.Time) / (float)this.player.Duration;
+				this.progressBar.Ratio = (this.player.Duration > 0) ? (((float)this.player.Time) / (float)this.player.Duration) : (0.0f);
 				this.Texture2DApplied = true;
 			}
 		}
