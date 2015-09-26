@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMotion", "MediaMotion.Motion.LeapMotion\MediaMotion.Motion.LeapMotion.csproj", "{4941DBA6-22D7-4F5A-93E7-6CBE56913C45}"
 EndProject
@@ -10,6 +10,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMotion.Testing", "MediaMotion.Motion.LeapMotion.Testing\MediaMotion.Motion.LeapMotion.Testing.csproj", "{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMotion.Tests", "MediaMotion.Motion.LeapMotion.Tests\MediaMotion.Motion.LeapMotion.Tests.csproj", "{B1FFCCA9-0FDC-4541-9716-82414E6AF422}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{30AD17EE-9B88-496C-AE07-6A8B32A1B03B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
