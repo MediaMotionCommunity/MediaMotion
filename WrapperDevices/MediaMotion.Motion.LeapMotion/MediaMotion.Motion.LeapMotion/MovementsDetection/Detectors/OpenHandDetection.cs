@@ -7,11 +7,13 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
     public class OpenHandDetection : ICustomDetection {
         #region Constants
 
-        private readonly TimeSpan timeToValidate = new TimeSpan(0, 0, 0, 1, 0);
+        private readonly TimeSpan timeToValidate = new TimeSpan(0, 0, 0, 2, 0);
 
-        private readonly TimeSpan lockDetectionTime = new TimeSpan(0, 0, 0, 1, 0);
+        private readonly TimeSpan lockDetectionTime = new TimeSpan(0, 0, 0, 1, 500);
 
         private readonly float threadsholdHandOpen = 0.0f;
+
+        private float maximunHandDisplacement = 10.0f;
         #endregion
 
         #region Fields
@@ -22,12 +24,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
         private Dictionary<int, bool> handsOpenState;
 
         private Dictionary<int, DateTime> handsActionLastDetection;
+
+        private Dictionary<int, Vector> handStartPosition;
         #endregion
 
         #region Constructor
         public OpenHandDetection() {
             this.handsOpenState = new Dictionary<int, bool>();
             this.handsActionLastDetection = new Dictionary<int, DateTime>();
+            this.handStartPosition = new Dictionary<int, Vector>();
         }
         #endregion
 
@@ -44,6 +49,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
                                 this.lockStart = DateTime.Now;
                                 this.handsOpenState.Clear();
                                 this.handsActionLastDetection.Clear();
+                                this.handStartPosition.Clear();
                             }
                         }
                     }
@@ -61,20 +67,36 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
             }
         }
 
+        private bool HandPositionValid(int id, Vector actualPosition) {
+            Vector gap = this.handStartPosition[id] - actualPosition;
+
+           if (Math.Abs(gap.x) <= this.maximunHandDisplacement &&
+                Math.Abs(gap.y) <= this.maximunHandDisplacement &&
+                Math.Abs(gap.z) <= this.maximunHandDisplacement) {
+                    return true;
+            }
+            return false;
+        }
+
         private bool ValidDetection(Hand hand, IActionCollection actionCollection) {
             if (!this.handsOpenState[hand.Id] &&
                 hand.GrabStrength <= this.threadsholdHandOpen) {
                 this.handsOpenState[hand.Id] = true;
                 this.handsActionLastDetection[hand.Id] = DateTime.Now;
+                this.handStartPosition[hand.Id] = hand.PalmPosition;
+                actionCollection.Add(Actions.ActionType.StartBack);
             }
             else if (this.handsOpenState[hand.Id] &&
-                hand.GrabStrength > this.threadsholdHandOpen) {
+                (hand.GrabStrength > this.threadsholdHandOpen ||
+                !this.HandPositionValid(hand.Id, hand.PalmPosition))) {
+                   actionCollection.Add(Actions.ActionType.CancelBack);
                     return true;
             }
             else if (this.handsOpenState[hand.Id] &&
                 (DateTime.Now - this.handsActionLastDetection[hand.Id]) >= this.timeToValidate) {
                 this.handsActionLastDetection[hand.Id] = DateTime.Now;
                 actionCollection.Add(Actions.ActionType.Back);
+                actionCollection.Add(Actions.ActionType.StartBack);
             }
             
             return false;

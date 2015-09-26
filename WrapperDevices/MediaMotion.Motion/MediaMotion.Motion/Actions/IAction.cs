@@ -10,6 +10,8 @@
 		ScrollIn,
 		ScrollOut,
 		Select,
+        StartBack,
+        CancelBack,
 		Back,
 		Leave,
 		BrowsingHighlight,
