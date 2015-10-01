@@ -25,7 +25,6 @@ namespace MediaMotion.Modules.PDFViewer {
 			this.Description = "Display your PDF in a wonderfull slideshow";
 			this.SupportedExtensions = new string[] { ".pdf", ".xps" };
 			this.SupportedAction = new ActionType[] {
-				ActionType.Rotate,
 				ActionType.Right,
 				ActionType.Left
 			};

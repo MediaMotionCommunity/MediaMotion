@@ -26,10 +26,10 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 			this.ServiceType = service;
 			this.typesList = new List<Type>();
 			this.typesList.Add(this.ServiceType);
-			if (instance != null) {
-				this.singleInstance = true;
-			}
 			this.Instance = instance;
+			if (this.Instance != null) {
+				this.SingleInstance = true;
+			}
 		}
 
 		/// <summary>

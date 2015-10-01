@@ -24,6 +24,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected object element;
 
 		/// <summary>
+		/// The is texture applied
+		/// </summary>
+		protected bool isTextureApplied;
+
+		/// <summary>
 		/// The cumulative rotation
 		/// </summary>
 		protected float cumulativeRotation = 0.0f;
@@ -51,6 +56,13 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		public virtual void Update() {
 			this.Texture2DLoadingProcess();
+		}
+
+		/// <summary>
+		/// Called when [destroy].
+		/// </summary>
+		public virtual void OnDestroy() {
+			this.ClearAll();
 		}
 
 		/// <summary>
@@ -90,7 +102,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 				if (this.IsTexture2DReady()) {
 					this.ScaleTexture2D();
 					this.ApplyTexture2D();
-					this.CleanTexture2D();
 					this.ResetElement();
 				} else {
 					this.LoadTexture2D();
@@ -141,6 +152,9 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// Clean the texture 2D.
 		/// </summary>
 		protected virtual void CleanTexture2D() {
+			if (this.texture2D != null) {
+				Texture2D.Destroy(this.texture2D);
+			}
 			this.texture2D = null;
 		}
 

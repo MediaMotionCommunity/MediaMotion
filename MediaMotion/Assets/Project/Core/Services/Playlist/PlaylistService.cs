@@ -121,8 +121,8 @@ namespace MediaMotion.Core.Services.Playlist {
 				this.Elements = elements;
 				this.Length = this.Elements.Length;
 				this.Index = this.GetIndex(element).GetValueOrDefault();
-				this.Index = this.SortArray().GetValueOrDefault();
 				this.IsConfigured = true;
+				this.Index = this.SortArray().GetValueOrDefault();
 				return (this.IsConfigured);
 			}
 			return (false);
@@ -132,9 +132,11 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. But leave the instance usable (contrary to Dispose)
 		/// </summary>
 		public void Reset() {
-			foreach (IComparable element in this.Elements) {
-				if (element is IDisposable) {
-					((IDisposable)element).Dispose();
+			if (this.Elements != null) {
+				foreach (IComparable element in this.Elements) {
+					if (element is IDisposable) {
+						((IDisposable)element).Dispose();
+					}
 				}
 			}
 			this.Index = 0;
@@ -149,7 +151,7 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		///   The element or <c>null</c>
 		/// </returns>
-		public object Current() {
+		public IComparable Current() {
 			if (this.IsConfigured) {
 				return (this.Elements[this.Index]);
 			}
@@ -162,7 +164,7 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		///   The element or <c>null</c>
 		/// </returns>
-		public object Previous() {
+		public IComparable Previous() {
 			if (this.IsConfigured) {
 				int? index = this.GetIndex(-1);
 
@@ -180,7 +182,7 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		///   The element or <c>null</c>
 		/// </returns>
-		public object Next() {
+		public IComparable Next() {
 			if (this.IsConfigured) {
 				int? index = this.GetIndex(1);
 
@@ -199,7 +201,7 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// <returns>
 		/// The file
 		/// </returns>
-		public object Peek(int offset = 0) {
+		public IComparable Peek(int offset = 0) {
 			if (this.IsConfigured) {
 				int? index = this.GetIndex(offset);
 
@@ -272,10 +274,10 @@ namespace MediaMotion.Core.Services.Playlist {
 		/// </returns>
 		private int? SortArray() {
 			if (this.IsConfigured) {
-				object element = this.Current();
+				IComparable element = this.Current();
 
 				Array.Sort(this.Elements, this.SortCallback);
-				return (this.GetIndex((IComparable)element));
+				return (this.GetIndex(element));
 			}
 			return (null);
 		}

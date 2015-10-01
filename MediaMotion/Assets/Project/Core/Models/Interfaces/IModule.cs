@@ -8,7 +8,7 @@ namespace MediaMotion.Core.Models.Interfaces {
 	/// <summary>
 	/// Module Interface
 	/// </summary>
-	public interface IModule {
+	public interface IModule : IConfigurableContainer {
 		/// <summary>
 		/// Gets the priority.
 		/// </summary>
@@ -40,14 +40,6 @@ namespace MediaMotion.Core.Models.Interfaces {
 		/// The module description.
 		/// </value>
 		string Description { get; }
-
-		/// <summary>
-		/// Gets the container.
-		/// </summary>
-		/// <value>
-		/// The container.
-		/// </value>
-		IContainer Container { get; }
 
 		/// <summary>
 		/// Gets a value indicating whether [support reload].
@@ -88,12 +80,6 @@ namespace MediaMotion.Core.Models.Interfaces {
 		/// The parameters.
 		/// </value>
 		IElement[] Parameters { get; }
-
-		/// <summary>
-		/// Configures the module.
-		/// </summary>
-		/// <param name="container">The container.</param>
-		void Configure(IContainer container);
 
 		/// <summary>
 		/// Load the module with specified parameters.

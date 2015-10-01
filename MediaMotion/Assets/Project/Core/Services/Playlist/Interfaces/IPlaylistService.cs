@@ -81,7 +81,7 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 		/// <returns>
 		///   The element or <c>null</c>
 		/// </returns>
-		object Current();
+		IComparable Current();
 
 		/// <summary>
 		/// Previous file in the list.
@@ -89,7 +89,7 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 		/// <returns>
 		///   The element or <c>null</c>
 		/// </returns>
-		object Previous();
+		IComparable Previous();
 
 		/// <summary>
 		/// Next file in the list.
@@ -97,7 +97,7 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 		/// <returns>
 		///   The element or <c>null</c>
 		/// </returns>
-		object Next();
+		IComparable Next();
 
 		/// <summary>
 		/// Peeks the specified offset.
@@ -106,6 +106,6 @@ namespace MediaMotion.Core.Services.Playlist.Interfaces {
 		/// <returns>
 		///   The element or <c>null</c>
 		/// </returns>
-		object Peek(int offset = 0);
+		IComparable Peek(int offset = 0);
 	}
 }

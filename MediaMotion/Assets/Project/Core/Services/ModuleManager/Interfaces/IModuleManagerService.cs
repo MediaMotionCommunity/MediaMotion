@@ -13,6 +13,12 @@ namespace MediaMotion.Core.Services.ModuleManager.Interfaces {
 		void Register<Module>() where Module : IModule, new();
 
 		/// <summary>
+		/// Registers the module.
+		/// </summary>
+		/// <typeparam name="Module">The type of the module.</typeparam>
+		void RegisterAdvanced<Module>() where Module : IAdvancedModule, new();
+
+		/// <summary>
 		/// Gets this instance.
 		/// </summary>
 		/// <typeparam name="Module">The type of the module.</typeparam>

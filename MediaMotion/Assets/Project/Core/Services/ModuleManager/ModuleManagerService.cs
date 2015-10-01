@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MediaMotion.Core.Models.Interfaces;
+using MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Models;
@@ -56,6 +57,20 @@ namespace MediaMotion.Core.Services.ModuleManager {
 
 			module.Configure(MediaMotionCore.Container);
 			this.availableModules.Add(typeof(Module), module);
+		}
+
+		/// <summary>
+		/// Registers the module.
+		/// </summary>
+		/// <typeparam name="Module">The type of the module.</typeparam>
+		public void RegisterAdvanced<Module>() where Module : IAdvancedModule, new() {
+			IAdvancedModule mainModule = new Module();
+
+			mainModule.Configure(MediaMotionCore.Container);
+			foreach (IModule subModule in mainModule.Children) {
+				subModule.Configure(mainModule.Container);
+				this.availableModules.Add(subModule.GetType(), subModule);
+			}
 		}
 
 		/// <summary>

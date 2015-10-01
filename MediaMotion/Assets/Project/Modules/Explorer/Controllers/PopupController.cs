@@ -16,7 +16,17 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <summary>
 		/// Style for the name of the property.
 		/// </summary>
-		private GUIStyle propertyLabelStyle;
+		private GUIStyle titleLineStyle;
+
+		/// <summary>
+		/// Style for the name of the property.
+		/// </summary>
+		private GUIStyle valueLineStyle;
+
+		/// <summary>
+		/// Style for the popup.
+		/// </summary>
+		private GUIStyle windowStyle;
 
 		/// <summary>
 		/// Popup container
@@ -54,9 +64,27 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			this.timer.Elapsed += this.Show;
 
 			// gui element
-			this.propertyLabelStyle = new GUIStyle();
-			this.propertyLabelStyle.normal.textColor = Color.white;
-			this.popupRect = new Rect(20, 20, 300, 65);
+			this.popupRect = new Rect(20, 20, 300, 90);
+
+			this.titleLineStyle = new GUIStyle();
+			Color labelColor = new Color(0.84f, 0.87f, 0.91f, 1.0f);
+			this.titleLineStyle.normal.textColor = labelColor;
+			this.titleLineStyle.padding = new RectOffset(5, 5, 20, 0);
+
+			this.valueLineStyle = new GUIStyle();
+			this.valueLineStyle.normal.textColor = labelColor;
+			this.valueLineStyle.padding = new RectOffset(5, 5, 20, 0);
+			this.valueLineStyle.fontStyle = FontStyle.Bold;
+
+			this.windowStyle = new GUIStyle();
+			Color titleColor = new Color(0.53f, 0.72f, 0.91f, 1.0f);
+			this.windowStyle.normal.textColor = titleColor;
+			this.windowStyle.fontSize = 16;
+			this.windowStyle.fontStyle = FontStyle.Bold;
+			Texture2D windowBackground = Resources.Load("PopupPNG") as Texture2D;
+			this.windowStyle.normal.background = windowBackground;
+			this.windowStyle.padding = new RectOffset(15, 15, 12, 12);
+			this.windowStyle.border = new RectOffset(10, 10, 10, 10);
 
 			// element
 			this.element = null;
@@ -67,7 +95,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		public void OnGUI() {
 			if (this.PopupVisibility && this.element != null) {
-				this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Information");
+				this.popupRect = GUI.Window(0, this.popupRect, this.HydratePopupContent, "Information", this.windowStyle);
 			}
 		}
 
@@ -115,10 +143,10 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// <param name="WindowID">The window identifier.</param>
 		private void HydratePopupContent(int WindowID) {
 			if (this.element != null) {
-				GUI.Label(new Rect(10, 20, 100, 20), "Name", this.propertyLabelStyle);
-				GUI.Label(new Rect(10, 40, 100, 20), "Type", this.propertyLabelStyle);
-				GUI.Label(new Rect(110, 20, 200, 20), this.element.GetName());
-				GUI.Label(new Rect(110, 40, 200, 20), this.element.GetHumanTypeString());
+				GUI.Label(new Rect(10, 20, 100, 20), "Name:", this.titleLineStyle);
+				GUI.Label(new Rect(10, 40, 100, 20), "Type:", this.titleLineStyle);
+				GUI.Label(new Rect(70, 20, 200, 20), this.element.GetName(), this.valueLineStyle);
+				GUI.Label(new Rect(70, 40, 200, 20), this.element.GetHumanTypeString(), this.valueLineStyle);
 			}
 		}
 	}
