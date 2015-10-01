@@ -52,7 +52,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 						isDetectAction = true;
 					}
 					else if (bone.Center.x > -100.0f && bone.Center.x < 100.0f && bone.Center.y < 100.0f) {
-						this.IsCorrectInterval(actionCollection, ActionType.RotationLeft, bone);
+						this.IsCorrectInterval(actionCollection, ActionType.RotateLeft, bone);
 						isDetectAction = true;
 					}
 				}

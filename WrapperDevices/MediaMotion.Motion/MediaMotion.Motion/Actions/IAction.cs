@@ -23,7 +23,7 @@
 		ZoomIn,
 		ZoomOut,
 		RotateRight,
-		RotationLeft,
+		RotateLeft,
 		SoundUp,
 		SoundDown
 	}
