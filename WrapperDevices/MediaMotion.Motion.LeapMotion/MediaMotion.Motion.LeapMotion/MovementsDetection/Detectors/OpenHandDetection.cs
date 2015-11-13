@@ -84,7 +84,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
                 this.handsOpenState[hand.Id] = true;
                 this.handsActionLastDetection[hand.Id] = DateTime.Now;
                 this.handStartPosition[hand.Id] = hand.PalmPosition;
-                actionCollection.Add(Actions.ActionType.StartBack);
+                actionCollection.Add(Actions.ActionType.StartBack, this.timeToValidate);
             }
             else if (this.handsOpenState[hand.Id] &&
                 (hand.GrabStrength > this.threadsholdHandOpen ||
@@ -96,7 +96,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
                 (DateTime.Now - this.handsActionLastDetection[hand.Id]) >= this.timeToValidate) {
                 this.handsActionLastDetection[hand.Id] = DateTime.Now;
                 actionCollection.Add(Actions.ActionType.Back);
-                actionCollection.Add(Actions.ActionType.StartBack);
+                actionCollection.Add(Actions.ActionType.StartBack, this.timeToValidate);
             }
             
             return false;
