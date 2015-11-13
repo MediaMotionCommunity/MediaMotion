@@ -26,6 +26,8 @@ using MediaMotion.Modules.Explorer;
 using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Modules.PDFViewer;
 using MediaMotion.Modules.MediaViewer;
+using NDesk.Options;
+using System.Collections.Generic;
 
 namespace MediaMotion.Core {
 	/// <summary>
@@ -43,6 +45,16 @@ namespace MediaMotion.Core {
 		static MediaMotionCore() {
 			Assembly assembly = typeof(MediaMotionCore).Assembly;
 			IContainerBuilderService builder = new ContainerBuilderService();
+			string[] commandLineArgs = Environment.GetCommandLineArgs();
+			Dictionary<string, object> commandLineOptions = MediaMotionCore.GetCommandLineOptions(commandLineArgs);
+
+			// Command Line
+			builder.Define("CommandLine", Environment.CommandLine);
+			builder.Define("CommandLineArgs", commandLineArgs);
+			builder.Define("CommandLineOptions", commandLineOptions);
+			foreach (KeyValuePair<String, object> option in commandLineOptions) {
+				builder.Define("CommandLineOptions" + option.Key, option.Value);
+			}
 
 			// Parameters
 			builder.Define("Version", MediaMotionCore.GetVersion(assembly));
@@ -79,6 +91,22 @@ namespace MediaMotion.Core {
 			moduleManager.Register<ImageViewerModule>();
 			moduleManager.Register<PDFViewerModule>();
 			moduleManager.RegisterAdvanced<MediaViewerModule>();
+		}
+
+		/// <summary>
+		/// Gets the command line options.
+		/// </summary>
+		/// <param name="commandLineArgs">The command line arguments.</param>
+		/// <returns>The command line options</returns>
+		private static Dictionary<string, object> GetCommandLineOptions(string[] commandLineArgs) {
+			Dictionary<string, object> options = new Dictionary<string, object>();
+			OptionSet optionSet = new OptionSet() {
+				{"r|root=", v => options["Root"] = ((Directory.Exists(v)) ? (v) : (null))},
+				{"h|?|help", v => options["Help"] = (v != null)}
+			};
+
+			options["Extra"] = optionSet.Parse(commandLineArgs);
+			return (options);
 		}
 
 		/// <summary>

@@ -123,11 +123,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 			} else {
 				this.OpenDirectory(this.module.Parameters.FirstOrDefault(parameter => parameter is IFolder) as IFolder);
 			}
-
-//			this.sidebar = GameObject.Find("Sidebar");
-//			this.cam = GameObject.Find("Cameras/Main");
-//			this.cam.transform.position = Camera.main.transform.position;
-//			Camera.main.transform.parent = this.cam.transform;
 		}
 
 		/// <summary>
@@ -152,12 +147,6 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				case ActionType.GrabStop:
 					this.wheelTool.DeactiveWheelTool();
 					break;
-//				case ActionType.Left:
-//					this.ShowSidebar();
-//					break;
-//				case ActionType.Right:
-//					this.HideSidebar();
-//					break;
 				}
 			}
 		}
@@ -223,7 +212,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		private void Back() {
 			string parentPath = this.fileSystemService.CurrentFolder.GetParent();
 
-			if (parentPath != null) {
+			if (this.fileSystemService.IsAccessible(parentPath)) {
 				this.Open(this.elementFactory.CreateFolder(parentPath));
 			}
 		}

@@ -43,7 +43,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Resolver {
 						return (true);
 					}
 				}
-				return (false);
+				return (parameter.IsOptional);
 			}
 			return (this.Container.Has(parameter.ParameterType));
 		}
@@ -89,7 +89,10 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Resolver {
 						return (this.Container.GetParameter(key));
 					}
 				}
-				throw new Exception("Parameter not found");
+				if (parameter.IsOptional) {
+					return (parameter.DefaultValue);
+				}
+				throw new Exception("Mandatory parameter not found.");
 			}
 			if (this.Container.Has(parameter.ParameterType)) {
 				return (this.Container.Get(parameter.ParameterType));

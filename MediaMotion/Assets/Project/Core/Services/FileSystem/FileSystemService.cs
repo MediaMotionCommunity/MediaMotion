@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MediaMotion.Core.Services.ContainerBuilder.Resolver.Attributes;
 using MediaMotion.Core.Services.FileSystem.Extensions;
 using MediaMotion.Core.Services.FileSystem.Factories.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Interfaces;
 using MediaMotion.Core.Services.FileSystem.Models.Enums;
 using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
-
 using Buffer = MediaMotion.Core.Services.FileSystem.Models.Buffer;
 
 namespace MediaMotion.Core.Services.FileSystem {
@@ -26,11 +26,17 @@ namespace MediaMotion.Core.Services.FileSystem {
 		private object bufferAccess;
 
 		/// <summary>
+		/// The root path
+		/// </summary>
+		private string rootPath;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="FileSystemService" /> class.
 		/// </summary>
 		/// <param name="elementFactory">The element factory.</param>
-		public FileSystemService(IElementFactory elementFactory) {
+		public FileSystemService(IElementFactory elementFactory, [Parameter("CommandLineOptionsRoot")] string rootPath = null) {
 			this.elementFactory = elementFactory;
+			this.rootPath = rootPath;
 			this.bufferAccess = new object();
 			this.InitialFolder = this.elementFactory.CreateFolder(Directory.GetCurrentDirectory());
 			this.CurrentFolder = this.InitialFolder;
@@ -90,13 +96,43 @@ namespace MediaMotion.Core.Services.FileSystem {
 		public bool DisplaySystemElements { get; set; }
 
 		/// <summary>
+		/// Determines whether this instance has chrooted.
+		/// </summary>
+		/// <returns>true if the programm is chrooted, false otherwise.</returns>
+		public bool IsChrooted() {
+			return (this.rootPath != null);
+		}
+
+		/// <summary>
+		/// Gets the root.
+		/// </summary>
+		/// <returns>The root path</returns>
+		public string GetRoot() {
+			return (this.rootPath);
+		}
+
+		/// <summary>
+		/// Determines whether the specified path is accessible.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns>true if the path is accessible, false otherwise.</returns>
+		public bool IsAccessible(string path) {
+			return (path != null && (!this.IsChrooted() || (!path.Contains("..") && path.StartsWith(this.GetRoot()))));
+		}
+
+		/// <summary>
 		/// Get the home path
 		/// </summary>
 		/// <returns>
 		///   Home path
 		/// </returns>
 		public string GetHome() {
-			return ((Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty) ? (Environment.GetFolderPath(Environment.SpecialFolder.Personal)) : (Environment.GetFolderPath(Environment.SpecialFolder.System)));
+			string homePath = (Environment.GetFolderPath(Environment.SpecialFolder.Personal) != string.Empty) ? (Environment.GetFolderPath(Environment.SpecialFolder.Personal)) : (Environment.GetFolderPath(Environment.SpecialFolder.System));
+
+			if (!this.IsAccessible(homePath)) {
+				homePath = this.GetRoot();
+			}
+			return (homePath);
 		}
 
 		/// <summary>
@@ -120,6 +156,9 @@ namespace MediaMotion.Core.Services.FileSystem {
 			if (!Directory.Exists(folder)) {
 				return (false);
 			}
+			if (!this.IsAccessible(folder)) {
+				return (false);
+			}
 			this.CurrentFolder = this.elementFactory.CreateFolder(folder);
 			return (true);
 		}
@@ -139,7 +178,11 @@ namespace MediaMotion.Core.Services.FileSystem {
 					throw new ArgumentException("filterExtension must contain valid extensions only.");
 				}
 				int i = 0;
-				DirectoryInfo directoryInfo = new DirectoryInfo(path ?? this.CurrentFolder.GetPath());
+				path = path ?? this.CurrentFolder.GetPath();
+				if (!this.IsAccessible(path)) {
+					throw new Exception("Not accessible");
+				}
+				DirectoryInfo directoryInfo = new DirectoryInfo(path);
 				FileSystemInfo[] directoryElementsInfo = directoryInfo.GetFileSystemInfos();
 				IEnumerable<FileSystemInfo> relevantDirectoryElementsInfo = directoryElementsInfo.Where(element => this.IsElementBrowsable(element, filterExtension, onlyFiles));
 				IElement[] directoryElements = new IElement[relevantDirectoryElementsInfo.Count()];
@@ -152,6 +195,8 @@ namespace MediaMotion.Core.Services.FileSystem {
 			} catch (ArgumentException) {
 				// TODO Log e.Message
 			} catch (DirectoryNotFoundException) {
+				// TODO Log e.Message
+			} catch (Exception e) {
 				// TODO Log e.Message
 			}
 			return (null);

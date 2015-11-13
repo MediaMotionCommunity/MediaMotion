@@ -47,6 +47,25 @@ namespace MediaMotion.Core.Services.FileSystem.Interfaces {
 		bool DisplaySystemElements { get; set; }
 
 		/// <summary>
+		/// Determines whether this instance has chrooted.
+		/// </summary>
+		/// <returns>true if the programm is chrooted, false otherwise.</returns>
+		bool IsChrooted();
+
+		/// <summary>
+		/// Gets the root.
+		/// </summary>
+		/// <returns>The root path</returns>
+		string GetRoot();
+
+		/// <summary>
+		/// Determines whether the specified path is accessible.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns>true if the path is accessible, false otherwise.</returns>
+		bool IsAccessible(string path);
+
+		/// <summary>
 		/// Get the home path
 		/// </summary>
 		/// <returns>the home path</returns>
