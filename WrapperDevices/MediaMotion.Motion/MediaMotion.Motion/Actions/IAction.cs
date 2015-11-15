@@ -3,6 +3,7 @@
 	/// The action type.
 	/// </summary>
 	public enum ActionType {
+		None,
 		Up,
 		Down,
 		Right,
@@ -10,8 +11,8 @@
 		ScrollIn,
 		ScrollOut,
 		Select,
-        StartBack,
-        CancelBack,
+		StartBack,
+		CancelBack,
 		Back,
 		Leave,
 		BrowsingHighlight,

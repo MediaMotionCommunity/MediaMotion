@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -27,7 +28,6 @@ using MediaMotion.Modules.ImageViewer;
 using MediaMotion.Modules.PDFViewer;
 using MediaMotion.Modules.MediaViewer;
 using NDesk.Options;
-using System.Collections.Generic;
 
 namespace MediaMotion.Core {
 	/// <summary>
@@ -74,8 +74,7 @@ namespace MediaMotion.Core {
 			// Observers
 			builder.Register<ElementDrawObserver>().As<IElementDrawObserver>().SingleInstance = true;
 
-			Container = builder.Build();
-
+			MediaMotionCore.Container = builder.Build();
 			MediaMotionCore.RegisterModules();
 		}
 
@@ -100,11 +99,10 @@ namespace MediaMotion.Core {
 		/// <returns>The command line options</returns>
 		private static Dictionary<string, object> GetCommandLineOptions(string[] commandLineArgs) {
 			Dictionary<string, object> options = new Dictionary<string, object>();
-			OptionSet optionSet = new OptionSet() {
-				{"r|root=", v => options["Root"] = ((Directory.Exists(v)) ? (v) : (null))},
-				{"h|?|help", v => options["Help"] = (v != null)}
-			};
+			OptionSet optionSet = new OptionSet();
 
+			optionSet.Add("r|root=", v => options["Root"] = ((Directory.Exists(v)) ? (v) : (null)));
+			optionSet.Add("h|?|help", v => options["Help"] = (v != null));
 			options["Extra"] = optionSet.Parse(commandLineArgs);
 			return (options);
 		}
