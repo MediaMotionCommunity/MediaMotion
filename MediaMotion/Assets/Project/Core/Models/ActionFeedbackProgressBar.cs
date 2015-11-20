@@ -48,8 +48,9 @@ namespace MediaMotion.Core.Models {
 		/// Initializes the specified action duration.
 		/// </summary>
 		/// <param name="actionDuration">Duration of the action.</param>
-		public void Init(TimeSpan actionDuration) {
-			this.actionDuration = (float)actionDuration.Seconds + ((float)actionDuration.Milliseconds / 1000);
+		/// <param name="delta">delta</param>
+		public void Init(TimeSpan actionDuration, float delta) {
+			this.actionDuration = ((float)actionDuration.Seconds + ((float)actionDuration.Milliseconds / 1000)) - delta;
 			this.duration = 0.0f;
 			this.ratio = 0.0f;
 			this.Cancel = false;

@@ -12,7 +12,12 @@ namespace MediaMotion.Core.Models {
 		/// <summary>
 		/// The time before disparition after cancel
 		/// </summary>
-		const float TIME_BEFORE_DISPÄRITION_AFTER_CANCEL = 1.0f;
+		const float TIME_BEFORE_APARITION_AFTER_START = 0.5f;
+
+		/// <summary>
+		/// The time before disparition after cancel
+		/// </summary>
+		const float TIME_BEFORE_DISPARITION_AFTER_CANCEL = 1.0f;
 
 		/// <summary>
 		/// The progress bar container
@@ -38,6 +43,11 @@ namespace MediaMotion.Core.Models {
 		/// The action
 		/// </summary>
 		private ActionType action;
+
+		/// <summary>
+		/// The start
+		/// </summary>
+		private float? start;
 
 		/// <summary>
 		/// The cancel
@@ -75,13 +85,22 @@ namespace MediaMotion.Core.Models {
 					this.ClearAction();
 				}
 			}
+			if (this.start.HasValue) {
+				if ((this.start -= Time.deltaTime) <= 0.0f) {
+					this.StartAction();
+				}
+			}
 			foreach (IAction action in this.inputService.GetMovements()) {
 				switch (action.Type) {
 					case ActionType.StartBack:
-						this.StartAction(action.Type, (TimeSpan)action.Parameter);
+						this.InitAction(action.Type, (TimeSpan)action.Parameter);
 						break;
 					case ActionType.CancelBack:
-						this.CancelAction();
+						if (!this.start.HasValue) {
+							this.CancelAction();
+						} else {
+							this.ClearAction();
+						}
 						break;
 					case ActionType.Back:
 						this.ClearAction();
@@ -91,16 +110,22 @@ namespace MediaMotion.Core.Models {
 		}
 
 		/// <summary>
-		/// Starts the action.
+		/// Inits the action.
 		/// </summary>
 		/// <param name="action">The action.</param>
 		/// <param name="actionDuration">Duration of the action.</param>
-		private void StartAction(ActionType action, TimeSpan actionDuration) {
+		private void InitAction(ActionType action, TimeSpan actionDuration) {
 			this.ClearAction();
-
+			this.start = ActionFeedback.TIME_BEFORE_APARITION_AFTER_START;
 			this.imageController.Init(action);
-			this.progressBarController.Init(actionDuration);
+			this.progressBarController.Init(actionDuration, ActionFeedback.TIME_BEFORE_APARITION_AFTER_START);
+		}
 
+		/// <summary>
+		/// Starts the action.
+		/// </summary>
+		private void StartAction() {
+			this.start = null;
 			if (this.ProgressBarContainer != null) {
 				this.ProgressBarContainer.SetActive(true);
 			}
@@ -114,7 +139,7 @@ namespace MediaMotion.Core.Models {
 		private void CancelAction() {
 			this.imageController.Cancel = true;
 			this.progressBarController.Cancel = true;
-			this.cancel = ActionFeedback.TIME_BEFORE_DISPÄRITION_AFTER_CANCEL;
+			this.cancel = ActionFeedback.TIME_BEFORE_DISPARITION_AFTER_CANCEL;
 		}
 
 		/// <summary>
@@ -127,6 +152,7 @@ namespace MediaMotion.Core.Models {
 			this.ProgressBar.SetActive(false);
 			this.Image.SetActive(false);
 			
+			this.start = null;
 			this.cancel = null;
 		}
 	}
