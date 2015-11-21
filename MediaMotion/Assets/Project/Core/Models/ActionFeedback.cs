@@ -92,9 +92,11 @@ namespace MediaMotion.Core.Models {
 			}
 			foreach (IAction action in this.inputService.GetMovements()) {
 				switch (action.Type) {
+					case ActionType.StartLeave:
 					case ActionType.StartBack:
 						this.InitAction(action.Type, (TimeSpan)action.Parameter);
 						break;
+					case ActionType.CancelLeave:
 					case ActionType.CancelBack:
 						if (!this.start.HasValue) {
 							this.CancelAction();
@@ -102,6 +104,7 @@ namespace MediaMotion.Core.Models {
 							this.ClearAction();
 						}
 						break;
+					case ActionType.Leave:
 					case ActionType.Back:
 						this.ClearAction();
 						break;

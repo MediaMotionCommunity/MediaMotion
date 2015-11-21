@@ -1,4 +1,5 @@
-﻿using MediaMotion.Motion.Actions;
+﻿using System.Collections.Generic;
+using MediaMotion.Motion.Actions;
 using UnityEngine;
 
 namespace MediaMotion.Core.Models {
@@ -7,6 +8,11 @@ namespace MediaMotion.Core.Models {
 		/// The action
 		/// </summary>
 		private ActionType action;
+
+		/// <summary>
+		/// The images
+		/// </summary>
+		private Dictionary<ActionType, Material> materials;
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="ActionFeedbackImage"/> is cancel.
@@ -23,6 +29,21 @@ namespace MediaMotion.Core.Models {
 		public void Init(ActionType action) {
 			this.action = action;
 			this.Cancel = false;
+
+			if (this.materials == null) {
+				this.ImportMaterials();
+			}
+			this.GetComponent<Renderer>().material = this.materials[action];
+		}
+
+		/// <summary>
+		/// Imports the materials.
+		/// </summary>
+		public void ImportMaterials() {
+			this.materials = new Dictionary<ActionType, Material>();
+
+			this.materials.Add(ActionType.StartBack, Resources.Load<Material>("Models/FeedbackMovement-Back"));
+			this.materials.Add(ActionType.StartLeave, Resources.Load<Material>("Models/FeedbackMovement-Leave"));
 		}
 
 		/// <summary>

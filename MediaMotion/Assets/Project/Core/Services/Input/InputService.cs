@@ -75,9 +75,6 @@ namespace MediaMotion.Core.Services.Input {
 			this.AddDefaultInput(KeyCode.L, new MediaMotion.Motion.Actions.Action(ActionType.RotateLeft, null));
 			this.AddDefaultInput(KeyCode.R, new MediaMotion.Motion.Actions.Action(ActionType.RotateRight, null));
 
-			this.AddDefaultInput(KeyCode.B, new MediaMotion.Motion.Actions.Action(ActionType.StartBack, new TimeSpan(0, 0, 2)));
-			this.AddDefaultInput(KeyCode.C, new MediaMotion.Motion.Actions.Action(ActionType.CancelBack, null));
-
 			this.LoadWrapper();
 		}
 
