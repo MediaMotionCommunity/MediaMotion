@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMotion", "MediaMotion.Motion.LeapMotion\MediaMotion.Motion.LeapMotion.csproj", "{4941DBA6-22D7-4F5A-93E7-6CBE56913C45}"
 EndProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AAB965
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaMotion.Motion.LeapMotion.Testing", "MediaMotion.Motion.LeapMotion.Testing\MediaMotion.Motion.LeapMotion.Testing.csproj", "{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,12 @@ Global
 		{4E88DA8E-EB8E-4C2C-9E9B-EBF64AC12C42}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E88DA8E-EB8E-4C2C-9E9B-EBF64AC12C42}.Unix Debug|Any CPU.ActiveCfg = Unix Debug|Any CPU
 		{4E88DA8E-EB8E-4C2C-9E9B-EBF64AC12C42}.Unix Debug|Any CPU.Build.0 = Unix Debug|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Unix Debug|Any CPU.ActiveCfg = Unix Debug|Any CPU
+		{CEF9A8A4-D504-4A34-9E46-2DC863CF99AB}.Unix Debug|Any CPU.Build.0 = Unix Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

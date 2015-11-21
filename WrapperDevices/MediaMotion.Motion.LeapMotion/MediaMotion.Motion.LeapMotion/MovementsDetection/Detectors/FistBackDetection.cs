@@ -11,15 +11,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 		/// <summary>
 		/// Maximun time for do and release fist for valid detection
 		/// </summary>
-		private readonly TimeSpan releaseTimeMax = new TimeSpan(0, 0, 0, 1, 500);
+		private readonly TimeSpan timeToTrigger = new TimeSpan(0, 0, 0, 3, 0);
 
 		/// <summary>
 		/// Time detection will be locked when a valid detection found
 		/// </summary>
-		private readonly TimeSpan lockDetectionTime = new TimeSpan(0, 0, 0, 1, 0);
+		private readonly TimeSpan lockDetectionTime = new TimeSpan(0, 0, 0, 5, 0);
 
-		private readonly float threasholdFistClosedDetection = 0.2f;
-		private readonly float threadsholdFistOpenDetection = 0.0f;
+		private readonly float threasholdFistClosedDetection = 1.0f;
+		private readonly float threadsholdFistOpenDetection = 0.85f;
 		#endregion
 
 		#region Fields
@@ -33,14 +33,14 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 		/// </summary>
 		private DateTime lastValidDetection = DateTime.Now;
 		private Dictionary<int, bool> handsFistClosedState;
-		private Dictionary<int, DateTime> handsFistOpenedLastDetection;
+		private Dictionary<int, DateTime> handsFistClosedLastDetection;
 		#endregion
 
 		#region Constructor
 		public FistBackDetection() {
 			this.lastValidDetection = DateTime.Now;
 			this.handsFistClosedState = new Dictionary<int, bool>();
-			this.handsFistOpenedLastDetection = new Dictionary<int, DateTime>();
+			this.handsFistClosedLastDetection = new Dictionary<int, DateTime>();
 		}
 		#endregion
 
@@ -56,38 +56,42 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 								this.lockDetection = true;
 								this.lastValidDetection = DateTime.Now;
 								this.handsFistClosedState.Clear();
-								this.handsFistOpenedLastDetection.Clear();
+								this.handsFistClosedLastDetection.Clear();
 							}
 						}
 					}
 				}
-			} else if (this.lockDetection &&
-				  (DateTime.Now - this.lastValidDetection > this.releaseTimeMax)) {
+			}
+            else if (this.lockDetection &&
+				  (DateTime.Now - this.lastValidDetection > this.timeToTrigger)) {
 				this.lockDetection = false;
 			}
 		}
 
 		private void SynchronizeHandsState(Hand hand) {
 			if (!this.handsFistClosedState.ContainsKey(hand.Id)) {
-				this.handsFistClosedState[hand.Id] = true;
+				this.handsFistClosedState[hand.Id] = false;
 			}
 		}
 
 		private bool ValidDetection(Hand hand, IActionCollection actionCollection) {
-			if (this.handsFistClosedState[hand.Id] &&
-				hand.GrabStrength <= this.threadsholdFistOpenDetection) {
-				Console.WriteLine("Detected: Open fist");
-				this.handsFistClosedState[hand.Id] = false;
-				this.handsFistOpenedLastDetection[hand.Id] = DateTime.Now;
-			} else if (!this.handsFistClosedState[hand.Id] &&
-				  hand.GrabStrength >= this.threasholdFistClosedDetection) {
-				if (DateTime.Now - this.handsFistOpenedLastDetection[hand.Id] <= this.releaseTimeMax) {
-					actionCollection.Add(Actions.ActionType.Back);
-					return true;
-				}
-				this.handsFistClosedState[hand.Id] = true;
-			}
-			return false;
+		    if (!this.handsFistClosedState[hand.Id] &&
+                hand.GrabStrength >= this.threasholdFistClosedDetection) {
+                this.handsFistClosedState[hand.Id] = true;
+                this.handsFistClosedLastDetection[hand.Id] = DateTime.Now;
+                actionCollection.Add(Actions.ActionType.StartLeave, this.timeToTrigger);
+            }
+            else if (this.handsFistClosedState[hand.Id]) {
+                if (hand.GrabStrength <= this.threadsholdFistOpenDetection) {
+                    this.handsFistClosedState[hand.Id] = false;
+                    actionCollection.Add(Actions.ActionType.CancelLeave);
+                }
+                else if (DateTime.Now - this.handsFistClosedLastDetection[hand.Id] >= this.timeToTrigger) {
+                    actionCollection.Add(Actions.ActionType.Leave);
+                    return true;
+                }
+            }
+            return false;
 		}
 
 		#endregion

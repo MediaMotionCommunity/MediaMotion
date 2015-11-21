@@ -14,6 +14,8 @@
 		StartBack,
 		CancelBack,
 		Back,
+        StartLeave,
+        CancelLeave,
 		Leave,
 		BrowsingHighlight,
 		BrowsingScroll,

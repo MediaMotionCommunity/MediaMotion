@@ -19,9 +19,7 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 			var wrapper = new LeapMotion();
 			wrapper.Load();
 			wrapper.EnableActions(new[] {
-				ActionType.Select, 
-				ActionType.Back,
-				ActionType.GrabPerform
+				ActionType.Leave
 			});
 			var timer = new Timer(Display, wrapper, 0, 1000 / 30);
 			Console.ReadLine();

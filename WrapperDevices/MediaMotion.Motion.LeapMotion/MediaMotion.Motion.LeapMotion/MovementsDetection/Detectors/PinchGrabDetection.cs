@@ -6,7 +6,7 @@ using Leap;
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 	public class PinchGrabDetection : APinchDetection {
 		#region Constants
-		private readonly TimeSpan releadTimeMin = new TimeSpan(0, 0, 0, 0, 750);
+		private readonly TimeSpan releadTimeMin = new TimeSpan(0, 0, 0, 3, 0);
 		#endregion
 		
 		#region Fields
