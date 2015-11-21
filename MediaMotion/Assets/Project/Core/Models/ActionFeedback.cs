@@ -12,7 +12,7 @@ namespace MediaMotion.Core.Models {
 		/// <summary>
 		/// The time before disparition after cancel
 		/// </summary>
-		const float TIME_BEFORE_APARITION_AFTER_START = 0.5f;
+		const float TIME_BEFORE_APARITION_AFTER_START = 0.30f;
 
 		/// <summary>
 		/// The time before disparition after cancel
