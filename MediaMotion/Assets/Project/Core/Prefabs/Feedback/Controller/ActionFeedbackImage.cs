@@ -2,7 +2,7 @@
 using MediaMotion.Motion.Actions;
 using UnityEngine;
 
-namespace MediaMotion.Core.Models {
+namespace MediaMotion.Core.Prefabs.Feedback.Controllers {
 	public class ActionFeedbackImage : MonoBehaviour {
 		/// <summary>
 		/// The action
@@ -42,8 +42,8 @@ namespace MediaMotion.Core.Models {
 		public void ImportMaterials() {
 			this.materials = new Dictionary<ActionType, Material>();
 
-			this.materials.Add(ActionType.StartBack, Resources.Load<Material>("Models/FeedbackMovement-Back"));
-			this.materials.Add(ActionType.StartLeave, Resources.Load<Material>("Models/FeedbackMovement-Leave"));
+			this.materials.Add(ActionType.StartBack, Resources.Load<Material>("FeedbackMovement-Back"));
+			this.materials.Add(ActionType.StartLeave, Resources.Load<Material>("FeedbackMovement-Leave"));
 		}
 
 		/// <summary>

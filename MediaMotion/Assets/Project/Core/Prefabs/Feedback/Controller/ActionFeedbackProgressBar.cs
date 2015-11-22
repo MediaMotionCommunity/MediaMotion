@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace MediaMotion.Core.Models {
+namespace MediaMotion.Core.Prefabs.Feedback.Controllers {
 	/// <summary>
 	/// Action Feedback Progress Bar
 	/// </summary>

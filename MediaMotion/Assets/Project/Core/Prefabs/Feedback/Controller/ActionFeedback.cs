@@ -4,7 +4,7 @@ using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion.Actions;
 using System;
 
-namespace MediaMotion.Core.Models {
+namespace MediaMotion.Core.Prefabs.Feedback.Controllers {
 	/// <summary>
 	/// Action feedback
 	/// </summary>
