@@ -21,12 +21,16 @@ namespace MediaMotion.Modules.MediaViewer.Services.VLC.Models {
 		/// <returns>always <c>1</c></returns>
 		public static uint VideoFormat(ref IntPtr opaque, ref uint chroma, ref uint width, ref uint height, ref uint pitches, ref uint lines) {
 			IPlayer instance = (IPlayer)((GCHandle)opaque).Target;
-
 			chroma = ('B' << 24) | ('G' << 16) | ('R' << 8) | 'A';
 			pitches = width * 4;
 			lines = height;
 			instance.Pitches = (int)pitches;
 			instance.Lines = (int)lines;
+//			Debug.Log ("test");
+//			Debug.Log (width);
+//			Debug.Log (height);
+//			Debug.Log (instance.Pitches);
+//			Debug.Log (instance.Lines);
 			return (1);
 		}
 
@@ -70,9 +74,8 @@ namespace MediaMotion.Modules.MediaViewer.Services.VLC.Models {
 		/// <param name="picture">The picture.</param>
 		public static void VideoDisplay(IntPtr opaque, IntPtr picture) {
 			IPlayer instance = (IPlayer)((GCHandle)opaque).Target;
-
 			if (instance.Texture != null && instance.Texture.Ptr != IntPtr.Zero && picture != IntPtr.Zero) {
-				LibVLC.memcpy(instance.Texture.Ptr, picture, (uint)(instance.Media.Width * instance.Media.Height * 4));
+				LibVLC.memcpy(instance.Texture.Ptr, picture, (uint)(instance.Pitches * instance.Media.Height));
 			}
 		}
 	}
