@@ -1,4 +1,5 @@
-﻿using MediaMotion.Core.Models.Abstracts;
+﻿using System;
+using MediaMotion.Core.Models.Abstracts;
 using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Motion.Actions;
 using UnityEngine;
@@ -8,11 +9,15 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 	/// Camera controller
 	/// </summary>
 	public class CameraController : AScript<ImageViewerModule, CameraController> {
+		private const float RatioZoom = 0.15f;
+		private const float MinPositionZ = 0.0f;
+		private const float MaxPositionZ = -25.0f;
+
 		/// <summary>
 		/// The input service
 		/// </summary>
 		private IInputService inputService;
-		
+
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
@@ -25,13 +30,13 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// Updates this instance.
 		/// </summary>
 		public void Update() {
-			foreach (IAction action in this.inputService.GetMovements()) {
+			foreach (var action in this.inputService.GetMovements()) {
 				switch (action.Type) {
 					case ActionType.ZoomIn:
-						this.ZoomIn((float)action.Parameter);
+						this.ZoomIn((float) action.Parameter);
 						break;
 					case ActionType.ZoomOut:
-						this.ZoomOut((float)action.Parameter);
+						this.ZoomOut((float) action.Parameter);
 						break;
 				}
 			}
@@ -40,23 +45,34 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// <summary>
 		/// Zooms the in.
 		/// </summary>
-		/// <param name="distance">The distance.</param>
+		/// <param name="velocity">The distance.</param>
 		public void ZoomIn(float velocity) {
-			Vector3 position = this.transform.localPosition;
+			var position = this.transform.localPosition;
+			Debug.Log("ZoomIn");
 
-			position.z = Mathf.Max(position.z / (1.5f * velocity), -25.0f);
+			position.z = Mathf.Min(position.z + GetRatioZoom(position.z) * velocity, MinPositionZ);
+			Debug.Log("position.z: " + position.z);
 			this.transform.localPosition = position;
 		}
 
 		/// <summary>
 		/// Zooms the out.
 		/// </summary>
-		/// <param name="distance">The distance.</param>
+		/// <param name="velocity">The distance.</param>
 		public void ZoomOut(float velocity) {
-			Vector3 position = this.transform.localPosition;
+			var position = this.transform.localPosition;
+			Debug.Log("ZoomOut");
 
-			position.z = Mathf.Max(position.z * (1.5f * velocity), -25.0f);
+			position.z = Mathf.Max(position.z - GetRatioZoom(position.z) * velocity, MaxPositionZ);
+			Debug.Log("position.z: " + position.z);
 			this.transform.localPosition = position;
+		}
+
+		private float GetRatioZoom(float positionZ) {
+			var multiplier = Mathf.Abs(positionZ) / 10;
+			if (Math.Abs(multiplier) < 0.0001)
+				return RatioZoom;
+			return RatioZoom*multiplier;
 		}
 	}
 }

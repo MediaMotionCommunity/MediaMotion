@@ -28,15 +28,18 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 				this.inZomeTime = null;
 				return;
 			}
-			var fingers = hand.Fingers.Where(f => f.TouchZone == Pointable.Zone.ZONETOUCHING && f.IsExtended && f.IsValid);
+			var fingers = hand.Fingers.Where(f => f.TouchZone == Pointable.Zone.ZONETOUCHING && f.IsExtended && f.IsValid).ToArray();
 			if (!fingers.Any()) {
 				this.inZomeTime = null;
 				return;
 			}
 			bool isDetectAction = false;
-			var bones = fingers.Select(f => f.Bone(Bone.BoneType.TYPE_DISTAL));
-			var maxZ = bones.Max(o => o.Center.z);
-			bones = bones.Where(b => b.Center.z.Equals(maxZ));
+			var bones = fingers.Select(f => f.Bone(Bone.BoneType.TYPE_DISTAL))
+				.Where(b => b.IsValid)
+				.ToArray();
+			var maxZ = bones.Min(o => o.Center.z);
+			bones = bones.Where(b => b.Center.z.Equals(maxZ))
+				.ToArray();
 			foreach (var bone in bones) {
 				if (bone.IsValid) {
 					if (bone.Center.x < -40.0f && bone.Center.y > 110.0f && bone.Center.y < 300.0f) {

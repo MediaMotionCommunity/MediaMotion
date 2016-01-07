@@ -64,6 +64,7 @@
     <Compile Include="MovementsDetection\Detectors\RightLeftDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\SoundDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\SwipeDetection.cs" />
+    <Compile Include="MovementsDetection\Detectors\ZoomDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\ZoomRotateDetection.cs" />
     <Compile Include="MovementsDetection\Detectors\FistBackDetection.cs" />
     <Compile Include="MovementsDetection\ICustomDetection.cs" />

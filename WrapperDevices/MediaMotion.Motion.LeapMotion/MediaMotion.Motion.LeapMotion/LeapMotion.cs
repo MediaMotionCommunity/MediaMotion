@@ -97,8 +97,14 @@ namespace MediaMotion.Motion.LeapMotion {
 		/// <exception cref="NotImplementedException">
 		/// </exception>
 		public void Dispose() {
-			this.core.Dispose();
-			GC.SuppressFinalize(this);
+			Dispose(true);
+		}
+
+		public void Dispose(bool dispose) {
+			if (dispose) {
+				this.core.Dispose();
+				GC.SuppressFinalize(this);
+			}
 		}
 		#endregion
 	}
