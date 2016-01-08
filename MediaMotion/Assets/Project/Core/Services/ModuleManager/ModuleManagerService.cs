@@ -7,6 +7,7 @@ using MediaMotion.Core.Services.FileSystem.Models.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Interfaces;
 using MediaMotion.Core.Services.ModuleManager.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MediaMotion.Core.Services.ModuleManager {
 	/// <summary>
@@ -140,7 +141,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 					moduleInstance.Module.WakeUp(moduleInstance.Parameters);
 					this.LoadModule(moduleInstance.Module);
 				} else {
-					Application.LoadLevel("Loader");
+					SceneManager.LoadScene("Loader");
 				}
 				return (true);
 			}
@@ -184,7 +185,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 		/// </summary>
 		/// <param name="module">The module.</param>
 		private void LoadModule(IModule module) {
-			Application.LoadLevel(module.Scene);
+			SceneManager.LoadScene(module.Scene);
 			this.currentModule = module;
 		}
 	}

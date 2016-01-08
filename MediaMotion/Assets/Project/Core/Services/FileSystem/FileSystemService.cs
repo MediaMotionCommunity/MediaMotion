@@ -196,7 +196,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 				// TODO Log e.Message
 			} catch (DirectoryNotFoundException) {
 				// TODO Log e.Message
-			} catch (Exception e) {
+			} catch (Exception) {
 				// TODO Log e.Message
 			}
 			return (null);

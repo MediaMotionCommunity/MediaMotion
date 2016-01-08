@@ -26,7 +26,9 @@ namespace MediaMotion.Modules.PDFViewer {
 			this.SupportedExtensions = new string[] { ".pdf", ".xps" };
 			this.SupportedAction = new ActionType[] {
 				ActionType.Right,
-				ActionType.Left
+				ActionType.Left,
+				ActionType.ZoomIn,
+				ActionType.ZoomOut,
 			};
 		}
 

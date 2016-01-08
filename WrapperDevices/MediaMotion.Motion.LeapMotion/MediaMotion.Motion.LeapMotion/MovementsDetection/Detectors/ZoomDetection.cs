@@ -43,7 +43,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 				.ToArray();
 			var boneMinDistance = bones.Min(f => f.Center.z);
 			var bone = bones.FirstOrDefault(b => b.Center.z.Equals(boneMinDistance));
-			if (bone?.Center.x > 0) {
+			if (bone != null && bone.Center.x > 0) {
 				if (_previousPosition == null) {
 					_previousPosition = bone.Center;
 					return true;

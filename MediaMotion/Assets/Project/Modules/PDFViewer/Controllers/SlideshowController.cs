@@ -69,53 +69,5 @@ namespace MediaMotion.Modules.PDFViewer.Controllers {
 			this.document = this.mupdfService.GetDocument((IPDF)element);
 			return (this.playlistService.Configure(this.document.GetPages()));
 		}
-
-		/// <summary>
-		/// Computes the local scale using the <see cref="offset" />.
-		/// </summary>
-		/// <param name="offset">The offset.</param>
-		/// <returns>
-		/// The local scale
-		/// </returns>
-		protected override Vector3 ComputeLocalScale(GameObject element, int offset) {
-			return (new Vector3(0.38f, 0.38f, 0.38f));
-		}
-
-		/// <summary>
-		/// Computes the local position using the <see cref="offset" />.
-		/// </summary>
-		/// <param name="offset">The offset.</param>
-		/// <returns>
-		/// The local position
-		/// </returns>
-		protected override Vector3 ComputeLocalPosition(GameObject element, int offset) {
-			float childWidth = element.transform.Find("Tile").gameObject.transform.localScale.x;
-			int index = this.playlistService.Index + offset;
-			int diff = index % 2;
-
-			return (new Vector3(((offset >= diff) ? (1) : (-1)) * (childWidth * 1.9f), 2.2f, (((offset + diff) > 1 || (offset + diff) < 0)) ? (1.0f) : (0.0f)));
-		}
-
-		/// <summary>
-		/// Computes the local rotation using the <see cref="offset" />.
-		/// </summary>
-		/// <param name="offset">The offset.</param>
-		/// <returns>
-		/// The local rotation
-		/// </returns>
-		protected override Quaternion ComputeLocalRotation(GameObject element, int offset) {
-			int index = this.playlistService.Index + offset;
-
-			if (offset > 1) {
-				return (Quaternion.Euler(0.0f, (index % 2 == 0) ? (1.0f) : (179.0f), 0.0f));
-			}
-			if (offset < -1) {
-				return (Quaternion.Euler(0.0f, (index % 2 == 0) ? (179.0f) : (1.0f), 0.0f));
-			}
-			if (offset == -1 && index % 2 == 0) {
-				return (Quaternion.Euler(0.0f, 179.0f, 0.0f));
-			}
-			return (Quaternion.Euler(0.0f, 1.0f, 0.0f));
-		}
 	}
 }
