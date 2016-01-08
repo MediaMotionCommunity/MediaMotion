@@ -38,6 +38,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		public int EditorBufferSize = 8;
 
 		/// <summary>
+		/// The editor center space
+		/// </summary>
+		public float EditorCenterSpace = 5.0f;
+
+		/// <summary>
 		/// The base element
 		/// </summary>
 		public GameObject BaseElement;
@@ -93,6 +98,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected Queue<GameObject> buffer;
 
 		/// <summary>
+		/// The center space
+		/// </summary>
+		protected float centerSpace;
+
+		/// <summary>
 		/// Initializes the specified module.
 		/// </summary>
 		/// <param name="inputService">The input.</param>
@@ -105,6 +115,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 
 			this.sideElements = this.EditorSideElements;
 			this.bufferSize = this.EditorBufferSize;
+			this.centerSpace = this.EditorCenterSpace;
 
 			this.InitPlaylist();
 			this.InitBuffers();
@@ -129,6 +140,16 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 					case ActionType.Select:
 						if (this.module.SupportedAction.Contains(ActionType.Select)) {
 							this.Select(this.elements[this.sideElements]);
+						}
+						break;
+					case ActionType.ZoomIn:
+						if (this.module.SupportedAction.Contains(ActionType.ZoomIn) && this.elements[this.sideElements] != null) {
+							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Zoom((float)action.Parameter);
+						}
+						break;
+					case ActionType.ZoomOut:
+						if (this.module.SupportedAction.Contains(ActionType.ZoomOut) && this.elements[this.sideElements] != null) {
+							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Zoom(-(float)action.Parameter);
 						}
 						break;
 					case ActionType.RotateLeft:
@@ -364,7 +385,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		///   The local position
 		/// </returns>
 		protected virtual Vector3 ComputeLocalPosition(GameObject element, int offset) {
-			return (new Vector3(Math.Sign(offset) * ((5 + Math.Abs(offset)) - 1), 2.2f, Math.Abs(Math.Sign(offset)) * (3.0f - (Math.Abs(offset) * 0.5f))));
+			return (new Vector3(Math.Sign(offset) * ((this.centerSpace + Math.Abs(offset)) - 1), 2.0f, Math.Abs(Math.Sign(offset)) * (3.0f - (Math.Abs(offset) * 0.5f))));
 		}
 
 		/// <summary>

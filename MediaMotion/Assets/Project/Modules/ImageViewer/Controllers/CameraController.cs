@@ -47,11 +47,9 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// </summary>
 		/// <param name="velocity">The distance.</param>
 		public void ZoomIn(float velocity) {
-			var position = this.transform.localPosition;
-			Debug.Log("ZoomIn");
+			Vector3 position = this.transform.localPosition;
 
 			position.z = Mathf.Min(position.z + GetRatioZoom(position.z) * velocity, MinPositionZ);
-			Debug.Log("position.z: " + position.z);
 			this.transform.localPosition = position;
 		}
 
@@ -60,19 +58,19 @@ namespace MediaMotion.Modules.ImageViewer.Controllers {
 		/// </summary>
 		/// <param name="velocity">The distance.</param>
 		public void ZoomOut(float velocity) {
-			var position = this.transform.localPosition;
-			Debug.Log("ZoomOut");
+			Vector3 position = this.transform.localPosition;
 
 			position.z = Mathf.Max(position.z - GetRatioZoom(position.z) * velocity, MaxPositionZ);
-			Debug.Log("position.z: " + position.z);
 			this.transform.localPosition = position;
 		}
 
 		private float GetRatioZoom(float positionZ) {
-			var multiplier = Mathf.Abs(positionZ) / 10;
-			if (Math.Abs(multiplier) < 0.0001)
-				return RatioZoom;
-			return RatioZoom*multiplier;
+			float multiplier = Mathf.Abs(positionZ) / 10.0f;
+
+			if (Math.Abs(multiplier) < 0.0001) {
+				return (RatioZoom);
+			}
+			return (RatioZoom * multiplier);
 		}
 	}
 }

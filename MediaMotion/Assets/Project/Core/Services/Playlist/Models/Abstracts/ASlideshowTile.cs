@@ -14,6 +14,16 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		where Module : class, IModule
 		where Child : ASlideshowTile<Module, Child> {
 		/// <summary>
+		/// The origin angle
+		/// </summary>
+		protected Quaternion? originAngle;
+
+		/// <summary>
+		/// The origin scale
+		/// </summary>
+		protected Vector3? originScale;
+
+		/// <summary>
 		/// The texture
 		/// </summary>
 		protected Texture2D texture2D;
@@ -27,11 +37,6 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// The is texture applied
 		/// </summary>
 		protected bool isTextureApplied;
-
-		/// <summary>
-		/// The cumulative rotation
-		/// </summary>
-		protected float cumulativeRotation = 0.0f;
 
 		/// <summary>
 		/// The opposite x scale
@@ -59,6 +64,14 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		}
 
 		/// <summary>
+		/// Leaves the fullscreen.
+		/// </summary>
+		public override void LeaveFullscreen() {
+			this.ClearZoom();
+			this.ClearRotation();
+		}
+
+		/// <summary>
 		/// Called when [destroy].
 		/// </summary>
 		public virtual void OnDestroy() {
@@ -66,12 +79,37 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		}
 
 		/// <summary>
+		/// Zooms the file
+		/// </summary>
+		/// <param name="multiplier">The multiplier.</param>
+		public virtual void Zoom(float multiplier) {
+			//this.gameObject.transform.localScale *= multiplier;
+		}
+
+		/// <summary>
+		/// Clears the zoom.
+		/// </summary>
+		public void ClearZoom() {
+			if (this.originScale.HasValue) {
+				this.gameObject.transform.localScale = this.originScale.Value;
+			}
+		}
+
+		/// <summary>
 		/// Rotate the tile
 		/// </summary>
 		/// <param name="angle">The angle.</param>
 		public virtual void Rotate(float angle) {
-			this.cumulativeRotation += angle;
 			this.gameObject.transform.Rotate(new Vector3(0.0f, angle, 0.0f), Space.Self);
+		}
+
+		/// <summary>
+		/// Clears the rotation.
+		/// </summary>
+		public void ClearRotation() {
+			if (this.originAngle.HasValue) {
+				this.gameObject.transform.localRotation = this.originAngle.Value;
+			}
 		}
 
 		/// <summary>
@@ -90,7 +128,8 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		protected virtual void ClearAll() {
 			this.Texture2DApplied = false;
-			this.Rotate(-this.cumulativeRotation);
+			this.ClearRotation();
+			this.ClearZoom();
 			this.CleanTexture2D();
 		}
 
@@ -124,7 +163,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		/// <param name="maxWidth">The maximum width.</param>
 		/// <param name="maxHeight">The maximum height.</param>
-		protected virtual void ScaleTexture2D(float maxWidth = 1.3f, float maxHeight = 1.0f) {
+		protected virtual void ScaleTexture2D(float maxWidth = 1.8f, float maxHeight = 1.2f) {
 			if (this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
 				float coeff = (float)this.texture2D.height / (float)this.texture2D.width;
 
@@ -144,6 +183,8 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 			if (this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
 				this.texture2D.wrapMode = TextureWrapMode.Clamp;
 				this.gameObject.GetComponent<Renderer>().material.mainTexture = this.texture2D;
+				this.originAngle = this.gameObject.transform.localRotation;
+				this.originScale = this.gameObject.transform.localScale;
 				this.Texture2DApplied = true;
 			}
 		}

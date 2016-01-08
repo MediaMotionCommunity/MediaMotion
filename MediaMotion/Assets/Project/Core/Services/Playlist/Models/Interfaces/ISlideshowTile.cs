@@ -12,9 +12,25 @@ namespace MediaMotion.Core.Services.Playlist.Models.Interfaces {
 		void Load(object element);
 
 		/// <summary>
+		/// Zooms the file
+		/// </summary>
+		/// <param name="multiplier">The multiplier.</param>
+		void Zoom(float multiplier);
+
+		/// <summary>
+		/// Clears the zoom.
+		/// </summary>
+		void ClearZoom();
+
+		/// <summary>
 		/// Rotate the tile
 		/// </summary>
 		/// <param name="angle">The angle.</param>
 		void Rotate(float angle);
+
+		/// <summary>
+		/// Clears the rotation.
+		/// </summary>
+		void ClearRotation();
 	}
 }
