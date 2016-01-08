@@ -26,6 +26,8 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 		private Dictionary<int, DateTime> handsActionLastDetection;
 
 		private Dictionary<int, Vector> handStartPosition;
+
+		private List<int> handsUsed;
 		#endregion
 
 		#region Constructor
@@ -33,17 +35,22 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 			this.handsOpenState = new Dictionary<int, bool>();
 			this.handsActionLastDetection = new Dictionary<int, DateTime>();
 			this.handStartPosition = new Dictionary<int, Vector>();
+			this.handsUsed = new List<int>();
 		}
 		#endregion
 
 		#region Methods
 
 		public void Detection(Frame frame, IActionCollection actionCollection) {
+			List<int> hands = new List<int>(this.handsUsed);
 			if (!this.lockDetection) {
 				if (!frame.Hands.IsEmpty) {
 					foreach (Hand hand in frame.Hands) {
 						if (hand.IsValid) {
 							this.SynchronizeHandState(hand);
+							if (hands.Contains(hand.Id)) {
+								hands.Remove(hand.Id);
+							}
 							if (this.ValidDetection(hand, actionCollection)) {
 								this.lockDetection = true;
 								this.lockStart = DateTime.Now;
@@ -52,6 +59,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 								this.handStartPosition.Clear();
 							}
 						}
+					}
+				}
+				if (hands.Count != 0) {
+					actionCollection.Add(Actions.ActionType.CancelBack);
+					foreach (int id in hands) {
+						this.handsOpenState.Remove(id);
+						this.handsActionLastDetection.Remove(id);
+						this.handStartPosition.Remove(id);
+						this.handsUsed.Remove(id);
 					}
 				}
 			} else if (this.lockDetection &&
@@ -83,10 +99,14 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 				this.handsOpenState[hand.Id] = true;
 				this.handsActionLastDetection[hand.Id] = DateTime.Now;
 				this.handStartPosition[hand.Id] = hand.PalmPosition;
+				if (!this.handsUsed.Contains(hand.Id)) {
+					this.handsUsed.Add(hand.Id);
+				}
 				actionCollection.Add(Actions.ActionType.StartBack, this.timeToValidate);
 			} else if (this.handsOpenState[hand.Id] &&
 				  (hand.GrabStrength > this.threadsholdHandOpen ||
 				  !this.HandPositionValid(hand.Id, hand.PalmPosition))) {
+				this.handsUsed.Remove(hand.Id);
 				actionCollection.Add(Actions.ActionType.CancelBack);
 				return true;
 			} else if (this.handsOpenState[hand.Id] &&
