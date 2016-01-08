@@ -24,6 +24,11 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		protected Vector3? originScale;
 
 		/// <summary>
+		/// The ratio scale
+		/// </summary>
+		protected float ratioScale;
+
+		/// <summary>
 		/// The texture
 		/// </summary>
 		protected Texture2D texture2D;
@@ -83,7 +88,10 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		/// <param name="multiplier">The multiplier.</param>
 		public virtual void Zoom(float multiplier) {
-			//this.gameObject.transform.localScale *= multiplier;
+			if (this.originScale.HasValue) {
+				this.ratioScale = Mathf.Min(Mathf.Max(this.ratioScale * ((multiplier / 25.0f) + 1), 0.2f), 5.0f);
+				this.gameObject.transform.localScale = this.originScale.Value * this.ratioScale;
+			}
 		}
 
 		/// <summary>
@@ -141,6 +149,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 				if (this.IsTexture2DReady()) {
 					this.ScaleTexture2D();
 					this.ApplyTexture2D();
+					this.SaveElementValues();
 					this.ResetElement();
 				} else {
 					this.LoadTexture2D();
@@ -183,10 +192,16 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 			if (this.texture2D != null && this.gameObject.GetComponent<Renderer>() != null) {
 				this.texture2D.wrapMode = TextureWrapMode.Clamp;
 				this.gameObject.GetComponent<Renderer>().material.mainTexture = this.texture2D;
-				this.originAngle = this.gameObject.transform.localRotation;
-				this.originScale = this.gameObject.transform.localScale;
 				this.Texture2DApplied = true;
 			}
+		}
+
+		/// <summary>
+		/// Saves the element values.
+		/// </summary>
+		protected virtual void SaveElementValues() {
+			this.originAngle = this.gameObject.transform.localRotation;
+			this.originScale = this.gameObject.transform.localScale;
 		}
 
 		/// <summary>

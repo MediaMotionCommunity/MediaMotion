@@ -97,11 +97,7 @@ namespace MediaMotion.Modules.MediaViewer.SubModules.VideoPlayer.Controllers {
 				int height = this.player.Media.Height;
 				int pitches = (int)Mathf.Ceil((float)width / 32.0f) * 32;
 				int lines = this.player.Lines;
-//				Debug.Log ("Sizes:");
-//				Debug.Log(width);
-//				Debug.Log (height);
-//				Debug.Log(pitches);
-//				Debug.Log (lines);
+
 				this.texture2D = new Texture2D(pitches, this.player.Media.Height, TextureFormat.ARGB32, false);
 				this.texture2D.wrapMode = TextureWrapMode.Clamp;
 				this.texture2D.filterMode = FilterMode.Trilinear;

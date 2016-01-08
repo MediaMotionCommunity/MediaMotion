@@ -128,40 +128,32 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		public virtual void Update() {
 			foreach (IAction action in this.inputService.GetMovements()) {
-				switch (action.Type) {
-					case ActionType.Right:
-						this.Unselect(this.elements[this.sideElements]);
-						this.Next();
-						break;
-					case ActionType.Left:
-						this.Unselect(this.elements[this.sideElements]);
-						this.Previous();
-						break;
-					case ActionType.Select:
-						if (this.module.SupportedAction.Contains(ActionType.Select)) {
+				if (this.elements[this.sideElements] != null) {
+					switch (action.Type) {
+						case ActionType.Right:
+							this.Unselect(this.elements[this.sideElements]);
+							this.Next();
+							break;
+						case ActionType.Left:
+							this.Unselect(this.elements[this.sideElements]);
+							this.Previous();
+							break;
+						case ActionType.Select:
 							this.Select(this.elements[this.sideElements]);
-						}
-						break;
-					case ActionType.ZoomIn:
-						if (this.module.SupportedAction.Contains(ActionType.ZoomIn) && this.elements[this.sideElements] != null) {
+							break;
+						case ActionType.ZoomIn:
 							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Zoom((float)action.Parameter);
-						}
-						break;
-					case ActionType.ZoomOut:
-						if (this.module.SupportedAction.Contains(ActionType.ZoomOut) && this.elements[this.sideElements] != null) {
+							break;
+						case ActionType.ZoomOut:
 							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Zoom(-(float)action.Parameter);
-						}
-						break;
-					case ActionType.RotateLeft:
-						if (this.module.SupportedAction.Contains(ActionType.RotateLeft) && this.elements[this.sideElements] != null) {
+							break;
+						case ActionType.RotateLeft:
 							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Rotate(5.0f);
-						}
-						break;
-					case ActionType.RotateRight:
-						if (this.module.SupportedAction.Contains(ActionType.RotateRight) && this.elements[this.sideElements] != null) {
+							break;
+						case ActionType.RotateRight:
 							this.elements[this.sideElements].transform.Find("Tile").gameObject.GetComponent<TileScript>().Rotate(-5.0f);
-						}
-						break;
+							break;
+					}
 				}
 			}
 		}
