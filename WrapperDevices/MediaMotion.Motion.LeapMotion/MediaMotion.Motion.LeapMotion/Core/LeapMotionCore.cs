@@ -56,7 +56,14 @@ namespace MediaMotion.Motion.LeapMotion.Core {
 		#region Methods
 		#region IDisposable
 		public void Dispose() {
-			this.controller.Dispose();
+			Dispose(true);
+		}
+
+		public void Dispose(bool dispose) {
+			if (dispose) {
+				this.controller.Dispose();
+				GC.SuppressFinalize(this);
+			}
 		}
 		#endregion
 

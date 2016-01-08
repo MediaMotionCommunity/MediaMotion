@@ -26,7 +26,6 @@ namespace MediaMotion.Modules.MediaViewer.Services.VLC.Models {
 			this.Buffer = IntPtr.Zero;
 			this.Texture = null;
 			this.Resource = LibVLC.libvlc_media_player_new_from_media(this.Media.Resource);
-
 			if (this.Resource == IntPtr.Zero) {
 				throw new Exception("Could not load Player for " + this.Media.Element.GetName());
 			}

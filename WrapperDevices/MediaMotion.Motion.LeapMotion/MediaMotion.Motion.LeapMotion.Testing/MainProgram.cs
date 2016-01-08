@@ -16,14 +16,16 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 		/// </param>
 		public static void Main(string[] args) {
 			Console.WriteLine("Testing wrapper device");
-			var wrapper = new LeapMotion();
-			wrapper.Load();
-			wrapper.EnableActions(new[] {
-				ActionType.Leave
-			});
-			var timer = new Timer(Display, wrapper, 0, 1000 / 30);
-			Console.ReadLine();
-			wrapper.Unload();
+			using (var wrapper = new LeapMotion()) {
+				wrapper.Load();
+				wrapper.EnableActions(new[] {
+					ActionType.ZoomIn,
+					ActionType.ZoomOut,
+				});
+				var timer = new Timer(Display, wrapper, 0, 1000/30);
+				Console.ReadLine();
+				wrapper.Unload();
+			}
 		}
 
 		/// <summary>
