@@ -34,6 +34,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 		private DateTime lastValidDetection = DateTime.Now;
 		private Dictionary<int, bool> handsFistClosedState;
 		private Dictionary<int, DateTime> handsFistClosedLastDetection;
+		private List<int> handUsed;
 		#endregion
 
 		#region Constructor
@@ -41,24 +42,38 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 			this.lastValidDetection = DateTime.Now;
 			this.handsFistClosedState = new Dictionary<int, bool>();
 			this.handsFistClosedLastDetection = new Dictionary<int, DateTime>();
+			this.handUsed = new List<int>();
 		}
 		#endregion
 
 		#region Methods
 
 		public void Detection(Frame frame, IActionCollection actionCollection) {
+			List<int> hands = new List<int>(this.handUsed);
 			if (!this.lockDetection) {
 				if (!frame.Hands.IsEmpty) {
 					foreach (Hand hand in frame.Hands) {
 						if (hand.IsValid) {
 							this.SynchronizeHandsState(hand);
+							if (hands.Contains(hand.Id)) {
+								hands.Remove(hand.Id);
+							}
 							if (this.ValidDetection(hand, actionCollection)) {
 								this.lockDetection = true;
 								this.lastValidDetection = DateTime.Now;
 								this.handsFistClosedState.Clear();
 								this.handsFistClosedLastDetection.Clear();
+								this.handUsed.Clear();
 							}
 						}
+					}
+				}
+				if (hands.Count != 0) {
+					actionCollection.Add(Actions.ActionType.CancelLeave);
+					foreach (int id in hands) {
+						this.handsFistClosedState.Remove(id);
+						this.handsFistClosedLastDetection.Remove(id);
+						this.handUsed.Remove(id);
 					}
 				}
 			}
@@ -79,11 +94,15 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
                 hand.GrabStrength >= this.threasholdFistClosedDetection) {
                 this.handsFistClosedState[hand.Id] = true;
                 this.handsFistClosedLastDetection[hand.Id] = DateTime.Now;
+				if (!this.handUsed.Contains(hand.Id)) {
+					this.handUsed.Add(hand.Id);
+				}
                 actionCollection.Add(Actions.ActionType.StartLeave, this.timeToTrigger);
             }
             else if (this.handsFistClosedState[hand.Id]) {
                 if (hand.GrabStrength <= this.threadsholdFistOpenDetection) {
                     this.handsFistClosedState[hand.Id] = false;
+					this.handUsed.Remove(hand.Id);
                     actionCollection.Add(Actions.ActionType.CancelLeave);
                 }
                 else if (DateTime.Now - this.handsFistClosedLastDetection[hand.Id] >= this.timeToTrigger) {
