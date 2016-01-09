@@ -63,13 +63,13 @@ namespace MediaMotion.Core {
 			builder.Define("DebuggerAttached", Debugger.IsAttached);
 
 			// Services
-			builder.Register<ContainerBuilderService>().As<IContainerBuilderService>();
+			builder.Register<ContainerBuilderService>().As<IContainerBuilderService>().SingleInstance = false;
 			builder.Register<ElementFactory>().As<IElementFactory>().SingleInstance = true;
-			builder.Register<FileSystemService>().As<IFileSystemService>();
+			builder.Register<FileSystemService>().As<IFileSystemService>().SingleInstance = false;
 			builder.Register<HistoryService>().As<IHistoryService>().SingleInstance = true;
 			builder.Register<InputService>().As<IInputService>().SingleInstance = true;
 			builder.Register<ModuleManagerService>().As<IModuleManagerService>().SingleInstance = true;
-			builder.Register<PlaylistService>().As<IPlaylistService>();
+			builder.Register<PlaylistService>().As<IPlaylistService>().SingleInstance = false;
 
 			// Observers
 			builder.Register<ElementDrawObserver>().As<IElementDrawObserver>().SingleInstance = true;

@@ -5,13 +5,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces {
 	/// <summary>
 	/// Service Container interface
 	/// </summary>
-	public interface IContainer {
-		/// <summary>
-		/// Gets the parameters.
-		/// </summary>
-		/// <param name="parameters">The parameters.</param>
-		void GetParameters(out Dictionary<string, object> parameters);
-
+	public interface IContainer : IDisposable {
 		/// <summary>
 		/// Gets the parameter.
 		/// </summary>
@@ -30,12 +24,6 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models.Interfaces {
 		///   <c>true</c> if a parameter with the specified name exist, <c>false</c> otherwise
 		/// </returns>
 		bool HasParameter(string name);
-
-		/// <summary>
-		/// Gets the services.
-		/// </summary>
-		/// <param name="services">The services.</param>
-		void GetServices(out Dictionary<Type, IActivator> services);
 
 		/// <summary>
 		/// Gets this instance.

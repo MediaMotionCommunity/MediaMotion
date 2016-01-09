@@ -13,6 +13,11 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		private readonly List<Type> typesList;
 
 		/// <summary>
+		/// The disposable
+		/// </summary>
+		private bool disposable;
+
+		/// <summary>
 		/// The single instance
 		/// </summary>
 		private bool singleInstance;
@@ -27,7 +32,8 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 			this.typesList = new List<Type>();
 			this.typesList.Add(this.ServiceType);
 			this.Instance = instance;
-			if (this.Instance != null) {
+			this.disposable = typeof(IDisposable).IsAssignableFrom(service);
+			if (this.Instance != null || this.disposable) {
 				this.SingleInstance = true;
 			}
 		}
@@ -61,14 +67,14 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		/// <value>
 		///   <c>true</c> if [single instance]; otherwise, <c>false</c>.
 		/// </value>
-		/// <exception cref="System.ArgumentException">SingleInstance cannot be false if an instance already exist</exception>
+		/// <exception cref="System.ArgumentException">SingleInstance cannot be false when the service is defined using an Instance or if the service need to free some managed/unmanaged memory/object (if it implement the IDisposable interface).</exception>
 		public bool SingleInstance {
 			get {
 				return (this.singleInstance);
 			}
 			set {
-				if (this.Instance != null && value == false) {
-					throw new ArgumentException("SingleInstance cannot be false in this context");
+				if ((this.Instance != null || this.disposable) && value == false) {
+					throw new ArgumentException("SingleInstance cannot be false when the service is defined using an Instance or if the service need to free some managed/unmanaged memory/object (if it implement the IDisposable interface).");
 				}
 				this.singleInstance = value;
 			}

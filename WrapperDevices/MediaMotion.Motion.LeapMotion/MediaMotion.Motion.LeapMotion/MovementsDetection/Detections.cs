@@ -58,8 +58,8 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 			this.detectionContainer.Register<PinchGrabSpaceDetection>(ActionType.GrabPerform);
 			this.detectionContainer.Register<RightLeftDetection>(ActionType.Left, ActionType.Right);
 			this.detectionContainer.Register<SoundDetection>(ActionType.SoundUp, ActionType.SoundDown);
-            this.detectionContainer.Register<FistBackDetection>(ActionType.Leave, ActionType.StartLeave, ActionType.CancelLeave);
-            this.detectionContainer.Build();
+			this.detectionContainer.Register<FistBackDetection>(ActionType.Leave, ActionType.StartLeave, ActionType.CancelLeave);
+			this.detectionContainer.Build();
 		}
 		#endregion
 	}

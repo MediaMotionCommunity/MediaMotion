@@ -39,13 +39,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder {
 		public IContainer Build(IContainer parent = null) {
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
 			Dictionary<Type, IActivator> services = new Dictionary<Type, IActivator>();
-
-			if (parent != null) {
-				parent.GetParameters(out parameters);
-				parent.GetServices(out services);
-			}
-
-			IContainer container = new Container(parameters, services);
+			IContainer container = new Container(parent, parameters, services);
 			IResolverService resolver = new ResolverService(container);
 			IActivator resolverActivator = new SingleInstanceActivator(resolver, typeof(ResolverService), resolver);
 

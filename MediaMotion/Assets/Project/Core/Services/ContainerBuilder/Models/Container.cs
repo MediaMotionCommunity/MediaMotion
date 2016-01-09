@@ -8,6 +8,11 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 	/// </summary>
 	public sealed class Container : IContainer {
 		/// <summary>
+		/// The parent
+		/// </summary>
+		private readonly IContainer parent;
+
+		/// <summary>
 		/// The parameters
 		/// </summary>
 		private readonly Dictionary<string, object> parameters;
@@ -22,17 +27,28 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		/// </summary>
 		/// <param name="parameters">The parameters.</param>
 		/// <param name="services">The services.</param>
-		public Container(Dictionary<string, object> parameters, Dictionary<Type, IActivator> services) {
+		public Container(IContainer parent, Dictionary<string, object> parameters, Dictionary<Type, IActivator> services) {
+			this.parent = parent;
 			this.parameters = parameters;
 			this.services = services;
 		}
 
 		/// <summary>
-		/// Gets the parameters.
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
-		/// <param name="parameters">The parameters.</param>
-		public void GetParameters(out Dictionary<string, object> parameters) {
-			parameters = new Dictionary<string, object>(this.parameters);
+		public void Dispose() {
+			foreach (KeyValuePair<string, object> entry in this.parameters) {
+				if (entry.Value is IDisposable) {
+					((IDisposable)entry.Value).Dispose();
+				}
+			}
+			this.parameters.Clear();
+			foreach (KeyValuePair<Type, IActivator> entry in this.services) {
+				if (entry.Value is IDisposable) {
+					((IDisposable)entry.Value).Dispose();
+				}
+			}
+			this.services.Clear();
 		}
 
 		/// <summary>
@@ -40,14 +56,17 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <returns>
-		///   The parameter
+		/// The parameter
 		/// </returns>
-		/// <exception cref="System.ArgumentOutOfRangeException">name;No parameter with this name can be found</exception>
+		/// <exception cref="System.ArgumentException">No parameter with this name can be found.;name</exception>
 		public object GetParameter(string name) {
 			object parameter;
 
 			if (!this.parameters.TryGetValue(name, out parameter)) {
-				throw new ArgumentOutOfRangeException("name", "No parameter with this name can be found");
+				if (this.parent != null) {
+					return (this.parent.GetParameter(name));
+				}
+				throw new ArgumentException("No parameter with this name can be found.", "name");
 			}
 			return (parameter);
 		}
@@ -60,15 +79,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		///   <c>true</c> if a parameter with the specified name exist, <c>false</c> otherwise
 		/// </returns>
 		public bool HasParameter(string name) {
-			return (this.parameters.ContainsKey(name));
-		}
-
-		/// <summary>
-		/// Gets the services.
-		/// </summary>
-		/// <param name="services">The services.</param>
-		public void GetServices(out Dictionary<Type, IActivator> services) {
-			services = new Dictionary<Type, IActivator>(this.services);
+			return (this.parameters.ContainsKey(name) || (this.parent != null && this.parent.HasParameter(name)));
 		}
 
 		/// <summary>
@@ -89,12 +100,15 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		/// <returns>
 		/// The service
 		/// </returns>
-		/// <exception cref="System.ArgumentOutOfRangeException">type;The requested service cannot be found</exception>
+		/// <exception cref="System.ArgumentException">The requested service cannot be found;type</exception>
 		public object Get(Type type) {
 			IActivator activator;
 
 			if (!this.services.TryGetValue(type, out activator)) {
-				throw new ArgumentOutOfRangeException("type", "The requested service cannot be found");
+				if (this.parent != null) {
+					return (this.parent.Get(type));
+				}
+				throw new ArgumentException("The requested service cannot be found", "type");
 			}
 			return (activator.Get());
 		}
@@ -118,7 +132,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 		///   <c>true</c> if the container has registered the service, <c>false</c> otherwise
 		/// </returns>
 		public bool Has(Type type) {
-			return (this.services.ContainsKey(type));
+			return (this.services.ContainsKey(type) || (this.parent != null && this.parent.Has(type)));
 		}
 	}
 }

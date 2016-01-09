@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-
+﻿using System;
+using System.Collections.Generic;
 using MediaMotion.Core.Models.Interfaces;
 using MediaMotion.Core.Services.History.Interfaces;
 
@@ -11,13 +11,13 @@ namespace MediaMotion.Core.Services.History {
 		/// <summary>
 		/// The histories
 		/// </summary>
-		private Dictionary<IIdentifier, IIdentifierHistory> Histories;
+		private Dictionary<IIdentifier, IIdentifierHistory> histories;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="HistoryService" /> class.
 		/// </summary>
 		public HistoryService() {
-			this.Histories = new Dictionary<IIdentifier, IIdentifierHistory>();
+			this.histories = new Dictionary<IIdentifier, IIdentifierHistory>();
 		}
 
 		/// <summary>
@@ -32,8 +32,8 @@ namespace MediaMotion.Core.Services.History {
 		public IIdentifierHistory GetHistory(IIdentifier Identifier) {
 			IIdentifierHistory History = null;
 
-			if (this.Histories.TryGetValue(Identifier, out History) == false) {
-				this.Histories.Add(Identifier, (History = new IdentifierHistory(Identifier)));
+			if (this.histories.TryGetValue(Identifier, out History) == false) {
+				this.histories.Add(Identifier, (History = new IdentifierHistory(Identifier)));
 			}
 			return (History);
 		}

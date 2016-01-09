@@ -14,7 +14,7 @@ namespace MediaMotion.Core.Services.FileSystem {
 	/// <summary>
 	/// FileSystem Service
 	/// </summary>
-	public sealed class FileSystemService : IDisposable, IFileSystemService {
+	public sealed class FileSystemService : IFileSystemService {
 		/// <summary>
 		/// The file factory
 		/// </summary>
@@ -94,18 +94,6 @@ namespace MediaMotion.Core.Services.FileSystem {
 		///   <c>true</c> if [display system files]; otherwise, <c>false</c>.
 		/// </value>
 		public bool DisplaySystemElements { get; set; }
-
-		/// <summary>
-		/// Releases unmanaged and - optionally - managed resources.
-		/// </summary>
-		public void Dispose() {
-			this.elementFactory = null;
-			this.rootPath = null;
-			this.bufferAccess = null;
-			this.InitialFolder = null;
-			this.CurrentFolder = null;
-			this.BufferizedElements = null;
-		}
 
 		/// <summary>
 		/// Determines whether this instance has chrooted.

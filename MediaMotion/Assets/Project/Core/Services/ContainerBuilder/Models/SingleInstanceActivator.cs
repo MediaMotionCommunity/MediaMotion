@@ -6,7 +6,7 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 	/// <summary>
 	/// Single Instance Activator
 	/// </summary>
-	public class SingleInstanceActivator : AActivator {
+	public class SingleInstanceActivator : AActivator, IDisposable {
 		/// <summary>
 		/// The service
 		/// </summary>
@@ -25,6 +25,18 @@ namespace MediaMotion.Core.Services.ContainerBuilder.Models {
 				throw new Exception("the provided instance does not match the provided type");
 			}
 			this.service = service;
+		}
+
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		public void Dispose() {
+			if (this.service != null) {
+				if (this.service is IDisposable) {
+					((IDisposable)this.service).Dispose();
+				}
+				this.service = null;
+			}
 		}
 
 		/// <summary>

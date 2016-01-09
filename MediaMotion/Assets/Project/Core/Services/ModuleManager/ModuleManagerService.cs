@@ -13,7 +13,7 @@ namespace MediaMotion.Core.Services.ModuleManager {
 	/// <summary>
 	/// Module manager service
 	/// </summary>
-	public class ModuleManagerService : IModuleManagerService {
+	public class ModuleManagerService : IDisposable, IModuleManagerService {
 		/// <summary>
 		/// The service lock
 		/// </summary>
@@ -47,6 +47,23 @@ namespace MediaMotion.Core.Services.ModuleManager {
 			this.backgroundModules = new Stack<ModuleInstance>();
 			this.stackedModules = new Stack<ModuleInstance>();
 			this.currentModule = null;
+		}
+
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		public void Dispose() {
+			lock (this.locker) {
+				foreach (KeyValuePair<Type, IModule> entry in this.availableModules) {
+					if (entry.Value is IDisposable) {
+						((IDisposable)entry.Value).Dispose();
+					}
+				}
+				this.availableModules.Clear();
+				this.backgroundModules.Clear();
+				this.stackedModules.Clear();
+				this.currentModule = null;
+			}
 		}
 
 		/// <summary>
