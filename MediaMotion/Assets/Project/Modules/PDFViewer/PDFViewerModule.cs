@@ -22,7 +22,7 @@ namespace MediaMotion.Modules.PDFViewer {
 		public PDFViewerModule() {
 			this.Name = "PDF Viewer";
 			this.Scene = "PDFViewer";
-			this.Description = "Display your PDF in a wonderfull slideshow";
+			this.Description = "Display your PDF in a wonderful slideshow";
 			this.SupportedExtensions = new string[] { ".pdf", ".xps" };
 			this.SupportedAction = new ActionType[] {
 				ActionType.Right,

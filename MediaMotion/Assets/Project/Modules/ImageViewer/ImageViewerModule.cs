@@ -23,11 +23,11 @@ namespace MediaMotion.Modules.ImageViewer {
 			this.Description = "Display your picture in a wonderfull slideshow";
 			this.SupportedExtensions = new string[] { ".jpg", ".jpeg", ".gif", ".png", ".svg", ".bmp", ".tiff" };
 			this.SupportedAction = new ActionType[] {
-				ActionType.RotateLeft,
-				ActionType.RotateRight,
 				ActionType.Right,
 				ActionType.Left,
-				ActionType.Zoom, 
+				ActionType.Zoom,
+				ActionType.RotateRight,
+				ActionType.RotateLeft,
 			};
 		}
 

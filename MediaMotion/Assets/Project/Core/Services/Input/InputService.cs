@@ -16,7 +16,7 @@ namespace MediaMotion.Core.Services.Input {
 	/// <summary>
 	/// LeapMotion Service
 	/// </summary>
-	public class InputService : IInputService {
+	public class InputService : IDisposable, IInputService {
 		/// <summary>
 		/// The file system service
 		/// </summary>
@@ -101,6 +101,13 @@ namespace MediaMotion.Core.Services.Input {
 		public bool IsLoaded { get; private set; }
 
 		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		public void Dispose() {
+			this.UnloadWrapper();
+		}
+
+		/// <summary>
 		/// Loads the wrapper.
 		/// </summary>
 		/// <param name="Name">Name of the wrapper device.</param>
@@ -121,7 +128,7 @@ namespace MediaMotion.Core.Services.Input {
 				if (!types.Any()) {
 					throw new WrapperNotFoundException("Bad Wrapper Library");
 				}
-				this.wrapper = Activator.CreateInstance(types.FirstOrDefault()) as IWrapperDevice;
+				this.SwitchWrapper(Activator.CreateInstance(types.FirstOrDefault()) as IWrapperDevice);
 			} catch (WrapperNotFoundException exception) {
 				Debug.LogError("Wrapper not found: " + exception.Message);
 			} catch (DllNotFoundException exception) {
@@ -130,6 +137,27 @@ namespace MediaMotion.Core.Services.Input {
 				Debug.LogError(exception);
 			}
 			this.IsLoaded = this.wrapper != null;
+		}
+
+		/// <summary>
+		/// Unloads the wrapper.
+		/// </summary>
+		public void UnloadWrapper() {
+			if (this.wrapper != null) {
+				this.wrapper.Dispose();
+				this.wrapper = null;
+			}
+		}
+
+		/// <summary>
+		/// Switches the wrapper.
+		/// </summary>
+		/// <param name="wrapper">The wrapper.</param>
+		protected void SwitchWrapper(IWrapperDevice wrapper) {
+			if (wrapper != null) {
+				this.UnloadWrapper();
+				this.wrapper = wrapper;
+			}
 		}
 
 		/// <summary>

@@ -102,6 +102,8 @@ namespace MediaMotion.Core {
 			OptionSet optionSet = new OptionSet();
 
 			optionSet.Add("r|root=", v => options["Root"] = ((Directory.Exists(v)) ? (v) : (null)));
+			optionSet.Add("hidden-file", v => options["HiddenFile"] = (v != null));
+			optionSet.Add("system-file", v => options["SystemFile"] = (v != null));
 			optionSet.Add("h|?|help", v => options["Help"] = (v != null));
 			options["Extra"] = optionSet.Parse(commandLineArgs);
 			return (options);
