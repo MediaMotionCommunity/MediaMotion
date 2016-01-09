@@ -51,8 +51,9 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 				var distance = RemoveNoise(_previousPosition.y - bone.Center.y);
 				_previousPosition = bone.Center;
 				//Console.WriteLine("distance: " + distance);
-				if (Math.Abs(distance) > 0.001)
-					actionCollection.Add(distance > 0f ? ActionType.ZoomOut : ActionType.ZoomIn, Math.Abs(distance));
+				if (Math.Abs(distance) > 0.001) {
+					actionCollection.Add(ActionType.Zoom, distance);
+				}
 				return true;
 			}
 			return false;

@@ -19,8 +19,7 @@ namespace MediaMotion.Motion.LeapMotion.Testing {
 			using (var wrapper = new LeapMotion()) {
 				wrapper.Load();
 				wrapper.EnableActions(new[] {
-					ActionType.ZoomIn,
-					ActionType.ZoomOut,
+					ActionType.Zoom,
 				});
 				var timer = new Timer(Display, wrapper, 0, 1000/30);
 				Console.ReadLine();

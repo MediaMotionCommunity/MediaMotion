@@ -49,7 +49,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection {
 
 		#region Privates Methods
 		private void Configuration() {
-			this.detectionContainer.Register<ZoomDetection>(ActionType.ZoomIn, ActionType.ZoomOut);
+			this.detectionContainer.Register<ZoomDetection>(ActionType.Zoom);
 			//			this.detectionContainer.Register<ZoomRotateDetection>(ActionType.ZoomIn, ActionType.ZoomOut);
 			this.detectionContainer.Register<OpenHandDetection>(ActionType.Back);
 			this.detectionContainer.Register<EasyFileBrowsingDetection>(ActionType.BrowsingCursor, ActionType.BrowsingHighlight, ActionType.BrowsingScroll);

@@ -42,7 +42,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 				.ToArray();
 			foreach (var bone in bones) {
 				if (bone.IsValid) {
-					if (bone.Center.x < -40.0f && bone.Center.y > 110.0f && bone.Center.y < 300.0f) {
+					/*if (bone.Center.x < -40.0f && bone.Center.y > 110.0f && bone.Center.y < 300.0f) {
 						this.IsCorrectInterval(actionCollection, ActionType.ZoomOut, bone);
 						isDetectAction = true;
 					}
@@ -50,7 +50,7 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 						this.IsCorrectInterval(actionCollection, ActionType.ZoomIn, bone);
 						isDetectAction = true;
 					}
-					else if (bone.Center.x > -100.0f && bone.Center.x < 100.0f && bone.Center.y > 250.0f) {
+					else */if (bone.Center.x > -100.0f && bone.Center.x < 100.0f && bone.Center.y > 250.0f) {
 						this.IsCorrectInterval(actionCollection, ActionType.RotateRight, bone);
 						isDetectAction = true;
 					}
