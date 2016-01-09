@@ -35,6 +35,16 @@ namespace MediaMotion.Core {
 	/// </summary>
 	public static class MediaMotionCore {
 		/// <summary>
+		/// The is quit access
+		/// </summary>
+		private static object isQuitAccess = new object();
+
+		/// <summary>
+		/// The is quit
+		/// </summary>
+		private static bool isQuit = false;
+
+		/// <summary>
 		/// The services
 		/// </summary>
 		public static readonly IContainer Container;
@@ -76,6 +86,18 @@ namespace MediaMotion.Core {
 
 			MediaMotionCore.Container = builder.Build();
 			MediaMotionCore.RegisterModules();
+		}
+
+		/// <summary>
+		/// Quits the programm.
+		/// </summary>
+		public static void Quit() {
+			lock (MediaMotionCore.isQuitAccess) {
+				if (!MediaMotionCore.isQuit) {
+					MediaMotionCore.Container.Dispose();
+					MediaMotionCore.isQuit = true;
+				}
+			}
 		}
 
 		/// <summary>

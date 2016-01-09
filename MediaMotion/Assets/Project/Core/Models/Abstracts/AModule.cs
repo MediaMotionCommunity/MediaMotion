@@ -14,7 +14,7 @@ namespace MediaMotion.Core.Models.Abstracts {
 	/// <summary>
 	/// Abstract Module
 	/// </summary>
-	public abstract class AModule : IModule {
+	public abstract class AModule : IDisposable, IModule {
 		/// <summary>
 		/// Gets or sets the priority.
 		/// </summary>
@@ -94,6 +94,13 @@ namespace MediaMotion.Core.Models.Abstracts {
 		/// The parameters.
 		/// </value>
 		public IElement[] Parameters { get; protected set; }
+
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		public virtual void Dispose() {
+			this.Container.Dispose();
+		}
 
 		/// <summary>
 		/// Configures the module.

@@ -42,6 +42,13 @@ namespace MediaMotion.Core.Models.Abstracts {
 				}
 			}
 		}
+
+		/// <summary>
+		/// Called when [application quit].
+		/// </summary>
+		public void OnApplicationQuit() {
+			MediaMotionCore.Quit();
+		}
 	}
 
 	/// <summary>
