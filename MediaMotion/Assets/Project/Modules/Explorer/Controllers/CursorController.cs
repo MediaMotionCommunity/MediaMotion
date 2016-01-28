@@ -3,6 +3,7 @@ using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.Actions.Parameters;
+using UnityEngine;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
@@ -43,6 +44,14 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public void Init(IInputService inputService) {
 			this.inputService = inputService;
 		}
+		
+		/// <summary>
+		/// Colorates the specified color.
+		/// </summary>
+		/// <param name="color">The color.</param>
+		private void Colorate(Color32 color) {
+			iTween.ColorTo(this.gameObject, color, 0.25f);
+		}
 
 		/// <summary>
 		/// Updates this instance.
@@ -54,6 +63,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				Object3 parameter = action.Parameter as Object3;
 
 				this.gameObject.transform.localPosition = new UnityEngine.Vector3(parameter.Pos.X / 10, parameter.Pos.Y / 10, -parameter.Pos.Z / 25);
+				if (parameter.Pos.Y > 0.0f) {
+					this.Colorate(new Color32(180, 180, 180, 255));
+				} else {
+					this.Colorate(new Color32(180, 40, 40, 255));
+				}
 			}
 		}
 
