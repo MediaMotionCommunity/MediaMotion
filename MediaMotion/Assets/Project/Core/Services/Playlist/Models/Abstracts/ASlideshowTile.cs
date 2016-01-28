@@ -108,7 +108,7 @@ namespace MediaMotion.Core.Services.Playlist.Models.Abstracts {
 		/// </summary>
 		/// <param name="angle">The angle.</param>
 		public virtual void Rotate(float angle) {
-			this.gameObject.transform.Rotate(new Vector3(0.0f, angle, 0.0f), Space.Self);
+			this.gameObject.transform.Rotate(new Vector3(0.0f, angle * 3.0f, 0.0f), Space.Self);
 		}
 
 		/// <summary>

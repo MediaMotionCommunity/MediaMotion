@@ -26,8 +26,7 @@ namespace MediaMotion.Modules.ImageViewer {
 				ActionType.Right,
 				ActionType.Left,
 				ActionType.Zoom,
-				ActionType.RotateRight,
-				ActionType.RotateLeft,
+				ActionType.Rotate,
 			};
 		}
 
