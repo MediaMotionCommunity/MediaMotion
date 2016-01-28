@@ -90,8 +90,13 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// </summary>
 		private Rect popupRect;
 
-//		private GameObject cam;
-//		private GameObject sidebar;
+		/// <summary>
+		/// Gets the count.
+		/// </summary>
+		/// <value>
+		/// The count.
+		/// </value>
+		public int Count { get; private set; }
 
 		/// <summary>
 		/// Initializes the specified explorer module.
@@ -248,15 +253,7 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 				uiElement.AddComponent<ElementController>().Element = element;
 				++count;
 			}
+			this.Count = count;
 		}
-			
-//		private void ShowSidebar() {
-//			iTween.MoveTo(this.sidebar, new Vector3(7.0f, 0.93f, 0.05f), 1.5f);
-//			iTween.MoveTo(this.cam, new Vector3(0.0f, 5.0f, -2.5f), 1.5f);
-//		}
-//		private void HideSidebar() {
-//			iTween.MoveTo(this.sidebar, new Vector3(5.5f, 0.93f, 0.05f), 1.5f);
-//			iTween.MoveTo(this.cam, new Vector3(1.6f, 5.0f, -2.5f), 1.5f);
-//		}
 	}
 }

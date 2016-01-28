@@ -3,6 +3,7 @@ using MediaMotion.Core.Services.Input.Interfaces;
 using MediaMotion.Modules.Explorer.Services.CursorManager.Interfaces;
 using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.Actions.Parameters;
+using UnityEngine;
 
 namespace MediaMotion.Modules.Explorer.Controllers {
 	/// <summary>
@@ -18,6 +19,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		/// The cursor manager service
 		/// </summary>
 		private ICursorManagerService cursorManagerService;
+
+		/// <summary>
+		/// The explorer
+		/// </summary>
+		public GameObject explorer;
 
 		/// <summary>
 		/// Initializes this instance.
@@ -42,7 +48,11 @@ namespace MediaMotion.Modules.Explorer.Controllers {
 		public void Update() {
 			if (this.cursorManagerService.IsEnabled) {
 				foreach (IAction action in this.inputService.GetMovements(ActionType.BrowsingScroll)) {
-					this.gameObject.transform.Translate(0, 0, (action.Parameter as Object3).Pos.Z / 8, UnityEngine.Space.World);
+					Object3 parameter = (action.Parameter as Object3);
+
+					if ((this.gameObject.transform.localPosition.z + (parameter.Pos.Z / 8)) > -1 && (this.gameObject.transform.localPosition.z + (parameter.Pos.Z / 8)) < ((int)((float)((this.explorer.GetComponent<ExplorerController>().Count / ExplorerController.FilePerLine) + 1) * ExplorerController.FileSpacing) + 1)) {
+						this.gameObject.transform.Translate(0, 0, parameter.Pos.Z / 8, UnityEngine.Space.World);
+					}
 				}
 			}
 		}
