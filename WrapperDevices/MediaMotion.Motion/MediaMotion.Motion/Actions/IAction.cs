@@ -26,8 +26,8 @@
 		Zoom,
 		RotateRight,
 		RotateLeft,
-		SoundUp,
-		SoundDown
+		Sound,
+		Rotate
 	}
 
 	/// <summary>

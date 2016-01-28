@@ -5,11 +5,11 @@ using MediaMotion.Motion.Actions;
 using MediaMotion.Motion.LeapMotion.Core;
 
 namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
-	public class SoundDetection : ICustomDetection {
+	public class SoundOldDetection : ICustomDetection {
 		private readonly TimeSpan interval = new TimeSpan(0, 0, 0, 0, 500);
 		private DateTime? inZomeTime;
 
-		public SoundDetection() {
+		public SoundOldDetection() {
 			this.inZomeTime = null;
 		}
 
@@ -39,11 +39,11 @@ namespace MediaMotion.Motion.LeapMotion.MovementsDetection.Detectors {
 			foreach (var bone in bones) {
 				if (bone.IsValid) {
 					if (bone.Center.x < -40.0f && bone.Center.y > 110.0f && bone.Center.y < 300.0f) {
-						this.IsCorrectInterval(actionCollection, ActionType.SoundDown, bone);
+						this.IsCorrectInterval(actionCollection, ActionType.Sound, bone);
 						isDetectAction = true;
 					}
 					else if (bone.Center.x > 40.0f && bone.Center.y > 110.0f && bone.Center.y < 300.0f) {
-						this.IsCorrectInterval(actionCollection, ActionType.SoundUp, bone);
+						this.IsCorrectInterval(actionCollection, ActionType.Sound, bone);
 						isDetectAction = true;
 					}
 				}
