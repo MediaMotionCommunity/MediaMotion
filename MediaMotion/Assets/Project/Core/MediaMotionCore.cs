@@ -94,7 +94,7 @@ namespace MediaMotion.Core {
 		public static void Quit() {
 			lock (MediaMotionCore.isQuitAccess) {
 				if (!MediaMotionCore.isQuit) {
-					// MediaMotionCore.Container.Dispose();
+					((IDisposable)MediaMotionCore.Container.Get<IInputService>()).Dispose();
 					MediaMotionCore.isQuit = true;
 				}
 			}
