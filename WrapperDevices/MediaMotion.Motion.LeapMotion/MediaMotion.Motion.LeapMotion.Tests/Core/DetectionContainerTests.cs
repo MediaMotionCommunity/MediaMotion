@@ -95,50 +95,6 @@ namespace MediaMotion.Motion.LeapMotion.Tests.Core {
 		}
 
 		[Test]
-		public void GivenInstanceWithRegisterInstance_WhenDetectMouvement_ThenShouldCallMethodDetectionOfInstance() {
-			this.detectionContainer.Register(this.customDetectionMock.Object);
-			
-			this.detectionContainer.DetectMouvement(this.frameMock.Object, this.actionCollection);
-
-			this.customDetectionMock.Verify(cd => cd.Detection(this.frameMock.Object, this.actionCollection));
-		}
-
-		[Test]
-		public void GivenRegisterTypeAndEnabledThis_WhenDetectMouvement_ThenShouldUsedDetectionMethod() {
-			this.detectionContainer.Register<CustomDetectionImplementation>(AUsedAction);
-			this.detectionContainer.Enable(AUsedAction);
-
-			this.detectionContainer.DetectMouvement(this.frameMock.Object, this.actionCollection);
-
-			Assert.IsNotNull(this.actionCollection.FirstOrDefault(ac => ac.Type.Equals(AUsedAction)));
-		}
-
-		[Test]
-		public void GivenRegisterAndEnabledATypeWithNoParameterLessConstructorButParameterTypeNotEnabled_WhenDetectMouvement_ThenShouldReceiveANullArgument() {
-			this.detectionContainer.Register<DetectionWithParameterConstructor>(AnOtherUsedAction);
-			this.detectionContainer.Register<CustomDetectionImplementation>(AUsedAction);
-			this.detectionContainer.Build();
-			this.detectionContainer.Enable(AnOtherUsedAction);
-
-			this.detectionContainer.DetectMouvement(this.frameMock.Object, this.actionCollection);
-
-			Assert.IsNull(this.actionCollection.FirstOrDefault(ac => ac.Type.Equals(AnOtherUsedAction)));
-		}
-
-		[Test]
-		public void GivenRegisterAndEnabledATypeWithNoParameterLessConstructorAndParameterTypeEnabled_WhenDetectMouvement_ThenShouldReceiveOtherDetectionInstance() {
-			this.detectionContainer.Register<DetectionWithParameterConstructor>(AnOtherUsedAction);
-			this.detectionContainer.Register<CustomDetectionImplementation>(AUsedAction);
-			this.detectionContainer.Build();
-			this.detectionContainer.Enable(AUsedAction);
-			this.detectionContainer.Enable(AnOtherUsedAction);
-
-			this.detectionContainer.DetectMouvement(this.frameMock.Object, this.actionCollection);
-
-			Assert.IsNotNull(this.actionCollection.FirstOrDefault(ac => ac.Type.Equals(AnOtherUsedAction)));
-		}
-
-		[Test]
 		[ExpectedException(typeof(DetectionResolveException))]
 		public void GivenRegisterAndEnabledATypeWithNoParameterLessConstructorButParameterTypeNotRegister_WhenBuild_ThenShouldThrowAnException() {
 			this.detectionContainer.Register<DetectionWithParameterConstructor>(AnOtherUsedAction);
