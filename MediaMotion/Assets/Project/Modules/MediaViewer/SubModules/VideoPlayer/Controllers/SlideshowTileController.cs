@@ -72,7 +72,7 @@ namespace MediaMotion.Modules.MediaViewer.SubModules.VideoPlayer.Controllers {
 				}
 			} else {
 				this.LoadTexture2D();
-				this.ScaleTexture2D(2.6f, 1.1f);
+				this.ScaleTexture2D(2.3f, 1.1f);
 			}
 		}
 
